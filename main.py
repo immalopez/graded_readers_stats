@@ -11,13 +11,23 @@ from graded_readers_stats import preprocess, statistics
 
 # ================================= LOAD DATA =================================
 
+# Set to True to use a small sample of the whole dataset.
+TRIAL = True
+
 pd.set_option('display.max_columns', 99)
 
 PATH_TO_READERS_CSV = 'Data/Graded readers list.csv'
 PATH_TO_VOCABULARY_CSV = 'Data/Vocabulary list.csv'
+PATH_TO_TRIAL_READERS_CSV = 'Data/Graded readers list_TRIAL.csv'
+PATH_TO_TRIAL_VOCABULARY_CSV = 'Data/Vocabulary list_TRIAL.csv'
 
-graded_readers = pd.read_csv(PATH_TO_READERS_CSV, sep=';')[0:2] # REMEMBER TO CHANGE BACK
-graded_vocabulary = pd.read_csv(PATH_TO_VOCABULARY_CSV, sep=';')[0:2] # REMEMBER TO CHANGE BACK
+if TRIAL:
+    graded_readers = pd.read_csv(PATH_TO_TRIAL_READERS_CSV, sep=';')
+    graded_vocabulary = pd.read_csv(PATH_TO_TRIAL_VOCABULARY_CSV, sep=';')
+    print("⚠️ WARNING: Using trial dataset!!!")
+else:
+    graded_readers = pd.read_csv(PATH_TO_READERS_CSV, sep=';')
+    graded_vocabulary = pd.read_csv(PATH_TO_VOCABULARY_CSV, sep=';')
 
 
 # ================================= CONSTANTS =================================
@@ -41,7 +51,8 @@ VOCAB_SYNTACTIC_HEAD = "Vocabulary's syntactic heads"
 TXT_DEPENDENCY_RELATIONS = "Text's dependency relations"
 VOCAB_DEPENDENCY_RELATIONS = "Vocabulary's dependency relations"
 TXT_NAMED_ENTITIES = "Text's named entities"
-VOCAB_NAMED_ENTITIES = "Vocabulary's named entitites"
+VOCAB_NAMED_ENTITIES = "Vocabulary's named entities"
+VOCAB_IN_READERS = 'Is this vocabulary item in the readers?'
 
 
 # ================================== COLUMNS ==================================
@@ -101,15 +112,14 @@ graded_vocabulary[VOCAB_NAMED_ENTITIES] = graded_vocabulary[
     PROCESSED_VOCAB].apply(
     preprocess.get_word_properties, args=('text',)
 )
+graded_vocabulary[VOCAB_IN_READERS] = statistics.check_if_vocab_in_text(
+    graded_readers[LEMMATIZED_TXT], graded_vocabulary[LEMMATIZED_VOCAB])
 
 
 # ================================ CLEAN DATA ================================
 
 if __name__ == '__main__':
-    print(graded_vocabulary[VOCAB_UNI_POS])
+    print(graded_readers[LEMMATIZED_TXT])
     print(graded_vocabulary[LEMMATIZED_VOCAB])
-    print(graded_vocabulary[VOCAB_SYNTACTIC_HEAD])
-    print(graded_vocabulary[VOCAB_DEPENDENCY_RELATIONS])
-    print(graded_vocabulary[VOCAB_NAMED_ENTITIES])
-    print(statistics.compute_freq_dist(graded_readers[LEMMATIZED_TXT],
+    print(statistics.get_vocab_in_text(graded_readers[LEMMATIZED_TXT],
                                        graded_vocabulary[LEMMATIZED_VOCAB]))

@@ -10,94 +10,70 @@ readers = pd.Series(data=[
     [
         ['cara', 'a'],
         ['cara', 'a', 'b'],
-        # ['¿', 'ya', 'poder', 'empezar', '?'],
+        ['¿', 'ya', 'poder', 'empezar', '?']
         # ['bueno', ',', 'este', 'ser', 'difícil', '.']
     ],
     [
-        # ['peter', 'pan'],
+        ['peter', 'pan'],
         # ['system', 'out', 'print', 'line', '?']
     ]
 ])
 
 vocab = pd.Series(data=[
     [['cara', 'a']],
-    # [['¿', 'cómo', 'estar', '?']],
+    [['¿', 'cómo', 'estar', '?']],
+    [['¿', 'ya', 'poder', 'empezar', '?']]
     # [['¿', 'qué', 'hora', 'ser', '?']]
 ])
 
-def array_contains_array(arr1, arr2):
-    if len(arr1) > len(arr2):
-        return False
 
-    for a1 in arr1:
-        for a2 in arr2:
-            if a1 != a2:
-                return False
-
-    return True
-
-# print(array_contains_array([2], [2, 4]))
-
-
-def isSubArray(A, B):
-    n = len(A)
-    m = len(B)
-    # Two pointers to traverse the arrays
-    i = 0
-    j = 0
-
-    # Traverse both arrays simultaneously
-    while i < n and j < m:
-
-        # If element matches
-        # increment both pointers
-        if A[i] == B[j]:
-
-            i += 1
-            j += 1
-
-            # If array B is completely
-            # traversed
-            if j == m:
+def check_if_vocab_in_text(text, vocabulary):
+    """Returns True if the lexical items contained in a vocabulary list are
+    to be found in the sentence lists of a given text, and False otherwise."""
+    t_length = len(text)
+    v_length = len(vocabulary)
+    pointer_t = 0
+    pointer_v = 0
+    while pointer_t < t_length and pointer_v < v_length:
+        if str(text[pointer_t]).lower() == str(vocabulary[pointer_v]).lower():
+            pointer_t += 1
+            pointer_v += 1
+            if pointer_v == v_length:
                 return True
-
-        # If not,
-        # increment i and reset j
         else:
-            i = i - j + 1
-            j = 0
-
+            pointer_t = pointer_t - pointer_v + 1
+            pointer_v = 0
     return False
 
 
-print(isSubArray([3, 2, 4], [4]))
-
-
-def compute_freq_dist(text, vocabulary):
+def get_vocab_in_text(text, vocabulary):
+    """Returns a list of lists with all of the vocabulary lexical items that
+    can be found in a given (set of) text(s)."""
+    vocab_in_text = []
     for vocab_items in vocabulary:
         vocab_item = vocab_items[0]
-        # print(vocab_item)
-
         for text_items in text:
             for text_item in text_items:
-                print('comparing: ' + str(vocab_item) + ' in ' + str(text_item))
-                print(isSubArray(text_item, vocab_item))
+                if (check_if_vocab_in_text(text_item, vocab_item) and
+                        vocab_item not in vocab_in_text):
+                    vocab_in_text.append(vocab_item)
+    return vocab_in_text
+
+
+def compute_vocab_freq_dist0(text, vocabulary):
+    for vocab_items in vocabulary:
+        vocab_item = vocab_items[0]
+        for text_items in text:
+            for text_item in text_items:
+                print('comparing: ' + str(vocab_item) + ' in ' + str(
+                    text_item))
+                print(check_if_vocab_in_text(text_item, vocab_item))
                 # print(array_contains_array(vocab_item, text_item))
                 # print(np.array_equal(vocab_item, text_item))
                 # print(vocab_item.equal(text_item))
 
 
-compute_freq_dist(readers, vocab)
-
-
-
-
-
-
-
-
-
-
+print(get_vocab_in_text(readers, vocab))
 
 # return FreqDist(lexical_item
 #                 for lexical_item in text if lexical_item in vocabulary)
