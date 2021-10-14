@@ -47,30 +47,23 @@ def check_if_vocab_in_text(text, vocabulary):
 
 
 def get_vocab_in_text(text, vocabulary):
-    """Returns a list of lists with all of the vocabulary lexical items that
-    can be found in a given (set of) text(s)."""
+    """Returns a boolean list whose values depend on whether each item in the
+    vocabulary can be found in any of the texts or not."""
     vocab_in_text = []
     for vocab_items in vocabulary:
         vocab_item = vocab_items[0]
+        item_found: bool = False
         for text_items in text:
+            if item_found:
+                break
             for text_item in text_items:
-                if (check_if_vocab_in_text(text_item, vocab_item) and
-                        vocab_item not in vocab_in_text):
-                    vocab_in_text.append(vocab_item)
+                if check_if_vocab_in_text(text_item, vocab_item):
+                    vocab_in_text.append(True)
+                    item_found = True
+                    break
+        if not item_found:
+            vocab_in_text.append(False)
     return vocab_in_text
-
-
-def compute_vocab_freq_dist0(text, vocabulary):
-    for vocab_items in vocabulary:
-        vocab_item = vocab_items[0]
-        for text_items in text:
-            for text_item in text_items:
-                print('comparing: ' + str(vocab_item) + ' in ' + str(
-                    text_item))
-                print(check_if_vocab_in_text(text_item, vocab_item))
-                # print(array_contains_array(vocab_item, text_item))
-                # print(np.array_equal(vocab_item, text_item))
-                # print(vocab_item.equal(text_item))
 
 
 print(get_vocab_in_text(readers, vocab))

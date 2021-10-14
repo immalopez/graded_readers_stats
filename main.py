@@ -112,7 +112,7 @@ graded_vocabulary[VOCAB_NAMED_ENTITIES] = graded_vocabulary[
     PROCESSED_VOCAB].apply(
     preprocess.get_word_properties, args=('text',)
 )
-graded_vocabulary[VOCAB_IN_READERS] = statistics.check_if_vocab_in_text(
+graded_vocabulary[VOCAB_IN_READERS] = statistics.get_vocab_in_text(
     graded_readers[LEMMATIZED_TXT], graded_vocabulary[LEMMATIZED_VOCAB])
 
 
