@@ -34,7 +34,7 @@ else:
 
 # --- Column names ---#
 LEXICAL_ITEM = 'Lexical item'
-TEXT = "Reader's text"
+RAW_TEXT = "Reader's raw text"
 TEXT_FILE = 'Text file'
 PROCESSED_READERS = 'Processed readers'
 PROCESSED_VOCAB = 'Processed lexical items'
@@ -57,11 +57,11 @@ VOCAB_IN_READERS = 'Is this vocabulary item in the readers?'
 
 # ================================== COLUMNS ==================================
 
-graded_readers[TEXT] = preprocess.read_readers(
+graded_readers[RAW_TEXT] = preprocess.read_readers(
     graded_readers[TEXT_FILE]
 )
 graded_readers[PROCESSED_READERS] = preprocess.normalize_text(
-    graded_readers[TEXT]
+    graded_readers[RAW_TEXT]
 )
 graded_vocabulary[PROCESSED_VOCAB] = preprocess.normalize_text(
     graded_vocabulary[LEXICAL_ITEM]
@@ -113,7 +113,8 @@ graded_vocabulary[VOCAB_NAMED_ENTITIES] = graded_vocabulary[
     preprocess.get_word_properties, args=('text',)
 )
 graded_vocabulary[VOCAB_IN_READERS] = statistics.get_vocab_in_text(
-    graded_readers[LEMMATIZED_TXT], graded_vocabulary[LEMMATIZED_VOCAB])
+    graded_readers[LEMMATIZED_TXT], graded_vocabulary[LEMMATIZED_VOCAB]
+)
 
 
 # ================================ CLEAN DATA ================================
@@ -123,3 +124,7 @@ if __name__ == '__main__':
     print(graded_vocabulary[LEMMATIZED_VOCAB])
     print(statistics.get_vocab_in_text(graded_readers[LEMMATIZED_TXT],
                                        graded_vocabulary[LEMMATIZED_VOCAB]))
+#    print(statistics.compute_vocab_freq_dist(
+#        graded_vocabulary[LEMMATIZED_VOCAB],
+#        graded_vocabulary[VOCAB_IN_READERS],
+#        graded_readers[LEMMATIZED_TXT]))
