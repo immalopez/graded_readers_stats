@@ -22,8 +22,8 @@ pd.set_option('display.max_columns', 99)
 
 PATH_TO_READERS_CSV = 'Data/Graded readers list.csv'
 PATH_TO_VOCABULARY_CSV = 'Data/Vocabulary list.csv'
-PATH_TO_TRIAL_READERS_CSV = 'Data/Graded readers list_TRIAL.csv'
-PATH_TO_TRIAL_VOCABULARY_CSV = 'Data/Vocabulary list_TRIAL.csv'
+PATH_TO_TRIAL_READERS_CSV = 'Data/Trial/Graded readers list.csv'
+PATH_TO_TRIAL_VOCABULARY_CSV = 'Data/Trial/Vocabulary list.csv'
 
 if TRIAL:
     graded_readers = pd.read_csv(PATH_TO_TRIAL_READERS_CSV, sep=';')
@@ -39,6 +39,7 @@ else:
 # --- Column names ---#
 LEXICAL_ITEM = 'Lexical item'
 RAW_TEXT = "Reader's raw text"
+LEVEL = 'Level'
 TEXT_FILE = 'Text file'
 PROCESSED_READERS = 'Processed readers'
 PROCESSED_VOCAB = 'Processed lexical items'
@@ -120,6 +121,49 @@ graded_vocabulary[VOCAB_IN_READERS] = statistics.get_vocab_in_text(
     graded_readers[LEMMATIZED_TXT], graded_vocabulary[LEMMATIZED_VOCAB]
 )
 
+
+def count_vocab_in_texts(vocab: pd.Series, texts: pd.Series, levels: pd.Series):
+    counts_per_level = {}
+    for vocab_items in vocab:
+        vocab_item = vocab_items[0]
+        vocab_item_key = '_'.join(vocab_item)
+        counts_per_level[vocab_item_key] = {
+            'Inicial': 0,
+            'Intermedio': 0,
+            'Avanzado': 0
+        }
+        for text_items, level in zip(texts, levels):
+            for text_item in text_items:
+                if statistics.check_if_vocab_in_text(text_item, vocab_item):
+                    counts_per_level[vocab_item_key][level] += 1
+    return counts_per_level
+
+
+vocab_counts_per_level = count_vocab_in_texts(
+    graded_vocabulary[LEMMATIZED_VOCAB],
+    graded_readers[LEMMATIZED_TXT],
+    graded_readers[LEVEL]
+)
+print(vocab_counts_per_level)
+
+
+def temp(vocab_item, level):
+    key = '_'.join(vocab_item[0])
+    return vocab_counts_per_level[key][level]
+
+
+graded_vocabulary['Inicial'] = graded_vocabulary.apply(
+    lambda x: temp(x[LEMMATIZED_VOCAB], 'Inicial'),
+    axis=1
+)
+graded_vocabulary['Intermedio'] = graded_vocabulary.apply(
+    lambda x: temp(x[LEMMATIZED_VOCAB], 'Intermedio'),
+    axis=1
+)
+graded_vocabulary['Avanzado'] = graded_vocabulary.apply(
+    lambda x: temp(x[LEMMATIZED_VOCAB], 'Avanzado'),
+    axis=1
+)
 
 # ================================ CLEAN DATA ================================
 
