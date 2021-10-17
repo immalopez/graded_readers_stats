@@ -128,14 +128,15 @@ def count_vocab_in_texts(vocab: pd.Series, texts: pd.Series, levels: pd.Series):
         vocab_item = vocab_items[0]
         vocab_item_key = '_'.join(vocab_item)
         counts_per_level[vocab_item_key] = {
-            'Inicial': 0,
-            'Intermedio': 0,
-            'Avanzado': 0
+            'Inicial': [0, 0],
+            'Intermedio': [0, 0],
+            'Avanzado': [0, 0]
         }
         for text_items, level in zip(texts, levels):
             for text_item in text_items:
+                counts_per_level[vocab_item_key][level][1] += 1
                 if statistics.check_if_vocab_in_text(text_item, vocab_item):
-                    counts_per_level[vocab_item_key][level] += 1
+                    counts_per_level[vocab_item_key][level][0] += 1
     return counts_per_level
 
 
@@ -149,7 +150,8 @@ print(vocab_counts_per_level)
 
 def temp(vocab_item, level):
     key = '_'.join(vocab_item[0])
-    return vocab_counts_per_level[key][level]
+    level_counts = vocab_counts_per_level[key][level]
+    return level_counts[0] / level_counts[1]
 
 
 graded_vocabulary['Inicial'] = graded_vocabulary.apply(
