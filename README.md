@@ -11,7 +11,7 @@ pip install -r requirements.txt
 
 Execute in Python Console to download files:
 ```python console
-stanza.download('en')
+stanza.download('es')
 ```
 
 ## Usage
