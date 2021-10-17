@@ -4,6 +4,10 @@
 
 import pandas as pd
 
+# Possible alternatives for the Spanish native corpus:
+# https://crscardellino.ar/SBWCE/ AND
+# https://www.cs.upc.edu/~nlp/wikicorpus/
+from nltk.corpus import cess_esp as cess
 from nltk.tokenize import word_tokenize
 from nltk.probability import FreqDist
 from graded_readers_stats import preprocess, statistics
