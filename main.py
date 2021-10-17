@@ -10,7 +10,7 @@ import pandas as pd
 from nltk.corpus import cess_esp as cess
 from nltk.tokenize import word_tokenize
 from nltk.probability import FreqDist
-from graded_readers_stats import preprocess, statistics
+from graded_readers_stats import preprocess, statistics, utils
 
 
 # ================================= LOAD DATA =================================
@@ -36,6 +36,11 @@ else:
 
 # ================================= CONSTANTS =================================
 
+LEVEL_AVANZADO = 'Avanzado'
+LEVEL_INTERMEDIO = 'Intermedio'
+LEVEL_INICIAL = 'Inicial'
+READER_LEVELS = [LEVEL_INICIAL, LEVEL_INTERMEDIO, LEVEL_AVANZADO]
+
 # --- Column names ---#
 LEXICAL_ITEM = 'Lexical item'
 RAW_TEXT = "Reader's raw text"
@@ -58,6 +63,9 @@ VOCAB_DEPENDENCY_RELATIONS = "Vocabulary's dependency relations"
 TXT_NAMED_ENTITIES = "Text's named entities"
 VOCAB_NAMED_ENTITIES = "Vocabulary's named entities"
 VOCAB_IN_READERS = 'Is this vocabulary item in the readers?'
+VOCAB_FREQ_INICIAL = 'Vocab FreqDist for Level Inicial'
+VOCAB_FREQ_INTERMEDIO = 'Vocab FreqDist for Level Intermedio'
+VOCAB_FREQ_AVANZADO = 'Vocab FreqDist for Level Avanzado'
 
 
 # ================================== COLUMNS ==================================
@@ -120,50 +128,34 @@ graded_vocabulary[VOCAB_NAMED_ENTITIES] = graded_vocabulary[
 graded_vocabulary[VOCAB_IN_READERS] = statistics.get_vocab_in_text(
     graded_readers[LEMMATIZED_TXT], graded_vocabulary[LEMMATIZED_VOCAB]
 )
-
-
-def count_vocab_in_texts(vocab: pd.Series, texts: pd.Series, levels: pd.Series):
-    counts_per_level = {}
-    for vocab_items in vocab:
-        vocab_item = vocab_items[0]
-        vocab_item_key = '_'.join(vocab_item)
-        counts_per_level[vocab_item_key] = {
-            'Inicial': [0, 0],
-            'Intermedio': [0, 0],
-            'Avanzado': [0, 0]
-        }
-        for text_items, level in zip(texts, levels):
-            for text_item in text_items:
-                counts_per_level[vocab_item_key][level][1] += 1
-                if statistics.check_if_vocab_in_text(text_item, vocab_item):
-                    counts_per_level[vocab_item_key][level][0] += 1
-    return counts_per_level
-
-
-vocab_counts_per_level = count_vocab_in_texts(
+vocab_counts_per_level = statistics.get_vocab_in_texts_freq(
     graded_vocabulary[LEMMATIZED_VOCAB],
     graded_readers[LEMMATIZED_TXT],
-    graded_readers[LEVEL]
+    graded_readers[LEVEL],
+    READER_LEVELS
 )
-print(vocab_counts_per_level)
-
-
-def temp(vocab_item, level):
-    key = '_'.join(vocab_item[0])
-    level_counts = vocab_counts_per_level[key][level]
-    return level_counts[0] / level_counts[1]
-
-
-graded_vocabulary['Inicial'] = graded_vocabulary.apply(
-    lambda x: temp(x[LEMMATIZED_VOCAB], 'Inicial'),
+graded_vocabulary[VOCAB_FREQ_INICIAL] = graded_vocabulary.apply(
+    lambda x: utils.get_vocab_freq_for_level(
+        x[LEMMATIZED_VOCAB],
+        LEVEL_INICIAL,
+        vocab_counts_per_level
+    ),
     axis=1
 )
-graded_vocabulary['Intermedio'] = graded_vocabulary.apply(
-    lambda x: temp(x[LEMMATIZED_VOCAB], 'Intermedio'),
+graded_vocabulary[VOCAB_FREQ_INTERMEDIO] = graded_vocabulary.apply(
+    lambda x: utils.get_vocab_freq_for_level(
+        x[LEMMATIZED_VOCAB],
+        LEVEL_INTERMEDIO,
+        vocab_counts_per_level
+    ),
     axis=1
 )
-graded_vocabulary['Avanzado'] = graded_vocabulary.apply(
-    lambda x: temp(x[LEMMATIZED_VOCAB], 'Avanzado'),
+graded_vocabulary[VOCAB_FREQ_AVANZADO] = graded_vocabulary.apply(
+    lambda x: utils.get_vocab_freq_for_level(
+        x[LEMMATIZED_VOCAB],
+        LEVEL_AVANZADO,
+        vocab_counts_per_level
+    ),
     axis=1
 )
 

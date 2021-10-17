@@ -4,7 +4,8 @@
 
 from nltk.probability import FreqDist
 import pandas as pd
-import numpy as np
+# using . to import code from same folder
+from .utils import vocab_item_to_key
 
 readers = pd.Series(data=[
     [
@@ -25,6 +26,27 @@ vocab = pd.Series(data=[
     [['¿', 'ya', 'poder', 'empezar', '?']]
     # [['¿', 'qué', 'hora', 'ser', '?']]
 ])
+
+
+def get_vocab_in_texts_freq(vocabulary: pd.Series,
+                            texts: pd.Series,
+                            levels: pd.Series,
+                            level_names: [str]):
+    counts_per_level = {}
+    for vocab_items in vocabulary:
+        vocab_item = vocab_items[0]
+        vocab_item_key = vocab_item_to_key(vocab_item)
+        counts_per_level[vocab_item_key] = {
+            level_names[0]: [0, 0],
+            level_names[1]: [0, 0],
+            level_names[2]: [0, 0]
+        }
+        for text_items, level in zip(texts, levels):
+            for text_item in text_items:
+                counts_per_level[vocab_item_key][level][1] += 1
+                if check_if_vocab_in_text(text_item, vocab_item):
+                    counts_per_level[vocab_item_key][level][0] += 1
+    return counts_per_level
 
 
 def get_vocab_in_text(text, vocabulary):
