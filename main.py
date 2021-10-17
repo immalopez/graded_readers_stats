@@ -18,8 +18,8 @@ pd.set_option('display.max_columns', 99)
 
 PATH_TO_READERS_CSV = 'Data/Graded readers list.csv'
 PATH_TO_VOCABULARY_CSV = 'Data/Vocabulary list.csv'
-PATH_TO_TRIAL_READERS_CSV = 'Data/Graded readers list_TRIAL.csv'
-PATH_TO_TRIAL_VOCABULARY_CSV = 'Data/Vocabulary list_TRIAL.csv'
+PATH_TO_TRIAL_READERS_CSV = 'Data/Trial/Graded readers list.csv'
+PATH_TO_TRIAL_VOCABULARY_CSV = 'Data/Trial/Vocabulary list.csv'
 
 if TRIAL:
     graded_readers = pd.read_csv(PATH_TO_TRIAL_READERS_CSV, sep=';')
