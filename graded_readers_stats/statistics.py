@@ -56,14 +56,20 @@ def get_vocab_in_texts_freq(vocabulary: pd.Series,
     for vocab_items in vocabulary:
         vocab_item = vocab_items[0]
         vocab_item_key = vocab_item_to_key(vocab_item)
+
         counts_per_level[vocab_item_key] = {
-            level_names[0]: [0, 0],
-            level_names[1]: [0, 0],
-            level_names[2]: [0, 0]
+            level_names[0]: [0, 0],  # Level 1: [Occurrences, Total]
+            level_names[1]: [0, 0],  # Level 2: [Occurrences, Total]
+            level_names[2]: [0, 0]   # Level 3: [Occurrences, Total]
         }
         for text_items, level in zip(texts, levels):
             for text_item in text_items:
+
+                # Increment total count
                 counts_per_level[vocab_item_key][level][1] += 1
+
+                # Increment occurrences
                 if check_if_vocab_in_text(text_item, vocab_item):
                     counts_per_level[vocab_item_key][level][0] += 1
+
     return counts_per_level

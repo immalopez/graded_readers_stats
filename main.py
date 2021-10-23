@@ -12,7 +12,7 @@ import pandas as pd
 # ================================= LOAD DATA =================================
 
 # Set to True to use a small sample of the whole dataset.
-TRIAL = False
+TRIAL = True
 
 pd.set_option('display.max_columns', 99)
 
@@ -65,16 +65,40 @@ VOCAB_FREQ_INTERMEDIO = 'Vocab FreqDist for Level Intermedio'
 VOCAB_FREQ_AVANZADO = 'Vocab FreqDist for Level Avanzado'
 
 
-# --- Variables --- #
-vocab_counts_per_level = statistics.get_vocab_in_texts_freq(
-    graded_vocabulary[LEMMATIZED_VOCAB],
-    graded_readers[LEMMATIZED_TXT],
-    graded_readers[LEVEL],
-    READER_LEVELS
+# ================================== COLUMNS ==================================
+
+
+# --- GRADED READERS ---#
+
+graded_readers[RAW_TEXT] = preprocess.read_files(
+    graded_readers[TEXT_FILE]
+)
+graded_readers[PROCESSED_READERS] = preprocess.normalize_text(
+    graded_readers[RAW_TEXT]
+)
+graded_readers[TOKENIZED_TXT] = graded_readers[PROCESSED_READERS].apply(
+    preprocess.get_word_properties, args=('text',)
+)
+graded_readers[LEMMATIZED_TXT] = graded_readers[PROCESSED_READERS].apply(
+    preprocess.get_word_properties, args=('lemma',)
+)
+graded_readers[TXT_UNI_POS] = graded_readers[PROCESSED_READERS].apply(
+    preprocess.get_word_properties, args=('upos',)
+)
+graded_readers[TXT_FEATURES] = graded_readers[PROCESSED_READERS].apply(
+    preprocess.get_word_properties, args=('feats',)
+)
+graded_readers[TXT_SYNTACTIC_HEAD] = graded_readers[PROCESSED_READERS].apply(
+    preprocess.get_word_properties, args=('head',)
+)
+graded_readers[TXT_DEPENDENCY_RELATIONS] = graded_readers[
+    PROCESSED_READERS].apply(
+    preprocess.get_word_properties, args=('deprel',)
+)
+graded_readers[TXT_NAMED_ENTITIES] = graded_readers[PROCESSED_READERS].apply(
+    preprocess.perform_ner
 )
 
-
-# ================================== COLUMNS ==================================
 
 # --- GRADED VOCABULARY ---#
 
@@ -108,6 +132,17 @@ graded_vocabulary[VOCAB_NAMED_ENTITIES] = graded_vocabulary[
 graded_vocabulary[VOCAB_IN_READERS] = statistics.get_vocab_in_text(
     graded_readers[LEMMATIZED_TXT], graded_vocabulary[LEMMATIZED_VOCAB]
 )
+
+
+# --- Variables --- #
+vocab_counts_per_level = statistics.get_vocab_in_texts_freq(
+    graded_vocabulary[LEMMATIZED_VOCAB],
+    graded_readers[LEMMATIZED_TXT],
+    graded_readers[LEVEL],
+    READER_LEVELS
+)
+
+
 graded_vocabulary[VOCAB_FREQ_INICIAL] = graded_vocabulary.apply(
     lambda x: utils.get_vocab_freq_for_level(
         x[LEMMATIZED_VOCAB],
@@ -131,38 +166,6 @@ graded_vocabulary[VOCAB_FREQ_AVANZADO] = graded_vocabulary.apply(
         vocab_counts_per_level
     ),
     axis=1
-)
-
-
-# --- GRADED READERS ---#
-
-graded_readers[RAW_TEXT] = preprocess.read_files(
-    graded_readers[TEXT_FILE]
-)
-graded_readers[PROCESSED_READERS] = preprocess.normalize_text(
-    graded_readers[RAW_TEXT]
-)
-graded_readers[TOKENIZED_TXT] = graded_readers[PROCESSED_READERS].apply(
-    preprocess.get_word_properties, args=('text',)
-)
-graded_readers[LEMMATIZED_TXT] = graded_readers[PROCESSED_READERS].apply(
-    preprocess.get_word_properties, args=('lemma',)
-)
-graded_readers[TXT_UNI_POS] = graded_readers[PROCESSED_READERS].apply(
-    preprocess.get_word_properties, args=('upos',)
-)
-graded_readers[TXT_FEATURES] = graded_readers[PROCESSED_READERS].apply(
-    preprocess.get_word_properties, args=('feats',)
-)
-graded_readers[TXT_SYNTACTIC_HEAD] = graded_readers[PROCESSED_READERS].apply(
-    preprocess.get_word_properties, args=('head',)
-)
-graded_readers[TXT_DEPENDENCY_RELATIONS] = graded_readers[
-    PROCESSED_READERS].apply(
-    preprocess.get_word_properties, args=('deprel',)
-)
-graded_readers[TXT_NAMED_ENTITIES] = graded_readers[PROCESSED_READERS].apply(
-    preprocess.perform_ner
 )
 
 
