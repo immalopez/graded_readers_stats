@@ -29,14 +29,12 @@ else:
     graded_readers = pd.read_csv(PATH_TO_READERS_CSV, sep=';')
     graded_vocabulary = pd.read_csv(PATH_TO_VOCABULARY_CSV, sep=';')
 
-
 # ================================= CONSTANTS =================================
 
 LEVEL_AVANZADO = 'Avanzado'
 LEVEL_INTERMEDIO = 'Intermedio'
 LEVEL_INICIAL = 'Inicial'
 READER_LEVELS = [LEVEL_INICIAL, LEVEL_INTERMEDIO, LEVEL_AVANZADO]
-
 
 # --- Column names --- #
 LEXICAL_ITEM = 'Lexical item'
@@ -63,7 +61,6 @@ VOCAB_IN_READERS = 'Is this vocabulary item in the readers?'
 VOCAB_FREQ_INICIAL = 'Vocab FreqDist for Level Inicial'
 VOCAB_FREQ_INTERMEDIO = 'Vocab FreqDist for Level Intermedio'
 VOCAB_FREQ_AVANZADO = 'Vocab FreqDist for Level Avanzado'
-
 
 # ================================== COLUMNS ==================================
 
@@ -99,7 +96,6 @@ graded_readers[TXT_NAMED_ENTITIES] = graded_readers[PROCESSED_READERS].apply(
     preprocess.perform_ner
 )
 
-
 # --- GRADED VOCABULARY ---#
 
 graded_vocabulary[PROCESSED_VOCAB] = preprocess.normalize_text(
@@ -133,15 +129,14 @@ graded_vocabulary[VOCAB_IN_READERS] = statistics.get_vocab_in_text(
     graded_readers[LEMMATIZED_TXT], graded_vocabulary[LEMMATIZED_VOCAB]
 )
 
+# --- FREQUENCY OF VOCABULARY ---#
 
-# --- Variables --- #
 vocab_counts_per_level = statistics.get_vocab_in_texts_freq(
     graded_vocabulary[LEMMATIZED_VOCAB],
     graded_readers[LEMMATIZED_TXT],
     graded_readers[LEVEL],
     READER_LEVELS
 )
-
 
 graded_vocabulary[VOCAB_FREQ_INICIAL] = graded_vocabulary.apply(
     lambda x: utils.get_vocab_freq_for_level(
@@ -168,6 +163,46 @@ graded_vocabulary[VOCAB_FREQ_AVANZADO] = graded_vocabulary.apply(
     axis=1
 )
 
+
+# --- FREQUENCY OF CONTEXT WORDS ---#
+
+
+def collect_vocab_context(
+        vocabulary: pd.Series,
+        texts: pd.Series,
+        window: int = 3
+):
+    context_words_per_item = {}
+    for vocab_items in vocabulary:
+        vocab_item = vocab_items[0]
+        vocab_item_key = utils.vocab_item_to_key(vocab_item)
+        context_words_per_item[vocab_item_key] = []
+
+        for text_items in texts:
+            for text_item in text_items:
+
+                text_range = statistics.get_vocab_range_in_text(
+                    text_item,
+                    vocab_item
+                )
+                if text_range:
+                    start = text_range[0]
+                    end = text_range[1]
+
+                    # limit indices to `text_item` bounds using `min` and `max`
+                    # to safely use with list slicing
+                    # since out-of-bounds slicing would return empty list ([])
+                    slice_before = slice(max(0, start - window), start)
+                    slice_after = slice(end, min(end + window, len(text_item)))
+
+                    words = text_item[slice_before] + text_item[slice_after]
+                    context_words_per_item[vocab_item_key].extend(words)
+
+    return context_words_per_item
+
+
+context_words_per_vocab_item = collect_vocab_context(
+    graded_vocabulary[LEMMATIZED_VOCAB], graded_readers[LEMMATIZED_TXT])
 
 # --- LITERATURE PARTITIONS ---#
 
