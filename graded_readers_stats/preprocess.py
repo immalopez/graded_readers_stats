@@ -15,9 +15,9 @@ nlp_es = st.Pipeline(lang='es',
 
 # ================================= LOAD DATA =================================
 
-def read_readers(paths):
-    """Opens each graded reader's text file and returns a single list of
-    strings with all of their contents."""
+def read_files(paths):
+    """Opens each text file in a list and returns a single list of strings with
+    all of their contents."""
     texts = []
     for path in paths:
         with open(path) as file:
@@ -56,7 +56,3 @@ def perform_ner(document):
     return [token.ner
             for sentence in document.sentences
             for token in sentence.tokens]
-
-
-if __name__ == '__main__':
-    print('Hello world')
