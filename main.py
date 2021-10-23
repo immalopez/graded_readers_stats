@@ -125,9 +125,9 @@ graded_vocabulary[VOCAB_NAMED_ENTITIES] = graded_vocabulary[
     PROCESSED_VOCAB].apply(
     preprocess.perform_ner
 )
-graded_vocabulary[VOCAB_IN_READERS] = statistics.get_vocab_in_text(
-    graded_readers[LEMMATIZED_TXT], graded_vocabulary[LEMMATIZED_VOCAB]
-)
+# graded_vocabulary[VOCAB_IN_READERS] = statistics.get_vocab_in_text(
+#     graded_readers[LEMMATIZED_TXT], graded_vocabulary[LEMMATIZED_VOCAB]
+# )
 
 # --- FREQUENCY OF VOCABULARY ---#
 
@@ -167,42 +167,49 @@ graded_vocabulary[VOCAB_FREQ_AVANZADO] = graded_vocabulary.apply(
 # --- FREQUENCY OF CONTEXT WORDS ---#
 
 
-def collect_vocab_context(
-        vocabulary: pd.Series,
-        texts: pd.Series,
-        window: int = 3
-):
-    context_words_per_item = {}
-    for vocab_items in vocabulary:
-        vocab_item = vocab_items[0]
-        vocab_item_key = utils.vocab_item_to_key(vocab_item)
-        context_words_per_item[vocab_item_key] = []
-
-        for text_items in texts:
-            for text_item in text_items:
-
-                text_range = statistics.get_vocab_range_in_text(
-                    text_item,
-                    vocab_item
-                )
-                if text_range:
-                    start = text_range[0]
-                    end = text_range[1]
-
-                    # limit indices to `text_item` bounds using `min` and `max`
-                    # to safely use with list slicing
-                    # since out-of-bounds slicing would return empty list ([])
-                    slice_before = slice(max(0, start - window), start)
-                    slice_after = slice(end, min(end + window, len(text_item)))
-
-                    words = text_item[slice_before] + text_item[slice_after]
-                    context_words_per_item[vocab_item_key].extend(words)
-
-    return context_words_per_item
-
-
-context_words_per_vocab_item = collect_vocab_context(
+context_words_per_vocab_item = statistics.collect_vocab_context(
     graded_vocabulary[LEMMATIZED_VOCAB], graded_readers[LEMMATIZED_TXT])
+
+graded_vocabulary['Context'] = graded_vocabulary.apply(
+    # wrap into an empty list to match `get_vocab_in_texts` parameters later
+    lambda x: context_words_per_vocab_item[
+        utils.vocab_item_to_key(x[LEMMATIZED_VOCAB][0])
+    ],
+    axis=1
+)
+
+# context_counts_per_level = statistics.get_vocab_in_texts_freq(
+#     graded_vocabulary['Context'],
+#     graded_readers[LEMMATIZED_TXT],
+#     graded_readers[LEVEL],
+#     READER_LEVELS
+# )
+
+# graded_vocabulary[CTX_FREQ_INICIAL] = graded_vocabulary.apply(
+#     lambda x: utils.get_vocab_freq_for_level(
+#         x['Context'],
+#         LEVEL_INICIAL,
+#         context_counts_per_level
+#     ),
+#     axis=1
+# )
+# graded_vocabulary[CTX_FREQ_INTERMEDIO] = graded_vocabulary.apply(
+#     lambda x: utils.get_vocab_freq_for_level(
+#         x['Context'],
+#         LEVEL_INTERMEDIO,
+#         context_counts_per_level
+#     ),
+#     axis=1
+# )
+# graded_vocabulary[CTX_FREQ_AVANZADO] = graded_vocabulary.apply(
+#     lambda x: utils.get_vocab_freq_for_level(
+#         x['Context'],
+#         LEVEL_AVANZADO,
+#         context_counts_per_level
+#     ),
+#     axis=1
+# )
+
 
 # --- LITERATURE PARTITIONS ---#
 

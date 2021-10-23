@@ -79,3 +79,39 @@ def get_vocab_in_texts_freq(vocabulary: pd.Series,
                     counts_per_level[vocab_item_key][level][0] += 1
 
     return counts_per_level
+
+
+def collect_vocab_context(
+        vocabulary: pd.Series,
+        texts: pd.Series,
+        window: int = 3
+):
+    context_words_per_item = {}
+    for vocab_items in vocabulary:
+        vocab_item = vocab_items[0]
+        vocab_item_key = vocab_item_to_key(vocab_item)
+        context_words_per_item[vocab_item_key] = []
+
+        for text_items in texts:
+            for text_item in text_items:
+
+                text_range = get_vocab_range_in_text(
+                    text_item,
+                    vocab_item
+                )
+                if text_range:
+                    start = text_range[0]
+                    end = text_range[1]
+
+                    # limit indices to `text_item` bounds using `min` and `max`
+                    # to safely use with list slicing
+                    # since out-of-bounds slicing would return empty list ([])
+                    slice_before = slice(max(0, start - window), start)
+                    slice_after = slice(end, min(end + window, len(text_item)))
+
+                    words = text_item[slice_before] + text_item[slice_after]
+                    context_words_per_item[vocab_item_key].extend(words)
+
+    return context_words_per_item
+
+
