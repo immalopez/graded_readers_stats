@@ -139,7 +139,7 @@ vocab_counts_per_level = statistics.get_vocab_in_texts_freq(
 )
 
 graded_vocabulary[VOCAB_FREQ_INICIAL] = graded_vocabulary.apply(
-    lambda x: utils.get_vocab_freq_for_level(
+    lambda x: statistics.get_vocab_freq_for_level(
         x[LEMMATIZED_VOCAB],
         LEVEL_INICIAL,
         vocab_counts_per_level
@@ -147,7 +147,7 @@ graded_vocabulary[VOCAB_FREQ_INICIAL] = graded_vocabulary.apply(
     axis=1
 )
 graded_vocabulary[VOCAB_FREQ_INTERMEDIO] = graded_vocabulary.apply(
-    lambda x: utils.get_vocab_freq_for_level(
+    lambda x: statistics.get_vocab_freq_for_level(
         x[LEMMATIZED_VOCAB],
         LEVEL_INTERMEDIO,
         vocab_counts_per_level
@@ -155,7 +155,7 @@ graded_vocabulary[VOCAB_FREQ_INTERMEDIO] = graded_vocabulary.apply(
     axis=1
 )
 graded_vocabulary[VOCAB_FREQ_AVANZADO] = graded_vocabulary.apply(
-    lambda x: utils.get_vocab_freq_for_level(
+    lambda x: statistics.get_vocab_freq_for_level(
         x[LEMMATIZED_VOCAB],
         LEVEL_AVANZADO,
         vocab_counts_per_level
