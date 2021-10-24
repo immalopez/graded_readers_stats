@@ -131,7 +131,7 @@ graded_vocabulary[VOCAB_NAMED_ENTITIES] = graded_vocabulary[
 
 # --- FREQUENCY OF VOCABULARY ---#
 
-vocab_counts_per_level = statistics.get_vocab_in_texts_freq(
+vocab_counts_per_level = statistics.get_vocab_counts_in_texts(
     graded_vocabulary[LEMMATIZED_VOCAB],
     graded_readers[LEMMATIZED_TXT],
     graded_readers[LEVEL],
@@ -139,7 +139,7 @@ vocab_counts_per_level = statistics.get_vocab_in_texts_freq(
 )
 
 graded_vocabulary[VOCAB_FREQ_INICIAL] = graded_vocabulary.apply(
-    lambda x: statistics.get_vocab_freq_for_level(
+    lambda x: statistics.get_vocab_freq_dist_for_level(
         x[LEMMATIZED_VOCAB],
         LEVEL_INICIAL,
         vocab_counts_per_level
@@ -147,7 +147,7 @@ graded_vocabulary[VOCAB_FREQ_INICIAL] = graded_vocabulary.apply(
     axis=1
 )
 graded_vocabulary[VOCAB_FREQ_INTERMEDIO] = graded_vocabulary.apply(
-    lambda x: statistics.get_vocab_freq_for_level(
+    lambda x: statistics.get_vocab_freq_dist_for_level(
         x[LEMMATIZED_VOCAB],
         LEVEL_INTERMEDIO,
         vocab_counts_per_level
@@ -155,7 +155,7 @@ graded_vocabulary[VOCAB_FREQ_INTERMEDIO] = graded_vocabulary.apply(
     axis=1
 )
 graded_vocabulary[VOCAB_FREQ_AVANZADO] = graded_vocabulary.apply(
-    lambda x: statistics.get_vocab_freq_for_level(
+    lambda x: statistics.get_vocab_freq_dist_for_level(
         x[LEMMATIZED_VOCAB],
         LEVEL_AVANZADO,
         vocab_counts_per_level
@@ -178,22 +178,86 @@ graded_vocabulary['Context'] = graded_vocabulary.apply(
     axis=1
 )
 
-# context_counts_per_level = statistics.get_vocab_in_texts_freq(
-#     graded_vocabulary['Context'],
-#     graded_readers[LEMMATIZED_TXT],
-#     graded_readers[LEVEL],
-#     READER_LEVELS
-# )
 
-# graded_vocabulary[CTX_FREQ_INICIAL] = graded_vocabulary.apply(
-#     lambda x: utils.get_vocab_freq_for_level(
+def get_vocab_context_counts(
+        vocabulary: pd.Series,
+        contexts: pd.Series,
+        texts: pd.Series,
+        levels: pd.Series,
+        level_names: [str]):
+
+    # result[word][word'][level] = (count, total)
+    result = {}
+
+    for vocab_items, context in zip(vocabulary, contexts):
+        vocab_item = vocab_items[0]
+        vocab_item_key = utils.vocab_item_to_key(vocab_item)
+        result[vocab_item_key] = {}
+
+        for word in context:
+            result[vocab_item_key][word] = {
+                level_names[0]: [0, 0],  # Level: [Count, Total]
+                level_names[1]: [0, 0],  # Level: [Count, Total]
+                level_names[2]: [0, 0]   # Level: [Count, Total]
+            }
+
+            for text_items, level in zip(texts, levels):
+                for text_item in text_items:
+                    # Increment total count
+                    # WARNING: This counts sentences, not individual words!
+                    result[vocab_item_key][word][level][1] += 1
+                    # Increment occurrences
+                    if statistics.get_range_for_vocab_in_text(text_item, [word]):
+                        result[vocab_item_key][word][level][0] += 1
+    return result
+
+
+context_counts = get_vocab_context_counts(
+    graded_vocabulary[LEMMATIZED_VOCAB],
+    graded_vocabulary['Context'],
+    graded_readers[LEMMATIZED_TXT],
+    graded_readers[LEVEL],
+    READER_LEVELS
+)
+
+
+def aggregate_context_counts_per_level(context_counts, level_names):
+    level1 = level_names[0]
+    level2 = level_names[1]
+    level3 = level_names[2]
+    # result[vocab_item][level] = [count, total]
+    result = {}
+    for vocab_key, context_dict in context_counts.items():
+        result[vocab_key] = {
+            level_names[0]: [0, 0],  # Level: [Count, Total]
+            level_names[1]: [0, 0],  # Level: [Count, Total]
+            level_names[2]: [0, 0]   # Level: [Count, Total]
+        }
+        for word, levels_dict in context_dict.items():
+            result[vocab_key][level1][0] += levels_dict[level1][0]
+            result[vocab_key][level1][1] += levels_dict[level1][1]
+            result[vocab_key][level2][0] += levels_dict[level2][0]
+            result[vocab_key][level2][1] += levels_dict[level2][1]
+            result[vocab_key][level3][0] += levels_dict[level3][0]
+            result[vocab_key][level3][1] += levels_dict[level3][1]
+            # for level_name, counts in levels_dict.items():
+            #     result[vocab_key][level_name][0] += counts[0]
+            #     result[vocab_key][level_name][1] += counts[1]
+    return result
+
+
+aggregates = aggregate_context_counts_per_level(context_counts, READER_LEVELS)
+print(aggregates)
+# graded_vocabulary['CTX_FREQ_INICIAL'] = graded_vocabulary.apply(
+#     lambda x: get_vocab_context_counts(
 #         x['Context'],
-#         LEVEL_INICIAL,
-#         context_counts_per_level
+#         graded_readers[LEMMATIZED_TXT],
+#         graded_readers[LEVEL],
+#         READER_LEVELS
 #     ),
 #     axis=1
 # )
-# graded_vocabulary[CTX_FREQ_INTERMEDIO] = graded_vocabulary.apply(
+# graded_vocabulary['CTX_FREQ_INTERMEDIO'] = graded_vocabulary.apply(
 #     lambda x: utils.get_vocab_freq_for_level(
 #         x['Context'],
 #         LEVEL_INTERMEDIO,
@@ -201,7 +265,7 @@ graded_vocabulary['Context'] = graded_vocabulary.apply(
 #     ),
 #     axis=1
 # )
-# graded_vocabulary[CTX_FREQ_AVANZADO] = graded_vocabulary.apply(
+# graded_vocabulary['CTX_FREQ_AVANZADO'] = graded_vocabulary.apply(
 #     lambda x: utils.get_vocab_freq_for_level(
 #         x['Context'],
 #         LEVEL_AVANZADO,
@@ -209,6 +273,59 @@ graded_vocabulary['Context'] = graded_vocabulary.apply(
 #     ),
 #     axis=1
 # )
+
+# print(context_counts)
+
+# def get_vocab_counts_in_texts(vocabulary: pd.Series,
+#                               texts: pd.Series,
+#                               levels: pd.Series,
+#                               level_names: [str]):
+#     """Counts how many occurrences of each vocabulary item can be found in the
+#     texts of each language level."""
+#     counts_per_level = {}
+#     for vocab_items in vocabulary:
+#         vocab_item = vocab_items[0]
+#         vocab_item_key = vocab_item_to_key(vocab_item)
+#
+#         counts_per_level[vocab_item_key] = {
+#             level_names[0]: [0, 0],  # Level 1: [Occurrences, Total]
+#             level_names[1]: [0, 0],  # Level 2: [Occurrences, Total]
+#             level_names[2]: [0, 0]   # Level 3: [Occurrences, Total]
+#         }
+#         for text_items, level in zip(texts, levels):
+#             for text_item in text_items:
+#
+#                 # Increment total count
+#                 # WARNING: This counts sentences, not individual words!
+#                 counts_per_level[vocab_item_key][level][1] += 1
+#
+#                 # Increment occurrences
+#                 if get_range_for_vocab_in_text(text_item, vocab_item):
+#                     counts_per_level[vocab_item_key][level][0] += 1
+#
+#     return counts_per_level
+
+
+# adapted_context_words = [[[context_word]] for context_word in context_words]
+# word_counts_per_level = statistics.get_vocab_counts_in_texts(
+#     adapted_context_words,
+#     graded_readers[LEMMATIZED_TXT],
+#     graded_readers[LEVEL],
+#     READER_LEVELS
+# )
+# print(word_counts_per_level)
+
+
+# get_vocab_context_counts(['word1', 'word2'], None, None, None)
+
+
+# context_counts_per_level = statistics.get_vocab_in_texts_freq(
+#     graded_vocabulary['Context'],
+#     graded_readers[LEMMATIZED_TXT],
+#     graded_readers[LEVEL],
+#     READER_LEVELS
+# )
+
 
 
 # --- LITERATURE PARTITIONS ---#

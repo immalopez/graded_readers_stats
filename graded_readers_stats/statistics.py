@@ -10,7 +10,7 @@ from .utils import vocab_item_to_key
 
 # ========= COMPUTE THE FREQUENCY DISTRIBUTION OF IN-TEXT VOCABULARY =========
 
-def get_vocab_range_in_text(text, vocabulary):
+def get_range_for_vocab_in_text(text, vocabulary):
     """Returns a tuple(start, end) where start is the first index in of
     vocabulary in text and end is the end index of the vocabulary in text if
     the lexical items contained in a vocabulary list are to be found in the
@@ -43,7 +43,7 @@ def get_vocab_in_text(text, vocabulary):
             if item_found:
                 break
             for text_item in text_items:
-                if get_vocab_range_in_text(text_item, vocab_item):
+                if get_range_for_vocab_in_text(text_item, vocab_item):
                     item_found = True
                     vocab_in_text.append(True)
                     break
@@ -52,7 +52,7 @@ def get_vocab_in_text(text, vocabulary):
     return vocab_in_text
 
 
-def get_vocab_freq_for_level(vocab_item, level, vocab_counts_per_level):
+def get_vocab_freq_dist_for_level(vocab_item, level, vocab_counts_per_level):
     """Computes the relative frequency of each vocabulary item it is passed."""
     key = vocab_item_to_key(vocab_item[0])
     level_counts = vocab_counts_per_level[key][level]
@@ -61,10 +61,10 @@ def get_vocab_freq_for_level(vocab_item, level, vocab_counts_per_level):
     return occurrences / total_count
 
 
-def get_vocab_in_texts_freq(vocabulary: pd.Series,
-                            texts: pd.Series,
-                            levels: pd.Series,
-                            level_names: [str]):
+def get_vocab_counts_in_texts(vocabulary: pd.Series,
+                              texts: pd.Series,
+                              levels: pd.Series,
+                              level_names: [str]):
     """Counts how many occurrences of each vocabulary item can be found in the
     texts of each language level."""
     counts_per_level = {}
@@ -81,10 +81,11 @@ def get_vocab_in_texts_freq(vocabulary: pd.Series,
             for text_item in text_items:
 
                 # Increment total count
+                # WARNING: This counts sentences, not individual words!
                 counts_per_level[vocab_item_key][level][1] += 1
 
                 # Increment occurrences
-                if get_vocab_range_in_text(text_item, vocab_item):
+                if get_range_for_vocab_in_text(text_item, vocab_item):
                     counts_per_level[vocab_item_key][level][0] += 1
 
     return counts_per_level
@@ -104,7 +105,7 @@ def collect_vocab_context(
         for text_items in texts:
             for text_item in text_items:
 
-                text_range = get_vocab_range_in_text(
+                text_range = get_range_for_vocab_in_text(
                     text_item,
                     vocab_item
                 )
