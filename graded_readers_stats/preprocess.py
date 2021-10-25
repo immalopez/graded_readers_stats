@@ -72,8 +72,8 @@ def perform_ner(document):
             for token in sentence.tokens]
 
 text_analysis_pipeline = [
-    preprocess.normalize_text,
-    preprocess.tokenize_text,
+    normalize_text,
+    # tokenize_text,
     # preprocess.uni_pos,
     # preprocess.features,
     # preprocess.syntactic_head,
@@ -81,8 +81,8 @@ text_analysis_pipeline = [
     # preprocess.named_entities
 ]
 vocabulary_pipeline = [
-    preprocess.normalize_text,
-    preprocess.tokenize_text
+    normalize_text,
+    # tokenize_text
 ]
 
 # ================================== COLUMNS ==================================
