@@ -4,10 +4,8 @@
 
 from collections.abc import Callable
 
-# Using Stanford NLP's "Stanza" package.
-# Documentation available at: https://stanfordnlp.github.io/stanza/
-import pandas as pd
 import stanza as st
+import pandas as pd
 
 from graded_readers_stats import data
 
@@ -24,23 +22,8 @@ LEXICAL_ITEM = 'Lexical item'
 LEVEL = 'Level'
 TEXT_FILE = 'Text file'
 RAW_TEXT = 'Raw text'
-ST_DOCS = 'Stanza Docs'
-LEMMAS = 'Lemmas'
-
-NORMALIZED_TEXT = 'Normalized text'
-TOKENIZED_TEXT = 'Tokenized text'
-LEMMATIZED_TEXT = 'Lemmatized text'
-
-NORMALIZED_VOCAB = 'Normalized vocab'
-TOKENIZED_VOCAB = 'Tokenized vocab'
-LEMMATIZED_VOCAB = 'Lemmatized vocab'
-
-
-# LEVEL_AVANZADO = 'Avanzado'
-# LEVEL_INTERMEDIO = 'Intermedio'
-# LEVEL_INICIAL = 'Inicial'
-# READER_LEVELS = [LEVEL_INICIAL, LEVEL_INTERMEDIO, LEVEL_AVANZADO]
-
+STANZA_DOC = 'Stanza Doc'
+LEMMA = 'Lemma'
 
 # ============================== PREPROCESS DATA ==============================
 
@@ -114,26 +97,18 @@ def normalize_text(texts):
     return nlp_es(documents)
 
 
-def perform_ner(document):
-    """Returns a list for each document with any detected named entity
-    types."""
-    return [token.ner
-            for sentence in document.sentences
-            for token in sentence.tokens]
-
-
 # =========================== PIPELINE EXECUTION ==============================
 # Pipeline steps receive a DataFrame, transform it, and return it for next step
 
 
 text_analysis_pipeline = [
     set_column(read_files, src=TEXT_FILE, dst=RAW_TEXT),
-    set_column(normalize_text, src=RAW_TEXT, dst=ST_DOCS),
-    set_column(get_fields, src=ST_DOCS, dst=LEMMAS, args=('lemma',)),
+    set_column(normalize_text, src=RAW_TEXT, dst=STANZA_DOC),
+    set_column(get_fields, src=STANZA_DOC, dst=LEMMA, args=('lemma',)),
 ]
 vocabulary_pipeline = [
-    normalize_text,
-    # tokenize_text
+    set_column(normalize_text, src=LEXICAL_ITEM, dst=STANZA_DOC),
+    set_column(get_fields, src=STANZA_DOC, dst=LEMMA, args=('lemma',)),
 ]
 
 

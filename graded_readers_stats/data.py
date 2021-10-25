@@ -1,8 +1,12 @@
 ##############################################################################
 #                                DATA LOADING                                #
 ##############################################################################
+# NOTE:
+# Possible alternatives for the Spanish native corpus:
+# https://crscardellino.ar/SBWCE/ AND
+# https://www.cs.upc.edu/~nlp/wikicorpus/
+
 import pandas as pd
-from graded_readers_stats import preprocess
 
 pd.set_option('display.max_columns', 99)
 
