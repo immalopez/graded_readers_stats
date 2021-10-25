@@ -25,6 +25,10 @@ RAW_TEXT = 'Raw text'
 STANZA_DOC = 'Stanza Doc'
 LEMMA = 'Lemma'
 
+# Type hints
+DataFrame = pd.DataFrame
+Pipe = Callable[[DataFrame], DataFrame]
+
 # ============================== PREPROCESS DATA ==============================
 
 
@@ -112,8 +116,7 @@ vocabulary_pipeline = [
 ]
 
 
-def run(input_data: pd.DataFrame,
-        pipes: [Callable[[pd.DataFrame], pd.DataFrame]]) -> pd.DataFrame:
+def run(df: DataFrame, pipes: [Pipe]) -> DataFrame:
     for pipe in pipes:
-        input_data = pipe(input_data)
-    return input_data
+        df = pipe(df)
+    return df
