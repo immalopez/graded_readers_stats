@@ -7,13 +7,13 @@
 # https://crscardellino.ar/SBWCE/ AND
 # https://www.cs.upc.edu/~nlp/wikicorpus/
 
-from graded_readers_stats import data
+from graded_readers_stats import data, preprocess
 
 # Load data
 vocabulary, readers = data.load(trial=True)
 
 # Preprocess data
-# readers = preprocess.run(readers, preprocess.text_analysis_pipeline)
+readers = preprocess.run(readers, preprocess.text_analysis_pipeline)
 # literature = preprocess.run(literature, preprocess.text_analysis_pipeline)
 # vocabulary = preprocess.run(vocabulary, preprocess.vocabulary_pipeline)
 #

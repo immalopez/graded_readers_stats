@@ -23,7 +23,7 @@ def load(trial: bool = False) -> (pd.DataFrame, pd.DataFrame):
     else:
         graded_readers = pd.read_csv(PATH_TO_READERS_CSV, sep=';')
         graded_vocabulary = pd.read_csv(PATH_TO_VOCABULARY_CSV, sep=';')
-    return graded_readers, graded_vocabulary
+    return graded_vocabulary, graded_readers
 
 
 # ================================= LOAD DATA =================================
