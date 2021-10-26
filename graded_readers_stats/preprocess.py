@@ -25,6 +25,11 @@ RAW_TEXT = 'Raw text'
 STANZA_DOC = 'Stanza Doc'
 LEMMA = 'Lemma'
 
+LEVEL_INICIAL = 'Inicial'
+LEVEL_INTERMEDIO = 'Intermedio'
+LEVEL_AVANZADO = 'Avanzado'
+LEVELS = [LEVEL_INICIAL, LEVEL_INTERMEDIO, LEVEL_AVANZADO]
+
 # Type hints
 DataFrame = pd.DataFrame
 Pipe = Callable[[DataFrame], DataFrame]
