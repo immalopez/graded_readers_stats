@@ -13,8 +13,8 @@ from graded_readers_stats import data
 
 nlp_es = st.Pipeline(
     lang='es',
-    processors='tokenize,mwt,lemma'  # less processors for faster execution
-    # processors='tokenize,mwt,pos,lemma,depparse,ner'
+    # processors='tokenize,mwt,lemma'  # less processors for faster execution
+    processors='tokenize,mwt,pos,lemma,depparse,ner'
 )
 
 # --- Column names --- #
