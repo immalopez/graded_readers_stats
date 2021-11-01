@@ -13,10 +13,9 @@ vocabulary = preprocess.run(vocabulary, preprocess.vocabulary_pipeline)
 
 # Vocabulary Frequencies
 readers_by_level = readers.groupby(preprocess.LEVEL)
-frequency.occurrences(vocabulary, readers_by_level)
-
-# readers_by_level = data.group_by_level(readers)
-# frequency.count_occurrences(vocabulary, readers_by_level, 'Reader')
+frequency.count_phrases_in_sentences_by_groups(
+    vocabulary, readers_by_level, new_column_prefix='Reader_'
+)
 
 # Vocabulary's Context Frequencies
 # frequency.get_context(vocabulary, readers_by_level, 'Reader')
