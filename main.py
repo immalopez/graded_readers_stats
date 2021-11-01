@@ -21,3 +21,6 @@ frequency.count_phrases_in_sentences_by_groups(
 frequency.collect_context_for_phrases_in_texts(
     vocabulary, readers, column_prefix='Reader_'
 )
+frequency.count_context_in_sentences_by_groups(
+    vocabulary, readers_by_level, column_prefix='Reader_Context_'
+)
