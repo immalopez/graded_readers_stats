@@ -2,62 +2,76 @@
 #                            FREQUENCY CALCULATIONS                          #
 ##############################################################################
 
-# word_counts[word][level] = [count, total]
-# word_counts = {}
-# for word in vocabulary:
-#     for text_level_1 in texts_level_1:
-#         pass
-#     for text_level_2 in texts_level_2:
-#         pass
-#     for text_level_3 in texts_level_3:
-#         pass
-
-# "A Pepe le gusta comer HAMBURGUESAS en McDonald's cada miércoles."
-#            ^     ^     ~~~~~~~~~~~~ ^  ^
-
-# df['Occurrences_Reader_Level1'] = df.apply(
-#   lambda x: frequency.count(x[LEMMA], readers_by_level['Level1']), axis=1
-# )
-
-# for word in vocabulary
-#   for readers in level
-#       frequency.count(word, readers)
-
-# for readers in level
-#   count(list of phrases, sentences)
-
 import pandas as pd
 
 # Typing
 DataFrameGroupBy = pd.core.groupby.generic.DataFrameGroupBy
 DataFrame = pd.DataFrame
+Series = pd.Series
 
 
 def count_phrases_in_sentences_by_groups(
-        phrases_dataframe: DataFrame,
+        phrases: DataFrame,
         sentences_by_groups: DataFrameGroupBy,
-        new_column_prefix: str
+        column_prefix: str
 ) -> None:
     for group_name in sentences_by_groups.groups:
-        output_column_name = new_column_prefix + group_name
-        phrases_dataframe[output_column_name] = phrases_dataframe.apply(
-            lambda x: phrase_count_in_sents(
-                x['Lemma'],
-                sentences_by_groups.get_group(group_name)
+        output_column_name = column_prefix + group_name
+        phrases[output_column_name] = phrases.apply(
+            lambda x: count_phrase_in_sentences(
+                x['Lemma'][0],
+                sentences_by_groups.get_group(group_name)['Lemma']
             ),
             axis=1
         )
 
 
-def phrase_count_in_sents(phrase: [[str]], texts: DataFrame) -> int:
-    phrase, texts = phrase[0], texts['Lemma']
-
+def count_phrase_in_sentences(phrase: [str], texts: Series) -> int:
     count = 0
     for sents in texts:
         for sent in sents:
             if get_range_of_phrase_in_sentence(phrase, sent):
                 count += 1
     return count
+
+
+def collect_context_for_phrases_in_texts(
+        phrases: DataFrame,
+        texts: DataFrame,
+        column_prefix: str
+) -> None:
+    phrases[column_prefix + 'Context'] = phrases.apply(
+        lambda x: collect_context_for_phrase_in_texts(
+            x['Lemma'][0],
+            texts['Lemma']
+        ),
+        axis=1
+    )
+
+
+def collect_context_for_phrase_in_texts(
+        phrase: [str],
+        texts: Series,
+        window: int = 3
+) -> [str]:
+
+    context = []
+    for sentences in texts:
+        for sent in sentences:
+            text_range = get_range_of_phrase_in_sentence(phrase, sent)
+            if text_range:
+                start, end = text_range[0], text_range[1]
+
+                # limit indices to sentence bounds using `min` and `max`
+                # to safely use with list slicing
+                # since out-of-bounds slicing would return empty list ([])
+                slice_before = slice(max(0, start - window), start)
+                slice_after = slice(end, min(end + window, len(sent)))
+
+                words = sent[slice_before] + sent[slice_after]
+                context.extend(words)
+
+    return context
 
 
 def get_range_of_phrase_in_sentence(phrase: [str], sentence: [str]):
