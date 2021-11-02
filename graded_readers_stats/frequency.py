@@ -2,12 +2,7 @@
 #                            FREQUENCY CALCULATIONS                          #
 ##############################################################################
 
-import pandas as pd
-
-# Typing
-DataFrameGroupBy = pd.core.groupby.generic.DataFrameGroupBy
-DataFrame = pd.DataFrame
-Series = pd.Series
+from graded_readers_stats._typing import *
 
 
 def count_phrases_in_sentences_by_groups(

@@ -2,7 +2,7 @@
 #                      SPANISH GRADED READERS STATISTICS                      #
 ###############################################################################
 
-from graded_readers_stats import data, frequency, preprocess
+from graded_readers_stats import data, frequency, preprocess, tree
 
 # Load data
 vocabulary, readers = data.load(trial=True)
@@ -25,27 +25,6 @@ frequency.count_context_in_sentences_by_groups(
     vocabulary, readers_by_level, column_prefix='Reader_Context_'
 )
 
-
-
-# from stanza.server import CoreNLPClient
-#
-# # set up the client
-# with CoreNLPClient(annotators=['tokenize','ssplit','pos','lemma','ner', 'parse'], timeout=30000, memory='16G') as client:
-#     # submit the request to the server
-#     ann = client.annotate("A Plamen le gustan las motos.")
-#
-#     # get the first sentence
-#     sentence = ann.sentence[0]
-#
-#     # get the constituency parse of the first sentence
-#     print('---')
-#     print('constituency parse of first sentence')
-#     constituency_parse = sentence.parseTree
-#     print(constituency_parse)
-#
-#     # get the first subtree of the constituency parse
-#     print('---')
-#     print('first subtree of constituency parse')
-#     print(constituency_parse.child[0])
-
-
+# Min and Max width
+tree.find_min_max_width(vocabulary, readers_by_level, column_prefix='Reader_')
+tree.find_min_max_depth(vocabulary, readers_by_level, column_prefix='Reader_')
