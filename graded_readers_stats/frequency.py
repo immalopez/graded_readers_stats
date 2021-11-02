@@ -14,7 +14,11 @@ def make_trees(
     for group_name in sentences_by_groups.groups:
 
         phrase_series = [wrapper[0] for wrapper in phrases['Lemma']]
+        widths = []
+        heights = []
         for phrase in phrase_series:
+            max_width = 0
+            max_height = 0
 
             docs = sentences_by_groups.get_group(group_name)['Stanza Doc']
             for doc in docs:
@@ -32,17 +36,25 @@ def make_trees(
                             if word.head == 0:
                                 root = nodes[word.id]
 
-                        max_height = root.height
-                        max_width = max([
+                        max_height_sent = root.height
+                        max_width_sent = max([
                             len(children)
                             for children in LevelOrderGroupIter(root)
                         ])
-                        print(max_width, max_height)
+                        # print(max_width_sent, max_height_sent)
+
+                        max_width = max(max_width, max_width_sent)
+                        max_height = max(max_height, max_height_sent)
 
                         # print tree
                         # for pre, fill, node in RenderTree(root):
                         #     print("%s%s" % (pre, node.name))
 
+            widths.append(max_width)
+            heights.append(max_height)
+
+        phrases[group_name + '_widths'] = widths
+        phrases[group_name + '_heights'] = heights
 
 def count_phrases_in_sentences_by_groups(
         phrases: DataFrame,
