@@ -12,7 +12,8 @@ from graded_readers_stats._typing import *
 nlp_es = st.Pipeline(
     lang='es',
     # processors='tokenize,mwt,lemma'
-    processors='tokenize,mwt,pos,lemma,depparse,ner'
+    # processors='tokenize,mwt,pos,lemma,depparse,ner'
+    processors='tokenize,mwt,pos,lemma,depparse'
 )
 
 # --- Column names --- #
@@ -27,27 +28,6 @@ LEVEL_INICIAL = 'Inicial'
 LEVEL_INTERMEDIO = 'Intermedio'
 LEVEL_AVANZADO = 'Avanzado'
 LEVELS = [LEVEL_INICIAL, LEVEL_INTERMEDIO, LEVEL_AVANZADO]
-
-
-# ============================== PREPROCESS DATA ==============================
-
-
-def get_word_properties(document, key):
-    """Returns a list of lists (sentences) for each document with the specified
-    property (id, text, lemma, upos, xpos, feats, start_char, & end_char)."""
-    all_sentences = []
-    for sentence in document.to_dict():
-        sentence_result = []
-        for word in sentence:
-            sentence_result.append(word.get(key))
-        all_sentences.append(sentence_result)
-    return all_sentences
-
-
-def get_fields(documents, key):
-    """Returns a list of lists (sentences) for each document with the specified
-    property (id, text, lemma, upos, xpos, feats, start_char, & end_char)."""
-    return [d.get(key, True) for d in documents]
 
 
 # ============================== PIPELINE STEPS ===============================
@@ -101,6 +81,12 @@ def normalize_text(texts):
     documents = [st.Document([], text=d) for d in texts]
     # Call the neural pipeline on this list of documents
     return nlp_es(documents)
+
+
+def get_fields(documents, key):
+    """Returns a list of lists (sentences) for each document with the specified
+    property (id, text, lemma, upos, xpos, feats, start_char, & end_char)."""
+    return [d.get(key, True) for d in documents]
 
 
 # =========================== PIPELINE EXECUTION ==============================
