@@ -5,7 +5,9 @@
 import stanza as st
 
 from graded_readers_stats import data
+from graded_readers_stats.utils import *
 from graded_readers_stats._typing import *
+from graded_readers_stats.constants import *
 
 # ================================= CONSTANTS =================================
 
@@ -16,18 +18,6 @@ nlp_es = st.Pipeline(
     processors='tokenize,mwt,pos,lemma,depparse'
 )
 
-# --- Column names --- #
-LEXICAL_ITEM = 'Lexical item'
-LEVEL = 'Level'
-TEXT_FILE = 'Text file'
-RAW_TEXT = 'Raw text'
-STANZA_DOC = 'Stanza Doc'
-LEMMA = 'Lemma'
-
-LEVEL_INICIAL = 'Inicial'
-LEVEL_INTERMEDIO = 'Intermedio'
-LEVEL_AVANZADO = 'Avanzado'
-LEVELS = [LEVEL_INICIAL, LEVEL_INTERMEDIO, LEVEL_AVANZADO]
 
 
 # ============================== PIPELINE STEPS ===============================
@@ -89,18 +79,57 @@ def get_fields(documents, key):
     return [d.get(key, True) for d in documents]
 
 
+def collect_context_for_phrases_in_texts(
+        phrases: DataFrame,
+        texts: DataFrame,
+        column_prefix: str
+) -> DataFrame:
+    phrases[column_prefix + SUFFIX_CONTEXT] = phrases.apply(
+        lambda x: collect_context_for_phrase_in_texts(
+            x[COL_LEMMA][0],
+            texts[COL_LEMMA]
+        ),
+        axis=1
+    )
+    return phrases
+
+
+def collect_context_for_phrase_in_texts(
+        phrase: [str],
+        texts: Series,
+        window: int = 3
+) -> [str]:
+    context = []
+    for sentences in texts:
+        for sent in sentences:
+            text_range = get_range_of_phrase_in_sentence(phrase, sent)
+            if text_range:
+                start, end = text_range[0], text_range[1]
+
+                # limit indices to sentence bounds using `min` and `max`
+                # to safely use with list slicing
+                # since out-of-bounds slicing would return empty list ([])
+                slice_before = slice(max(0, start - window), start)
+                slice_after = slice(end, min(end + window, len(sent)))
+
+                words = sent[slice_before] + sent[slice_after]
+                context.extend(words)
+
+    return context
+
+
 # =========================== PIPELINE EXECUTION ==============================
 # Pipeline steps receive a DataFrame, transform it, and return it for next step
 
 
 text_analysis_pipeline = [
-    set_column(read_files, src=TEXT_FILE, dst=RAW_TEXT),
-    set_column(normalize_text, src=RAW_TEXT, dst=STANZA_DOC),
-    set_column(get_fields, src=STANZA_DOC, dst=LEMMA, args=('lemma',)),
+    set_column(read_files, src=COL_TEXT_FILE, dst=COL_RAW_TEXT),
+    set_column(normalize_text, src=COL_RAW_TEXT, dst=COL_STANZA_DOC),
+    set_column(get_fields, src=COL_STANZA_DOC, dst=COL_LEMMA, args=('lemma',)),
 ]
 vocabulary_pipeline = [
-    set_column(normalize_text, src=LEXICAL_ITEM, dst=STANZA_DOC),
-    set_column(get_fields, src=STANZA_DOC, dst=LEMMA, args=('lemma',)),
+    set_column(normalize_text, src=COL_LEXICAL_ITEM, dst=COL_STANZA_DOC),
+    set_column(get_fields, src=COL_STANZA_DOC, dst=COL_LEMMA, args=('lemma',)),
 ]
 
 
