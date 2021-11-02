@@ -7,7 +7,7 @@ from graded_readers_stats.utils import *
 from graded_readers_stats.constants import *
 
 
-def count_phrases_in_sentences_by_groups(
+def count_vocab_in_sentences_by_groups(
         phrases: DataFrame,
         sentences_by_groups: DataFrameGroupBy,
         column_prefix: str
@@ -32,7 +32,7 @@ def count_phrase_in_sentences(phrase: [str], texts: Series) -> int:
     return count
 
 
-def count_context_in_sentences_by_groups(
+def count_vocab_context_in_sentences_by_groups(
         phrases: DataFrame,
         sentences_by_groups: DataFrameGroupBy,
         column_prefix: str

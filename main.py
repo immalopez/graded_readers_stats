@@ -15,15 +15,15 @@ vocabulary = preprocess.run(vocabulary, preprocess.vocabulary_pipeline)
 preprocess.collect_context_for_phrases_in_texts(
     vocabulary, readers, column_prefix=PREFIX_READER
 )
+readers_by_level = readers.groupby(COL_LEVEL)
 
 # Vocabulary Frequencies
-readers_by_level = readers.groupby(COL_LEVEL)
-frequency.count_phrases_in_sentences_by_groups(
+frequency.count_vocab_in_sentences_by_groups(
     vocabulary, readers_by_level, column_prefix=PREFIX_READER
 )
 
 # Vocabulary's Context Frequencies
-frequency.count_context_in_sentences_by_groups(
+frequency.count_vocab_context_in_sentences_by_groups(
     vocabulary, readers_by_level, column_prefix=PREFIX_READER_CONTEXT
 )
 
