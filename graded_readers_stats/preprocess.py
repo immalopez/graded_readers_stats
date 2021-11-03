@@ -15,32 +15,9 @@ from graded_readers_stats.constants import *
 
 nlp_es = st.Pipeline(
     lang='es',
-    # processors='tokenize,mwt,lemma'
-    # processors='tokenize,mwt,pos,lemma,depparse,ner'
-    processors='tokenize,mwt,pos,lemma,depparse',
+    processors='tokenize,mwt,lemma,pos,depparse',
     logging_level='ERROR'
 )
-
-# import time
-# import os
-
-# start = time.time()
-# doc = nlp_es('Hola, ¿cómo estás?')
-# with open('STANZA', 'rb') as f:
-#     bytes = f.read()
-#     doc = st.Document.from_serialized(bytes)
-# print("%.3f" % (time.time() - start))
-
-# save stanza doc to file
-# serialized = doc.to_serialized()
-# with open(os.path.join('', 'nlp_es.pickle'), 'wb') as f:
-# with open('STANZA', 'wb') as f:
-#     f.write(serialized)
-
-# serialized = doc.to_serialized()
-# with open('serialized.json', 'w') as f:
-#     f.write(serialized)
-
 
 # ============================== PIPELINE STEPS ===============================
 
@@ -177,8 +154,8 @@ def process_or_restore_stanza_docs(df: DataFrame) -> DataFrame:
 
 text_analysis_pipeline = [
     set_column(read_files, src=COL_TEXT_FILE, dst=COL_RAW_TEXT),
-    process_or_restore_stanza_docs,
-    # set_column(normalize_text, src=COL_RAW_TEXT, dst=COL_STANZA_DOC),
+    # process_or_restore_stanza_docs,
+    set_column(normalize_text, src=COL_RAW_TEXT, dst=COL_STANZA_DOC),
     set_column(get_fields, src=COL_STANZA_DOC, dst=COL_LEMMA, args=('lemma',)),
 ]
 vocabulary_pipeline = [

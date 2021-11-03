@@ -2,48 +2,59 @@
 #                      SPANISH GRADED READERS STATISTICS                      #
 ###############################################################################
 
+import time
+
 from graded_readers_stats import data, frequency, preprocess, tree
-from graded_readers_stats.constants import *
+from graded_readers_stats.constants import (
+    PREFIX_READER,
+    COL_LEVEL
+)
+
+start = time.time()
+
+# Load data
+vocabulary, readers = data.load(trial=True)
+
+# Preprocess data
+readers = preprocess.run(readers, preprocess.text_analysis_pipeline)
+vocabulary = preprocess.run(vocabulary, preprocess.vocabulary_pipeline)
+preprocess.collect_context_for_phrases_in_texts(
+    vocabulary, readers, column_prefix=PREFIX_READER
+)
+readers_by_level = readers.groupby(COL_LEVEL)
+
+# # Vocabulary Frequencies
+# frequency.count_vocab_in_sentences_by_groups(
+#     vocabulary, readers_by_level, column_prefix=PREFIX_READER
+# )
+#
+# # Vocabulary's Context Frequencies
+# frequency.count_vocab_context_in_sentences_by_groups(
+#     vocabulary, readers_by_level, column_prefix=PREFIX_READER_CONTEXT
+# )
+#
+# # Tree widths and depths
+# tree.get_tree_widths_and_depths(
+#     vocabulary,
+#     readers_by_level
+# )
+
+print('DONE!')
+print('Total time: %d secs' % (time.time() - start))
 
 
-def main():
-    # Load data
-    vocabulary, readers = data.load(trial=True)
+###############################################################################
+#                                 PROFILING                                   #
+###############################################################################
 
-    # Preprocess data
-    readers = preprocess.run(readers, preprocess.text_analysis_pipeline)
-    vocabulary = preprocess.run(vocabulary, preprocess.vocabulary_pipeline)
-    preprocess.collect_context_for_phrases_in_texts(
-        vocabulary, readers, column_prefix=PREFIX_READER
-    )
-    readers_by_level = readers.groupby(COL_LEVEL)
-
-    # Vocabulary Frequencies
-    frequency.count_vocab_in_sentences_by_groups(
-        vocabulary, readers_by_level, column_prefix=PREFIX_READER
-    )
-
-    # Vocabulary's Context Frequencies
-    frequency.count_vocab_context_in_sentences_by_groups(
-        vocabulary, readers_by_level, column_prefix=PREFIX_READER_CONTEXT
-    )
-
-    # Tree widths and depths
-    tree.get_tree_widths_and_depths(
-        vocabulary,
-        readers_by_level
-    )
-
-    print('DONE!')
-
-
+# wrap the code above in a 'main()' function and call it
 # if __name__ == '__main__':
 #     main()
 
-import profile
-profile.run('main()', 'profile_stats')
-
-import pstats
-from pstats import SortKey
-p = pstats.Stats('profile_stats')
-p.sort_stats(SortKey.CUMULATIVE).print_stats(20)
+# import profile
+# profile.run('main()', 'profile_stats')
+#
+# import pstats
+# from pstats import SortKey
+# p = pstats.Stats('profile_stats')
+# p.sort_stats(SortKey.CUMULATIVE).print_stats(20)
