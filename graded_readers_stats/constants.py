@@ -1,5 +1,9 @@
 # Dynamic column naming using prefix and suffix
 
+DATASET_READERS = 'Readers'
+DATASET_LITERATURE = 'Literature'
+DATASET_NATIVE = 'Native'
+
 PREFIX_READER = 'Reader_'
 PREFIX_LITER = 'Liter_'
 PREFIX_NATIVE = 'Native_'

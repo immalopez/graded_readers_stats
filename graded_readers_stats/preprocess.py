@@ -52,7 +52,7 @@ def read_files(file_paths: [str]) -> [str]:
     return data.read_files(file_paths)
 
 
-def normalize_text(texts):
+def make_stanza_docs(texts):
     global nlp_es
 
     # Initialize only once if not initialized.
@@ -84,6 +84,18 @@ def get_fields(documents, key):
     property (id, text, lemma, upos, xpos, feats, start_char, & end_char)."""
     return [d.get(key, True) for d in documents]
 
+
+def find_phrases_in_texts(
+        phrases: DataFrame,
+        texts: DataFrame,
+        dataframe_name: str
+) -> None:
+    # For each phrase in phrases
+    #   For each document in texts
+    #       For each sentence in document
+    #           If phrase in sentence:
+    #               Append location to current list
+    pass
 
 def collect_context_for_phrases_in_texts(
         phrases: DataFrame,
@@ -130,11 +142,11 @@ def collect_context_for_phrase_in_texts(
 
 text_analysis_pipeline = [
     set_column(read_files, src=COL_TEXT_FILE, dst=COL_RAW_TEXT),
-    set_column(normalize_text, src=COL_RAW_TEXT, dst=COL_STANZA_DOC),
+    set_column(make_stanza_docs, src=COL_RAW_TEXT, dst=COL_STANZA_DOC),
     set_column(get_fields, src=COL_STANZA_DOC, dst=COL_LEMMA, args=('lemma',)),
 ]
 vocabulary_pipeline = [
-    set_column(normalize_text, src=COL_LEXICAL_ITEM, dst=COL_STANZA_DOC),
+    set_column(make_stanza_docs, src=COL_LEXICAL_ITEM, dst=COL_STANZA_DOC),
     set_column(get_fields, src=COL_STANZA_DOC, dst=COL_LEMMA, args=('lemma',)),
 ]
 
