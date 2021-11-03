@@ -2,6 +2,8 @@
 #                            CORPUS PREPROCESSING                            #
 ##############################################################################
 
+import os
+
 import stanza as st
 
 from graded_readers_stats import data
@@ -15,8 +17,29 @@ nlp_es = st.Pipeline(
     lang='es',
     # processors='tokenize,mwt,lemma'
     # processors='tokenize,mwt,pos,lemma,depparse,ner'
-    processors='tokenize,mwt,pos,lemma,depparse'
+    processors='tokenize,mwt,pos,lemma,depparse',
+    logging_level='ERROR'
 )
+
+# import time
+# import os
+
+# start = time.time()
+# doc = nlp_es('Hola, ¿cómo estás?')
+# with open('STANZA', 'rb') as f:
+#     bytes = f.read()
+#     doc = st.Document.from_serialized(bytes)
+# print("%.3f" % (time.time() - start))
+
+# save stanza doc to file
+# serialized = doc.to_serialized()
+# with open(os.path.join('', 'nlp_es.pickle'), 'wb') as f:
+# with open('STANZA', 'wb') as f:
+#     f.write(serialized)
+
+# serialized = doc.to_serialized()
+# with open('serialized.json', 'w') as f:
+#     f.write(serialized)
 
 
 # ============================== PIPELINE STEPS ===============================
@@ -117,16 +140,49 @@ def collect_context_for_phrase_in_texts(
     return context
 
 
+def process_and_store_stanza_doc(stanza_path):
+    print('Processing: ' + stanza_path)
+    path_no_ext = os.path.splitext(stanza_path)[0]
+    text = data.read_files([path_no_ext])[0]
+    doc = nlp_es(text)
+    serialized = doc.to_serialized()
+    with open(stanza_path, 'wb') as f:
+        f.write(serialized)
+
+
+def restore_stanza_file(path):
+    with open(path + '.stanza', 'rb') as f:
+        serialized = f.read()
+        return st.Document.from_serialized(serialized)
+
+
+def process_or_restore_stanza_docs(df: DataFrame) -> DataFrame:
+    file_paths = df[COL_TEXT_FILE]
+
+    print('Processing stanza docs...')
+    for path in file_paths:
+        stanza_path = path + '.stanza'
+        if not os.path.exists(stanza_path):
+            process_and_store_stanza_doc(stanza_path)
+    print('Processing stanza docs DONE!')
+
+    df[COL_STANZA_DOC] = df[COL_TEXT_FILE].apply(restore_stanza_file)
+
+    return df
+
+
 # =========================== PIPELINE EXECUTION ==============================
 # Pipeline steps receive a DataFrame, transform it, and return it for next step
 
 
 text_analysis_pipeline = [
     set_column(read_files, src=COL_TEXT_FILE, dst=COL_RAW_TEXT),
-    set_column(normalize_text, src=COL_RAW_TEXT, dst=COL_STANZA_DOC),
+    process_or_restore_stanza_docs,
+    # set_column(normalize_text, src=COL_RAW_TEXT, dst=COL_STANZA_DOC),
     set_column(get_fields, src=COL_STANZA_DOC, dst=COL_LEMMA, args=('lemma',)),
 ]
 vocabulary_pipeline = [
+    # process_or_restore_stanza_docs,
     set_column(normalize_text, src=COL_LEXICAL_ITEM, dst=COL_STANZA_DOC),
     set_column(get_fields, src=COL_STANZA_DOC, dst=COL_LEMMA, args=('lemma',)),
 ]
@@ -136,3 +192,5 @@ def run(df: DataFrame, pipes: [Pipe]) -> DataFrame:
     for pipe in pipes:
         df = pipe(df)
     return df
+
+
