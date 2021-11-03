@@ -17,8 +17,9 @@ start = time.time()
 vocabulary, readers, literature = data.load(trial=True)
 
 # Preprocess data
-readers = preprocess.run(readers, preprocess.text_analysis_pipeline)
 vocabulary = preprocess.run(vocabulary, preprocess.vocabulary_pipeline)
+readers = preprocess.run(readers, preprocess.text_analysis_pipeline)
+literature = preprocess.run(literature, preprocess.text_analysis_pipeline)
 # preprocess.collect_context_for_phrases_in_texts(
 #     vocabulary, readers, column_prefix=PREFIX_READER
 # )
