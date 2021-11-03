@@ -7,7 +7,8 @@ import time
 from graded_readers_stats import data, frequency, preprocess, tree
 from graded_readers_stats.constants import (
     PREFIX_READER,
-    COL_LEVEL
+    COL_LEVEL,
+    COL_RAW_TEXT
 )
 
 start = time.time()

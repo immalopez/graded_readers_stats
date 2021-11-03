@@ -11,12 +11,8 @@ from graded_readers_stats.utils import *
 from graded_readers_stats._typing import *
 from graded_readers_stats.constants import *
 
-# ================================= CONSTANTS =================================
-
-nlp_es = st.Pipeline(
-    lang='es',
-    processors='tokenize,mwt,lemma,pos,depparse'
-)
+# Initialized on demand
+nlp_es = None
 
 # ============================== PIPELINE STEPS ===============================
 
@@ -37,7 +33,10 @@ def set_column(func, src, dst, args=()):
     """
 
     def modify(df):
-        df[dst] = func(df[src], *args)
+        # Columns not restored from cache won't appear in the DataFrame.
+        # Run `func` only for new / not restored from cache columns.
+        if dst not in df.columns:
+            df[dst] = func(df[src], *args)
         return df
 
     return modify
@@ -54,6 +53,15 @@ def read_files(file_paths: [str]) -> [str]:
 
 
 def normalize_text(texts):
+    global nlp_es
+
+    # Initialize only once if not initialized.
+    if nlp_es is None:
+        nlp_es = st.Pipeline(
+            lang='es',
+            processors='tokenize,mwt,lemma,pos,depparse'
+        )
+
     """Processes a list of strings and returns it as a list of lists (docs)
     of sublists, wherein each sublist is a sentence that in turn contains a
     dictionary per word with the following information: "id" (ID of the word),

@@ -73,10 +73,10 @@ def save(
 
     if is_trial:
         folder = FOLDER_DATA_TRIAL
-        print("Saving TRIAL data.")
+        print("Saving data (TRIAL)")
     else:
         folder = FOLDER_DATA
-        print("Saving PROD data.")
+        print("Saving data (REAL)")
 
     vocabulary.to_pickle(folder + VOCABULARY_CACHE)
     readers.to_pickle(folder + READERS_CACHE)
