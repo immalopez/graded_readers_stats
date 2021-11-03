@@ -1,7 +1,7 @@
 from typing import Optional, Tuple
 
 
-def get_range_of_phrase_in_sentence(
+def first_occurrence_of_phrase_in_sentence(
         phrase: [str],
         sentence: [str]
 ) -> Optional[Tuple[int, int]]:

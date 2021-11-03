@@ -27,7 +27,7 @@ def count_phrase_in_sentences(phrase: [str], texts: Series) -> int:
     count = 0
     for sents in texts:
         for sent in sents:
-            if get_range_of_phrase_in_sentence(phrase, sent):
+            if first_occurrence_of_phrase_in_sentence(phrase, sent):
                 count += 1
     return count
 
@@ -53,7 +53,7 @@ def count_context_in_sentences(words: [str], texts: Series) -> int:
     for word in words:
         for sents in texts:
             for sent in sents:
-                if get_range_of_phrase_in_sentence([word], sent):
+                if first_occurrence_of_phrase_in_sentence([word], sent):
                     count += 1
     return count
 

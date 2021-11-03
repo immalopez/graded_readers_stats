@@ -2,8 +2,6 @@
 #                            CORPUS PREPROCESSING                            #
 ##############################################################################
 
-import os
-
 import stanza as st
 
 from graded_readers_stats import data
@@ -90,12 +88,38 @@ def find_phrases_in_texts(
         texts: DataFrame,
         dataframe_name: str
 ) -> None:
+
     # For each phrase in phrases
     #   For each document in texts
     #       For each sentence in document
     #           If phrase in sentence:
     #               Append location to current list
-    pass
+
+    phrase_series = phrases[COL_LEMMA]
+    doc_series = texts[COL_STANZA_DOC]
+    loc_phrases = []
+
+    for phrase_row in phrase_series:
+        phrase = phrase_row[0]
+        loc_docs = []
+
+        # TODO: cache sentences instead of re-creating them for every doc
+        # OR use the 'lemma' column of the texts DataFrame
+        for doc in doc_series:
+            loc_doc = []
+
+            for sent_index, sentence in enumerate(doc.sentences):
+                lemmas = [word.lemma for word in sentence.words]
+                location = first_occurrence_of_phrase_in_sentence(
+                    phrase,
+                    lemmas
+                )
+                if location:
+                    loc_doc.append((sent_index, location))  # namedtuple?
+            loc_docs.append(loc_doc)
+        loc_phrases.append(loc_docs)
+    phrases[dataframe_name + '_locations'] = loc_phrases
+
 
 def collect_context_for_phrases_in_texts(
         phrases: DataFrame,
@@ -120,7 +144,7 @@ def collect_context_for_phrase_in_texts(
     context = []
     for sentences in texts:
         for sent in sentences:
-            text_range = get_range_of_phrase_in_sentence(phrase, sent)
+            text_range = first_occurrence_of_phrase_in_sentence(phrase, sent)
             if text_range:
                 start, end = text_range[0], text_range[1]
 

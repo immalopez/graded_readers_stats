@@ -27,7 +27,7 @@ def get_tree_widths_and_depths(
                 sents_lemma = doc.get('lemma', True)
                 for (sent, sent_lemma) in zip(doc.sentences, sents_lemma):
 
-                    if get_range_of_phrase_in_sentence(phrase, sent_lemma):
+                    if first_occurrence_of_phrase_in_sentence(phrase, sent_lemma):
 
                         nodes = {word.id: Node(word.lemma) for word in sent.words}
                         for word in sent.words:
