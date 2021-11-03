@@ -15,8 +15,7 @@ from graded_readers_stats.constants import *
 
 nlp_es = st.Pipeline(
     lang='es',
-    processors='tokenize,mwt,lemma,pos,depparse',
-    logging_level='ERROR'
+    processors='tokenize,mwt,lemma,pos,depparse'
 )
 
 # ============================== PIPELINE STEPS ===============================

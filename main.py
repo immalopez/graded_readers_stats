@@ -13,15 +13,15 @@ from graded_readers_stats.constants import (
 start = time.time()
 
 # Load data
-vocabulary, readers = data.load(trial=True)
+vocabulary, readers, literature = data.load(trial=True)
 
 # Preprocess data
 readers = preprocess.run(readers, preprocess.text_analysis_pipeline)
 vocabulary = preprocess.run(vocabulary, preprocess.vocabulary_pipeline)
-preprocess.collect_context_for_phrases_in_texts(
-    vocabulary, readers, column_prefix=PREFIX_READER
-)
-readers_by_level = readers.groupby(COL_LEVEL)
+# preprocess.collect_context_for_phrases_in_texts(
+#     vocabulary, readers, column_prefix=PREFIX_READER
+# )
+# readers_by_level = readers.groupby(COL_LEVEL)
 
 # # Vocabulary Frequencies
 # frequency.count_vocab_in_sentences_by_groups(
@@ -38,6 +38,8 @@ readers_by_level = readers.groupby(COL_LEVEL)
 #     vocabulary,
 #     readers_by_level
 # )
+
+data.save(vocabulary, readers, literature)
 
 print('DONE!')
 print('Total time: %d secs' % (time.time() - start))
