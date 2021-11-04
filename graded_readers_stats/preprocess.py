@@ -89,12 +89,6 @@ def find_phrases_in_texts(
         column_name: str
 ) -> None:
 
-    # For each phrase in phrases
-    #   For each document in texts
-    #       For each sentence in document
-    #           If phrase in sentence:
-    #               Append location to current list
-
     phrase_series = phrases[COL_LEMMA]
     doc_series = texts[COL_STANZA_DOC]
     loc_phrases = []
@@ -121,8 +115,8 @@ def find_phrases_in_texts(
     phrases[column_name] = loc_phrases
 
 
-def count_stuff(vocabulary, readers):
-    location_series = vocabulary[COL_READERS_LOCATIONS]
+def print_words_at_locations(vocabulary, readers):
+    location_series = vocabulary[READER + ' ' + LOCATIONS]
     lemma_series = readers[COL_LEMMA]
     for location_row in location_series:
         for doc_index, loc_doc in enumerate(location_row):
@@ -138,7 +132,7 @@ def collect_context_for_phrases_in_texts(
         texts: DataFrame,
         column_prefix: str
 ) -> DataFrame:
-    phrases[column_prefix + SUFFIX_CONTEXT] = phrases.apply(
+    phrases[column_prefix + ' ' + CONTEXT] = phrases.apply(
         lambda x: collect_context_for_phrase_in_texts(
             x[COL_LEMMA][0],
             texts[COL_LEMMA]

@@ -53,5 +53,5 @@ def get_tree_widths_and_depths(
             widths.append(max_width)
             heights.append(max_height)
 
-        phrases[group_name + SUFFIX_WIDTHS] = widths
-        phrases[group_name + SUFFIX_HEIGHTS] = heights
+        phrases[group_name + ' ' + WIDTHS] = widths
+        phrases[group_name + ' ' + HEIGHTS] = heights

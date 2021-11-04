@@ -7,7 +7,26 @@ from graded_readers_stats.utils import *
 from graded_readers_stats.constants import *
 
 
-def count_vocab_in_sentences_by_groups(
+def count_vocab_in_sentences_by_groups_v1(
+        phrases: DataFrame,
+        sentences_by_groups: DataFrameGroupBy,
+        column_prefix: str
+) -> None:
+    for group_name in sentences_by_groups.groups:
+        in_column_locations = READER + ' ' + LOCATIONS
+        out_column_counts = column_prefix + ' ' + COUNTS + ' ' + group_name
+        phrases[out_column_counts] = phrases.apply(
+            lambda x: count_phrase_occurrences_v1(x[in_column_locations]),
+            axis=1
+        )
+
+
+def count_phrase_occurrences_v1(locations: [[(int, (int, int))]]) -> int:
+    # We count sentences since we detect the first occurrence of the phrase
+    return sum(1 for doc in locations for sent in doc)
+
+
+def count_vocab_in_sentences_by_groups_v0(
         phrases: DataFrame,
         sentences_by_groups: DataFrameGroupBy,
         column_prefix: str
@@ -15,7 +34,7 @@ def count_vocab_in_sentences_by_groups(
     for group_name in sentences_by_groups.groups:
         output_column_name = column_prefix + group_name
         phrases[output_column_name] = phrases.apply(
-            lambda x: count_phrase_in_sentences(
+            lambda x: count_phrase_in_sentences_v0(
                 x[COL_LEMMA][0],
                 sentences_by_groups.get_group(group_name)[COL_LEMMA]
             ),
@@ -23,7 +42,7 @@ def count_vocab_in_sentences_by_groups(
         )
 
 
-def count_phrase_in_sentences(phrase: [str], texts: Series) -> int:
+def count_phrase_in_sentences_v0(phrase: [str], texts: Series) -> int:
     count = 0
     for sents in texts:
         for sent in sents:
@@ -41,7 +60,7 @@ def count_vocab_context_in_sentences_by_groups(
         output_column_name = column_prefix + group_name
         phrases[output_column_name] = phrases.apply(
             lambda x: count_context_in_sentences(
-                x[PREFIX_READER + SUFFIX_CONTEXT],
+                x[READER + ' ' + CONTEXT],
                 sentences_by_groups.get_group(group_name)[COL_LEMMA]
             ),
             axis=1
