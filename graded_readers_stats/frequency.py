@@ -10,11 +10,11 @@ from graded_readers_stats.constants import *
 def count_vocab_in_sentences_by_groups_v1(
         phrases: DataFrame,
         sentences_by_groups: DataFrameGroupBy,
-        column_prefix: str
+        column: str
 ) -> None:
     for group_name in sentences_by_groups.groups:
-        in_column_locations = READER + ' ' + LOCATIONS
-        out_column_counts = column_prefix + ' ' + COUNTS + ' ' + group_name
+        in_column_locations = column + ' ' + LOCATIONS
+        out_column_counts = column + ' ' + COUNTS + ' ' + group_name
         phrases[out_column_counts] = phrases.apply(
             lambda x: count_phrase_occurrences_v1(x[in_column_locations]),
             axis=1
@@ -23,6 +23,7 @@ def count_vocab_in_sentences_by_groups_v1(
 
 def count_phrase_occurrences_v1(locations: [[(int, (int, int))]]) -> int:
     # We count sentences since we detect the first occurrence of the phrase
+    # meaning phrases appear at most once in a sentence
     return sum(1 for doc in locations for sent in doc)
 
 

@@ -25,22 +25,26 @@ preprocess.find_phrases_in_texts(vocab, litera, LITERA + ' ' + LOCATIONS)
 #     vocab, reader, column_prefix=DATASET_READER
 # )
 
-readers_by_level = reader.groupby(COL_LEVEL)
+reader_by_level = reader.groupby(COL_LEVEL)
+litera_by_level = litera.groupby(COL_LEVEL)
 
 # Vocabulary Frequencies
 frequency.count_vocab_in_sentences_by_groups_v1(
-    vocab, readers_by_level, column_prefix=READER
+    vocab, reader_by_level, column=READER
+)
+frequency.count_vocab_in_sentences_by_groups_v1(
+    vocab, litera_by_level, column=LITERA
 )
 
 # # Vocabulary's Context Frequencies
 # frequency.count_vocab_context_in_sentences_by_groups(
-#     vocab, readers_by_level, column_prefix=PREFIX_READER_CONTEXT
+#     vocab, reader_by_level, column_prefix=PREFIX_READER_CONTEXT
 # )
 #
 # # Tree widths and depths
 # tree.get_tree_widths_and_depths(
 #     vocab,
-#     readers_by_level
+#     reader_by_level
 # )
 
 # vocab.drop(columns=['Readers_locations'], inplace=True)
