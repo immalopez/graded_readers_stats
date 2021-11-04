@@ -35,6 +35,12 @@ frequency.count_vocab_in_sentences_by_groups_v1(
 frequency.count_vocab_in_sentences_by_groups_v1(
     vocab, litera_by_level, column=LITERA
 )
+frequency.total_counts_for_docs_with_vocab_occurrences(
+    vocab, reader_by_level, column=READER
+)
+frequency.total_counts_for_docs_with_vocab_occurrences(
+    vocab, litera_by_level, column=LITERA
+)
 
 # # Vocabulary's Context Frequencies
 # frequency.count_vocab_context_in_sentences_by_groups(
