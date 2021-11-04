@@ -86,7 +86,7 @@ def get_fields(documents, key):
 def find_phrases_in_texts(
         phrases: DataFrame,
         texts: DataFrame,
-        dataframe_name: str
+        column_name: str
 ) -> None:
 
     # For each phrase in phrases
@@ -103,7 +103,7 @@ def find_phrases_in_texts(
         phrase = phrase_row[0]
         loc_docs = []
 
-        # TODO: cache sentences instead of re-creating them for every doc
+        # Idea: cache sentences instead of re-creating them for every doc
         # OR use the 'lemma' column of the texts DataFrame
         for doc in doc_series:
             loc_doc = []
@@ -118,7 +118,19 @@ def find_phrases_in_texts(
                     loc_doc.append((sent_index, location))  # namedtuple?
             loc_docs.append(loc_doc)
         loc_phrases.append(loc_docs)
-    phrases[dataframe_name + '_locations'] = loc_phrases
+    phrases[column_name] = loc_phrases
+
+
+def count_stuff(vocabulary, readers):
+    location_series = vocabulary[COL_READERS_LOCATIONS]
+    lemma_series = readers[COL_LEMMA]
+    for location_row in location_series:
+        for doc_index, loc_doc in enumerate(location_row):
+            for loc_sent in loc_doc:
+                sent_index = loc_sent[0]
+                phrase = loc_sent[1]
+                lemma = lemma_series[doc_index][sent_index][slice(*phrase)]
+                print(lemma)
 
 
 def collect_context_for_phrases_in_texts(
@@ -179,5 +191,3 @@ def run(df: DataFrame, pipes: [Pipe]) -> DataFrame:
     for pipe in pipes:
         df = pipe(df)
     return df
-
-

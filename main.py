@@ -6,9 +6,7 @@ import time
 
 from graded_readers_stats import data, frequency, preprocess, tree
 from graded_readers_stats.constants import (
-    DATASET_READERS,
-    COL_LEVEL,
-    COL_RAW_TEXT
+    COL_READERS_LOCATIONS
 )
 
 start = time.time()
@@ -21,7 +19,8 @@ vocabulary = preprocess.run(vocabulary, preprocess.vocabulary_pipeline)
 readers = preprocess.run(readers, preprocess.text_analysis_pipeline)
 literature = preprocess.run(literature, preprocess.text_analysis_pipeline)
 
-preprocess.find_phrases_in_texts(vocabulary, readers, DATASET_READERS)
+preprocess.find_phrases_in_texts(vocabulary, readers, COL_READERS_LOCATIONS)
+preprocess.count_stuff(vocabulary, readers)
 
 # preprocess.collect_context_for_phrases_in_texts(
 #     vocabulary, readers, column_prefix=PREFIX_READER

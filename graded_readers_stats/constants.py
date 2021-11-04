@@ -21,7 +21,7 @@ COL_TEXT_FILE = 'Text file'
 COL_RAW_TEXT = 'Raw text'
 COL_STANZA_DOC = 'Stanza Doc'
 COL_LEMMA = 'Lemma'
-
+COL_READERS_LOCATIONS = 'Readers_locations'
 # Misc.
 
 LEVEL_INICIAL = 'Inicial'
