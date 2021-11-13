@@ -1,6 +1,7 @@
 ##############################################################################
 #                            FREQUENCY CALCULATIONS                          #
 ##############################################################################
+from pandas import Int64Index
 
 from graded_readers_stats._typing import *
 from graded_readers_stats.utils import *
@@ -16,9 +17,28 @@ def count_vocab_in_sentences_by_groups_v1(
         in_column_locations = column + ' ' + LOCATIONS
         out_column_counts = column + ' ' + COUNTS + ' ' + group_name
         phrases[out_column_counts] = phrases.apply(
-            lambda x: count_phrase_occurrences_v1(x[in_column_locations]),
+            lambda x: count_phrase_occurrences_v1(
+                x[in_column_locations],
+                sentences_by_groups.get_group(group_name).index
+            ),
             axis=1
         )
+
+
+def count_phrase_occurrences_v1(
+        locations: [[(int, (int, int))]],  # list of docs of sentences
+        group_indices: Int64Index
+) -> int:
+    # We count sentences since we detect the first occurrence of the phrase
+    # meaning phrases appear at most once in a sentence.
+    # NOTE: Using '_' to indicate we don't care about the sentence index.
+    return sum(1
+               # iterate over pandas' series to recover index
+               for doc_index in group_indices
+               # we count sentences since we detect
+               # the first occurrence of the phrase in a sentence only.
+               # for sentence in document
+               for _ in locations[doc_index])
 
 
 def total_counts_for_docs_with_vocab_occurrences(
@@ -38,16 +58,9 @@ def total_counts_for_docs_with_vocab_occurrences(
         )
 
 
-def count_phrase_occurrences_v1(locations: [[(int, (int, int))]]) -> int:
-    # We count sentences since we detect the first occurrence of the phrase
-    # meaning phrases appear at most once in a sentence.
-    # NOTE: Using '_' to indicate we don't care about the sentence index.
-    return sum(1 for doc in locations for _ in doc)
-
-
 def total_counts_for_phrase(
         locations: [[(int, (int, int))]],
-        texts: Series
+        texts: Series  # (2, [['Text', items']], ...)
 ) -> int:
 
     # Print the whole document (all sentences in doc)
@@ -57,11 +70,18 @@ def total_counts_for_phrase(
     #      if len(locations[doc_index]) > 0]
     # )
 
-    # shape: [[1, 1, 1]], thus we need to unwrap outer list.
-    # when there are no occurrences, we deal with an empty list [].
-    total = [[1 for sent in sents for _ in sent]
-             for doc_index, sents in texts.items()
+    # Count number of words in a sentence.
+    # Shape: [[1, 3, 1]], thus we need to unwrap outer list.
+    # When there are no occurrences, we deal with an empty list [].
+    total = [[len(sent) for sent in doc_sents]
+
+             # iterate over pandas' series to recover index
+             for doc_index, doc_sents in texts.items()
+
+             # only docs with occurrences
              if len(locations[doc_index]) > 0]
+
+    # sum word counts for all documents
     return sum(total[0]) if len(total) > 0 else 0
 
 

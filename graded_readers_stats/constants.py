@@ -12,6 +12,7 @@ HEIGHTS = 'heights'
 
 # Column names
 
+COL_TITLE = 'Title'
 COL_LEXICAL_ITEM = 'Lexical item'
 COL_LEVEL = 'Level'
 COL_TEXT_FILE = 'Text file'
