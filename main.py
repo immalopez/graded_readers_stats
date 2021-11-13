@@ -48,7 +48,11 @@ frequency.total_counts_for_docs_with_vocab_occurrences(
 # )
 
 # Tree widths and depths
-tree.make_trees_for_occurrences(vocab, reader)
+tree.make_trees_for_occurrences(vocab, reader, column=READER)
+tree.make_trees_for_occurrences(vocab, litera, column=LITERA)
+
+tree.calculate_tree_props(vocab, column=READER)
+tree.calculate_tree_props(vocab, column=LITERA)
 
 # vocabs.drop(columns=['Readers_locations'], inplace=True)
 # data.save(vocabs, reader, litera)

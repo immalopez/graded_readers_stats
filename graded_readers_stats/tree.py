@@ -13,7 +13,7 @@ from graded_readers_stats._typing import *
 def make_trees_for_occurrences(
         vocabs: DataFrame,
         texts: DataFrame,
-        column: str = READER
+        column: str
 ) -> None:
     in_column_locations = column + ' ' + LOCATIONS
     out_column_trees = column + ' ' + 'trees'
@@ -119,3 +119,44 @@ def get_tree_widths_and_depths_v0(
 
         vocabs[group_name + ' ' + WIDTHS] = widths
         vocabs[group_name + ' ' + HEIGHTS] = heights
+
+
+def calculate_tree_props(
+        vocabs: DataFrame,
+        column: str
+) -> None:
+    in_column_trees = column + ' ' + TREES
+    out_column_trees_props = column + ' ' + TREES_PROPS
+
+    trees = vocabs[in_column_trees]
+    vocabs[out_column_trees_props] = vocabs.apply(
+        lambda x: get_tree_props(x[in_column_trees]),
+        axis=1
+    )
+
+
+def get_tree_props(
+        doc_trees: [[Node]]
+) -> (int, int, int, int):  # min_width, max_width, min_height, max_height
+
+    from collections import namedtuple
+    TreeProps = namedtuple(
+        'TreeProps',
+        ['min_width', 'max_width', 'min_height', 'max_height']
+    )
+
+    min_w, max_w, min_h, max_h = None, None, None, None
+
+    for doc in doc_trees:
+        for node in doc:
+
+            width = max([len(children)
+                         for children in LevelOrderGroupIter(node)])
+            height = node.height
+
+            min_w = width if min_w is None else min(min_w, width)
+            max_w = width if max_w is None else max(max_w, width)
+            min_h = height if min_h is None else min(min_h, height)
+            max_h = height if max_h is None else max(max_h, height)
+
+    return TreeProps(min_w, max_w, min_h, max_h)
