@@ -2,7 +2,7 @@ from typing import Optional, Tuple
 
 
 def first_occurrence_of_vocab_in_sentence(
-        phrase: [str],
+        vocab: [str],
         sentence: [str]
 ) -> Optional[Tuple[int, int]]:
     """Returns a tuple(start, end) where start is the first index of
@@ -12,9 +12,9 @@ def first_occurrence_of_vocab_in_sentence(
     sent_index = 0
     sent_len = len(sentence)
     phrase_index = 0
-    phrase_len = len(phrase)
+    phrase_len = len(vocab)
     while sent_index < sent_len and phrase_index < phrase_len:
-        if str(sentence[sent_index]).lower() == str(phrase[phrase_index]).lower():
+        if str(sentence[sent_index]).lower() == str(vocab[phrase_index]).lower():
             sent_index += 1
             phrase_index += 1
             if phrase_index == phrase_len:

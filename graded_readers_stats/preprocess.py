@@ -84,17 +84,17 @@ def get_fields(documents, key):
 
 
 def find_vocabs_in_texts(
-        phrases: DataFrame,
+        vocabs: DataFrame,
         texts: DataFrame,
         column_name: str
 ) -> None:
 
-    phrase_series = phrases[COL_LEMMA]
+    vocab_series = vocabs[COL_LEMMA]
     doc_series = texts[COL_STANZA_DOC]
     loc_phrases = []
 
-    for phrase_row in phrase_series:
-        phrase = phrase_row[0]
+    for vocab_row in vocab_series:
+        vocab = vocab_row[0]
         loc_docs = []
 
         # Idea: cache sentences instead of re-creating them for every doc
@@ -105,14 +105,14 @@ def find_vocabs_in_texts(
             for sent_index, sentence in enumerate(doc.sentences):
                 lemmas = [word.lemma for word in sentence.words]
                 location = first_occurrence_of_vocab_in_sentence(
-                    phrase,
+                    vocab,
                     lemmas
                 )
                 if location:
                     loc_doc.append((sent_index, location))  # namedtuple?
             loc_docs.append(loc_doc)
         loc_phrases.append(loc_docs)
-    phrases[column_name] = loc_phrases
+    vocabs[column_name] = loc_phrases
 
 
 def print_words_at_locations(vocabulary, readers):
@@ -122,8 +122,8 @@ def print_words_at_locations(vocabulary, readers):
         for doc_index, loc_doc in enumerate(location_row):
             for loc_sent in loc_doc:
                 sent_index = loc_sent[0]
-                phrase = loc_sent[1]
-                lemma = lemma_series[doc_index][sent_index][slice(*phrase)]
+                vocab = loc_sent[1]
+                lemma = lemma_series[doc_index][sent_index][slice(*vocab)]
                 print(lemma)
 
 
@@ -143,14 +143,14 @@ def collect_context_for_phrases_in_texts(
 
 
 def collect_context_for_phrase_in_texts(
-        phrase: [str],
+        vocab: [str],
         texts: Series,
         window: int = 3
 ) -> [str]:
     context = []
     for sentences in texts:
         for sent in sentences:
-            text_range = first_occurrence_of_vocab_in_sentence(phrase, sent)
+            text_range = first_occurrence_of_vocab_in_sentence(vocab, sent)
             if text_range:
                 start, end = text_range[0], text_range[1]
 

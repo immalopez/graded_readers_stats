@@ -29,14 +29,14 @@ def count_phrase_occurrences_v1(
         locations: [[(int, (int, int))]],  # list of docs of sentences
         group_indices: Int64Index
 ) -> int:
-    # We count sentences since we detect the first occurrence of the phrase
+    # We count sentences since we detect the first occurrence of the vocab
     # meaning vocabs appear at most once in a sentence.
     # NOTE: Using '_' to indicate we don't care about the sentence index.
     return sum(1
                # iterate over pandas' series to recover index
                for doc_index in group_indices
                # we count sentences since we detect only
-               # the first occurrence of the phrase in a sentence.
+               # the first occurrence of the vocab in a sentence.
                # iterate over sentences in document
                for _ in locations[doc_index])
 
@@ -101,23 +101,23 @@ def count_vocab_in_sentences_by_groups_v0(
         )
 
 
-def count_phrase_in_sentences_v0(phrase: [str], texts: Series) -> int:
+def count_phrase_in_sentences_v0(vocab: [str], texts: Series) -> int:
     count = 0
     for sents in texts:
         for sent in sents:
-            if first_occurrence_of_vocab_in_sentence(phrase, sent):
+            if first_occurrence_of_vocab_in_sentence(vocab, sent):
                 count += 1
     return count
 
 
 def count_vocab_context_in_sentences_by_groups(
-        phrases: DataFrame,
+        vocabs: DataFrame,
         sentences_by_groups: DataFrameGroupBy,
         column_prefix: str
 ) -> None:
     for group_name in sentences_by_groups.groups:
         output_column_name = column_prefix + group_name
-        phrases[output_column_name] = phrases.apply(
+        vocabs[output_column_name] = vocabs.apply(
             lambda x: count_context_in_sentences(
                 x[READER + ' ' + CONTEXT],
                 sentences_by_groups.get_group(group_name)[COL_LEMMA]

@@ -46,7 +46,7 @@ frequency.total_counts_for_docs_with_vocab_occurrences(
 # frequency.count_vocab_context_in_sentences_by_groups(
 #     vocabs, reader_by_level, column_prefix=PREFIX_READER_CONTEXT
 # )
-#
+
 # Tree widths and depths
 tree.make_trees_for_occurrences(vocab, reader)
 
