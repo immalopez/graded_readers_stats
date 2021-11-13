@@ -1,7 +1,7 @@
 from typing import Optional, Tuple
 
 
-def first_occurrence_of_phrase_in_sentence(
+def first_occurrence_of_vocab_in_sentence(
         phrase: [str],
         sentence: [str]
 ) -> Optional[Tuple[int, int]]:
@@ -18,7 +18,7 @@ def first_occurrence_of_phrase_in_sentence(
             sent_index += 1
             phrase_index += 1
             if phrase_index == phrase_len:
-                # adjust start to include vocab item(s)
+                # adjust start to include vocabs item(s)
                 return sent_index - phrase_len, sent_index  # a tuple
         else:
             sent_index = sent_index - phrase_index + 1

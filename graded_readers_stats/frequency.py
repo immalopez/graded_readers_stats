@@ -30,14 +30,14 @@ def count_phrase_occurrences_v1(
         group_indices: Int64Index
 ) -> int:
     # We count sentences since we detect the first occurrence of the phrase
-    # meaning phrases appear at most once in a sentence.
+    # meaning vocabs appear at most once in a sentence.
     # NOTE: Using '_' to indicate we don't care about the sentence index.
     return sum(1
                # iterate over pandas' series to recover index
                for doc_index in group_indices
-               # we count sentences since we detect
-               # the first occurrence of the phrase in a sentence only.
-               # for sentence in document
+               # we count sentences since we detect only
+               # the first occurrence of the phrase in a sentence.
+               # iterate over sentences in document
                for _ in locations[doc_index])
 
 
@@ -105,7 +105,7 @@ def count_phrase_in_sentences_v0(phrase: [str], texts: Series) -> int:
     count = 0
     for sents in texts:
         for sent in sents:
-            if first_occurrence_of_phrase_in_sentence(phrase, sent):
+            if first_occurrence_of_vocab_in_sentence(phrase, sent):
                 count += 1
     return count
 
@@ -131,8 +131,6 @@ def count_context_in_sentences(words: [str], texts: Series) -> int:
     for word in words:
         for sents in texts:
             for sent in sents:
-                if first_occurrence_of_phrase_in_sentence([word], sent):
+                if first_occurrence_of_vocab_in_sentence([word], sent):
                     count += 1
     return count
-
-

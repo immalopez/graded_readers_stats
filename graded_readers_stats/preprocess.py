@@ -83,7 +83,7 @@ def get_fields(documents, key):
     return [d.get(key, True) for d in documents]
 
 
-def find_phrases_in_texts(
+def find_vocabs_in_texts(
         phrases: DataFrame,
         texts: DataFrame,
         column_name: str
@@ -104,7 +104,7 @@ def find_phrases_in_texts(
 
             for sent_index, sentence in enumerate(doc.sentences):
                 lemmas = [word.lemma for word in sentence.words]
-                location = first_occurrence_of_phrase_in_sentence(
+                location = first_occurrence_of_vocab_in_sentence(
                     phrase,
                     lemmas
                 )
@@ -150,7 +150,7 @@ def collect_context_for_phrase_in_texts(
     context = []
     for sentences in texts:
         for sent in sentences:
-            text_range = first_occurrence_of_phrase_in_sentence(phrase, sent)
+            text_range = first_occurrence_of_vocab_in_sentence(phrase, sent)
             if text_range:
                 start, end = text_range[0], text_range[1]
 

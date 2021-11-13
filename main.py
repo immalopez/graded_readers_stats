@@ -17,12 +17,12 @@ vocab = preprocess.run(vocab, preprocess.vocabulary_pipeline)
 reader = preprocess.run(reader, preprocess.text_analysis_pipeline)
 litera = preprocess.run(litera, preprocess.text_analysis_pipeline)
 
-preprocess.find_phrases_in_texts(vocab, reader, READER + ' ' + LOCATIONS)
-preprocess.find_phrases_in_texts(vocab, litera, LITERA + ' ' + LOCATIONS)
-# preprocess.print_words_at_locations(vocab, reader)
+preprocess.find_vocabs_in_texts(vocab, reader, READER + ' ' + LOCATIONS)
+preprocess.find_vocabs_in_texts(vocab, litera, LITERA + ' ' + LOCATIONS)
+# preprocess.print_words_at_locations(vocabs, reader)
 
 # preprocess.collect_context_for_phrases_in_texts(
-#     vocab, reader, column_prefix=DATASET_READER
+#     vocabs, reader, column_prefix=DATASET_READER
 # )
 
 reader_by_level = reader.groupby(COL_LEVEL)
@@ -44,17 +44,14 @@ frequency.total_counts_for_docs_with_vocab_occurrences(
 
 # # Vocabulary's Context Frequencies
 # frequency.count_vocab_context_in_sentences_by_groups(
-#     vocab, reader_by_level, column_prefix=PREFIX_READER_CONTEXT
+#     vocabs, reader_by_level, column_prefix=PREFIX_READER_CONTEXT
 # )
 #
-# # Tree widths and depths
-# tree.get_tree_widths_and_depths(
-#     vocab,
-#     reader_by_level
-# )
+# Tree widths and depths
+tree.make_trees_for_occurrences(vocab, reader)
 
-# vocab.drop(columns=['Readers_locations'], inplace=True)
-data.save(vocab, reader, litera)
+# vocabs.drop(columns=['Readers_locations'], inplace=True)
+# data.save(vocabs, reader, litera)
 
 print('DONE!')
 print('Total time: %d secs' % (time.time() - start))
