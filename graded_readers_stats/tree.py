@@ -6,7 +6,6 @@ from anytree import Node, LevelOrderGroupIter
 from stanza.models.common.doc import Sentence
 
 from graded_readers_stats.constants import *
-from graded_readers_stats.utils import *
 from graded_readers_stats._typing import *
 
 
@@ -49,76 +48,6 @@ def make_tree_for_sent(sent: Sentence) -> Node:
         if word.head == 0:
             root = nodes[word.id]
     return root
-
-def make_trees_for_locations(
-        locations: [[(int, (int, int))]],
-        docs: Series
-) -> [[(int, Node)]]:
-    # trees_by_doc = []
-    # for sent_loc in doc_locations:
-
-    for doc_index, doc in docs.items():
-        sent_locs = locations[doc_index]
-        for loc in sent_locs:
-            sent = doc.sentences[loc[0]]
-            nodes = {word.id: Node(word.lemma) for word in sent.words}
-            for word in sent.words:
-                nodes[word.id].parent = nodes[word.head] \
-                    if word.head > 0 \
-                    else None
-                if word.head == 0:
-                    root = nodes[word.id]
-
-
-
-def get_tree_widths_and_depths_v0(
-        vocabs: DataFrame,
-        sentences_by_groups: DataFrameGroupBy
-) -> None:
-    for group_name in sentences_by_groups.groups:
-
-        vocab_lemmas = [wrapper[0] for wrapper in vocabs[COL_LEMMA]]
-        widths = []
-        heights = []
-        for vocab in vocab_lemmas:
-            max_width = 0
-            max_height = 0
-
-            docs = sentences_by_groups.get_group(group_name)[COL_STANZA_DOC]
-            for doc in docs:
-
-                sents_lemma = doc.get('lemma', True)
-                for (sent, sent_lemma) in zip(doc.sentences, sents_lemma):
-
-                    if first_occurrence_of_vocab_in_sentence(vocab, sent_lemma):
-
-                        nodes = {word.id: Node(word.lemma) for word in sent.words}
-                        for word in sent.words:
-                            nodes[word.id].parent = nodes[word.head] \
-                                if word.head > 0 \
-                                else None
-                            if word.head == 0:
-                                root = nodes[word.id]
-
-                        max_height_sent = root.height
-                        max_width_sent = max([
-                            len(children)
-                            for children in LevelOrderGroupIter(root)
-                        ])
-
-                        max_width = max(max_width, max_width_sent)
-                        max_height = max(max_height, max_height_sent)
-
-                        # print tree
-                        # from anytree import RenderTree
-                        # for pre, fill, node in RenderTree(root):
-                        #     print("%s%s" % (pre, node.name))
-
-            widths.append(max_width)
-            heights.append(max_height)
-
-        vocabs[group_name + ' ' + WIDTHS] = widths
-        vocabs[group_name + ' ' + HEIGHTS] = heights
 
 
 def calculate_tree_props(
