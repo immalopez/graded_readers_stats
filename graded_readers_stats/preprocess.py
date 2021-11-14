@@ -83,7 +83,7 @@ def get_fields(documents, key):
     return [d.get(key, True) for d in documents]
 
 
-def find_vocabs_in_texts(
+def vocabs_locations_in_texts(
         vocabs: DataFrame,
         texts: DataFrame,
         column_name: str

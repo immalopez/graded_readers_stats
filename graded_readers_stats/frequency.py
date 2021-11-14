@@ -7,7 +7,7 @@ from graded_readers_stats._typing import *
 from graded_readers_stats.constants import *
 
 
-def count_vocab_in_sentences_by_groups_v1(
+def count_vocab_in_texts_grouped_by_level(
         phrases: DataFrame,
         sentences_by_groups: DataFrameGroupBy,
         column: str
@@ -40,7 +40,7 @@ def count_phrase_occurrences_v1(
                for _ in locations[doc_index])
 
 
-def total_counts_for_vocab_occurrences_in_texts(
+def total_count_in_texts_grouped_by_level(
         vocabs: DataFrame,
         sentences_by_groups: DataFrameGroupBy,
         column: str

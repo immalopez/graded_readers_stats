@@ -17,8 +17,8 @@ vocab = preprocess.run(vocab, preprocess.vocabulary_pipeline)
 reader = preprocess.run(reader, preprocess.text_analysis_pipeline)
 litera = preprocess.run(litera, preprocess.text_analysis_pipeline)
 
-preprocess.find_vocabs_in_texts(vocab, reader, READER + ' ' + LOCATIONS)
-preprocess.find_vocabs_in_texts(vocab, litera, LITERA + ' ' + LOCATIONS)
+preprocess.vocabs_locations_in_texts(vocab, reader, READER + ' ' + LOCATIONS)
+preprocess.vocabs_locations_in_texts(vocab, litera, LITERA + ' ' + LOCATIONS)
 # preprocess.print_words_at_locations(vocabs, reader)
 
 # preprocess.collect_context_for_phrases_in_texts(
@@ -29,16 +29,16 @@ reader_by_level = reader.groupby(COL_LEVEL)
 litera_by_level = litera.groupby(COL_LEVEL)
 
 # Vocabulary Frequencies
-frequency.count_vocab_in_sentences_by_groups_v1(
+frequency.count_vocab_in_texts_grouped_by_level(
     vocab, reader_by_level, column=READER
 )
-frequency.count_vocab_in_sentences_by_groups_v1(
+frequency.count_vocab_in_texts_grouped_by_level(
     vocab, litera_by_level, column=LITERA
 )
-frequency.total_counts_for_vocab_occurrences_in_texts(
+frequency.total_count_in_texts_grouped_by_level(
     vocab, reader_by_level, column=READER
 )
-frequency.total_counts_for_vocab_occurrences_in_texts(
+frequency.total_count_in_texts_grouped_by_level(
     vocab, litera_by_level, column=LITERA
 )
 
