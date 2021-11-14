@@ -4,7 +4,6 @@
 from pandas import Int64Index
 
 from graded_readers_stats._typing import *
-from graded_readers_stats.utils import *
 from graded_readers_stats.constants import *
 
 
@@ -41,16 +40,16 @@ def count_phrase_occurrences_v1(
                for _ in locations[doc_index])
 
 
-def total_counts_for_docs_with_vocab_occurrences(
-        phrases: DataFrame,
+def total_counts_for_vocab_occurrences_in_texts(
+        vocabs: DataFrame,
         sentences_by_groups: DataFrameGroupBy,
         column: str
 ):
     for group_name in sentences_by_groups.groups:
         in_column_locations = column + ' ' + LOCATIONS
         out_column_counts = column + ' ' + TOTAL_COUNTS + ' ' + group_name
-        phrases[out_column_counts] = phrases.apply(
-            lambda x: total_counts_for_phrase(
+        vocabs[out_column_counts] = vocabs.apply(
+            lambda x: total_counts_for_vocab(
                 x[in_column_locations],
                 sentences_by_groups.get_group(group_name)[COL_LEMMA]
             ),
@@ -58,7 +57,7 @@ def total_counts_for_docs_with_vocab_occurrences(
         )
 
 
-def total_counts_for_phrase(
+def total_counts_for_vocab(
         locations: [[(int, (int, int))]],
         texts: Series  # (2, [['Text', items']], ...)
 ) -> int:
@@ -84,53 +83,3 @@ def total_counts_for_phrase(
     # sum word counts for all documents
     return sum(total[0]) if len(total) > 0 else 0
 
-
-def count_vocab_in_sentences_by_groups_v0(
-        phrases: DataFrame,
-        sentences_by_groups: DataFrameGroupBy,
-        column_prefix: str
-) -> None:
-    for group_name in sentences_by_groups.groups:
-        output_column_name = column_prefix + group_name
-        phrases[output_column_name] = phrases.apply(
-            lambda x: count_phrase_in_sentences_v0(
-                x[COL_LEMMA][0],
-                sentences_by_groups.get_group(group_name)[COL_LEMMA]
-            ),
-            axis=1
-        )
-
-
-def count_phrase_in_sentences_v0(vocab: [str], texts: Series) -> int:
-    count = 0
-    for sents in texts:
-        for sent in sents:
-            if first_occurrence_of_vocab_in_sentence(vocab, sent):
-                count += 1
-    return count
-
-
-def count_vocab_context_in_sentences_by_groups(
-        vocabs: DataFrame,
-        sentences_by_groups: DataFrameGroupBy,
-        column_prefix: str
-) -> None:
-    for group_name in sentences_by_groups.groups:
-        output_column_name = column_prefix + group_name
-        vocabs[output_column_name] = vocabs.apply(
-            lambda x: count_context_in_sentences(
-                x[READER + ' ' + CONTEXT],
-                sentences_by_groups.get_group(group_name)[COL_LEMMA]
-            ),
-            axis=1
-        )
-
-
-def count_context_in_sentences(words: [str], texts: Series) -> int:
-    count = 0
-    for word in words:
-        for sents in texts:
-            for sent in sents:
-                if first_occurrence_of_vocab_in_sentence([word], sent):
-                    count += 1
-    return count

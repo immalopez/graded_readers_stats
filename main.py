@@ -35,10 +35,10 @@ frequency.count_vocab_in_sentences_by_groups_v1(
 frequency.count_vocab_in_sentences_by_groups_v1(
     vocab, litera_by_level, column=LITERA
 )
-frequency.total_counts_for_docs_with_vocab_occurrences(
+frequency.total_counts_for_vocab_occurrences_in_texts(
     vocab, reader_by_level, column=READER
 )
-frequency.total_counts_for_docs_with_vocab_occurrences(
+frequency.total_counts_for_vocab_occurrences_in_texts(
     vocab, litera_by_level, column=LITERA
 )
 
