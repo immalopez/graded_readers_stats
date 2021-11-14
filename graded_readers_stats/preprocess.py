@@ -127,41 +127,44 @@ def print_words_at_locations(vocabulary, readers):
                 print(lemma)
 
 
-def collect_context_for_phrases_in_texts(
-        phrases: DataFrame,
+def collect_all_vocab_contexts_in_texts(
+        vocabs: DataFrame,
         texts: DataFrame,
-        column_prefix: str
+        column: str
 ) -> DataFrame:
-    phrases[column_prefix + ' ' + CONTEXT] = phrases.apply(
-        lambda x: collect_context_for_phrase_in_texts(
-            x[COL_LEMMA][0],
-            texts[COL_LEMMA]
+    vocabs[column + ' ' + CONTEXT] = vocabs.apply(
+        lambda x: collect_vocab_context_in_texts(
+            x[column + ' ' + LOCATIONS],
+            texts[COL_STANZA_DOC]
         ),
         axis=1
     )
-    return phrases
+    return vocabs
 
 
-def collect_context_for_phrase_in_texts(
-        vocab: [str],
-        texts: Series,
+def collect_vocab_context_in_texts(
+        vocab_locations: [[(int, (int, int))]],
+        text_docs: Series,
         window: int = 3
 ) -> [str]:
-    context = []
-    for sentences in texts:
-        for sent in sentences:
-            text_range = first_occurrence_of_vocab_in_sentence(vocab, sent)
-            if text_range:
-                start, end = text_range[0], text_range[1]
+    context = set()
 
-                # limit indices to sentence bounds using `min` and `max`
-                # to safely use with list slicing
-                # since out-of-bounds slicing would return empty list ([])
-                slice_before = slice(max(0, start - window), start)
-                slice_after = slice(end, min(end + window, len(sent)))
+    for doc_index, doc_loc in enumerate(vocab_locations):
+        for sent_loc in doc_loc:
+            start, end = sent_loc[1]
+            sent = text_docs[doc_index].sentences[sent_loc[0]]
+            sent_lemmas = [word.lemma for word in sent.words]
+            # TODO: filter stopwords
+            # TODO: normalize (e.g. lowercase)
 
-                words = sent[slice_before] + sent[slice_after]
-                context.extend(words)
+            # limit indices to sentence bounds using `min` and `max`
+            # to safely use with list slicing
+            # since out-of-bounds slicing would return empty list ([])
+            slice_before = slice(max(0, start - window), start)
+            slice_after = slice(end, min(end + window, len(sent_lemmas)))
+
+            context_words = sent_lemmas[slice_before] + sent_lemmas[slice_after]
+            context.update(context_words)
 
     return context
 

@@ -21,10 +21,6 @@ preprocess.vocabs_locations_in_texts(vocab, reader, READER + ' ' + LOCATIONS)
 preprocess.vocabs_locations_in_texts(vocab, litera, LITERA + ' ' + LOCATIONS)
 # preprocess.print_words_at_locations(vocabs, reader)
 
-# preprocess.collect_context_for_phrases_in_texts(
-#     vocabs, reader, column_prefix=DATASET_READER
-# )
-
 reader_by_level = reader.groupby(COL_LEVEL)
 litera_by_level = litera.groupby(COL_LEVEL)
 
@@ -48,9 +44,15 @@ frequency.frequency_in_texts_grouped_by_level(
     vocab, litera_by_level, column=LITERA
 )
 
-# # Vocabulary's Context Frequencies
+# Vocabulary's Context Frequencies
+preprocess.collect_all_vocab_contexts_in_texts(
+    vocab, reader, column=READER
+)
+preprocess.collect_all_vocab_contexts_in_texts(
+    vocab, litera, column=LITERA
+)
 # frequency.count_vocab_context_in_sentences_by_groups(
-#     vocabs, reader_by_level, column_prefix=PREFIX_READER_CONTEXT
+#     vocab, reader_by_level, column=READER
 # )
 
 # Tree widths and depths
