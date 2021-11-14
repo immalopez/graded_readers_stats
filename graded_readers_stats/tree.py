@@ -42,8 +42,7 @@ def make_tree(
 def make_tree_for_sent(sent: Sentence) -> Node:
     nodes = {word.id: Node(word.lemma) for word in sent.words}
     for word in sent.words:
-        nodes[word.id].parent = nodes[word.head] \
-            if word.head > 0 \
+        nodes[word.id].parent = nodes[word.head] if word.head > 0 \
             else None
         if word.head == 0:
             root = nodes[word.id]
@@ -56,8 +55,6 @@ def calculate_tree_props(
 ) -> None:
     in_column_trees = column + ' ' + TREES
     out_column_trees_props = column + ' ' + TREES_PROPS
-
-    trees = vocabs[in_column_trees]
     vocabs[out_column_trees_props] = vocabs.apply(
         lambda x: get_tree_props(x[in_column_trees]),
         axis=1
