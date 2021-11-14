@@ -147,7 +147,7 @@ def collect_vocab_context_in_texts(
         text_docs: Series,
         window: int = 3
 ) -> [str]:
-    context = set()
+    context = []
 
     for doc_index, doc_loc in enumerate(vocab_locations):
         for sent_loc in doc_loc:
@@ -164,9 +164,10 @@ def collect_vocab_context_in_texts(
             slice_after = slice(end, min(end + window, len(sent_lemmas)))
 
             context_words = sent_lemmas[slice_before] + sent_lemmas[slice_after]
-            context.update(context_words)
+            context.extend(context_words)
 
-    return context
+    # Remove duplicates and return
+    return list(set(context))
 
 
 # =========================== PIPELINE EXECUTION ==============================
