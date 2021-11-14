@@ -83,3 +83,18 @@ def total_counts_for_vocab(
     # sum word counts for all documents
     return sum(total[0]) if len(total) > 0 else 0
 
+
+def frequency_in_texts_grouped_by_level(
+        vocabs: DataFrame,
+        sentences_by_groups: DataFrameGroupBy,
+        column: str
+) -> None:
+    for group_name in sentences_by_groups.groups:
+        column_count = column + ' ' + COUNTS + ' ' + group_name
+        column_total_count = column + ' ' + TOTAL_COUNTS + ' ' + group_name
+        column_frequency = column + ' ' + FREQUENCY + ' ' + group_name
+        vocabs[column_frequency] = vocabs.apply(
+            lambda x: x[column_count] / x[column_total_count]
+            if x[column_total_count] > 0 else 0,
+            axis=1
+        )

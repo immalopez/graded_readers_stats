@@ -41,6 +41,12 @@ frequency.total_count_in_texts_grouped_by_level(
 frequency.total_count_in_texts_grouped_by_level(
     vocab, litera_by_level, column=LITERA
 )
+frequency.frequency_in_texts_grouped_by_level(
+    vocab, reader_by_level, column=READER
+)
+frequency.frequency_in_texts_grouped_by_level(
+    vocab, litera_by_level, column=LITERA
+)
 
 # # Vocabulary's Context Frequencies
 # frequency.count_vocab_context_in_sentences_by_groups(
