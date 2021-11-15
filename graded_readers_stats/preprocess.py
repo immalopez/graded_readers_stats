@@ -91,15 +91,26 @@ def get_fields(documents, key):
 def vocabs_locations_in_texts(
         vocabs: DataFrame,
         texts: DataFrame,
-        column_name: str
+        column: str,
+        is_context: bool = False
 ) -> None:
 
-    vocab_series = vocabs[COL_LEMMA]
+    if is_context:
+        rows = []
+        for context_row in vocabs[column + ' ' + CONTEXT]:
+            current_row = []
+            for word in context_row:
+                current_row.append([word])
+            rows.append(current_row)
+        vocab_series = rows
+    else:
+        vocab_series = vocabs[COL_LEMMA]
+
     doc_series = texts[COL_STANZA_DOC]
     loc_phrases = []
 
     for vocab_row in vocab_series:
-        vocab = vocab_row[0]
+        # vocab = vocab_row
         loc_docs = []
 
         # Idea: cache sentences instead of re-creating them for every doc
@@ -109,20 +120,23 @@ def vocabs_locations_in_texts(
 
             for sent_index, sentence in enumerate(doc.sentences):
                 lemmas = [word.lemma for word in sentence.words]
-                location = first_occurrence_of_vocab_in_sentence(
-                    vocab,
-                    lemmas
-                )
-                if location:
-                    loc_doc.append((sent_index, location))  # namedtuple?
+                for vocab in vocab_row:
+                    location = first_occurrence_of_vocab_in_sentence(
+                        vocab,
+                        lemmas
+                    )
+                    if location:
+                        loc_doc.append((sent_index, location))  # namedtuple?
             loc_docs.append(loc_doc)
         loc_phrases.append(loc_docs)
-    vocabs[column_name] = loc_phrases
+    column_mid_name = ' ' + CONTEXT + ' ' if is_context else ' '
+    vocabs[column + column_mid_name + LOCATIONS] = loc_phrases
 
 
-def print_words_at_locations(vocabulary, readers):
-    location_series = vocabulary[READER + ' ' + LOCATIONS]
-    lemma_series = readers[COL_LEMMA]
+def print_words_at_locations(vocabulary, texts, is_context=False):
+    column_mid_name = ' ' + CONTEXT + ' ' if is_context else ' '
+    location_series = vocabulary[READER + column_mid_name + LOCATIONS]
+    lemma_series = texts[COL_LEMMA]
     for location_row in location_series:
         for doc_index, loc_doc in enumerate(location_row):
             for loc_sent in loc_doc:

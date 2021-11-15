@@ -17,8 +17,8 @@ vocab = preprocess.run(vocab, preprocess.vocabulary_pipeline)
 reader = preprocess.run(reader, preprocess.text_analysis_pipeline)
 litera = preprocess.run(litera, preprocess.text_analysis_pipeline)
 
-preprocess.vocabs_locations_in_texts(vocab, reader, READER + ' ' + LOCATIONS)
-preprocess.vocabs_locations_in_texts(vocab, litera, LITERA + ' ' + LOCATIONS)
+preprocess.vocabs_locations_in_texts(vocab, reader, READER)
+preprocess.vocabs_locations_in_texts(vocab, litera, LITERA)
 # preprocess.print_words_at_locations(vocabs, reader)
 
 reader_by_level = reader.groupby(COL_LEVEL)
@@ -51,6 +51,10 @@ preprocess.collect_all_vocab_contexts_in_texts(
 preprocess.collect_all_vocab_contexts_in_texts(
     vocab, litera, column=LITERA
 )
+preprocess.vocabs_locations_in_texts(vocab, reader, READER, is_context=True)
+preprocess.vocabs_locations_in_texts(vocab, litera, LITERA, is_context=True)
+# preprocess.print_words_at_locations(vocab, reader, is_context=True)
+
 # frequency.count_vocab_context_in_sentences_by_groups(
 #     vocab, reader_by_level, column=READER
 # )
