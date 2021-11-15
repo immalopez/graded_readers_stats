@@ -172,9 +172,15 @@ def collect_vocab_context_in_texts(
         for sent_loc in doc_loc:
             start, end = sent_loc[1]
             sent = text_docs[doc_index].sentences[sent_loc[0]]
-            sent_lemmas = [word.lemma for word in sent.words]
-            # TODO: filter stopwords
-            # TODO: normalize (e.g. lowercase)
+
+            from string import punctuation
+            sent_lemmas = [word.lemma.lower()
+                           for word in sent.words
+                           if word.lemma not in punctuation]
+
+            # optimized string replacement (implementation in C)
+            # works on strings, not arrays, thus we don't use it for the moment
+            # some_str.translate(str.maketrans('', '', punctuation))
 
             # limit indices to sentence bounds using `min` and `max`
             # to safely use with list slicing
