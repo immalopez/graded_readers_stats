@@ -96,6 +96,8 @@ def vocabs_locations_in_texts(
 ) -> None:
 
     if is_context:
+        # When processing context words, we restructure the list of words
+        # to mimic the structure of the non-context words to re-use the logic.
         rows = []
         for context_row in vocabs[column + ' ' + CONTEXT]:
             current_row = []
@@ -110,7 +112,6 @@ def vocabs_locations_in_texts(
     loc_phrases = []
 
     for vocab_row in vocab_series:
-        # vocab = vocab_row
         loc_docs = []
 
         # Idea: cache sentences instead of re-creating them for every doc
