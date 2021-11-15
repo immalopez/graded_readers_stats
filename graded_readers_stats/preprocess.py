@@ -83,6 +83,11 @@ def get_fields(documents, key):
     return [d.get(key, True) for d in documents]
 
 
+# REMINDER:
+# 1. Refactor this function to work with context words as well.
+# 2. Then find locations of context words.
+# 3. Then count words and totals.
+# 4. Then calculate the frequency of each context word.
 def vocabs_locations_in_texts(
         vocabs: DataFrame,
         texts: DataFrame,
