@@ -54,6 +54,24 @@ preprocess.collect_all_vocab_contexts_in_texts(
 preprocess.vocabs_locations_in_texts(vocab, reader, READER, is_context=True)
 preprocess.vocabs_locations_in_texts(vocab, litera, LITERA, is_context=True)
 # preprocess.print_words_at_locations(vocab, reader, is_context=True)
+frequency.count_vocab_in_texts_grouped_by_level(
+    vocab, reader_by_level, column=READER, is_context=True
+)
+frequency.count_vocab_in_texts_grouped_by_level(
+    vocab, litera_by_level, column=LITERA, is_context=True
+)
+frequency.total_count_in_texts_grouped_by_level(
+    vocab, reader_by_level, column=READER, is_context=True
+)
+frequency.total_count_in_texts_grouped_by_level(
+    vocab, litera_by_level, column=LITERA, is_context=True
+)
+frequency.frequency_in_texts_grouped_by_level(
+    vocab, reader_by_level, column=READER, is_context=True
+)
+frequency.frequency_in_texts_grouped_by_level(
+    vocab, litera_by_level, column=LITERA, is_context=True
+)
 
 # frequency.count_vocab_context_in_sentences_by_groups(
 #     vocab, reader_by_level, column=READER
