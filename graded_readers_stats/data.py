@@ -73,7 +73,26 @@ def load_native_corpus() -> pd.DataFrame:
     from nltk.corpus import cess_esp
     words_esp = cess_esp.words()
     if is_trial:
-        words_esp = words_esp[:100]
+        words_esp = [
+            'Word1',
+            'earth',
+            'word2',
+            'summer',
+            'word3',
+            'sun',
+            ' ',
+            '.',
+            ' ',
+            'Dawn',
+            'this',
+            'is',
+            'it',
+            'word5',
+            'peter',
+            'pan',
+            'multi word 1',
+            'morning',
+        ]
     native = ' '.join([w.replace('_', ' ') for w in words_esp])
     dataframe = pd.DataFrame({COL_RAW_TEXT: [native], 'Level': ['Native']})
     return dataframe
