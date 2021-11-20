@@ -6,8 +6,10 @@
 # https://crscardellino.ar/SBWCE/ AND
 # https://www.cs.upc.edu/~nlp/wikicorpus/
 
-import pandas as pd
 import os
+import pandas as pd
+
+from graded_readers_stats.constants import COL_RAW_TEXT
 
 pd.set_option('display.max_columns', 99)
 
@@ -53,16 +55,28 @@ def load(
         literature = pd.read_pickle(folder + LITERATURE_CACHE) \
             if os.path.exists(folder + LITERATURE_CACHE) \
             else pd.read_csv(folder + LITERATURE_CSV, sep=';')
-        # native = pd.read_pickle(folder + NATIVE_CACHE) \
-        #     if os.path.exists(folder + NATIVE_CACHE) \
-        #     else pd.read_csv(folder + NATIVE_CSV, sep=';')
+        native = pd.read_pickle(folder + NATIVE_CACHE) \
+            if os.path.exists(folder + NATIVE_CACHE) \
+            else load_native_corpus()
+
     else:
         vocabulary = pd.read_csv(folder + VOCABULARY_CSV, sep=';')
         readers = pd.read_csv(folder + READERS_CSV, sep=';')
         literature = pd.read_csv(folder + LITERATURE_CSV, sep=';')
-        # native_corpus = pd.read_csv(folder + NATIVE_CSV, sep=';')
+        native = load_native_corpus()
 
-    return vocabulary, readers, literature  # , native_corpus
+    return vocabulary, readers, literature , native
+
+
+def load_native_corpus() -> pd.DataFrame:
+    """Loads the native corpus from the NLTK library."""
+    from nltk.corpus import cess_esp
+    words_esp = cess_esp.words()
+    if is_trial:
+        words_esp = words_esp[:100]
+    native = ' '.join([w.replace('_', ' ') for w in words_esp])
+    dataframe = pd.DataFrame({COL_RAW_TEXT: [native], 'Level': ['Native']})
+    return dataframe
 
 
 def save(
