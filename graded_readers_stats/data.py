@@ -7,6 +7,8 @@
 # https://www.cs.upc.edu/~nlp/wikicorpus/
 
 import os
+from typing import Optional
+
 import pandas as pd
 
 from graded_readers_stats.constants import COL_RAW_TEXT
@@ -33,17 +35,18 @@ is_trial = False
 
 def load(
         trial: bool = False,
-        use_cache: bool = True
+        use_cache: bool = True,
+        folder: str = Optional[str]
 ) -> (pd.DataFrame, pd.DataFrame, pd.DataFrame):
     global is_trial
     print('Loading data, use_cache = ' + str(use_cache))
 
     if trial:
-        folder = FOLDER_DATA_TRIAL
+        folder = FOLDER_DATA_TRIAL if folder is None else folder
         is_trial = True
         print("⚠️ WARNING: Using trial dataset!!!")
     else:
-        folder = FOLDER_DATA
+        folder = FOLDER_DATA if folder is None else folder
 
     if use_cache:
         vocabulary = pd.read_pickle(folder + VOCABULARY_CACHE) \
