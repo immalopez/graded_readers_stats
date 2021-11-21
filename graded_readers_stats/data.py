@@ -36,7 +36,7 @@ is_trial = False
 def load(
         trial: bool = False,
         use_cache: bool = True,
-        folder: str = Optional[str]
+        folder: Optional[str] = None
 ) -> (pd.DataFrame, pd.DataFrame, pd.DataFrame):
     global is_trial
     print('Loading data, use_cache = ' + str(use_cache))
