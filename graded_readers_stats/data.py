@@ -7,6 +7,8 @@
 # https://www.cs.upc.edu/~nlp/wikicorpus/
 
 import os
+from enum import Enum
+from collections import namedtuple
 from typing import Optional
 
 import pandas as pd
@@ -18,15 +20,34 @@ pd.set_option('display.max_columns', 99)
 FOLDER_DATA = './Data/'
 FOLDER_DATA_TRIAL = './Data_trial/'
 
-VOCABULARY_CSV = 'Vocabulary list.csv'
-READERS_CSV = 'Graded readers list.csv'
-LITERATURE_CSV = 'Literature list.csv'
-NATIVE_CSV = 'Native list.csv'
 
-VOCABULARY_CACHE = 'cache/vocabulary.pkl'
-READERS_CACHE = 'cache/readers.pkl'
-LITERATURE_CACHE = 'cache/literature.pkl'
-NATIVE_CACHE = 'cache/native.pkl'
+class Dataset(Enum):
+    VOCABULARY = 'Vocabulary'
+    READERS = 'Readers'
+    LITERATURE = 'Literature'
+    NATIVE = 'Native'
+
+
+DatasetInfo = namedtuple('DatasetInfo', ['csv_file', 'cache_file'])
+
+datasets = {
+    Dataset.VOCABULARY: DatasetInfo(
+        csv_file='Vocabulary list.csv',
+        cache_file='cache/vocabulary.pkl',
+    ),
+    Dataset.READERS: DatasetInfo(
+        csv_file='Graded readers list.csv',
+        cache_file='cache/readers.pkl',
+    ),
+    Dataset.LITERATURE: DatasetInfo(
+        csv_file='Literature list.csv',
+        cache_file='cache/literature.pkl',
+    ),
+    Dataset.NATIVE: DatasetInfo(
+        csv_file='Native list.csv',
+        cache_file='cache/native.pkl',
+    ),
+}
 
 
 # ================================= LOAD DATA =================================
@@ -34,44 +55,45 @@ is_trial = False
 
 
 def load(
+        dataset: Dataset,
         trial: bool = False,
         use_cache: bool = True,
         folder: Optional[str] = None
 ) -> (pd.DataFrame, pd.DataFrame, pd.DataFrame):
     global is_trial
-    print('Loading data, use_cache = ' + str(use_cache))
+    print(f'Loading {dataset.name}, use_cache = {str(use_cache)}:')
+    if trial:
+        print("\t⚠️ WARNING: Using trial dataset!!!")
 
     if trial:
         folder = FOLDER_DATA_TRIAL if folder is None else folder
         is_trial = True
-        print("⚠️ WARNING: Using trial dataset!!!")
     else:
         folder = FOLDER_DATA if folder is None else folder
 
+    csv_file = folder + datasets[dataset].csv_file
+    cache_file = folder + datasets[dataset].cache_file
+    load_file = load_native_corpus \
+        if dataset == Dataset.NATIVE \
+        else read_pandas_csv
+
     if use_cache:
-        vocabulary = pd.read_pickle(folder + VOCABULARY_CACHE) \
-            if os.path.exists(folder + VOCABULARY_CACHE) \
-            else pd.read_csv(folder + VOCABULARY_CSV, sep=';')
-        readers = pd.read_pickle(folder + READERS_CACHE) \
-            if os.path.exists(folder + READERS_CACHE) \
-            else pd.read_csv(folder + READERS_CSV, sep=';')
-        literature = pd.read_pickle(folder + LITERATURE_CACHE) \
-            if os.path.exists(folder + LITERATURE_CACHE) \
-            else pd.read_csv(folder + LITERATURE_CSV, sep=';')
-        native = pd.read_pickle(folder + NATIVE_CACHE) \
-            if os.path.exists(folder + NATIVE_CACHE) \
-            else load_native_corpus()
-
+        dataframe = pd.read_pickle(cache_file) \
+            if os.path.exists(cache_file) \
+            else load_file(csv_file)
     else:
-        vocabulary = pd.read_csv(folder + VOCABULARY_CSV, sep=';')
-        readers = pd.read_csv(folder + READERS_CSV, sep=';')
-        literature = pd.read_csv(folder + LITERATURE_CSV, sep=';')
-        native = load_native_corpus()
+        dataframe = load_file(csv_file)
 
-    return vocabulary, readers, literature , native
+    print(f'\t{dataset.name} loaded!')
+    return dataframe
 
 
-def load_native_corpus() -> pd.DataFrame:
+def read_pandas_csv(path: str) -> pd.DataFrame:
+    print(f'\tReading csv file at {path}')
+    return pd.read_csv(path, sep=';')
+
+
+def load_native_corpus(*args) -> pd.DataFrame:
     """Loads the native corpus from the NLTK library."""
     from nltk.corpus import cess_esp
     words_esp = cess_esp.words()

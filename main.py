@@ -1,7 +1,9 @@
 ###############################################################################
 #                      SPANISH GRADED READERS STATISTICS                      #
 ###############################################################################
-
+import multiprocessing
+from multiprocessing import Pool
+from os import cpu_count
 import time
 
 from graded_readers_stats import data, frequency, preprocess, tree
@@ -13,11 +15,71 @@ from graded_readers_stats.constants import (
 )
 
 
+def calculatestar(args):
+    return calculate(*args)
+
+
+def calculate(func, args):
+    return func(*args)
+
+
 def main():
     start = time.time()
 
+    # vocab = data.load(
+    #     dataset=data.Dataset.VOCABULARY,
+    #     trial=True,
+    #     use_cache=False
+    # )
+    # return vocab
+    num_processes = cpu_count()
+    tasks = [
+        (data.load, (ds, True, True))
+        for ds in data.Dataset
+    ]
+    # items = []
+    # for t in tasks:
+    #     items.append(calculate(*t))
+    # print('DONE!')
+    # print('Total time: %d secs' % (time.time() - start))
+    # print()
+    # vocab, reader, litera, native = items
+    # return vocab, reader, litera, native
+
+    with Pool(processes=num_processes) as pool:
+        # result = pool.apply_async(calculate, args=(plus, (1, 2)))
+        # result = pool.apply_async(plus, (1, 2))
+        # print(result.get())
+        # tasks = [pool.apply_async(plus, args=(i, 2)) for i in range(5)]
+        # for t in tasks:
+        #     print(t.get())
+        # return 1, 2, 3, 4
+        # return
+        # results = [
+        #     pool.apply_async(data.load, args=(ds, True, True))
+        #     for ds in data.Dataset
+        # ]
+        # items = []
+        # for r in results:
+        #     items.append(r.get())
+        # vocab, reader, litera, native = pool.map(
+        #     printstuff,
+        #     ['a', 'b', 'c', 'd']
+        #     # [(dataset, True, True) for dataset in data.Dataset]
+        # )
+        vocab, reader, litera, native  = pool.map(calculatestar, tasks)
+        # vocab, reader, litera, native = items
+        print('DONE!')
+        print('Total time: %d secs' % (time.time() - start))
+        print()
+        return vocab, reader, litera, native
+
     # Load data
-    vocab, reader, litera, native = data.load(trial=True, use_cache=True)
+    vocab, reader, litera, native = data.load(trial=False, use_cache=True)
+    print('DONE!')
+    print('Total time: %d secs' % (time.time() - start))
+    print()
+    return vocab, reader, litera, native
 
     # Preprocess data
     vocab = preprocess.run(vocab, preprocess.vocabulary_pipeline)
@@ -132,7 +194,10 @@ def main():
 ###############################################################################
 
 if __name__ == '__main__':
+    # vocab = main()
     vocab, reader, litera, native = main()
+    print('Finished')
+    # main()
 
 # Uncomment to print profiling results
 # if __name__ == '__main__':
