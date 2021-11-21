@@ -12,6 +12,7 @@ pip install -r requirements.txt
 Execute in Python Console to download files:
 ```python console
 stanza.download('es')
+nltk.download('cess_esp')
 ```
 
 ## Usage
