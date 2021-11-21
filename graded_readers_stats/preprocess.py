@@ -31,7 +31,6 @@ def set_column(func, src, dst, args=()):
     """
 
     def modify(df):
-        # Columns not restored from cache won't appear in the DataFrame.
         # Run `func` only for new / not restored from cache columns.
         if dst not in df.columns:
             df[dst] = func(df[src], *args)
@@ -83,17 +82,12 @@ def get_fields(documents, key):
     return [d.get(key, True) for d in documents]
 
 
-# REMINDER:
-# 1. Refactor this function to work with context words as well.
-# 2. Then find locations of context words.
-# 3. Then count words and totals.
-# 4. Then calculate the frequency of each context word.
 def vocabs_locations_in_texts(
         vocabs: DataFrame,
         texts: DataFrame,
         column: str,
         is_context: bool = False
-) -> None:
+) -> (str, [(int, (int, int))]):
 
     if is_context:
         # When processing context words, we restructure the list of words
@@ -131,7 +125,8 @@ def vocabs_locations_in_texts(
             loc_docs.append(loc_doc)
         loc_phrases.append(loc_docs)
     column_mid_name = ' ' + CONTEXT + ' ' if is_context else ' '
-    vocabs[column + column_mid_name + LOCATIONS] = loc_phrases
+    column_full_name = column + column_mid_name + LOCATIONS
+    return column_full_name, loc_phrases
 
 
 def print_words_at_locations(vocabulary, texts, is_context=False):
@@ -201,17 +196,23 @@ def collect_vocab_context_in_texts(
 
 
 text_analysis_pipeline = [
-    set_column(read_files, src=COL_TEXT_FILE, dst=COL_RAW_TEXT),
-    set_column(make_stanza_docs, src=COL_RAW_TEXT, dst=COL_STANZA_DOC),
-    set_column(get_fields, src=COL_STANZA_DOC, dst=COL_LEMMA, args=('lemma',)),
+    (read_files, COL_TEXT_FILE, COL_RAW_TEXT),
+    (make_stanza_docs, COL_RAW_TEXT, COL_STANZA_DOC),
+    (get_fields, COL_STANZA_DOC, COL_LEMMA, ('lemma',)),
 ]
 vocabulary_pipeline = [
-    set_column(make_stanza_docs, src=COL_LEXICAL_ITEM, dst=COL_STANZA_DOC),
-    set_column(get_fields, src=COL_STANZA_DOC, dst=COL_LEMMA, args=('lemma',)),
+    (make_stanza_docs, COL_LEXICAL_ITEM, COL_STANZA_DOC),
+    (get_fields, COL_STANZA_DOC, COL_LEMMA, ('lemma',)),
 ]
+
+
+def update_dataframe_with_func(df, func, src, dst, args=()):
+    if dst not in df.columns:
+        df[dst] = func(df[src], *args)
+    return df
 
 
 def run(df: DataFrame, pipes: [Pipe]) -> DataFrame:
-    for pipe in pipes:
-        df = pipe(df)
+    for params in pipes:
+        df = update_dataframe_with_func(df, *params)
     return df
