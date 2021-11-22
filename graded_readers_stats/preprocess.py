@@ -146,15 +146,16 @@ def collect_all_vocab_contexts_in_texts(
         vocabs: DataFrame,
         texts: DataFrame,
         column: str
-) -> DataFrame:
-    vocabs[column + ' ' + CONTEXT] = vocabs.apply(
+) -> (str, Series):
+    name = column + ' ' + CONTEXT
+    series = vocabs.apply(
         lambda x: collect_vocab_context_in_texts(
             x[column + ' ' + LOCATIONS],
             texts[COL_STANZA_DOC]
         ),
         axis=1
     )
-    return vocabs
+    return name, series
 
 
 def collect_vocab_context_in_texts(
