@@ -127,10 +127,10 @@ def load_native_corpus(*args) -> pd.DataFrame:
 
     # Sanitize metadata
     import re
-    native = re.sub(r'-Fpa-', '(', native)
-    native = re.sub(r'-Fpt-', ')', native)
+    native = re.sub(r'-[Ff]pa-', '(', native)
+    native = re.sub(r'-[Ff]pt-', ')', native)
     native = re.sub(r'\*0\*', '', native)
-    native = re.sub(r'-fe-', '', native)
+    native = re.sub(r'-[Ff]e-', '', native)
 
     dataframe = pd.DataFrame({COL_RAW_TEXT: [native], 'Level': ['Native']})
     return dataframe
