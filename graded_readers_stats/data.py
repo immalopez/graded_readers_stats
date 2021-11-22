@@ -103,6 +103,11 @@ def load_native_corpus(*args) -> pd.DataFrame:
             'earth',
             'word2',
             'summer',
+            '-Fpa-',
+            'BetweenParenthesis',
+            '-Fpt-',
+            '-fe-',
+            '*0*',
             'word3',
             'sun',
             ' ',
@@ -119,6 +124,14 @@ def load_native_corpus(*args) -> pd.DataFrame:
             'morning',
         ]
     native = ' '.join([w.replace('_', ' ') for w in words_esp])
+
+    # Sanitize metadata
+    import re
+    native = re.sub(r'-Fpa-', '(', native)
+    native = re.sub(r'-Fpt-', ')', native)
+    native = re.sub(r'\*0\*', '', native)
+    native = re.sub(r'-fe-', '', native)
+
     dataframe = pd.DataFrame({COL_RAW_TEXT: [native], 'Level': ['Native']})
     return dataframe
 
