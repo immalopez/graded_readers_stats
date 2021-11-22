@@ -139,19 +139,20 @@ def load_native_corpus(*args) -> pd.DataFrame:
 def save(
         vocabulary: pd.DataFrame,
         readers: pd.DataFrame,
-        literature: pd.DataFrame
+        literature: pd.DataFrame,
+        folder: Optional[str] = None
 ) -> None:
 
     if is_trial:
-        folder = FOLDER_DATA_TRIAL
+        folder = FOLDER_DATA_TRIAL if folder is None else folder
         print("Saving data (TRIAL)")
     else:
-        folder = FOLDER_DATA
+        folder = FOLDER_DATA if folder is None else folder
         print("Saving data (REAL)")
 
-    vocabulary.to_pickle(folder + VOCABULARY_CACHE)
-    readers.to_pickle(folder + READERS_CACHE)
-    literature.to_pickle(folder + LITERATURE_CACHE)
+    vocabulary.to_pickle(folder + datasets[Dataset.VOCABULARY].cache_file)
+    readers.to_pickle(folder + datasets[Dataset.READERS].cache_file)
+    literature.to_pickle(folder + datasets[Dataset.LITERATURE].cache_file)
 
 # ================================= LOAD DATA =================================
 
