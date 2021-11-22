@@ -142,32 +142,32 @@ def main():
         for name, freq in freqs:
             vocab[name] = freq
 
+        # Tree widths and depths
+        tree_tasks = [
+            (tree.make_trees_for_occurrences, (vocab, reader, READER)),
+            (tree.make_trees_for_occurrences, (vocab, litera, LITERA)),
+            (tree.make_trees_for_occurrences, (vocab, native, NATIVE)),
+        ]
+        trees = pool.map(calculatestar, tree_tasks)
+        for name, tr in trees:
+            vocab[name] = tr
+
+        tree_prop_tasks = [
+            (tree.calculate_tree_props, (vocab, READER)),
+            (tree.calculate_tree_props, (vocab, LITERA)),
+            (tree.calculate_tree_props, (vocab, NATIVE)),
+        ]
+        props = pool.map(calculatestar, tree_prop_tasks)
+        for name, prop in props:
+            vocab[name] = prop
+
+        # vocabs.drop(columns=['Readers_locations'], inplace=True)
+        # data.save(vocabs, reader, litera)
+
         print('DONE!')
         print('Total time: %d secs' % (time.time() - start))
         print()
         return vocab, reader, litera, native
-
-
-    # frequency.count_vocab_context_in_sentences_by_groups(
-    #     vocab, reader_by_level, column=READER
-    # )
-
-    # Tree widths and depths
-    tree.make_trees_for_occurrences(vocab, reader, column=READER)
-    tree.make_trees_for_occurrences(vocab, litera, column=LITERA)
-    tree.make_trees_for_occurrences(vocab, native, column=NATIVE)
-
-    tree.calculate_tree_props(vocab, column=READER)
-    tree.calculate_tree_props(vocab, column=LITERA)
-    tree.calculate_tree_props(vocab, column=NATIVE)
-
-    # vocabs.drop(columns=['Readers_locations'], inplace=True)
-    # data.save(vocabs, reader, litera)
-
-    print('DONE!')
-    print('Total time: %d secs' % (time.time() - start))
-    print()
-    return vocab, reader, litera, native
 
 
 ###############################################################################

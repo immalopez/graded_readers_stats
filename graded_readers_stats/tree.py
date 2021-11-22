@@ -13,13 +13,13 @@ def make_trees_for_occurrences(
         vocabs: DataFrame,
         texts: DataFrame,
         column: str
-) -> None:
+) -> (str, [[(int, Node)]]):
     in_column_locations = column + ' ' + LOCATIONS
     out_column_trees = column + ' ' + 'trees'
 
     rows = vocabs[in_column_locations]
     trees = [make_tree(row, texts[COL_STANZA_DOC]) for row in rows]
-    vocabs[out_column_trees] = trees
+    return out_column_trees, trees
 
 
 def make_tree(
@@ -52,24 +52,19 @@ def make_tree_for_sent(sent: Sentence) -> Node:
 def calculate_tree_props(
         vocabs: DataFrame,
         column: str
-) -> None:
+) -> (str, Series):
     in_column_trees = column + ' ' + TREES
     out_column_trees_props = column + ' ' + TREES_PROPS
-    vocabs[out_column_trees_props] = vocabs.apply(
+    values = vocabs.apply(
         lambda x: get_tree_props(x[in_column_trees]),
         axis=1
     )
+    return out_column_trees_props, values
 
 
 def get_tree_props(
         doc_trees: [[Node]]
 ) -> (int, int, int, int):  # min_width, max_width, min_height, max_height
-
-    from collections import namedtuple
-    TreeProps = namedtuple(
-        'TreeProps',
-        ['min_width', 'max_width', 'min_height', 'max_height']
-    )
 
     min_w, max_w, min_h, max_h = None, None, None, None
 
@@ -85,4 +80,4 @@ def get_tree_props(
             min_h = height if min_h is None else min(min_h, height)
             max_h = height if max_h is None else max(max_h, height)
 
-    return TreeProps(min_w, max_w, min_h, max_h)
+    return min_w, max_w, min_h, max_h
