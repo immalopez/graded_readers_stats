@@ -1,3 +1,4 @@
 .idea/
 __pycache__/
 graded_readers_stats/__pycache__/
+.DS_Store
