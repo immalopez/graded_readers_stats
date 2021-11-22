@@ -12,19 +12,20 @@ def count_vocab_in_texts_grouped_by_level(
         sentences_by_groups: DataFrameGroupBy,
         column: str,
         is_context: bool = False
-) -> None:
+) -> (str, Series):
     for group_name in sentences_by_groups.groups:
         ctx_name = ' ' + CONTEXT + ' ' if is_context else ' '
         in_column_locations = column + ctx_name + LOCATIONS
         out_column_counts = column + ctx_name + COUNTS + ' ' + group_name
 
-        phrases[out_column_counts] = phrases.apply(
+        counts = phrases.apply(
             lambda x: count_phrase_occurrences_v1(
                 x[in_column_locations],
                 sentences_by_groups.get_group(group_name).index
             ),
             axis=1
         )
+        return out_column_counts, counts
 
 
 def count_phrase_occurrences_v1(
@@ -54,13 +55,14 @@ def total_count_in_texts_grouped_by_level(
         in_column_locations = column + ctx_name + LOCATIONS
         out_column_counts = column + ctx_name + TOTAL_COUNTS + ' ' + group_name
 
-        vocabs[out_column_counts] = vocabs.apply(
+        totals = vocabs.apply(
             lambda x: total_counts_for_vocab(
                 x[in_column_locations],
                 sentences_by_groups.get_group(group_name)[COL_LEMMA]
             ),
             axis=1
         )
+        return out_column_counts, totals
 
 
 def total_counts_for_vocab(
@@ -95,15 +97,16 @@ def frequency_in_texts_grouped_by_level(
         sentences_by_groups: DataFrameGroupBy,
         column: str,
         is_context: bool = False
-) -> None:
+) -> (str, Series):
     for group_name in sentences_by_groups.groups:
         ctx_name = ' ' + CONTEXT + ' ' if is_context else ' '
         column_count = column + ctx_name + COUNTS + ' ' + group_name
         column_total_count = column + ctx_name + TOTAL_COUNTS + ' ' + group_name
         column_frequency = column + ctx_name + FREQUENCY + ' ' + group_name
 
-        vocabs[column_frequency] = vocabs.apply(
+        freqs = vocabs.apply(
             lambda x: x[column_count] / x[column_total_count]
             if x[column_total_count] > 0 else 0,
             axis=1
         )
+        return column_frequency, freqs

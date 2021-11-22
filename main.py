@@ -50,44 +50,47 @@ def main():
         for name, locations in location_columns:
             vocab[name] = locations
 
+        reader_by_level = reader.groupby(COL_LEVEL)
+        litera_by_level = litera.groupby(COL_LEVEL)
+        native_by_level = native.groupby(COL_LEVEL)
+
+        # Vocabulary Frequencies
+        count_tasks = [
+            (frequency.count_vocab_in_texts_grouped_by_level,
+             (vocab, reader_by_level, READER)),
+            (frequency.count_vocab_in_texts_grouped_by_level,
+             (vocab, litera_by_level, LITERA)),
+            (frequency.count_vocab_in_texts_grouped_by_level,
+             (vocab, native_by_level, NATIVE)),
+            (frequency.total_count_in_texts_grouped_by_level,
+             (vocab, reader_by_level, READER)),
+            (frequency.total_count_in_texts_grouped_by_level,
+             (vocab, litera_by_level, LITERA)),
+            (frequency.total_count_in_texts_grouped_by_level,
+             (vocab, native_by_level, NATIVE)),
+        ]
+        freqs = pool.map(calculatestar, count_tasks)
+        for name, freq in freqs:
+            vocab[name] = freq
+
+        # Frequencies
+        freqs_tasks = [
+            (frequency.frequency_in_texts_grouped_by_level,
+             (vocab, reader_by_level, READER)),
+            (frequency.frequency_in_texts_grouped_by_level,
+             (vocab, litera_by_level, LITERA)),
+            (frequency.frequency_in_texts_grouped_by_level,
+             (vocab, native_by_level, NATIVE)),
+        ]
+        freqs = pool.map(calculatestar, freqs_tasks)
+        for name, freq in freqs:
+            vocab[name] = freq
+
         print('DONE!')
         print('Total time: %d secs' % (time.time() - start))
         print()
         return vocab, reader, litera, native
 
-
-    reader_by_level = reader.groupby(COL_LEVEL)
-    litera_by_level = litera.groupby(COL_LEVEL)
-    native_by_level = native.groupby(COL_LEVEL)
-
-    # Vocabulary Frequencies
-    frequency.count_vocab_in_texts_grouped_by_level(
-        vocab, reader_by_level, column=READER
-    )
-    frequency.count_vocab_in_texts_grouped_by_level(
-        vocab, litera_by_level, column=LITERA
-    )
-    frequency.count_vocab_in_texts_grouped_by_level(
-        vocab, native_by_level, column=NATIVE
-    )
-    frequency.total_count_in_texts_grouped_by_level(
-        vocab, reader_by_level, column=READER
-    )
-    frequency.total_count_in_texts_grouped_by_level(
-        vocab, litera_by_level, column=LITERA
-    )
-    frequency.total_count_in_texts_grouped_by_level(
-        vocab, native_by_level, column=NATIVE
-    )
-    frequency.frequency_in_texts_grouped_by_level(
-        vocab, reader_by_level, column=READER
-    )
-    frequency.frequency_in_texts_grouped_by_level(
-        vocab, litera_by_level, column=LITERA
-    )
-    frequency.frequency_in_texts_grouped_by_level(
-        vocab, native_by_level, column=NATIVE
-    )
 
     # Vocabulary's Context Frequencies
     preprocess.collect_all_vocab_contexts_in_texts(
