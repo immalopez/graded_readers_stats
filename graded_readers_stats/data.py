@@ -140,6 +140,7 @@ def save(
         vocabulary: pd.DataFrame,
         readers: pd.DataFrame,
         literature: pd.DataFrame,
+        native: pd.DataFrame,
         folder: Optional[str] = None
 ) -> None:
 
@@ -153,6 +154,8 @@ def save(
     vocabulary.to_pickle(folder + datasets[Dataset.VOCABULARY].cache_file)
     readers.to_pickle(folder + datasets[Dataset.READERS].cache_file)
     literature.to_pickle(folder + datasets[Dataset.LITERATURE].cache_file)
+    native.to_pickle(folder + datasets[Dataset.NATIVE].cache_file)
+
 
 # ================================= LOAD DATA =================================
 

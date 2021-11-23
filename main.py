@@ -23,15 +23,20 @@ def calculate(func, args):
 
 
 def main():
-    start = time.time()
+    start_main = time.time()
 
     num_processes = cpu_count()
+    print(f"Creating pool with number of processes: {num_processes}")
     with Pool(processes=num_processes) as pool:
-        # Load data
-        data_tasks = [(data.load, (ds, True, False)) for ds in data.Dataset]
-        vocab, reader, litera, native  = pool.map(calculatestar, data_tasks)
 
-        # Preprocess data
+        print('Loading data...')
+        start = time.time()
+        data_tasks = [(data.load, (ds, True, False)) for ds in data.Dataset]
+        vocab, reader, litera, native = pool.map(calculatestar, data_tasks)
+        print(f'Data loaded in {time.time() - start} seconds')
+
+        print('Preprocessing data...')
+        start = time.time()
         process_tasks = [
             (preprocess.run, (vocab, preprocess.vocabulary_pipeline)),
             (preprocess.run, (reader, preprocess.text_analysis_pipeline)),
@@ -39,8 +44,10 @@ def main():
             (preprocess.run, (native, preprocess.text_analysis_pipeline)),
         ]
         vocab, reader, litera, native = pool.map(calculatestar, process_tasks)
+        print(f'Data preprocessed in {time.time() - start} seconds')
 
-        # Find vocab in texts
+        print('Searching for vocabulary in texts...')
+        start = time.time()
         location_tasks = [
             (preprocess.vocabs_locations_in_texts, (vocab, reader, READER)),
             (preprocess.vocabs_locations_in_texts, (vocab, litera, LITERA)),
@@ -49,12 +56,17 @@ def main():
         location_columns = pool.map(calculatestar, location_tasks)
         for name, locations in location_columns:
             vocab[name] = locations
+        print(f'Vocabulary found in texts in {time.time() - start} seconds')
 
+        print('Groping texts by level...')
+        start = time.time()
         reader_by_level = reader.groupby(COL_LEVEL)
         litera_by_level = litera.groupby(COL_LEVEL)
         native_by_level = native.groupby(COL_LEVEL)
+        print(f'Texts grouped by level in {time.time() - start} seconds')
 
-        # Vocabulary Frequencies
+        print('Counting frequency of vocabulary in texts...')
+        start = time.time()
         count_tasks = [
             (frequency.count_vocab_in_texts_grouped_by_level,
              (vocab, reader_by_level, READER)),
@@ -72,8 +84,10 @@ def main():
         counts = pool.map(calculatestar, count_tasks)
         for name, values in counts:
             vocab[name] = values
+        print(f'Frequency counted in texts in {time.time() - start} seconds')
 
-        # Frequencies
+        print('Calculating frequencies...')
+        start = time.time()
         freqs_tasks = [
             (frequency.frequency_in_texts_grouped_by_level,
              (vocab, reader_by_level, READER)),
@@ -85,8 +99,10 @@ def main():
         freqs = pool.map(calculatestar, freqs_tasks)
         for name, freq in freqs:
             vocab[name] = freq
+        print(f'Frequencies calculated in {time.time() - start} seconds')
 
-        # Vocabulary's Context Frequencies
+        print('Collecting context for vocabulary found in texts...')
+        start = time.time()
         collect_task = [
             (preprocess.collect_all_vocab_contexts_in_texts,
              (vocab, reader, READER)),
@@ -98,7 +114,10 @@ def main():
         context_texts = pool.map(calculatestar, collect_task)
         for name, contexts in context_texts:
             vocab[name] = contexts
+        print(f'Contexts collected in {time.time() - start} seconds')
 
+        print('Searching for context in texts...')
+        start = time.time()
         location_tasks = [
             (preprocess.vocabs_locations_in_texts,
              (vocab, reader, READER, True)),
@@ -110,7 +129,10 @@ def main():
         locations = pool.map(calculatestar, location_tasks)
         for name, locs in locations:
             vocab[name] = locs
+        print(f'Context words found in texts in {time.time() - start} seconds')
 
+        print('Counting frequency of context in texts...')
+        start = time.time()
         count_tasks = [
             (frequency.count_vocab_in_texts_grouped_by_level,
              (vocab, reader_by_level, READER, True)),
@@ -128,8 +150,10 @@ def main():
         counts = pool.map(calculatestar, count_tasks)
         for name, values in counts:
             vocab[name] = values
+        print(f'Context counted in texts in {time.time() - start} seconds')
 
-        # Context Frequencies
+        print('Calculating context frequencies...')
+        start = time.time()
         freqs_tasks = [
             (frequency.frequency_in_texts_grouped_by_level,
              (vocab, reader_by_level, READER, True)),
@@ -141,8 +165,10 @@ def main():
         freqs = pool.map(calculatestar, freqs_tasks)
         for name, freq in freqs:
             vocab[name] = freq
+        print(f'Frequencies calculated in {time.time() - start} seconds')
 
-        # Tree widths and depths
+        print('Make trees for vocabulary...')
+        start = time.time()
         tree_tasks = [
             (tree.make_trees_for_occurrences, (vocab, reader, READER)),
             (tree.make_trees_for_occurrences, (vocab, litera, LITERA)),
@@ -151,7 +177,10 @@ def main():
         trees = pool.map(calculatestar, tree_tasks)
         for name, tr in trees:
             vocab[name] = tr
+        print(f'Trees made in {time.time() - start} seconds')
 
+        print('Calculating tree properties...')
+        start = time.time()
         tree_prop_tasks = [
             (tree.calculate_tree_props, (vocab, READER)),
             (tree.calculate_tree_props, (vocab, LITERA)),
@@ -160,12 +189,16 @@ def main():
         props = pool.map(calculatestar, tree_prop_tasks)
         for name, prop in props:
             vocab[name] = prop
+        print(f'Tree properties calculated in {time.time() - start} seconds')
 
+        print('Saving data...')
+        start = time.time()
         # vocabs.drop(columns=['Readers_locations'], inplace=True)
-        # data.save(vocabs, reader, litera)
+        data.save(vocab, reader, litera, native)
+        print(f'Data saved in {time.time() - start} seconds')
 
         print('DONE!')
-        print('Total time: %d secs' % (time.time() - start))
+        print('Total time: %d secs' % (time.time() - start_main))
         print()
         return vocab, reader, litera, native
 
