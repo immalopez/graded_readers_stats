@@ -16,8 +16,9 @@ from graded_readers_stats.constants import (
 
 
 def main():
-    USE_CACHE = False
-    TRIAL = True
+    trial = True
+    use_cache = False
+
     start_main = time.time()
 
     num_processes = cpu_count()
@@ -27,7 +28,9 @@ def main():
 
         print('Loading data...')
         start = time.time()
-        data_tasks = [(data.load, (ds, TRIAL, USE_CACHE)) for ds in data.Dataset]
+        data_tasks = [
+            (data.load, (ds, trial, use_cache)) for ds in data.Dataset
+        ]
         vocab, reader, litera, native = pool.map(calculatestar, data_tasks)
         duration = time.time() - start
         print(f'Data loaded in {duration:.2f} seconds')
@@ -214,7 +217,7 @@ def main():
         print('Saving data...')
         start = time.time()
         # vocabs.drop(columns=['Readers_locations'], inplace=True)
-        data.save(TRIAL, vocab, reader, litera, native, None)
+        data.save(trial, vocab, reader, litera, native, None)
         duration = time.time() - start
         print(f'Data saved in {duration:.2f} seconds')
         print()
