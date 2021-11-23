@@ -6,6 +6,7 @@ from multiprocessing import Pool
 from os import cpu_count
 
 from graded_readers_stats import data, frequency, preprocess, tree
+from graded_readers_stats.utils import calculatestar
 from graded_readers_stats.constants import (
     READER,
     LITERA,
@@ -14,27 +15,23 @@ from graded_readers_stats.constants import (
 )
 
 
-def calculatestar(args):
-    return calculate(*args)
-
-
-def calculate(func, args):
-    return func(*args)
-
-
 def main():
+    USE_CACHE = False
+    TRIAL = True
     start_main = time.time()
 
     num_processes = cpu_count()
     print(f"Creating pool with number of processes: {num_processes}")
+    print()
     with Pool(processes=num_processes) as pool:
 
         print('Loading data...')
         start = time.time()
-        data_tasks = [(data.load, (ds, True, False)) for ds in data.Dataset]
+        data_tasks = [(data.load, (ds, TRIAL, USE_CACHE)) for ds in data.Dataset]
         vocab, reader, litera, native = pool.map(calculatestar, data_tasks)
         duration = time.time() - start
         print(f'Data loaded in {duration:.2f} seconds')
+        print()
 
         print('Preprocessing data...')
         start = time.time()
@@ -47,6 +44,7 @@ def main():
         vocab, reader, litera, native = pool.map(calculatestar, process_tasks)
         duration = time.time() - start
         print(f'Data preprocessed in {duration:.2f} seconds')
+        print()
 
         print('Searching for vocabulary in texts...')
         start = time.time()
@@ -60,6 +58,7 @@ def main():
             vocab[name] = locations
         duration = time.time() - start
         print(f'Vocabulary found in texts in {duration:.2f} seconds')
+        print()
 
         print('Groping texts by level...')
         start = time.time()
@@ -68,6 +67,7 @@ def main():
         native_by_level = native.groupby(COL_LEVEL)
         duration = time.time() - start
         print(f'Texts grouped by level in {duration:.2f} seconds')
+        print()
 
         print('Counting frequency of vocabulary in texts...')
         start = time.time()
@@ -90,6 +90,7 @@ def main():
             vocab[name] = values
         duration = time.time() - start
         print(f'Frequency counted in texts in {duration:.2f} seconds')
+        print()
 
         print('Calculating frequencies...')
         start = time.time()
@@ -106,6 +107,7 @@ def main():
             vocab[name] = freq
         duration = time.time() - start
         print(f'Frequencies calculated in {duration:.2f} seconds')
+        print()
 
         print('Collecting context for vocabulary found in texts...')
         start = time.time()
@@ -122,6 +124,7 @@ def main():
             vocab[name] = contexts
         duration = time.time() - start
         print(f'Contexts collected in {duration:.2f} seconds')
+        print()
 
         print('Searching for context in texts...')
         start = time.time()
@@ -138,6 +141,7 @@ def main():
             vocab[name] = locs
         duration = time.time() - start
         print(f'Context words found in texts in {duration:.2f} seconds')
+        print()
 
         print('Counting frequency of context in texts...')
         start = time.time()
@@ -160,6 +164,7 @@ def main():
             vocab[name] = values
         duration = time.time() - start
         print(f'Context counted in texts in {duration:.2f} seconds')
+        print()
 
         print('Calculating context frequencies...')
         start = time.time()
@@ -176,6 +181,7 @@ def main():
             vocab[name] = freq
         duration = time.time() - start
         print(f'Frequencies calculated in {duration:.2f} seconds')
+        print()
 
         print('Make trees for vocabulary...')
         start = time.time()
@@ -189,6 +195,7 @@ def main():
             vocab[name] = tr
         duration = time.time() - start
         print(f'Trees made in {duration:.2f} seconds')
+        print()
 
         print('Calculating tree properties...')
         start = time.time()
@@ -202,13 +209,15 @@ def main():
             vocab[name] = prop
         duration = time.time() - start
         print(f'Tree properties calculated in {duration:.2f} seconds')
+        print()
 
         print('Saving data...')
         start = time.time()
         # vocabs.drop(columns=['Readers_locations'], inplace=True)
-        data.save(vocab, reader, litera, native, None)
+        data.save(TRIAL, vocab, reader, litera, native, None)
         duration = time.time() - start
         print(f'Data saved in {duration:.2f} seconds')
+        print()
 
         print('DONE!')
         print('Total time: %d secs' % (time.time() - start_main))

@@ -1,6 +1,14 @@
 from typing import Optional, Tuple
 
 
+def calculatestar(args):
+    return calculate(*args)
+
+
+def calculate(func, args):
+    return func(*args)
+
+
 def first_occurrence_of_vocab_in_sentence(
         vocab: [str],
         sentence: [str]

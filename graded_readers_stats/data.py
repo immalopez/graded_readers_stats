@@ -137,6 +137,7 @@ def load_native_corpus(*args) -> pd.DataFrame:
 
 
 def save(
+        is_trial: bool,
         vocabulary: pd.DataFrame,
         readers: pd.DataFrame,
         literature: pd.DataFrame,
