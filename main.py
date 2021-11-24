@@ -16,7 +16,7 @@ from graded_readers_stats.constants import (
 
 
 def main():
-    trial = True
+    trial = False
     use_cache = False
 
     start_main = time.time()
@@ -89,8 +89,9 @@ def main():
              (vocab, native_by_level, NATIVE)),
         ]
         counts = pool.map(calculatestar, count_tasks)
-        for name, values in counts:
-            vocab[name] = values
+        for result in counts:
+            for name, values in result:
+                vocab[name] = values
         duration = time.time() - start
         print(f'Frequency counted in texts in {duration:.2f} seconds')
         print()
@@ -106,8 +107,9 @@ def main():
              (vocab, native_by_level, NATIVE)),
         ]
         freqs = pool.map(calculatestar, freqs_tasks)
-        for name, freq in freqs:
-            vocab[name] = freq
+        for result in freqs:
+            for name, freq in result:
+                vocab[name] = freq
         duration = time.time() - start
         print(f'Frequencies calculated in {duration:.2f} seconds')
         print()
@@ -163,8 +165,9 @@ def main():
              (vocab, native_by_level, NATIVE, True)),
         ]
         counts = pool.map(calculatestar, count_tasks)
-        for name, values in counts:
-            vocab[name] = values
+        for result in counts:
+            for name, values in result:
+                vocab[name] = values
         duration = time.time() - start
         print(f'Context counted in texts in {duration:.2f} seconds')
         print()
@@ -180,8 +183,9 @@ def main():
              (vocab, native_by_level, NATIVE, True)),
         ]
         freqs = pool.map(calculatestar, freqs_tasks)
-        for name, freq in freqs:
-            vocab[name] = freq
+        for result in freqs:
+            for name, freq in result:
+                vocab[name] = freq
         duration = time.time() - start
         print(f'Frequencies calculated in {duration:.2f} seconds')
         print()
@@ -221,6 +225,17 @@ def main():
         duration = time.time() - start
         print(f'Data saved in {duration:.2f} seconds')
         print()
+
+        print('Saving XLSX...')
+        import xlsxwriter
+        import pandas as pd
+        writer = pd.ExcelWriter(
+            'graded_readers_stats.xlsx',
+            engine='xlsxwriter'
+        )
+        vocab.to_excel(writer)
+        writer.save()
+        print('XLSX saved.')
 
         print('DONE!')
         print('Total time: %d secs' % (time.time() - start_main))

@@ -13,6 +13,7 @@ def count_vocab_in_texts_grouped_by_level(
         column: str,
         is_context: bool = False
 ) -> (str, Series):
+    results = []
     for group_name in sentences_by_groups.groups:
         ctx_name = ' ' + CONTEXT + ' ' if is_context else ' '
         in_column_locations = column + ctx_name + LOCATIONS
@@ -25,7 +26,8 @@ def count_vocab_in_texts_grouped_by_level(
             ),
             axis=1
         )
-        return out_column_counts, counts
+        results.append((out_column_counts, counts))
+    return results
 
 
 def count_phrase_occurrences_v1(
@@ -50,6 +52,7 @@ def total_count_in_texts_grouped_by_level(
         column: str,
         is_context: bool = False
 ):
+    results = []
     for group_name in sentences_by_groups.groups:
         ctx_name = ' ' + CONTEXT + ' ' if is_context else ' '
         in_column_locations = column + ctx_name + LOCATIONS
@@ -62,7 +65,8 @@ def total_count_in_texts_grouped_by_level(
             ),
             axis=1
         )
-        return out_column_counts, totals
+        results.append((out_column_counts, totals))
+    return results
 
 
 def total_counts_for_vocab(
@@ -98,6 +102,7 @@ def frequency_in_texts_grouped_by_level(
         column: str,
         is_context: bool = False
 ) -> (str, Series):
+    results = []
     for group_name in sentences_by_groups.groups:
         ctx_name = ' ' + CONTEXT + ' ' if is_context else ' '
         column_count = column + ctx_name + COUNTS + ' ' + group_name
@@ -109,4 +114,5 @@ def frequency_in_texts_grouped_by_level(
             if x[column_total_count] > 0 else 0,
             axis=1
         )
-        return column_frequency, freqs
+        results.append((column_frequency, freqs))
+    return results
