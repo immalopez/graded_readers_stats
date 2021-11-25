@@ -82,6 +82,13 @@ def get_fields(documents, key):
     return [d.get(key, True) for d in documents]
 
 
+def normalize(column):
+    return [[[word.lower()
+              for word in sent]
+             for sent in texts]
+            for texts in column]
+
+
 def vocabs_locations_in_texts(
         vocabs: DataFrame,
         texts: DataFrame,
@@ -173,7 +180,7 @@ def collect_vocab_context_in_texts(
             from string import punctuation
             sent_lemmas = [word.lemma.lower()
                            for word in sent.words
-                           if word.lemma not in punctuation]
+                           if word.lemma not in punctuation + r'¡¿–—']
 
             # optimized string replacement (implementation in C)
             # works on strings, not arrays, thus we don't use it for the moment
@@ -200,15 +207,17 @@ text_analysis_pipeline = [
     (read_files, COL_TEXT_FILE, COL_RAW_TEXT),
     (make_stanza_docs, COL_RAW_TEXT, COL_STANZA_DOC),
     (get_fields, COL_STANZA_DOC, COL_LEMMA, ('lemma',)),
+    (normalize, COL_LEMMA, COL_LEMMA),
 ]
 vocabulary_pipeline = [
     (make_stanza_docs, COL_LEXICAL_ITEM, COL_STANZA_DOC),
     (get_fields, COL_STANZA_DOC, COL_LEMMA, ('lemma',)),
+    (normalize, COL_LEMMA, COL_LEMMA),
 ]
 
 
 def update_dataframe_with_func(df, func, src, dst, args=()):
-    if dst not in df.columns:
+    if dst not in df.columns or src == dst:
         df[dst] = func(df[src], *args)
     return df
 
