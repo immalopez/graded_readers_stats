@@ -3,6 +3,7 @@
 ###############################################################################
 import time
 from multiprocessing import Pool
+import numpy as np
 
 from graded_readers_stats import data, frequency, preprocess, tree
 from graded_readers_stats.utils import calculatestar, NoPool
@@ -88,8 +89,8 @@ def main():
         ]
         counts = pool.map(calculatestar, count_tasks)
         for result in counts:
-            for name, values in result:
-                vocab[name] = values
+            for name, trees_matrix in result:
+                vocab[name] = trees_matrix
         duration = time.time() - start
         print(f'Frequency counted in texts in {duration:.2f} seconds')
         print()
@@ -164,8 +165,8 @@ def main():
         ]
         counts = pool.map(calculatestar, count_tasks)
         for result in counts:
-            for name, values in result:
-                vocab[name] = values
+            for name, trees_matrix in result:
+                vocab[name] = trees_matrix
         duration = time.time() - start
         print(f'Context counted in texts in {duration:.2f} seconds')
         print()
@@ -204,10 +205,25 @@ def main():
         trees = pool.map(calculatestar, tree_tasks)
         for name, tr in trees:
             vocab[name] = tr
-        # for groups in trees:
-        #     for group in groups:
-        #         name, values = group
-        #         vocab[name] = values
+
+        groups_by_source = {
+            READER: reader_by_level,
+            LITERA: litera_by_level,
+            NATIVE: native_by_level,
+        }
+        for source_index, source_name in enumerate(groups_by_source):
+            for group in groups_by_source[source_name]:
+                group_name = group[0]
+                group_index = group[1].index
+                col_name = f'{source_name}_{group_name}_trees'
+                trees_matrix = trees[source_index][1]
+                group_rows = []
+                for row in trees_matrix:
+                    row_values = [[]] * len(row)
+                    for idx in group_index:
+                        row_values[idx] = row[idx]
+                    group_rows.append(row_values)
+                vocab[col_name] = group_rows
         duration = time.time() - start
         print(f'Trees made in {duration:.2f} seconds')
         print()
@@ -235,13 +251,13 @@ def main():
         print()
 
         print('Saving XLSX...')
-        import xlsxwriter
-        import pandas as pd
-        writer = pd.ExcelWriter(
-            'graded_readers_stats.xlsx',
-            engine='xlsxwriter'
-        )
-        vocab.to_excel(writer)
+        # import xlsxwriter
+        # import pandas as pd
+        # writer = pd.ExcelWriter(
+        #     'graded_readers_stats.xlsx',
+        #     engine='xlsxwriter'
+        # )
+        # vocab.to_excel(writer)
         # writer.save()
         print('XLSX saved.')
 
