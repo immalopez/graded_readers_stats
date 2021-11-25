@@ -10,16 +10,66 @@ from graded_readers_stats._typing import *
 
 
 def make_trees_for_occurrences(
-        vocabs: DataFrame,
+        vocab: DataFrame,
         texts: DataFrame,
         column: str
 ) -> (str, [[(int, Node)]]):
     in_column_locations = column + ' ' + LOCATIONS
     out_column_trees = column + ' ' + 'trees'
 
-    rows = vocabs[in_column_locations]
+    rows = vocab[in_column_locations]
     trees = [make_tree(row, texts[COL_STANZA_DOC]) for row in rows]
     return out_column_trees, trees
+
+
+# Input: Vocab, Readers, Groups
+# Output: [(GroupName, Trees)]
+def make_trees_for_occurrences_v2(
+        vocab: DataFrame,
+        texts: DataFrame,
+        column: str,
+        groups: DataFrameGroupBy
+) -> (str, [[(int, Node)]]):
+    in_column_locations = column + ' ' + LOCATIONS
+    # out_column_trees = column + ' ' + 'trees'
+    print("Hello")
+
+    # result = []
+    # locations = vocab[in_column_locations]
+    # for group in groups:
+    #     group_name = group[0]
+    #     group_index = group[1].index
+    #     col_name = f'{column}_{group_name}_trees'
+    #     trees = []
+    #     for doc_locs in locations:
+    #         for doc_index, doc in enumerate(doc_locs):
+    #             if doc_index in group_index:
+    #                 trees.append(make_tree(doc_locs, texts[COL_STANZA_DOC]))
+    #             else:
+    #                 trees.append([])
+            # tree = make_tree(doc_locs, texts[COL_STANZA_DOC]) \
+            #     if row_i in group_index \
+            #     else []
+            # trees.append(tree)
+        # trees = [make_tree(row, texts[COL_STANZA_DOC])
+        #          if row_i in group_index else []
+        #          for row_i, row in enumerate(rows)]
+    #     group_result = (col_name, trees)
+    #     result.append(group_result)
+    # return result
+
+        # for row_locs in vocab[in_column_locations]:
+
+    # for group_name in groups.groups:
+    #     col_name = f'{column}_{group_name}_trees'
+    #     vocab[col_name] = None
+    #     mask = texts[COL_LEVEL] == group_name
+    #     vocab[col_name]
+    #     vocab.loc[mask, col_name] = make_tree()
+
+    # rows = vocab[in_column_locations]
+    # trees = [make_tree(row, texts[COL_STANZA_DOC]) for row in rows]
+    # return out_column_trees, trees
 
 
 def make_tree(

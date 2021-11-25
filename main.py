@@ -3,10 +3,9 @@
 ###############################################################################
 import time
 from multiprocessing import Pool
-from os import cpu_count
 
 from graded_readers_stats import data, frequency, preprocess, tree
-from graded_readers_stats.utils import calculatestar
+from graded_readers_stats.utils import calculatestar, NoPool
 from graded_readers_stats.constants import (
     READER,
     LITERA,
@@ -16,15 +15,14 @@ from graded_readers_stats.constants import (
 
 
 def main():
-    trial = False
+    trial = True
     use_cache = False
 
     start_main = time.time()
 
-    num_processes = cpu_count()
-    print(f"Creating pool with number of processes: {num_processes}")
+    print(f"Creating pool...")
     print()
-    with Pool(processes=num_processes) as pool:
+    with NoPool() as pool:
 
         print('Loading data...')
         start = time.time()
@@ -196,10 +194,20 @@ def main():
             (tree.make_trees_for_occurrences, (vocab, reader, READER)),
             (tree.make_trees_for_occurrences, (vocab, litera, LITERA)),
             (tree.make_trees_for_occurrences, (vocab, native, NATIVE)),
+            # (tree.make_trees_for_occurrences_v2,
+            #  (vocab, reader, READER, reader_by_level)),
+            # (tree.make_trees_for_occurrences_v2,
+            #  (vocab, litera, LITERA, litera_by_level)),
+            # (tree.make_trees_for_occurrences_v2,
+            #  (vocab, native, NATIVE, native_by_level)),
         ]
         trees = pool.map(calculatestar, tree_tasks)
         for name, tr in trees:
             vocab[name] = tr
+        # for groups in trees:
+        #     for group in groups:
+        #         name, values = group
+        #         vocab[name] = values
         duration = time.time() - start
         print(f'Trees made in {duration:.2f} seconds')
         print()
@@ -220,8 +228,8 @@ def main():
 
         print('Saving data...')
         start = time.time()
-        # vocabs.drop(columns=['Readers_locations'], inplace=True)
-        data.save(trial, vocab, reader, litera, native, None)
+        # vocab.drop(columns=['Readers_locations'], inplace=True)
+        # data.save(trial, vocab, reader, litera, native, None)
         duration = time.time() - start
         print(f'Data saved in {duration:.2f} seconds')
         print()
@@ -234,7 +242,7 @@ def main():
             engine='xlsxwriter'
         )
         vocab.to_excel(writer)
-        writer.save()
+        # writer.save()
         print('XLSX saved.')
 
         print('DONE!')

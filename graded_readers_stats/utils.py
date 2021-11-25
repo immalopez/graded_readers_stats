@@ -1,6 +1,20 @@
 from typing import Optional, Tuple
 
 
+class NoPool:
+    def __init__(self):
+        pass
+
+    def __enter__(self):
+        return self
+
+    def __exit__(self, *args):
+        pass
+
+    def map(self, func, iterable):
+        return list(map(func, iterable))
+
+
 def calculatestar(args):
     return calculate(*args)
 
@@ -22,11 +36,12 @@ def first_occurrence_of_vocab_in_sentence(
     phrase_index = 0
     phrase_len = len(vocab)
     while sent_index < sent_len and phrase_index < phrase_len:
-        if str(sentence[sent_index]).lower() == str(vocab[phrase_index]).lower():
+        if str(sentence[sent_index]).lower() == str(
+                vocab[phrase_index]).lower():
             sent_index += 1
             phrase_index += 1
             if phrase_index == phrase_len:
-                # adjust start to include vocabs item(s)
+                # adjust start to include vocab item(s)
                 return sent_index - phrase_len, sent_index  # a tuple
         else:
             sent_index = sent_index - phrase_index + 1

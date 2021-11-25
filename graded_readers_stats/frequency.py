@@ -35,7 +35,7 @@ def count_phrase_occurrences_v1(
         group_indices: Int64Index
 ) -> int:
     # We count sentences since we detect the first occurrence of the vocab
-    # meaning vocabs appear at most once in a sentence.
+    # meaning vocab appear at most once in a sentence.
     # NOTE: We are using '_' to indicate that we don't need the variable.
     return sum(1
                # iterate over pandas' series to recover index
