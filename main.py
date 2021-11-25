@@ -246,20 +246,20 @@ def main():
         print('Saving data...')
         start = time.time()
         # vocab.drop(columns=['Readers_locations'], inplace=True)
-        # data.save(trial, vocab, reader, litera, native, None)
+        data.save(trial, vocab, reader, litera, native, None)
         duration = time.time() - start
         print(f'Data saved in {duration:.2f} seconds')
         print()
 
         print('Saving XLSX...')
-        # import xlsxwriter
-        # import pandas as pd
-        # writer = pd.ExcelWriter(
-        #     'graded_readers_stats.xlsx',
-        #     engine='xlsxwriter'
-        # )
-        # vocab.to_excel(writer)
-        # writer.save()
+        import xlsxwriter
+        import pandas as pd
+        writer = pd.ExcelWriter(
+            'graded_readers_stats.xlsx',
+            engine='xlsxwriter'
+        )
+        vocab.to_excel(writer)
+        writer.save()
         print('XLSX saved.')
 
         print('DONE!')
