@@ -12,6 +12,7 @@ from graded_readers_stats.constants import (
     LITERA,
     NATIVE,
     COL_LEVEL,
+    TREES,
 )
 
 
@@ -231,9 +232,9 @@ def main():
         print('Calculating tree properties...')
         start = time.time()
         tree_prop_tasks = [
-            (tree.calculate_tree_props, (vocab, READER)),
-            (tree.calculate_tree_props, (vocab, LITERA)),
-            (tree.calculate_tree_props, (vocab, NATIVE)),
+            (tree.calculate_tree_props, (vocab, f'{source}_{group}_{TREES}'))
+            for source in groups_by_source
+            for group in groups_by_source[source].groups
         ]
         props = pool.map(calculatestar, tree_prop_tasks)
         for name, prop in props:

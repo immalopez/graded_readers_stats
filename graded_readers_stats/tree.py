@@ -103,8 +103,8 @@ def calculate_tree_props(
         vocabs: DataFrame,
         column: str
 ) -> (str, Series):
-    in_column_trees = column + ' ' + TREES
-    out_column_trees_props = column + ' ' + TREES_PROPS
+    in_column_trees = column
+    out_column_trees_props = column + TREES_PROPS
     values = vocabs.apply(
         lambda x: get_tree_props(x[in_column_trees]),
         axis=1
