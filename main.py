@@ -24,7 +24,7 @@ def main():
 
     print(f"Creating pool...")
     print()
-    with NoPool() as pool:
+    with Pool() as pool:
 
         print('Loading data...')
         start = time.time()
