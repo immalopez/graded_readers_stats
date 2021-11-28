@@ -17,7 +17,7 @@ from graded_readers_stats.constants import (
 
 
 def main():
-    trial = True
+    trial = False
     use_cache = False
 
     start_main = time.time()
@@ -60,6 +60,7 @@ def main():
         for name, locations in location_columns:
             vocab[name] = locations
         duration = time.time() - start
+        data.save(trial, vocab, reader, litera, native, None)
         print(f'Vocabulary found in texts in {duration:.2f} seconds')
         print()
 
@@ -145,6 +146,7 @@ def main():
         for name, locs in locations:
             vocab[name] = locs
         duration = time.time() - start
+        data.save(trial, vocab, reader, litera, native, None)
         print(f'Context words found in texts in {duration:.2f} seconds')
         print()
 
@@ -226,6 +228,7 @@ def main():
                     group_rows.append(row_values)
                 vocab[col_name] = group_rows
         duration = time.time() - start
+        data.save(trial, vocab, reader, litera, native, None)
         print(f'Trees made in {duration:.2f} seconds')
         print()
 
