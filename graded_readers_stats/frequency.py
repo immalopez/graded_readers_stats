@@ -55,23 +55,20 @@ def total_count_in_texts_grouped_by_level(
     results = []
     for group_name in sentences_by_groups.groups:
         ctx_name = ' ' + CONTEXT + ' ' if is_context else ' '
-        in_column_locations = column + ctx_name + LOCATIONS
         out_column_counts = column + ctx_name + TOTAL_COUNTS + ' ' + group_name
 
-        totals = vocabs.apply(
-            lambda x: total_counts_for_vocab(
-                x[in_column_locations],
-                sentences_by_groups.get_group(group_name)[COL_LEMMA]
-            ),
-            axis=1
-        )
+        from pandas.core.common import flatten
+
+        lemmas = sentences_by_groups.get_group(group_name)[COL_LEMMA]
+        total_count = sum(1 for _ in flatten(lemmas))
+        totals = vocabs.apply(lambda x: total_count, axis=1)
         results.append((out_column_counts, totals))
     return results
 
 
 def total_counts_for_vocab(
         locations: [[(int, (int, int))]],
-        texts: Series  # (2, [['Text', items']], ...)
+        texts: Series  # (2, [['Text', 'items']], ...)
 ) -> int:
 
     # Print the whole document (all sentences in doc)
