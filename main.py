@@ -2,10 +2,8 @@
 #                      SPANISH GRADED READERS STATISTICS                      #
 ###############################################################################
 import time
-from multiprocessing import Pool
-import numpy as np
 
-from graded_readers_stats import data, frequency, preprocess, tree
+from graded_readers_stats import data, frequency, preprocess, tree, statistics
 from graded_readers_stats.utils import calculatestar, NoPool
 from graded_readers_stats.constants import (
     READER,
@@ -17,14 +15,14 @@ from graded_readers_stats.constants import (
 
 
 def main():
-    trial = False
+    trial = True
     use_cache = False
 
     start_main = time.time()
 
     print(f"Creating pool...")
     print()
-    with Pool() as pool:
+    with NoPool() as pool:
 
         print('Loading data...')
         start = time.time()
@@ -71,6 +69,17 @@ def main():
         native_by_level = native.groupby(COL_LEVEL)
         duration = time.time() - start
         print(f'Texts grouped by level in {duration:.2f} seconds')
+        print()
+
+        print('Getting lexical richness...')
+        start = time.time()
+        groups_by_level = [reader_by_level, litera_by_level, native_by_level]
+        for group_by_level in groups_by_level:
+            for name, group in group_by_level:
+                text = ' '.join(group['Raw text'])
+                print(f'MSTTR for {name}: {statistics.get_msttr(text)}')
+        duration = time.time() - start
+        print(f'Got lexical richness in {duration:.2f} seconds')
         print()
 
         print('Counting frequency of vocabulary in texts...')
