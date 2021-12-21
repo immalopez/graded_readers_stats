@@ -3,6 +3,7 @@ import unittest
 import graded_readers_stats.data
 
 
+@unittest.skip("Data tests are not yet implemented")
 class DataTestCase(unittest.TestCase):
     def test_load(self):
         data = graded_readers_stats.data

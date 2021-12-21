@@ -113,21 +113,30 @@ def calculate_tree_props(
 
 
 def get_tree_props(
-        doc_trees: [[Node]]
+        source_group_trees: [[Node]]
 ) -> (int, int, int, int):  # min_width, max_width, min_height, max_height
 
-    min_w, max_w, min_h, max_h = None, None, None, None
+    min_w, max_w = None, None
+    min_h, max_h = None, None
+    sum_w, sum_h = 0, 0
+    num_nodes = 0
 
-    for doc in doc_trees:
+    for doc in source_group_trees:
         for node in doc:
 
             width = max([len(children)
                          for children in LevelOrderGroupIter(node)])
             height = node.height
 
+            sum_w += width
+            sum_h += height
+            num_nodes += 1
+
             min_w = width if min_w is None else min(min_w, width)
             max_w = width if max_w is None else max(max_w, width)
             min_h = height if min_h is None else min(min_h, height)
             max_h = height if max_h is None else max(max_h, height)
 
-    return min_w, max_w, min_h, max_h
+    avg_w = sum_w / num_nodes if num_nodes > 0 else None
+    avg_h = sum_h / num_nodes if num_nodes > 0 else None
+    return min_w, max_w, avg_w, min_h, max_h, avg_h
