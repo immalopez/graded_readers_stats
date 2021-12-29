@@ -180,7 +180,7 @@ def tfidfs_for_groups(locs, doc_groups, column_id) -> pd.DataFrame:
             term_result.append(tfidf_group_avg)
 
         # save the averaged series of vocab terms tfidfs
-        result[column_id + '_' + group_name] = term_result
+        result[TFIDF + '_' + column_id + '_' + group_name] = term_result
 
     # a dataframe with columns by group ready to be merged
     # into the main dataframe

@@ -35,10 +35,11 @@ class FrequencyTestCase(unittest.TestCase):
                                    column_id='Reader')
 
         # Then
-        self.assertEqual(0.0, result['Reader_Inicial'][0])
-        self.assertEqual(0.025085832971998432, result['Reader_Inicial'][1])
-        self.assertEqual(0.018814374728998825, result['Reader_Avanzado'][0])
-        self.assertEqual(0.0, result['Reader_Avanzado'][1])
+        prefix = 'TFIDF_Reader_'
+        self.assertEqual(0.0, result[prefix + 'Inicial'][0])
+        self.assertEqual(0.025085832971998432, result[prefix + 'Inicial'][1])
+        self.assertEqual(0.018814374728998825, result[prefix + 'Avanzado'][0])
+        self.assertEqual(0.0, result[prefix + 'Avanzado'][1])
 
 
 if __name__ == '__main__':

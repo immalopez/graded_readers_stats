@@ -11,6 +11,7 @@ from graded_readers_stats.constants import (
     NATIVE,
     COL_LEVEL,
     TREES,
+    LOCATIONS,
 )
 
 
@@ -117,11 +118,29 @@ def main():
              (vocab, native_by_level, NATIVE)),
         ]
         freqs = pool.map(calculatestar, freqs_tasks)
-        for result in freqs:
-            for name, freq in result:
+        for df in freqs:
+            for name, freq in df:
                 vocab[name] = freq
         duration = time.time() - start
         print(f'Frequencies calculated in {duration:.2f} seconds')
+        print()
+
+        print('Calculating TF-IDFs...')
+        start = time.time()
+        tfidf_tasks = [
+            (frequency.tfidfs_for_groups,
+             (vocab[READER + ' ' + LOCATIONS], reader_by_level, READER)),
+            (frequency.tfidfs_for_groups,
+             (vocab[LITERA + ' ' + LOCATIONS], litera_by_level, LITERA)),
+            (frequency.tfidfs_for_groups,
+             (vocab[NATIVE + ' ' + LOCATIONS], native_by_level, NATIVE)),
+        ]
+        tfidfs = pool.map(calculatestar, tfidf_tasks)
+        for df in tfidfs:
+            for column in df:
+                vocab[column] = df[column]
+        duration = time.time() - start
+        print(f'TF-IDFs calculated in {duration:.2f} seconds')
         print()
 
         print('Collecting context for vocabulary found in texts...')
