@@ -1,28 +1,44 @@
+import math
 import unittest
+import pandas as pd
+from graded_readers_stats.frequency import tfidfs_for_groups
 
 
 class FrequencyTestCase(unittest.TestCase):
-    def test_something(self):
-        # Input: locations, documents
+    def test_tfidf(self):
+        # Given
+        vocab_d = {'Lexical item': ['multi word 1', 'word1'],
+                   'Locations': [
+                       [[], [(0, (0, 3))], [], []],
+                       [[(0, (0, 1))], [], [], [(0, (0, 1))]],
+                   ]}
+        vocab_df = pd.DataFrame(vocab_d)
+        # print(vocab_df)
 
-        # For each term in the vocabulary:
+        docs_d = {'Level': ['Inicial', 'Avanzado', 'Inicial', 'Avanzado'],
+                  'Lemma': [
+                      [['word1', 'word2', '.'],
+                       ['word3', 'word4', '.'],
+                       ['word5', 'word6', '.'],
+                       ['word7', 'word8', '.']],
+                      [['multi', 'word', '1', 'word9', 'word10', '.'],
+                       ['word11', 'word12', 'word15', 'word16', '.']],
+                      [['word3', 'word4', '.']],
+                      [['word13', 'word14', '.']],
+                  ]}
+        docs_df = pd.DataFrame(docs_d)
+        # print(docs_df)
 
-        # 0. Normalize
-        # Convert join all texts and treat sentences as documents.
-        # Requires averaging at the end to achieve a single value per term.
+        # When
+        result = tfidfs_for_groups(locs=vocab_df['Locations'],
+                                   doc_groups=docs_df.groupby('Level'),
+                                   column_id='Reader')
 
-        # 1. Calculate the term frequency for each document
-        # where a document is a sentence in the corpus.
-
-        # 2. Calculate the inverse document frequency for each term
-        # by dividing the number of documents (sents) in the group by level
-        # by the number of documents where the term appears.
-
-        # 3. Calculate the TF-IDF for each document.
-
-        # 4. Average the TF-IDF for each document and connect it with the term.
-
-        self.assertEqual(True, False)  # add assertion here
+        # Then
+        self.assertEqual(0.0, result['Reader_Inicial'][0])
+        self.assertEqual(0.025085832971998432, result['Reader_Inicial'][1])
+        self.assertEqual(0.018814374728998825, result['Reader_Avanzado'][0])
+        self.assertEqual(0.0, result['Reader_Avanzado'][1])
 
 
 if __name__ == '__main__':

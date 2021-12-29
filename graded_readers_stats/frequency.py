@@ -2,6 +2,7 @@
 #                            FREQUENCY CALCULATIONS                          #
 ##############################################################################
 from pandas import Int64Index
+import math
 
 from graded_readers_stats._typing import *
 from graded_readers_stats.constants import *
@@ -113,3 +114,75 @@ def frequency_in_texts_grouped_by_level(
         )
         results.append((column_frequency, freqs))
     return results
+
+
+def tfidfs_for_groups(locs, doc_groups, column_id) -> pd.DataFrame:
+    # Input: locations, documents
+    # Output: a dataframe with TF-IDF columns ready to be merged
+
+    # For each term in the vocabulary:
+
+    # 0. Normalize
+    # Convert join all texts and treat sentences as documents.
+    # Requires averaging at the end to achieve a single value per term.
+
+    # 1. Calculate the term frequency for each document
+    # where a document is a sentence in the corpus.
+
+    # 2. Calculate the inverse document frequency for each term
+    # by dividing the number of documents (sents) in the group by level
+    # by the number of documents where the term appears.
+
+    # 3. Calculate the TF-IDF for each document.
+
+    # 4. Average the TF-IDF for each document
+    # and connect it with the term.
+
+    result = {}
+    # For each group:
+    for group_name, group_df in doc_groups:
+
+        # For each term in the vocabulary:
+        term_result = []
+        for term_locs in locs:
+
+            # For each document in the group:
+            tfidfs_group = []
+            for doc_idx in group_df.index:
+                doc_matches = term_locs[doc_idx]
+                doc_sents = group_df['Lemma'].loc[doc_idx]
+
+                sents_count = len(doc_sents)
+                sents_matched = len(doc_matches)
+
+                if sents_matched > 0:
+                    idf_doc = math.log10(sents_count / sents_matched)
+
+                    tfs_sents = []
+                    for doc_match in doc_matches:
+                        term_start = doc_match[1][0]
+                        term_end = doc_match[1][1]
+                        term_word_count = term_end - term_start
+                        sent_idx = doc_match[0]
+                        sent_words = doc_sents[sent_idx]
+                        sent_word_count = len(sent_words)
+                        # count multi-word terms as 1
+                        # by removing its length and adding 1 instead
+                        tf = 1 / (sent_word_count - term_word_count + 1)
+                        tfs_sents.append(tf)
+
+                    tfidfs_sents = map(lambda x: x * idf_doc, tfs_sents)
+                    tfidf_doc_avg = sum(tfidfs_sents) / sents_count
+                    tfidfs_group.append(tfidf_doc_avg)
+
+            # TF-IDF for current term
+            tfidf_group_avg = sum(tfidfs_group) / len(group_df)
+            term_result.append(tfidf_group_avg)
+
+        # save the averaged series of vocab terms tfidfs
+        result[column_id + '_' + group_name] = term_result
+
+    # a dataframe with columns by group ready to be merged
+    # into the main dataframe
+    return pd.DataFrame(result)
+
