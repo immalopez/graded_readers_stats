@@ -31,6 +31,11 @@ def main():
             (data.load, (ds, trial, use_cache)) for ds in data.Dataset
         ]
         vocab, reader, litera, native = pool.map(calculatestar, data_tasks)
+
+        # TODO: Temporary fix for lowercase 'infantil' group
+        litera[COL_LEVEL] = litera.apply(lambda x: x[COL_LEVEL].capitalize(),
+                                         axis=1)
+
         duration = time.time() - start
         print(f'Data loaded in {duration:.2f} seconds')
         print()
@@ -256,8 +261,15 @@ def main():
                     group_rows.append(row_values)
                 vocab[col_name] = group_rows
         duration = time.time() - start
-        data.save(trial, vocab, reader, litera, native, None)
         print(f'Trees made in {duration:.2f} seconds')
+        print()
+
+        print('Saving data...')
+        start = time.time()
+        # vocab.drop(columns=['Readers_locations'], inplace=True)
+        data.save(trial, vocab, reader, litera, native, None)
+        duration = time.time() - start
+        print(f'Data saved in {duration:.2f} seconds')
         print()
 
         print('Calculating tree properties...')
