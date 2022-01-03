@@ -9,6 +9,7 @@ graded_readers <- read_csv('graded_readers_stats.csv', n_max = 5)
 # Split tree tuples into columns
 ###############################################################################
 
+# Name the original columns
 columns <- c(
   "Trees' min, max, and average width & depth (Inicial)",
   "Trees' min, max, and average width & depth (Intermedio)",
@@ -19,6 +20,7 @@ columns <- c(
   "Trees' min, max, and average width & depth (Native corpus)"
 )
 
+# Simplify the names of the columns
 new_columns <- c(
   "Tree_Inicial",
   "Tree_Intermedio",
@@ -29,17 +31,23 @@ new_columns <- c(
   "Tree_Native"
 )
 
+# Rename the columns
 for (i in 1:length(columns)) {
   current <- columns[i]
   new <- new_columns[i]
   colnames(graded_readers)[which(names(graded_readers) == current)] <- new
 }
 
-strip_parens <- function(x) print(gsub('[()]', '', x))
+# Function to remove parentheses
+strip_parens <- function(x) gsub('[()]', '', x)
 
-# Remove ( and ) from start and end of each tuple
+# Remove ( and ) from the beginning and the end of each tuple
+# apply is used to apply a function per row (2 = column, 1 = row)
+# First you give the data and then the parameters
 for (i in 1:length(new_columns)) {
-  graded_readers <- data.frame(apply(graded_readers, 2, strip_parens))
+  start <- which(names(graded_readers) == "Tree_Inicial")
+  end <- which(names(graded_readers) == "Tree_Native")
+  graded_readers[, start:end] <- data.frame(apply(graded_readers[, start:end], 2, strip_parens))
 }
 
 for (i in 1:length(new_columns)) {
@@ -59,7 +67,7 @@ for (i in 1:length(new_columns)) {
 
 # FOR DEBUGGING ONLY
 # Delete all columns before Tree Properties to avoid horizontal scrolling
-graded_readers[1:58] <- NULL
+# graded_readers[1:58] <- NULL 
 
 
 
