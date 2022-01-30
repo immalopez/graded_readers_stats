@@ -3,7 +3,7 @@
 ###############################################################################
 import time
 
-from graded_readers_stats import data, frequency, preprocess, tree, statistics
+from graded_readers_stats import data, frequency, preprocess, tree, stats
 from graded_readers_stats.utils import calculatestar, NoPool
 from graded_readers_stats.constants import (
     READER,
@@ -83,7 +83,7 @@ def main():
         for group_by_level in groups_by_level:
             for name, group in group_by_level:
                 text = ' '.join(group['Raw text'])
-                print(f'MSTTR for {name}: {statistics.get_msttr(text)}')
+                print(f'MSTTR for {name}: {stats.get_msttr(text)}')
         duration = time.time() - start
         print(f'Got lexical richness in {duration:.2f} seconds')
         print()
