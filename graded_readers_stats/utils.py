@@ -1,4 +1,5 @@
 from typing import Optional, Tuple
+import time
 
 
 class NoPool:
@@ -47,3 +48,8 @@ def first_occurrence_of_vocab_in_sentence(
             sent_index = sent_index - phrase_index + 1
             phrase_index = 0
     return None
+
+
+def duration(start, msg):
+    print(f'{msg} ({time.time() - start:.2f}s)')
+    print('---')
