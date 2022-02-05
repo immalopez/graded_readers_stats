@@ -90,6 +90,25 @@ def normalize(column):
 
 
 def find_term_locations_in_docs(terms, docs):
+    """
+    terms
+    ---
+    [['multi', 'word', 'term'], ['single1'], ['single2']]
+
+    docs
+    ---
+    Series([
+        [['This', 'is', 'a', 'sentence', '.'], ['And', 'this', 'as', 'well']],
+        [['Another', 'sentence']]
+    ])
+
+    returns
+    ---
+    A matrix with rows corresponding to input terms and columns corresponding
+    to input docs. If there are 2 terms and 3 docs it will create 2x3 matrix
+    filled with indices of sentences where a term is found.
+    Shape: [[(sent_index, (term_start_index, term_end_index))], ...[...]]
+    """
     term_locs = []
     for term in terms:
         doc_locs = []
