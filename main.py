@@ -1,11 +1,13 @@
+import time
+
 from pandas.core.common import flatten
+
 from graded_readers_stats import (
     data,
     frequency,
     preprocess,
     tree,
     utils,
-    stats,
 )
 from graded_readers_stats.constants import (
     COL_LEMMA,
@@ -14,7 +16,7 @@ from graded_readers_stats.constants import (
     FREQUENCY,
     TFIDF,
 )
-import time
+
 start_main = time.time()
 
 # Load data
@@ -36,7 +38,7 @@ vocab = preprocess.run(vocab, preprocess.vocabulary_pipeline)
 group_1 = preprocess.run(group_1, preprocess.text_analysis_pipeline)
 utils.duration(start, 'Preprocess')
 
-# Search for vocab
+# Locate terms
 start = time.time()
 terms = [term for terms in vocab[COL_LEMMA] for term in terms]
 locations = preprocess.find_term_locations_in_docs(terms, group_1[COL_LEMMA])
@@ -62,11 +64,13 @@ trees = tree.make_trees_for_occurrences_v2(
 vocab['Trees'] = tree.calculate_tree_props_v2(trees)
 utils.duration(start, 'Trees')
 
-# Search for context
-# Frequency
-# TFIDF
-# Tree
-# MSTTR
+# Collect context
+# Locate context
+# Frequency context
+# TFIDF context
+# Tree context
+
+# MSTTR for all text
 
 utils.duration(start_main, 'Main')
 print('')
