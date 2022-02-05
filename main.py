@@ -2,6 +2,7 @@ from pandas.core.common import flatten
 from graded_readers_stats import data, frequency, preprocess, tree, stats
 from graded_readers_stats.constants import (
     COL_LEVEL,
+    COL_STANZA_DOC,
     LOCATIONS,
     FREQUENCY,
     COL_LEMMA,
@@ -38,6 +39,10 @@ vocab[FREQUENCY] = found_words / total_words
 vocab[TFIDF] = frequency.tfidfs(vocab_locs=vocab[LOCATIONS], docs=group_1)
 
 # Tree
+trees = tree.make_trees_for_occurrences_v2(
+    term_locs=vocab[LOCATIONS], stanza_docs=group_1[COL_STANZA_DOC]
+)
+vocab['Trees'] = tree.calculate_tree_props_v2(trees)
 
 # Search for context
 # Frequency

@@ -5,6 +5,9 @@ from graded_readers_stats.frequency import tfidfs_for_groups, tfidfs
 
 
 class FrequencyTestCase(unittest.TestCase):
+
+    # TODO: Add one more TFIDF test calculated manually
+
     def test_tfidf3(self):
         # Given
         vocab_d = {
