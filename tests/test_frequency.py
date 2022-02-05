@@ -1,10 +1,86 @@
 import math
 import unittest
 import pandas as pd
-from graded_readers_stats.frequency import tfidfs_for_groups
+from graded_readers_stats.frequency import tfidfs_for_groups, tfidfs
 
 
 class FrequencyTestCase(unittest.TestCase):
+    def test_tfidf3(self):
+        # Given
+        vocab_d = {'Lexical item': [
+            'multi word 1',
+            'word1'
+        ],
+            'Locations': [
+                [[(0, (0, 3))], []],
+                [[], []],
+            ]}
+        vocab_df = pd.DataFrame(vocab_d)
+        # print(vocab_df)
+
+        docs_d = {
+            'Topic': [
+                'Biology',
+                'Medicine',
+            ],
+            'Lemma': [
+                [['multi', 'word', '1', 'word9', 'word10', '.'],
+                 ['word11', 'word12', 'word15', 'word16', '.']],
+                [['word13', 'word14', '.']],
+            ]
+        }
+        docs_df = pd.DataFrame(docs_d)
+        # print(docs_df)
+
+        # When
+        vocab_tfidfs = tfidfs(
+            vocab_locs=vocab_df['Locations'],
+            docs=docs_df
+        )
+
+        # Then
+        self.assertEqual(0.018814374728998825, vocab_tfidfs[0])
+        self.assertEqual(0.0, vocab_tfidfs[1])
+
+    def test_tfidf2(self):
+        # Given
+        vocab_d = {'Lexical item': [
+                    'multi word 1',
+                    'word1'
+                    ],
+                   'Locations': [
+                       [[], []],
+                       [[(0, (0, 1))], [(0, (0, 1))]],
+                   ]}
+        vocab_df = pd.DataFrame(vocab_d)
+        # print(vocab_df)
+
+        docs_d = {
+            'Topic': [
+                'Biology',
+                'Medicine',
+            ],
+            'Lemma': [
+                [['word1', 'word2', '.'],
+                 ['word3', 'word4', '.'],
+                 ['word5', 'word6', '.'],
+                 ['word7', 'word8', '.']],
+                [['word1', 'word4', '.']],
+            ]
+        }
+        docs_df = pd.DataFrame(docs_d)
+        # print(docs_df)
+
+        # When
+        vocab_tfidfs = tfidfs(
+            vocab_locs=vocab_df['Locations'],
+            docs=docs_df
+        )
+
+        # Then
+        self.assertEqual(0.0, vocab_tfidfs[0])
+        self.assertEqual(0.025085832971998432, vocab_tfidfs[1])
+
     def test_tfidf(self):
         # Given
         vocab_d = {'Lexical item': ['multi word 1', 'word1'],

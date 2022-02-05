@@ -3,9 +3,9 @@ import unittest
 import graded_readers_stats.data
 
 
-@unittest.skip("Data tests are not yet implemented")
 class DataTestCase(unittest.TestCase):
-    def test_load(self):
+    # prefix with 'x_' to skip the test
+    def x_test_load(self):
         data = graded_readers_stats.data
         data.load(True, True, f'.{data.FOLDER_DATA_TRIAL}')
         self.assertEqual(True, False)  # add assertion here

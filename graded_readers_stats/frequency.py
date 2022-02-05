@@ -47,6 +47,13 @@ def count_phrase_occurrences_v1(
                for _ in locations[doc_index])
 
 
+def frequency(
+        locations: [[(int, (int, int))]],  # list of docs of sentences
+) -> float:
+    docs = locations
+    return sum(1 for _ in docs)
+
+
 def total_count_in_texts_grouped_by_level(
         vocabs: DataFrame,
         sentences_by_groups: DataFrameGroupBy,
@@ -67,6 +74,7 @@ def total_count_in_texts_grouped_by_level(
     return results
 
 
+@DeprecationWarning
 def total_counts_for_vocab(
         locations: [[(int, (int, int))]],
         texts: Series  # (2, [['Text', 'items']], ...)
@@ -149,8 +157,8 @@ def tfidfs_for_groups(locs, doc_groups, column_id) -> pd.DataFrame:
             # For each document in the group:
             tfidfs_group = []
             for doc_idx in group_df.index:
-                doc_matches = term_locs[doc_idx]
                 doc_sents = group_df['Lemma'].loc[doc_idx]
+                doc_matches = term_locs[doc_idx]
 
                 sents_count = len(doc_sents)
                 sents_matched = len(doc_matches)
@@ -185,4 +193,47 @@ def tfidfs_for_groups(locs, doc_groups, column_id) -> pd.DataFrame:
     # a dataframe with columns by group ready to be merged
     # into the main dataframe
     return pd.DataFrame(result)
+
+
+def tfidfs(vocab_locs, docs):
+    # For each term in the vocabulary:
+    term_result = []
+    for term_locs in vocab_locs:
+
+        # For each document in the group:
+        tfidfs_group = []
+        for doc_idx, doc in docs.iterrows():
+            # TODO: Pass lists of lemmas instead of whole data frame
+            doc_sents = doc['Lemma']
+            doc_matches = term_locs[doc_idx]
+
+            sents_count = len(doc_sents)
+            sents_matched = len(doc_matches)
+
+            if sents_matched > 0:
+                idf_doc = math.log10(sents_count / sents_matched)
+
+                tfs_sents = []
+                for doc_match in doc_matches:
+                    term_start = doc_match[1][0]
+                    term_end = doc_match[1][1]
+                    term_word_count = term_end - term_start
+                    sent_idx = doc_match[0]
+                    sent_words = doc_sents[sent_idx]
+                    sent_word_count = len(sent_words)
+                    # count multi-word terms as 1
+                    # by removing its length and adding 1 instead
+                    tf = 1 / (sent_word_count - term_word_count + 1)
+                    tfs_sents.append(tf)
+
+                tfidfs_sents = map(lambda x: x * idf_doc, tfs_sents)
+                tfidf_doc_avg = sum(tfidfs_sents) / sents_count
+                tfidfs_group.append(tfidf_doc_avg)
+
+        # TF-IDF for current term
+        tfidf_group_avg = sum(tfidfs_group) / len(docs)
+        term_result.append(tfidf_group_avg)
+
+    return term_result
+
 
