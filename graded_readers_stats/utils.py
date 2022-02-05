@@ -24,6 +24,7 @@ def calculate(func, args):
     return func(*args)
 
 
+# TODO: Optimize search to look for sub-lists only when needed
 def first_occurrence_of_vocab_in_sentence(
         vocab: [str],
         sentence: [str]
