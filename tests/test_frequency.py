@@ -7,16 +7,16 @@ from graded_readers_stats.frequency import tfidfs_for_groups, tfidfs
 class FrequencyTestCase(unittest.TestCase):
     def test_tfidf3(self):
         # Given
-        vocab_d = {'Lexical item': [
-            'multi word 1',
-            'word1'
-        ],
+        vocab_d = {
+            'Lexical item': [
+                'multi word 1',
+                'word1'
+            ],
             'Locations': [
                 [[(0, (0, 3))], []],
                 [[], []],
             ]}
         vocab_df = pd.DataFrame(vocab_d)
-        # print(vocab_df)
 
         docs_d = {
             'Topic': [
@@ -30,7 +30,6 @@ class FrequencyTestCase(unittest.TestCase):
             ]
         }
         docs_df = pd.DataFrame(docs_d)
-        # print(docs_df)
 
         # When
         vocab_tfidfs = tfidfs(
@@ -44,16 +43,16 @@ class FrequencyTestCase(unittest.TestCase):
 
     def test_tfidf2(self):
         # Given
-        vocab_d = {'Lexical item': [
-                    'multi word 1',
-                    'word1'
+        vocab_d = {
+                    'Lexical item': [
+                        'multi word 1',
+                        'word1'
                     ],
-                   'Locations': [
-                       [[], []],
-                       [[(0, (0, 1))], [(0, (0, 1))]],
-                   ]}
+                    'Locations': [
+                        [[], []],
+                        [[(0, (0, 1))], [(0, (0, 1))]],
+                    ]}
         vocab_df = pd.DataFrame(vocab_d)
-        # print(vocab_df)
 
         docs_d = {
             'Topic': [
@@ -69,7 +68,6 @@ class FrequencyTestCase(unittest.TestCase):
             ]
         }
         docs_df = pd.DataFrame(docs_d)
-        # print(docs_df)
 
         # When
         vocab_tfidfs = tfidfs(
@@ -83,15 +81,24 @@ class FrequencyTestCase(unittest.TestCase):
 
     def test_tfidf(self):
         # Given
-        vocab_d = {'Lexical item': ['multi word 1', 'word1'],
+        vocab_d = {
+                   'Lexical item': [
+                       'multi word 1',
+                       'word1'
+                   ],
                    'Locations': [
                        [[], [(0, (0, 3))], [], []],
                        [[(0, (0, 1))], [], [], [(0, (0, 1))]],
                    ]}
         vocab_df = pd.DataFrame(vocab_d)
-        # print(vocab_df)
 
-        docs_d = {'Level': ['Inicial', 'Avanzado', 'Inicial', 'Avanzado'],
+        docs_d = {
+                  'Level': [
+                      'Inicial',
+                      'Avanzado',
+                      'Inicial',
+                      'Avanzado'
+                  ],
                   'Lemma': [
                       [['word1', 'word2', '.'],
                        ['word3', 'word4', '.'],
@@ -103,12 +110,13 @@ class FrequencyTestCase(unittest.TestCase):
                       [['word13', 'word14', '.']],
                   ]}
         docs_df = pd.DataFrame(docs_d)
-        # print(docs_df)
 
         # When
-        result = tfidfs_for_groups(locs=vocab_df['Locations'],
-                                   doc_groups=docs_df.groupby('Level'),
-                                   column_id='Reader')
+        result = tfidfs_for_groups(
+            locs=vocab_df['Locations'],
+            doc_groups=docs_df.groupby('Level'),
+            column_id='Reader'
+        )
 
         # Then
         prefix = 'TFIDF_Reader_'
