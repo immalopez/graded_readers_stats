@@ -89,6 +89,21 @@ def normalize(column):
             for texts in column]
 
 
+def find_term_locations_in_docs(terms, docs):
+    term_locs = []
+    for term in terms:
+        doc_locs = []
+        for doc in docs:
+            sent_locs = []
+            for sent_index, sent in enumerate(doc):
+                loc = first_occurrence_of_vocab_in_sentence(term, sent)
+                if loc:
+                    sent_locs.append((sent_index, loc))
+            doc_locs.append(sent_locs)
+        term_locs.append(doc_locs)
+    return term_locs
+
+
 def vocabs_locations_in_texts(
         vocabs: DataFrame,
         texts: DataFrame,
