@@ -9,8 +9,6 @@ from graded_readers_stats.constants import (
     TFIDF,
 )
 
-# Steps
-# -
 # Load data
 trial = True
 use_cache = False
