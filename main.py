@@ -18,11 +18,11 @@ from graded_readers_stats.constants import (
 )
 
 start_main = time.time()
+trial = True
+use_cache = False
 
 # Load data
 start = time.time()
-trial = True
-use_cache = False
 vocab = data.load(data.Dataset.VOCABULARY, trial, use_cache)
 readers = data.load(data.Dataset.READERS, trial, use_cache)
 utils.duration(start, 'Loading')
@@ -53,7 +53,7 @@ utils.duration(start, 'Frequency')
 
 # TFIDF
 start = time.time()
-vocab[TFIDF] = frequency.tfidfs(vocab_locs=locations, docs=group_1)
+vocab[TFIDF] = frequency.tfidfs(term_locs=locations, docs=group_1)
 utils.duration(start, 'TFIDF')
 
 # Tree
@@ -65,6 +65,7 @@ vocab['Trees'] = tree.calculate_tree_props_v2(trees)
 utils.duration(start, 'Trees')
 
 # Collect context
+# context_words =
 # Locate context
 # Frequency context
 # TFIDF context

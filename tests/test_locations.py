@@ -1,5 +1,6 @@
-from graded_readers_stats import preprocess
 import pytest
+
+from graded_readers_stats import preprocess
 
 
 @pytest.fixture

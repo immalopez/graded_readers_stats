@@ -195,17 +195,17 @@ def tfidfs_for_groups(locs, doc_groups, column_id) -> pd.DataFrame:
     return pd.DataFrame(result)
 
 
-def tfidfs(vocab_locs, docs):
+def tfidfs(term_locs, docs):
     # For each term in the vocabulary:
     term_result = []
-    for term_locs in vocab_locs:
+    for doc_locs in term_locs:
 
         # For each document in the group:
         tfidfs_group = []
         for doc_idx, doc in docs.iterrows():
             # TODO: Pass lists of lemmas instead of whole data frame
             doc_sents = doc['Lemma']
-            doc_matches = term_locs[doc_idx]
+            doc_matches = doc_locs[doc_idx]
 
             sents_count = len(doc_sents)
             sents_matched = len(doc_matches)

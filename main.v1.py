@@ -32,7 +32,7 @@ def main():
         ]
         vocab, reader, litera, native = pool.map(calculatestar, data_tasks)
 
-        # TODO: Temporary fix for lowercase 'infantil' group
+        # Temporary fix for lowercase 'infantil' group
         litera[COL_LEVEL] = litera.apply(lambda x: x[COL_LEVEL].capitalize(),
                                          axis=1)
 
