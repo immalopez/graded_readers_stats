@@ -89,7 +89,7 @@ def normalize(column):
             for texts in column]
 
 
-def find_term_locations_in_docs(terms, docs):
+def locate_terms_in_docs(terms, docs):
     """
     terms
     ---

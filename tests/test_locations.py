@@ -21,7 +21,7 @@ def docs():
 
 def test_locations_structure(terms, docs):
     # When
-    term_locs = preprocess.find_term_locations_in_docs(terms, docs)
+    term_locs = preprocess.locate_terms_in_docs(terms, docs)
 
     # Then
     assert len(terms) == len(term_locs)
@@ -31,7 +31,7 @@ def test_locations_structure(terms, docs):
 
 def test_locations_details(terms, docs):
     # When
-    term_locs = preprocess.find_term_locations_in_docs(terms, docs)
+    term_locs = preprocess.locate_terms_in_docs(terms, docs)
 
     # Then
     expected = [
