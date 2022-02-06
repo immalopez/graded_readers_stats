@@ -95,7 +95,11 @@ def find_term_locations_in_docs(terms, docs):
     ---
     terms is a list of lists, where each
         term is a list of words to support multi-word terms.
-    [['multi', 'word', 'term'], ['single1'], ['single2']]
+    [
+        ['multi', 'word', 'term'],  # term 1
+        ['single1'],                # term 2
+        ['single2'],                # term 3
+    ]
 
     docs
     ---

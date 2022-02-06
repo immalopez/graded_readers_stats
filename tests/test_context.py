@@ -76,7 +76,7 @@ def test_collect_context_window_param(terms_locs, docs):
     assert {'how', 'going', 'today'} == words
 
 
-def test_collect_context_multi_term(terms_locs, docs):
+def test_collect_context_list_of_terms(terms_locs, docs):
     # When
     words = collect_context_words_multiple(terms_locs, docs, 1)
 
