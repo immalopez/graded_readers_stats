@@ -34,7 +34,7 @@ def test_tfidf3():
     # When
     vocab_tfidfs = tfidfs(
         term_locs=vocab_df['Locations'],
-        docs=docs_df
+        docs=docs_df['Lemma']
     )
 
     # Then
@@ -73,7 +73,7 @@ def test_tfidf2():
     # When
     vocab_tfidfs = tfidfs(
         term_locs=vocab_df['Locations'],
-        docs=docs_df
+        docs=docs_df['Lemma']
     )
 
     # Then

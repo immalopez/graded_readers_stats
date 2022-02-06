@@ -93,14 +93,19 @@ def find_term_locations_in_docs(terms, docs):
     """
     terms
     ---
+    terms is a list of lists, where each
+        term is a list of words to support multi-word terms.
     [['multi', 'word', 'term'], ['single1'], ['single2']]
 
     docs
     ---
-    Series([
+    docs is a list, where each
+        doc is a list of sents, where each
+            sent is a list of words.
+    [
         [['This', 'is', 'a', 'sentence', '.'], ['And', 'this', 'as', 'well']],
         [['Another', 'sentence']]
-    ])
+    ]
 
     returns
     ---
@@ -113,18 +118,18 @@ def find_term_locations_in_docs(terms, docs):
         ...,
     ]
     """
-    term_locs = []
+    result_terms = []
     for term in terms:
-        doc_locs = []
-        for doc in docs:
-            sent_locs = []
-            for sent_index, sent in enumerate(doc):
+        result_docs = []
+        for doc_sents in docs:
+            result_sents = []
+            for sent_index, sent in enumerate(doc_sents):
                 loc = first_occurrence_of_vocab_in_sentence(term, sent)
                 if loc:
-                    sent_locs.append((sent_index, loc))
-            doc_locs.append(sent_locs)
-        term_locs.append(doc_locs)
-    return term_locs
+                    result_sents.append((sent_index, loc))
+            result_docs.append(result_sents)
+        result_terms.append(result_docs)
+    return result_terms
 
 
 def vocabs_locations_in_texts(

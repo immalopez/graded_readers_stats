@@ -196,15 +196,41 @@ def tfidfs_for_groups(locs, doc_groups, column_id) -> pd.DataFrame:
 
 
 def tfidfs(term_locs, docs):
+    """
+    term_locs
+    ---
+    A matrix with rows corresponding to terms and columns corresponding
+    to docs. If there are 2 terms and 3 docs it would be a 2x3 matrix
+    filled with indices of sentences where a term is found.
+    Shape: [
+        [[(sent_index, (term_start_index, term_end_index))]],
+        [[...]],
+        ...,
+    ]
+
+    docs
+    ---
+    docs is a list, where each
+        doc is a list of sents, where each
+            sent is a list of words.
+    [
+        [['This', 'is', 'a', 'sentence', '.'], ['And', 'this', 'as', 'well']],
+        [['Another', 'sentence']]
+    ]
+
+    returns
+    ---
+    a list of TFIDF e.g. [0.0458, 0.0058, ...] where all the locations for a
+    term are reduced to a single average TFIDF.
+
+    """
     # For each term in the vocabulary:
-    term_result = []
+    result_tfidfs_per_term = []
     for doc_locs in term_locs:
 
         # For each document in the group:
         tfidfs_group = []
-        for doc_idx, doc in docs.iterrows():
-            # TODO: Pass lists of lemmas instead of whole data frame
-            doc_sents = doc['Lemma']
+        for doc_idx, doc_sents in enumerate(docs):
             doc_matches = doc_locs[doc_idx]
 
             sents_count = len(doc_sents)
@@ -234,8 +260,6 @@ def tfidfs(term_locs, docs):
 
         # TF-IDF for current term
         tfidf_group_avg = sum(tfidfs_group) / len(docs)
-        term_result.append(tfidf_group_avg)
+        result_tfidfs_per_term.append(tfidf_group_avg)
 
-    return term_result
-
-
+    return result_tfidfs_per_term

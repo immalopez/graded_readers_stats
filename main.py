@@ -53,7 +53,7 @@ utils.duration(start, 'Frequency')
 
 # TFIDF
 start = time.time()
-vocab[TFIDF] = frequency.tfidfs(term_locs=locations, docs=group_1)
+vocab[TFIDF] = frequency.tfidfs(term_locs=locations, docs=group_1[COL_LEMMA])
 utils.duration(start, 'TFIDF')
 
 # Tree
@@ -66,6 +66,7 @@ utils.duration(start, 'Trees')
 
 # Collect context
 # context_words =
+
 # Locate context
 # Frequency context
 # TFIDF context
