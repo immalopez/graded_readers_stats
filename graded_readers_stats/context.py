@@ -9,7 +9,7 @@ def collect_context_words_multiple(terms_locs, docs, window) -> List[Set[str]]:
 def collect_context_words_single(term_locs, docs, window) -> Set[str]:
     from string import punctuation
 
-    term_context = []
+    contexts = []
     # for every doc
     for doc_index, doc_locs in enumerate(term_locs):
         doc = docs[doc_index]
@@ -19,21 +19,21 @@ def collect_context_words_single(term_locs, docs, window) -> Set[str]:
             start, end = sent_loc[1]
             sent = doc[sent_index]
 
-            # normalize and remove irrelevant context words
-            sent_lemmas = [word.lower()
-                           for word in sent
-                           if word not in punctuation + r'¡¿–—']
-
             # limit indices to sentence bounds using `min` and `max`
             # to safely use with list slicing
             # since out-of-bounds slicing would return empty list ([])
             slice_before = slice(max(0, start - window), start)
-            slice_after = slice(end, min(end + window, len(sent_lemmas)))
-            context = sent_lemmas[slice_before] + sent_lemmas[slice_after]
-            term_context.append(context)
+            slice_after = slice(end, min(end + window, len(sent)))
+            context = sent[slice_before] + sent[slice_after]
+            contexts.append(context)
 
-    # flatten term_context since we appended lists of words to it
-    flattened = [word for words in term_context for word in words]
+    # flatten contexts since we accumulate lists, not plain words
+    flattened = [word for words in contexts for word in words]
+
+    # normalize and remove irrelevant context words
+    sanitized = [word.lower()
+                 for word in flattened
+                 if word not in punctuation + r'¡¿–—']
 
     # deduplicated
-    return set(flattened)
+    return set(sanitized)

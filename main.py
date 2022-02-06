@@ -3,6 +3,7 @@ import time
 from pandas.core.common import flatten
 
 from graded_readers_stats import (
+    context,
     data,
     frequency,
     preprocess,
@@ -65,7 +66,9 @@ vocab['Trees'] = tree.calculate_tree_props_v2(trees)
 utils.duration(start, 'Trees')
 
 # Collect context
-# context_words =
+context_words = context.collect_context_words_multiple(
+    locations, group_1[COL_LEMMA], window=3
+)
 
 # Locate context
 # Frequency context
