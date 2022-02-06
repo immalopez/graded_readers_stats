@@ -46,6 +46,8 @@ with Timer(name='Group', text=timer_text):
 with Timer(name='Preprocess', text=timer_text):
     terms_df = run(terms_df, vocabulary_pipeline)
     texts_df = run(texts_df, text_analysis_pipeline)
+    texts = texts_df[COL_LEMMA]
+    st_docs = texts_df[COL_STANZA_DOC]
 
 ##############################################################################
 #                               Process Terms                                #
@@ -53,19 +55,19 @@ with Timer(name='Preprocess', text=timer_text):
 
 with Timer(name='Locate terms', text=timer_text):
     terms = [term for terms in terms_df[COL_LEMMA] for term in terms]
-    terms_locs = locate_terms_in_docs(terms, texts_df[COL_LEMMA])
+    terms_locs = locate_terms_in_docs(terms, texts)
 
 with Timer(name='Frequency', text=timer_text):
     found_words = [sum(1 for doc in docs for _ in doc) for docs in terms_locs]
-    total_words = sum(1 for _ in flatten(texts_df[COL_LEMMA]))
+    total_words = sum(1 for _ in flatten(texts))
     terms_df[FREQUENCY] = [count / total_words for count in found_words]
 
 with Timer(name='TFIDF', text=timer_text):
-    terms_df[TFIDF] = tfidfs(term_locs=terms_locs, docs=texts_df[COL_LEMMA])
+    terms_df[TFIDF] = tfidfs(term_locs=terms_locs, docs=texts)
 
 with Timer(name='Trees', text=timer_text):
     trees = tree.make_trees_for_occurrences_v2(
-        term_locs=terms_locs, stanza_docs=texts_df[COL_STANZA_DOC]
+        term_locs=terms_locs, stanza_docs=st_docs
     )
     terms_df['Trees'] = tree.calculate_tree_props_v2(trees)
 
@@ -75,23 +77,21 @@ with Timer(name='Trees', text=timer_text):
 ##############################################################################
 
 with Timer(name='Context collect', text=timer_text):
-    contexts_by_term = context.collect_context_words_multiple(
-        terms_locs, texts_df[COL_LEMMA], window=3
+    ctx_by_term = context.collect_context_words_multiple(
+        terms_locs, texts, window=3
     )
-    ctx_terms_flat = list(flatten(contexts_by_term))
 
 with Timer(name='Context locate terms', text=timer_text):
-    # unified context list
-    ctx_terms = [[word] for word in ctx_terms_flat]
-    ctx_terms_locs = locate_terms_in_docs(ctx_terms, texts_df[COL_LEMMA])
-    ctx_term_loc_map = dict(zip(ctx_terms_flat, ctx_terms_locs))
+    ctx_terms_flat = list(flatten(ctx_by_term))
+    ctx_terms_wrap = [[word] for word in ctx_terms_flat]
+    ctx_terms_locs = locate_terms_in_docs(ctx_terms_wrap, texts)
+    ctx_term_loc_dict = dict(zip(ctx_terms_flat, ctx_terms_locs))
 
 with Timer(name='Context frequency', text=timer_text):
-    #
-    ctx_terms_2 = contexts_by_term[2]
-    ctx_terms_2_locs = map(ctx_term_loc_map.__getitem__, ctx_terms_2)
+    ctx_terms_2 = ctx_by_term[2]
+    ctx_terms_2_locs = map(ctx_term_loc_dict.__getitem__, ctx_terms_2)
     found_words = [sum(1 for doc in docs for _ in doc) for docs in ctx_terms_2_locs]
-    total_words = sum(1 for _ in flatten(texts_df[COL_LEMMA]))
+    total_words = sum(1 for _ in flatten(texts))
     ctx_freqs = [count / total_words for count in found_words]
 
 with Timer(name='Context TFIDF', text=timer_text):
