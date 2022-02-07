@@ -4,14 +4,17 @@ from codetiming import Timer
 from funcy import *
 from pandas.core.common import flatten
 
-import graded_readers_stats.context
 from graded_readers_stats import utils
 from graded_readers_stats.constants import (
     COL_LEMMA,
     COL_LEVEL,
     COL_STANZA_DOC,
 )
-from graded_readers_stats.context import collect_context_words
+from graded_readers_stats.context import (
+    avg,
+    collect_context_words,
+    ctxs_locs_by_term,
+)
 from graded_readers_stats.data import load, Dataset
 from graded_readers_stats.frequency import freqs_by_term, tfidfs
 from graded_readers_stats.preprocess import (
@@ -78,25 +81,29 @@ with Timer(name='Context locate terms', text=timer_text):
     ctx_term_loc_dict = dict(zip(ctx_terms_flat, ctx_terms_locs))
 
 with Timer(name='Context frequency', text=timer_text):
-    ctx_freqs_by_term = []
-    for ctx_words in ctx_by_term:
-        ctx_locs = [ctx_term_loc_dict[w] for w in ctx_words]
-        ctx_freqs = freqs_by_term(ctx_locs, words_total)
-        num_words = len(ctx_freqs)
-        avg_freq = sum(ctx_freqs) / num_words if num_words > 0 else 0
-        ctx_freqs_by_term.append(avg_freq)
+    ctxs_locs = ctxs_locs_by_term(ctx_term_loc_dict, ctx_by_term)
+    ctxs_freqs = [freqs_by_term(ctx_loc, words_total) for ctx_loc in ctxs_locs]
+    ctx_freqs_by_term = [avg(freqs) for freqs in ctxs_freqs]
     terms_df['Context frequency'] = ctx_freqs_by_term
 
     # Alternative using pipelines
-    # pipeline_freq = rcompose(
-    #   ctx_words_for_term,
-    #   partial(map, ctx_word_to_loc),
-    #   ctx_locs_to_counts,
+    # ctx_freqs_pipeline = rcompose(
+    #     ctxs_locs_by_term,
+    #     partial(map, rpartial(freqs_by_term, words_total)),
+    #     partial(map, avg),
     # )
-    # ctx_freqs_by_term = pipeline_freq(terms)
+    # terms_df['Context frequency 2'] = list(
+    #     ctx_freqs_pipeline(ctx_term_loc_dict, ctx_by_term)
+    # )
 
 with Timer(name='Context TFIDF', text=timer_text):
-    # select relevant words
+    tfidfs_pipeline = rcompose(
+        # map ctx terms to locs
+        partial(map, )
+        # map to tfidfs
+        # avg tfidfs
+    )
+    terms_df['Context TFIDF'] = tfidfs_pipeline(ctx_terms_locs)
     pass
 
 with Timer(name='Context Tree', text=timer_text):

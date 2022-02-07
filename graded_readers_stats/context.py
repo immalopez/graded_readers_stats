@@ -1,3 +1,4 @@
+import statistics
 from typing import List, Set
 
 
@@ -37,3 +38,13 @@ def collect_context_words_single(term_locs, docs, window) -> Set[str]:
 
     # deduplicated
     return set(sanitized)
+
+
+def ctxs_locs_by_term(term_loc_dict, ctx_words_by_term):
+    return [[term_loc_dict[w] for w in ws]
+            for ws in ctx_words_by_term]
+
+
+def avg(data):
+    return statistics.mean(data) if len(data) > 0 else 0
+
