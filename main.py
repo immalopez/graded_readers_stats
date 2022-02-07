@@ -10,8 +10,6 @@ from graded_readers_stats.constants import (
     COL_LEMMA,
     COL_LEVEL,
     COL_STANZA_DOC,
-    FREQUENCY,
-    TFIDF,
 )
 from graded_readers_stats.context import collect_context_words
 from graded_readers_stats.data import load, Dataset
@@ -57,10 +55,10 @@ with Timer(name='Locate terms', text=timer_text):
     terms_locs = locate_terms_in_docs(terms, texts)
 
 with Timer(name='Frequency', text=timer_text):
-    terms_df[FREQUENCY] = freqs_by_term(terms_locs, words_total)
+    terms_df['Frequency'] = freqs_by_term(terms_locs, words_total)
 
 with Timer(name='TFIDF', text=timer_text):
-    terms_df[TFIDF] = tfidfs(terms_locs, texts)
+    terms_df['TFIDF'] = tfidfs(terms_locs, texts)
 
 with Timer(name='Trees', text=timer_text):
     terms_df['Trees'] = tree_props_pipeline(terms_locs, st_docs)
@@ -80,13 +78,14 @@ with Timer(name='Context locate terms', text=timer_text):
     ctx_term_loc_dict = dict(zip(ctx_terms_flat, ctx_terms_locs))
 
 with Timer(name='Context frequency', text=timer_text):
-    # Pseudocode
-    # for every term (map?)
-    #   ctx_words = get context words for term
-    #   ctx_locs = map words to locations
-    #   ctx_counts = count(ctx_locs)
-    #   ctx_freqs = counts / total_words
-    #   avg_freq = sum(ctx_freqs) / len(ctx_freqs)
+    ctx_freqs_by_term = []
+    for ctx_words in ctx_by_term:
+        ctx_locs = [ctx_term_loc_dict[w] for w in ctx_words]
+        ctx_freqs = freqs_by_term(ctx_locs, words_total)
+        num_words = len(ctx_freqs)
+        avg_freq = sum(ctx_freqs) / num_words if num_words > 0 else 0
+        ctx_freqs_by_term.append(avg_freq)
+    terms_df['Context frequency'] = ctx_freqs_by_term
 
     # Alternative using pipelines
     # pipeline_freq = rcompose(
@@ -95,12 +94,6 @@ with Timer(name='Context frequency', text=timer_text):
     #   ctx_locs_to_counts,
     # )
     # ctx_freqs_by_term = pipeline_freq(terms)
-
-    ctx_terms_2 = ctx_by_term[2]
-    ctx_terms_2_locs = map(ctx_term_loc_dict.__getitem__, ctx_terms_2)
-    words_found = [sum(1 for doc in docs for _ in doc) for docs in ctx_terms_2_locs]
-    words_total = sum(1 for _ in flatten(texts))
-    ctx_freqs = [count / words_total for count in words_found]
 
 with Timer(name='Context TFIDF', text=timer_text):
     # select relevant words
