@@ -2,11 +2,12 @@
 #                            FREQUENCY CALCULATIONS                          #
 ##############################################################################
 
+import funcy
 from anytree import Node, LevelOrderGroupIter
 from stanza.models.common.doc import Sentence
 
-from graded_readers_stats.constants import *
 from graded_readers_stats._typing import *
+from graded_readers_stats.constants import *
 
 
 def make_trees_for_occurrences(
@@ -101,3 +102,9 @@ def get_tree_props(
     avg_w = sum_w / num_nodes if num_nodes > 0 else None
     avg_h = sum_h / num_nodes if num_nodes > 0 else None
     return min_w, max_w, avg_w, min_h, max_h, avg_h
+
+
+tree_props_pipeline = funcy.rcompose(
+    make_trees_for_occurrences_v2,
+    calculate_tree_props_v2
+)

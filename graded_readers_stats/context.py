@@ -1,7 +1,7 @@
 from typing import List, Set
 
 
-def collect_context_words_multiple(terms_locs, docs, window) -> List[Set[str]]:
+def collect_context_words(terms_locs, docs, window) -> List[Set[str]]:
     return [collect_context_words_single(term_locs, docs, window)
             for term_locs in terms_locs]
 

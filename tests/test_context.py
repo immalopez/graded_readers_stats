@@ -1,7 +1,7 @@
 import pytest
 
 from graded_readers_stats.context import (
-    collect_context_words_multiple,
+    collect_context_words,
     collect_context_words_single
 )
 
@@ -78,7 +78,7 @@ def test_collect_context_window_param(terms_locs, docs):
 
 def test_collect_context_list_of_terms(terms_locs, docs):
     # When
-    words = collect_context_words_multiple(terms_locs, docs, 1)
+    words = collect_context_words(terms_locs, docs, 1)
 
     # Then
     expected = [
