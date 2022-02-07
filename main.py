@@ -5,6 +5,7 @@ from funcy import *
 from pandas.core.common import flatten
 
 from graded_readers_stats import utils
+from graded_readers_stats.stats import get_msttr
 from graded_readers_stats.constants import (
     COL_LEMMA,
     COL_LEVEL,
@@ -118,8 +119,9 @@ with Timer(name='Context Tree', text=timer_text):
         ctx_tree_pipeline(ctx_term_loc_dict, ctx_by_term)
     )
 
-with Timer(name='MSTTR for all text', text=timer_text):
-    pass
+with Timer(name='MSTTR', text=timer_text):
+    joined_text = ' '.join(texts_df['Raw text'])
+    print(f'{get_msttr(joined_text)}')
 
 utils.duration(start_main, 'Main')
 print('')
