@@ -266,7 +266,6 @@ def tfidfs(term_locs, docs):
 
 
 def freqs_by_term(terms_locs, words_total):
-    # use _ to ignore sent and just count as 1
     terms_counts = [sum(1 for sents in term_locs for _ in sents)
                     for term_locs in terms_locs]
     return [count / words_total for count in terms_counts]
