@@ -52,5 +52,9 @@ def first_occurrence_of_vocab_in_sentence(
 
 
 def duration(start, msg):
-    print(f'{msg} ({time.time() - start:.2f}s)')
+    total = time.time() - start
+    if total < 60:
+        print(f'{msg} ({total:.2f}s)')
+    else:
+        print(f'{msg} ({total/60:.0f}m {total%60}s)')
     print('---')

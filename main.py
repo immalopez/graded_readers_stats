@@ -99,5 +99,5 @@ with Timer(name='MSTTR', text=timer_text):
     joined_text = ' '.join(texts_df['Raw text'])
     print(f'{get_msttr(joined_text)}')
 
-utils.duration(start_main, 'Main')
+utils.duration(start_main, 'main')
 print('')
