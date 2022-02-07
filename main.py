@@ -1,21 +1,19 @@
 import time
 
 from codetiming import Timer
-from funcy import *
 from pandas.core.common import flatten
 
 from graded_readers_stats import utils
-from graded_readers_stats.stats import get_msttr
 from graded_readers_stats.constants import (
     COL_LEMMA,
     COL_LEVEL,
     COL_STANZA_DOC,
 )
 from graded_readers_stats.context import (
-    avg,
-    avg_tuples,
     collect_context_words,
     ctxs_locs_by_term,
+    freqs_pipeline,
+    tfidfs_pipeline, trees_pipeline,
 )
 from graded_readers_stats.data import load, Dataset
 from graded_readers_stats.frequency import freqs_by_term, tfidfs
@@ -25,6 +23,7 @@ from graded_readers_stats.preprocess import (
     text_analysis_pipeline,
     locate_terms_in_docs,
 )
+from graded_readers_stats.stats import get_msttr
 from graded_readers_stats.tree import tree_props_pipeline
 
 timer_text = '{name}: {:0.0f} seconds'
@@ -49,7 +48,7 @@ with Timer(name='Preprocess', text=timer_text):
     texts_df = run(texts_df, text_analysis_pipeline)
     texts = texts_df[COL_LEMMA]
     st_docs = texts_df[COL_STANZA_DOC]
-    words_total = sum(1 for _ in flatten(texts))
+    num_words = sum(1 for _ in flatten(texts))
 
 ##############################################################################
 #                                 Terms                                      #
@@ -60,7 +59,7 @@ with Timer(name='Locate terms', text=timer_text):
     terms_locs = locate_terms_in_docs(terms, texts)
 
 with Timer(name='Frequency', text=timer_text):
-    terms_df['Frequency'] = freqs_by_term(terms_locs, words_total)
+    terms_df['Frequency'] = freqs_by_term(terms_locs, num_words)
 
 with Timer(name='TFIDF', text=timer_text):
     terms_df['TFIDF'] = tfidfs(terms_locs, texts)
@@ -70,7 +69,7 @@ with Timer(name='Tree', text=timer_text):
 
 
 ##############################################################################
-#                                  Contexts                                  #
+#                                Contexts                                    #
 ##############################################################################
 
 with Timer(name='Context collect', text=timer_text):
@@ -84,26 +83,17 @@ with Timer(name='Context locate terms', text=timer_text):
     ctxs_locs = ctxs_locs_by_term(ctx_term_loc_dict, ctx_by_term)
 
 with Timer(name='Context frequency', text=timer_text):
-    freqs_pipeline = rcompose(
-        partial(map, rpartial(freqs_by_term, words_total)),
-        partial(map, avg),
-    )
-    terms_df['Context frequency 2'] = list(freqs_pipeline(ctxs_locs))
+    terms_df['Context frequency'] = list(freqs_pipeline(num_words)(ctxs_locs))
 
 with Timer(name='Context TFIDF', text=timer_text):
-    tfidfs_pipeline = rcompose(
-        partial(map, rpartial(tfidfs, texts)),
-        partial(map, avg)
-    )
-    terms_df['Context TFIDF'] = list(tfidfs_pipeline(ctxs_locs))
+    terms_df['Context TFIDF'] = list(tfidfs_pipeline(texts)(ctxs_locs))
 
 with Timer(name='Context Tree', text=timer_text):
-    empty_tuple = (None, None, None, None, None, None)
-    trees_pipeline = rcompose(
-        partial(map, rpartial(tree_props_pipeline, st_docs)),
-        partial(map, rpartial(avg_tuples, empty_tuple))
-    )
-    terms_df['Context Tree'] = list(trees_pipeline(ctxs_locs))
+    terms_df['Context Tree'] = list(trees_pipeline(st_docs)(ctxs_locs))
+
+##############################################################################
+#                                  Others                                    #
+##############################################################################
 
 with Timer(name='MSTTR', text=timer_text):
     joined_text = ' '.join(texts_df['Raw text'])

@@ -1,6 +1,11 @@
 from statistics import mean
 from typing import List, Set
 
+from funcy import partial, rpartial, rcompose
+
+from graded_readers_stats.frequency import freqs_by_term, tfidfs
+from graded_readers_stats.tree import tree_props_pipeline
+
 
 def collect_context_words(terms_locs, docs, window) -> List[Set[str]]:
     return [collect_context_words_single(term_locs, docs, window)
@@ -45,6 +50,28 @@ def ctxs_locs_by_term(term_loc_dict, ctx_words_by_term):
             for ws in ctx_words_by_term]
 
 
+def freqs_pipeline(words_total):
+    return rcompose(
+        partial(map, rpartial(freqs_by_term, words_total)),
+        partial(map, avg),
+    )
+
+
+def tfidfs_pipeline(texts):
+    return rcompose(
+        partial(map, rpartial(tfidfs, texts)),
+        partial(map, avg)
+    )
+
+
+def trees_pipeline(st_docs):
+    empty_tuple = (None, None, None, None, None, None)
+    return rcompose(
+        partial(map, rpartial(tree_props_pipeline, st_docs)),
+        partial(map, rpartial(avg_tuples, empty_tuple))
+    )
+
+
 def avg(data):
     return mean(data) if len(data) > 0 else 0
 
@@ -52,7 +79,6 @@ def avg(data):
 def avg_tuples(data, empty_value):
     if not data:
         return empty_value
-
     transposed = list(map(list, zip(*data)))
     return tuple(map(lambda d: mean(d) if len(d) > 0 else 0, transposed))
 
