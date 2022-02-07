@@ -12,6 +12,7 @@ from graded_readers_stats.constants import (
 )
 from graded_readers_stats.context import (
     avg,
+    avg_tuples,
     collect_context_words,
     ctxs_locs_by_term,
 )
@@ -107,7 +108,15 @@ with Timer(name='Context TFIDF', text=timer_text):
     )
 
 with Timer(name='Context Tree', text=timer_text):
-    pass
+    empty_tuple = (None, None, None, None, None, None)
+    ctx_tree_pipeline = rcompose(
+        ctxs_locs_by_term,
+        partial(map, rpartial(tree_props_pipeline, st_docs)),
+        partial(map, rpartial(avg_tuples, empty_tuple))
+    )
+    terms_df['Context Trees'] = list(
+        ctx_tree_pipeline(ctx_term_loc_dict, ctx_by_term)
+    )
 
 with Timer(name='MSTTR for all text', text=timer_text):
     pass

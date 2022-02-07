@@ -1,4 +1,4 @@
-import statistics
+from statistics import mean
 from typing import List, Set
 
 
@@ -46,5 +46,13 @@ def ctxs_locs_by_term(term_loc_dict, ctx_words_by_term):
 
 
 def avg(data):
-    return statistics.mean(data) if len(data) > 0 else 0
+    return mean(data) if len(data) > 0 else 0
+
+
+def avg_tuples(data, empty_value):
+    if not data:
+        return empty_value
+
+    transposed = list(map(list, zip(*data)))
+    return tuple(map(lambda d: mean(d) if len(d) > 0 else 0, transposed))
 
