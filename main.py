@@ -65,7 +65,7 @@ with Timer(name='Frequency', text=timer_text):
 with Timer(name='TFIDF', text=timer_text):
     terms_df['TFIDF'] = tfidfs(terms_locs, texts)
 
-with Timer(name='Trees', text=timer_text):
+with Timer(name='Tree', text=timer_text):
     terms_df['Trees'] = tree_props_pipeline(terms_locs, st_docs)
 
 
@@ -81,43 +81,29 @@ with Timer(name='Context locate terms', text=timer_text):
     ctx_terms_wrap = [[word] for word in ctx_terms_flat]
     ctx_terms_locs = locate_terms_in_docs(ctx_terms_wrap, texts)
     ctx_term_loc_dict = dict(zip(ctx_terms_flat, ctx_terms_locs))
+    ctxs_locs = ctxs_locs_by_term(ctx_term_loc_dict, ctx_by_term)
 
 with Timer(name='Context frequency', text=timer_text):
-    ctxs_locs = ctxs_locs_by_term(ctx_term_loc_dict, ctx_by_term)
-    ctxs_freqs = [freqs_by_term(ctx_loc, words_total) for ctx_loc in ctxs_locs]
-    ctx_freqs_by_term = [avg(freqs) for freqs in ctxs_freqs]
-    terms_df['Context frequency'] = ctx_freqs_by_term
-
-    # Alternative using pipelines
-    # ctx_freqs_pipeline = rcompose(
-    #     ctxs_locs_by_term,
-    #     partial(map, rpartial(freqs_by_term, words_total)),
-    #     partial(map, avg),
-    # )
-    # terms_df['Context frequency 2'] = list(
-    #     ctx_freqs_pipeline(ctx_term_loc_dict, ctx_by_term)
-    # )
+    freqs_pipeline = rcompose(
+        partial(map, rpartial(freqs_by_term, words_total)),
+        partial(map, avg),
+    )
+    terms_df['Context frequency 2'] = list(freqs_pipeline(ctxs_locs))
 
 with Timer(name='Context TFIDF', text=timer_text):
     tfidfs_pipeline = rcompose(
-        ctxs_locs_by_term,
         partial(map, rpartial(tfidfs, texts)),
         partial(map, avg)
     )
-    terms_df['Context TFIDF'] = list(
-        tfidfs_pipeline(ctx_term_loc_dict, ctx_by_term)
-    )
+    terms_df['Context TFIDF'] = list(tfidfs_pipeline(ctxs_locs))
 
 with Timer(name='Context Tree', text=timer_text):
     empty_tuple = (None, None, None, None, None, None)
-    ctx_tree_pipeline = rcompose(
-        ctxs_locs_by_term,
+    trees_pipeline = rcompose(
         partial(map, rpartial(tree_props_pipeline, st_docs)),
         partial(map, rpartial(avg_tuples, empty_tuple))
     )
-    terms_df['Context Trees'] = list(
-        ctx_tree_pipeline(ctx_term_loc_dict, ctx_by_term)
-    )
+    terms_df['Context Tree'] = list(trees_pipeline(ctxs_locs))
 
 with Timer(name='MSTTR', text=timer_text):
     joined_text = ' '.join(texts_df['Raw text'])
