@@ -50,7 +50,7 @@ with Timer(name='Preprocess', text=timer_text):
     words_total = sum(1 for _ in flatten(texts))
 
 ##############################################################################
-#                               Process Terms                                #
+#                                 Terms                                      #
 ##############################################################################
 
 with Timer(name='Locate terms', text=timer_text):
@@ -68,7 +68,7 @@ with Timer(name='Trees', text=timer_text):
 
 
 ##############################################################################
-#                             Process Contexts                               #
+#                                  Contexts                                  #
 ##############################################################################
 
 with Timer(name='Context collect', text=timer_text):
@@ -98,16 +98,15 @@ with Timer(name='Context frequency', text=timer_text):
 
 with Timer(name='Context TFIDF', text=timer_text):
     tfidfs_pipeline = rcompose(
-        # map ctx terms to locs
-        partial(map, )
-        # map to tfidfs
-        # avg tfidfs
+        ctxs_locs_by_term,
+        partial(map, rpartial(tfidfs, texts)),
+        partial(map, avg)
     )
-    terms_df['Context TFIDF'] = tfidfs_pipeline(ctx_terms_locs)
-    pass
+    terms_df['Context TFIDF'] = list(
+        tfidfs_pipeline(ctx_term_loc_dict, ctx_by_term)
+    )
 
 with Timer(name='Context Tree', text=timer_text):
-    # select relevant words
     pass
 
 with Timer(name='MSTTR for all text', text=timer_text):
