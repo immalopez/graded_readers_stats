@@ -49,17 +49,34 @@ def test_freqs_by_term_complex():
     assert expected == freqs
 
 
-# def test_freqs_pipeline():
-#     # Given
-#
-#     terms_locs = [
-#         [[], []],
-#     ]
-#     words_total = 10
-#
-#     # When
-#     freqs = freqs_pipeline(words_total)(terms_locs)
-#
-#     # Then
-#     expected = []
-#     assert expected == freqs
+def test_freqs_pipeline():
+    # Given
+    s = (0, (0, 2))  # some sentence occurrence
+    terms_locs = [  # terms
+        [  # term 1: avg freq = (0.4 + 0.1) / 2 = 0.5 / 2 = 0.25
+            [  # ctx word 1: freq = 4 / 10 = 0.4
+                [s, s],  # doc 1
+                [s],     # doc 2
+                [s],     # doc 3
+            ],
+            [  # ctx word 2: freq = 1 / 10 = 0.1
+                [s],  # doc 1
+                [],   # doc 2
+                [],   # doc 3
+            ]
+        ],
+        [  # term 2
+            [  # ctx word 3: freq = 1 / 10 = 0.1
+                [],   # doc 1
+                [s],  # doc 2
+                [],   # doc 3
+            ],
+        ],
+    ]
+    words_total = 10
+
+    # When
+    freqs = list(freqs_pipeline(words_total)(terms_locs))
+
+    # Then
+    assert [0.25, 0.1] == freqs
