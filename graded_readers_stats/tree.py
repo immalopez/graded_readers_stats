@@ -24,10 +24,10 @@ def make_trees_for_occurrences(
 
 
 def make_trees_for_occurrences_v2(
-        term_locs: [],
+        terms_locs: [],
         stanza_docs: Series
 ) -> (str, [[(int, Node)]]):
-    return [make_tree(loc, stanza_docs) for loc in term_locs]
+    return [make_tree(loc, stanza_docs) for loc in terms_locs]
 
 
 def make_tree(

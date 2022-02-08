@@ -8,9 +8,9 @@ def test_tree_props():
     column = 'Reader_Avanzado_trees'
     data = {
         column: [[[
-            make_tree(1, 3),  # min_width: 1, min_height: 3
-            make_tree(2, 4),  # avg_width: 2, avg_height: 4
-            make_tree(3, 5),  # max_width: 3, max_height: 5
+            make_tree(1, 3),
+            make_tree(2, 4),
+            make_tree(3, 5),
         ]]],
     }
     df = pd.DataFrame(data)
@@ -21,6 +21,26 @@ def test_tree_props():
     # Then
     assert column + TREES_PROPS == new_column
     assert (1, 3, 2, 3, 5, 4) == tree_props[0]
+
+
+def test_calculate_tree_props_v2():
+    # Given
+    trees = [
+        [[make_tree(1, 3), make_tree(2, 4), make_tree(3, 5)]],
+        [[make_tree(2, 2), make_tree(4, 4), make_tree(6, 6)]],
+        #          ^ low            ^ avg            ^ high
+    ]
+
+    # When
+    tree_props = calculate_tree_props_v2(trees)
+
+    # Then
+    # min_w, max_w, avg_w, min_h, max_h, avg_h
+    expected = [
+        (1, 3, 2, 3, 5, 4),
+        (2, 6, 4, 2, 6, 4),
+    ]
+    assert expected == tree_props
 
 
 def make_tree(width, height):
