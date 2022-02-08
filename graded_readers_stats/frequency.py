@@ -195,7 +195,7 @@ def tfidfs_for_groups(locs, doc_groups, column_id) -> pd.DataFrame:
     return pd.DataFrame(result)
 
 
-def tfidfs(term_locs, docs):
+def tfidfs(terms_locs, docs):
     """
     term_locs
     ---
@@ -226,12 +226,12 @@ def tfidfs(term_locs, docs):
     """
     # For each term in the vocabulary:
     result_tfidfs_per_term = []
-    for doc_locs in term_locs:
+    for term_locs in terms_locs:
 
         # For each document in the group:
         tfidfs_group = []
         for doc_idx, doc_sents in enumerate(docs):
-            doc_matches = doc_locs[doc_idx]
+            doc_matches = term_locs[doc_idx]
 
             sents_count = len(doc_sents)
             sents_matched = len(doc_matches)
@@ -253,8 +253,9 @@ def tfidfs(term_locs, docs):
                     tf = 1 / sent_word_count
                     tfs_sents.append(tf)
 
-                tfidfs_sents = map(lambda x: x * idf_doc, tfs_sents)
-                tfidf_doc_avg = sum(tfidfs_sents) / sents_count
+                tfidfs_sents = map(lambda tf: tf * idf_doc, tfs_sents)
+                tfidfs_doc_sum = sum(tfidfs_sents)
+                tfidf_doc_avg = tfidfs_doc_sum / sents_count
                 tfidfs_group.append(tfidf_doc_avg)
 
         # TF-IDF for current term

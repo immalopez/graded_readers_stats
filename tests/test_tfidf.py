@@ -1,5 +1,6 @@
 import pandas as pd
 
+from graded_readers_stats.context import tfidfs_pipeline
 from graded_readers_stats.frequency import tfidfs, tfidfs_for_groups
 
 
@@ -161,7 +162,7 @@ def test_tfidf5():
     ]
 
     # When
-    result = tfidfs(term_locs=locations, docs=docs)
+    result = tfidfs(terms_locs=locations, docs=docs)
 
     # Then
     expected = [
@@ -169,3 +170,40 @@ def test_tfidf5():
         0.021502142547427227    # example
     ]
     assert expected == result
+
+
+def test_tfidfs_pipeline():
+    # Given
+    s = (0, (0, 1))  # some sentence occurrence
+    terms_locs = [  # terms
+        [  # term 1: 0.2
+            [  # ctx word 1: (0.0301 + 0.0301 + 0) / 3 ~= 0.2
+                [s],  # doc 1: 0.2 * 0.301 ~= 0.0602 / 2 ~= 0.0301
+                [s],  # doc 2: 0.2 * 0.301 ~= 0.0602 / 2 ~= 0.0301
+                [],   # doc 3: 0
+            ],
+            [  # ctx word 2: (0.0301 + 0 + 0) / 3 ~= 0.1
+                [s],  # doc 1:
+                [],   # doc 2: 0
+                [],   # doc 3: 0
+            ]
+        ],
+        [  # term 2
+            [  # ctx word 3: tfidf = 0
+                [],   # doc 1: 0
+                [],   # doc 2: 0
+                [],   # doc 3: 0
+            ],
+        ],
+    ]
+    texts = [  # docs
+        [['This', 'is', 'doc', 'number', '1'], ['Sentence', 'number', '2']],
+        [['This', 'is', 'doc', 'number', '2'], ['Sentence', 'number', '2']],
+        [['This', 'is', 'doc', 'number', '3'], ['Sentence', 'number', '2']],
+    ]
+
+    # When
+    result = list(tfidfs_pipeline(texts)(terms_locs))
+
+    # Then
+    assert [0.01505149978319906, 0] == result
