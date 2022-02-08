@@ -45,9 +45,9 @@ def test_locations_details(terms, docs):
 def test_context_locations():
     # Given
     ctx_words = [
-        {'hello', 'world'},
-        {'good'},
-        {}
+        ['hello', 'world'],
+        ['good'],
+        []
     ]
     docs = [
         [['this', 'is', 'a', 'sentence', '.'], ['this', 'as', 'well']],
