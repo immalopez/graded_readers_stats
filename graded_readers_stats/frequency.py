@@ -246,12 +246,11 @@ def tfidfs(term_locs, docs):
                     term_word_count = term_end - term_start
                     sent_idx = doc_match[0]
                     sent_words = doc_sents[sent_idx]
-                    sent_word_count = len(sent_words)
                     # count multi-word terms as 1
                     # by removing its length and adding 1 instead
-                    word_count = (sent_word_count - term_word_count + 1)
+                    sent_word_count = (len(sent_words) - term_word_count + 1)
                     # use frequency 1 since we match 1 term per sentence max
-                    tf = 1 / word_count
+                    tf = 1 / sent_word_count
                     tfs_sents.append(tf)
 
                 tfidfs_sents = map(lambda x: x * idf_doc, tfs_sents)
