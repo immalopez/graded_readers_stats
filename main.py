@@ -13,7 +13,7 @@ from graded_readers_stats.context import (
     collect_context_words,
     ctxs_locs_by_term,
     freqs_pipeline,
-    tfidfs_pipeline, trees_pipeline,
+    tfidfs_pipeline, trees_pipeline, locate_ctx_terms_in_docs,
 )
 from graded_readers_stats.data import load, Dataset
 from graded_readers_stats.frequency import freqs_by_term, tfidfs
@@ -73,14 +73,10 @@ with Timer(name='Tree', text=timer_text):
 ##############################################################################
 
 with Timer(name='Context collect', text=timer_text):
-    ctx_by_term = collect_context_words(terms_locs, texts, window=3)
+    ctx_words_by_term = collect_context_words(terms_locs, texts, window=3)
 
 with Timer(name='Context locate terms', text=timer_text):
-    ctx_terms_flat = list(flatten(ctx_by_term))
-    ctx_terms_wrap = [[word] for word in ctx_terms_flat]
-    ctx_terms_locs = locate_terms_in_docs(ctx_terms_wrap, texts)
-    ctx_term_loc_dict = dict(zip(ctx_terms_flat, ctx_terms_locs))
-    ctxs_locs = ctxs_locs_by_term(ctx_term_loc_dict, ctx_by_term)
+    ctxs_locs = locate_ctx_terms_in_docs(ctx_words_by_term, texts)
 
 with Timer(name='Context frequency', text=timer_text):
     terms_df['Context frequency'] = list(freqs_pipeline(num_words)(ctxs_locs))

@@ -2,8 +2,10 @@ from statistics import mean
 from typing import List, Set
 
 from funcy import partial, rpartial, rcompose
+from pandas.core.common import flatten
 
 from graded_readers_stats.frequency import freqs_by_term, tfidfs
+from graded_readers_stats.preprocess import locate_terms_in_docs
 from graded_readers_stats.tree import tree_props_pipeline
 
 
@@ -43,6 +45,15 @@ def collect_context_words_single(term_locs, docs, window) -> Set[str]:
 
     # deduplicated
     return set(sanitized)
+
+
+def locate_ctx_terms_in_docs(ctx_words_by_term, texts):
+    ctx_terms_flat = list(flatten(ctx_words_by_term))
+    ctx_terms_wrap = [[word] for word in ctx_terms_flat]
+    ctx_terms_locs = locate_terms_in_docs(ctx_terms_wrap, texts)
+    ctx_term_loc_dict = dict(zip(ctx_terms_flat, ctx_terms_locs))
+    ctxs_locs = ctxs_locs_by_term(ctx_term_loc_dict, ctx_words_by_term)
+    return ctxs_locs
 
 
 def ctxs_locs_by_term(term_loc_dict, ctx_words_by_term):
