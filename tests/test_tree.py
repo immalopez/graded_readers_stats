@@ -29,6 +29,8 @@ def test_calculate_tree_props_v2():
         # sent 1            sent 1            sent 2
         [[make_tree(1, 3)], [make_tree(2, 4), make_tree(3, 5)]],  # term 1
         [[make_tree(2, 2)], [make_tree(4, 4), make_tree(6, 6)]],  # term 2
+        [[], [], []],
+        [],
         #          ^ low            ^ avg            ^ high
     ]
 
@@ -40,6 +42,8 @@ def test_calculate_tree_props_v2():
     expected = [
         (1, 3, 2, 3, 5, 4),
         (2, 6, 4, 2, 6, 4),
+        (None, None, None, None, None, None),
+        (None, None, None, None, None, None),
     ]
     assert expected == tree_props
 

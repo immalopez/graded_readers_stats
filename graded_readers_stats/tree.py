@@ -77,8 +77,8 @@ def get_tree_props(
         docs_trees: [[Node]]
 ) -> (int, int, int, int):  # min_width, max_width, min_height, max_height
 
-    min_w, max_w = None, None
-    min_h, max_h = None, None
+    min_w, min_h = 1000, 1000
+    max_w, max_h = 0, 0
     sum_w, sum_h = 0, 0
     num_nodes = 0
 
@@ -93,14 +93,18 @@ def get_tree_props(
             sum_h += height
             num_nodes += 1
 
-            min_w = width if min_w is None else min(min_w, width)
-            max_w = width if max_w is None else max(max_w, width)
-            min_h = height if min_h is None else min(min_h, height)
-            max_h = height if max_h is None else max(max_h, height)
+            min_w = min(min_w, width)
+            max_w = max(max_w, width)
+            min_h = min(min_h, height)
+            max_h = max(max_h, height)
 
     avg_w = sum_w / num_nodes if num_nodes > 0 else None
     avg_h = sum_h / num_nodes if num_nodes > 0 else None
-    return min_w, max_w, avg_w, min_h, max_h, avg_h
+
+    has_result = max_w > 0
+    if has_result:
+        return min_w, max_w, avg_w, min_h, max_h, avg_h
+    return None, None, None, None, None, None
 
 
 tree_props_pipeline = funcy.rcompose(
