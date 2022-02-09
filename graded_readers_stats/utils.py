@@ -33,8 +33,8 @@ def first_occurrence_of_term_in_sent(
     vocabulary in text and end is the end index of the vocabulary in text if
     the lexical items contained in a vocabulary list are to be found in the
     sentence lists of a given text, and None otherwise."""
-    term_index = 0
-    term_num_words = len(term)  # multi-word terms
+
+    term_num_words = len(term)  # is it a multi-word term?
     if term_num_words == 1:
         try:
             index = sentence.index(term[0])
@@ -42,6 +42,7 @@ def first_occurrence_of_term_in_sent(
         except ValueError:
             return None
 
+    term_index = 0
     sent_index = 0
     sent_len = len(sentence)
     while sent_index < sent_len and term_index < term_num_words:
