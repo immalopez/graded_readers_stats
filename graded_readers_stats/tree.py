@@ -50,8 +50,7 @@ def make_tree(
 def make_tree_for_sent(sent: Sentence) -> Node:
     nodes = {word.id: Node(word.lemma) for word in sent.words}
     for word in sent.words:
-        nodes[word.id].parent = nodes[word.head] if word.head > 0 \
-            else None
+        nodes[word.id].parent = nodes[word.head] if word.head > 0 else None
         if word.head == 0:
             root = nodes[word.id]
     return root
