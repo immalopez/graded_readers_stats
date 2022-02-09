@@ -34,13 +34,14 @@ start_main = time.time()
 ##############################################################################
 
 with Timer(name='Load data', text=timer_text):
-    trial, use_cache = True, False
+    trial, use_cache = False, False
     terms_df = load(Dataset.VOCABULARY, trial, use_cache)
     readers = load(Dataset.READERS, trial, use_cache)
 
 with Timer(name='Group', text=timer_text):
     reader_by_level = readers.groupby(COL_LEVEL)
     texts_df = reader_by_level.get_group('Inicial').reset_index(drop=True)
+    texts_df = texts_df[:int(len(texts_df)/2)]
 
 # TODO: Delete redundant columns from DataFrame
 with Timer(name='Preprocess', text=timer_text):

@@ -128,7 +128,7 @@ def locate_terms_in_docs(terms, docs):
         for doc_sents in docs:
             result_sents = []
             for sent_index, sent in enumerate(doc_sents):
-                loc = first_occurrence_of_vocab_in_sentence(term, sent)
+                loc = first_occurrence_of_term_in_sent(term, sent)
                 if loc:
                     result_sents.append((sent_index, loc))
             result_docs.append(result_sents)
@@ -170,7 +170,7 @@ def vocabs_locations_in_texts(
             for sent_index, sentence in enumerate(doc.sentences):
                 lemmas = [word.lemma for word in sentence.words]
                 for vocab in vocab_row:
-                    location = first_occurrence_of_vocab_in_sentence(
+                    location = first_occurrence_of_term_in_sent(
                         vocab,
                         lemmas
                     )
