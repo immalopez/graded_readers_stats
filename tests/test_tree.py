@@ -1,6 +1,5 @@
+from graded_readers_stats.context import trees_pipeline
 from graded_readers_stats.tree import *
-import pandas as pd
-from anytree import Node, LevelOrderGroupIter
 
 
 def test_tree_props():
@@ -26,8 +25,10 @@ def test_tree_props():
 def test_calculate_tree_props_v2():
     # Given
     trees = [
-        [[make_tree(1, 3), make_tree(2, 4), make_tree(3, 5)]],
-        [[make_tree(2, 2), make_tree(4, 4), make_tree(6, 6)]],
+        # doc 1             doc 2
+        # sent 1            sent 1            sent 2
+        [[make_tree(1, 3)], [make_tree(2, 4), make_tree(3, 5)]],  # term 1
+        [[make_tree(2, 2)], [make_tree(4, 4), make_tree(6, 6)]],  # term 2
         #          ^ low            ^ avg            ^ high
     ]
 

@@ -27,20 +27,20 @@ def make_trees_for_occurrences_v2(
         terms_locs: [],
         stanza_docs: Series
 ) -> (str, [[(int, Node)]]):
-    return [make_tree(loc, stanza_docs) for loc in terms_locs]
+    return [make_tree(term_locs, stanza_docs) for term_locs in terms_locs]
 
 
 def make_tree(
-        doc_locations: [[(int, (int, int))]],  # list of docs of sents
-        docs: Series
+        docs_locs: [[(int, (int, int))]],  # list of docs of sents
+        stanza_docs: Series
 ) -> [(int, Node)]:
     doc_trees = []
-    for doc_index, doc_location in enumerate(doc_locations):
+    for doc_index, doc_locs in enumerate(docs_locs):
         sent_trees = []
-        if len(doc_location) > 0:
-            for sent_location in doc_location:
+        if len(doc_locs) > 0:
+            for sent_location in doc_locs:
                 sent_index = sent_location[0]
-                sent = docs[doc_index].sentences[sent_index]
+                sent = stanza_docs[doc_index].sentences[sent_index]
                 root_node = make_tree_for_sent(sent)
                 sent_trees.append(root_node)
         doc_trees.append(sent_trees)
@@ -70,12 +70,12 @@ def calculate_tree_props(
     return out_column_trees_props, values
 
 
-def calculate_tree_props_v2(trees):
-    return [get_tree_props(tree) for tree in trees]
+def calculate_tree_props_v2(terms_trees):
+    return [get_tree_props(term_trees) for term_trees in terms_trees]
 
 
 def get_tree_props(
-        source_group_trees: [[Node]]
+        docs_trees: [[Node]]
 ) -> (int, int, int, int):  # min_width, max_width, min_height, max_height
 
     min_w, max_w = None, None
@@ -83,12 +83,12 @@ def get_tree_props(
     sum_w, sum_h = 0, 0
     num_nodes = 0
 
-    for doc in source_group_trees:
-        for node in doc:
+    for doc_trees in docs_trees:
+        for sent_tree in doc_trees:
 
             width = max([len(children)
-                         for children in LevelOrderGroupIter(node)])
-            height = node.height
+                         for children in LevelOrderGroupIter(sent_tree)])
+            height = sent_tree.height
 
             sum_w += width
             sum_h += height
