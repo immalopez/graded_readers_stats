@@ -27,7 +27,6 @@ from graded_readers_stats.tree import tree_props_pipeline
 
 timer_text = '{name}: {:0.0f} seconds'
 start_main = time.time()
-storage = dict()
 
 ##############################################################################
 #                                Preprocess                                  #
@@ -42,14 +41,17 @@ with Timer(name='Load data', text=timer_text):
 with Timer(name='Group', text=timer_text):
     reader_by_level = readers.groupby(COL_LEVEL)
     texts_df = reader_by_level.get_group('Inicial').reset_index(drop=True)
-    texts_df = texts_df[:int(len(texts_df)/2)]
+    # texts_df = texts_df[:int(len(texts_df)/2)]
 
 # TODO: Delete redundant columns from DataFrame
 with Timer(name='Preprocess', text=timer_text):
     terms_df = run(terms_df, vocabulary_pipeline)
     texts_df = run(texts_df, text_analysis_pipeline)
     texts = texts_df[COL_LEMMA]
-    storage['stanza'] = texts_df[COL_STANZA_DOC]
+    storage = {
+        'stanza': texts_df[COL_STANZA_DOC],
+        'tree': {}
+    }
     num_words = sum(1 for _ in flatten(texts))
 
 ##############################################################################
@@ -67,7 +69,7 @@ with Timer(name='TFIDF', text=timer_text):
     terms_df['TFIDF'] = tfidfs(terms_locs, texts)
 
 with Timer(name='Tree', text=timer_text):
-    terms_df['Trees'] = tree_props_pipeline(storage, terms_locs)
+    terms_df['Tree'] = tree_props_pipeline(storage, terms_locs)
 
 
 ##############################################################################

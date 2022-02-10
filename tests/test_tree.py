@@ -1,4 +1,3 @@
-from graded_readers_stats.context import trees_pipeline
 from graded_readers_stats.tree import *
 
 

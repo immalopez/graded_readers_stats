@@ -34,13 +34,19 @@ def make_tree_for_term_locs(storage, docs_locs):
 def make_tree_for_loc(storage, doc_idx, sent_idx) -> Node:
     stanza_docs = storage['stanza']
     sent = stanza_docs[doc_idx].sentences[sent_idx]
+    trees = storage['tree']
+    key = f'{doc_idx}_{sent_idx}'
 
-    # TODO: Insert early return if cached
+    if key in trees:
+        return trees[key]
+
     nodes = {word.id: Node(word.lemma) for word in sent.words}
     for word in sent.words:
         nodes[word.id].parent = nodes[word.head] if word.head > 0 else None
         if word.head == 0:
             root = nodes[word.id]
+
+    storage['tree'][key] = root
     return root
 
 
