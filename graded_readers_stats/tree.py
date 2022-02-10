@@ -1,5 +1,5 @@
 ##############################################################################
-#                            FREQUENCY CALCULATIONS                          #
+#                               TREE CALCULATIONS                            #
 ##############################################################################
 
 import funcy
@@ -10,63 +10,38 @@ from graded_readers_stats._typing import *
 from graded_readers_stats.constants import *
 
 
-def make_trees_for_occurrences(
-        vocab: DataFrame,
-        texts: DataFrame,
-        column: str
-) -> (str, [[(int, Node)]]):
-    in_column_locations = column + ' ' + LOCATIONS
-    out_column_trees = column + ' ' + 'trees'
-
-    rows = vocab[in_column_locations]
-    trees = [make_tree(row, texts[COL_STANZA_DOC]) for row in rows]
-    return out_column_trees, trees
+def make_trees_for_terms_locs(storage, terms_locs):
+    return [make_tree_for_term_locs(storage, term_locs)
+            for term_locs in terms_locs]
 
 
-def make_trees_for_occurrences_v2(
-        terms_locs: [],
-        stanza_docs: Series
-) -> (str, [[(int, Node)]]):
-    return [make_tree(term_locs, stanza_docs) for term_locs in terms_locs]
+def make_tree_for_term_locs(storage, docs_locs):
+    # return [make_tree_for_loc(storage, doc_index, sent_loc[0])
+    #         for doc_index, doc_locs in enumerate(docs_locs)
+    #         for sent_loc in doc_locs]
 
-
-def make_tree(
-        docs_locs: [[(int, (int, int))]],  # list of docs of sents
-        stanza_docs: Series
-) -> [(int, Node)]:
-    doc_trees = []
+    docs_trees = []
     for doc_index, doc_locs in enumerate(docs_locs):
-        sent_trees = []
-        if len(doc_locs) > 0:
-            for sent_location in doc_locs:
-                sent_index = sent_location[0]
-                sent = stanza_docs[doc_index].sentences[sent_index]
-                root_node = make_tree_for_sent(sent)
-                sent_trees.append(root_node)
-        doc_trees.append(sent_trees)
-    return doc_trees
+        doc_trees = []
+        for sent_loc in doc_locs:
+            sent_index = sent_loc[0]
+            root_node = make_tree_for_loc(storage, doc_index, sent_index)
+            doc_trees.append(root_node)
+        docs_trees.append(doc_trees)
+    return docs_trees
 
 
-def make_tree_for_sent(sent: Sentence) -> Node:
+def make_tree_for_loc(storage, doc_idx, sent_idx) -> Node:
+    stanza_docs = storage['stanza']
+    sent = stanza_docs[doc_idx].sentences[sent_idx]
+
+    # TODO: Insert early return if cached
     nodes = {word.id: Node(word.lemma) for word in sent.words}
     for word in sent.words:
         nodes[word.id].parent = nodes[word.head] if word.head > 0 else None
         if word.head == 0:
             root = nodes[word.id]
     return root
-
-
-def calculate_tree_props(
-        vocabs: DataFrame,
-        column: str
-) -> (str, Series):
-    in_column_trees = column
-    out_column_trees_props = column + TREES_PROPS
-    values = vocabs.apply(
-        lambda x: get_tree_props(x[in_column_trees]),
-        axis=1
-    )
-    return out_column_trees_props, values
 
 
 def calculate_tree_props_v2(terms_trees):
@@ -106,8 +81,72 @@ def get_tree_props(
         return min_w, max_w, avg_w, min_h, max_h, avg_h
     return None, None, None, None, None, None
 
+##############################################################################
+#                                Deprecated                                  #
+##############################################################################
+
+
+def make_trees_for_occurrences_v2(terms_locs: [], stanza_docs: Series):
+    return [make_tree(term_locs, stanza_docs) for term_locs in terms_locs]
+
+
+def make_tree(
+        docs_locs: [[(int, (int, int))]],  # list of docs of sents
+        stanza_docs: Series
+) -> [(int, Node)]:
+    docs_trees = []
+    for doc_index, doc_locs in enumerate(docs_locs):
+        doc_trees = []
+        for sent_loc in doc_locs:
+            sent_index = sent_loc[0]
+            sent = stanza_docs[doc_index].sentences[sent_index]
+            root_node = make_tree_for_sent(sent)
+            doc_trees.append(root_node)
+        docs_trees.append(doc_trees)
+    return docs_trees
+
+
+def make_tree_for_sent(sent: Sentence) -> Node:
+    nodes = {word.id: Node(word.lemma) for word in sent.words}
+    for word in sent.words:
+        nodes[word.id].parent = nodes[word.head] if word.head > 0 else None
+        if word.head == 0:
+            root = nodes[word.id]
+    return root
+
+
+def make_trees_for_occurrences(
+        vocab: DataFrame,
+        texts: DataFrame,
+        column: str
+) -> (str, [[(int, Node)]]):
+    in_column_locations = column + ' ' + LOCATIONS
+    out_column_trees = column + ' ' + 'trees'
+
+    rows = vocab[in_column_locations]
+    trees = [make_tree(row, texts[COL_STANZA_DOC]) for row in rows]
+    return out_column_trees, trees
+
+
+def calculate_tree_props(
+        vocabs: DataFrame,
+        column: str
+) -> (str, Series):
+    in_column_trees = column
+    out_column_trees_props = column + TREES_PROPS
+    values = vocabs.apply(
+        lambda x: get_tree_props(x[in_column_trees]),
+        axis=1
+    )
+    return out_column_trees_props, values
+
+
+##############################################################################
+#                                 PIPELINE                                   #
+##############################################################################
+
 
 tree_props_pipeline = funcy.rcompose(
-    make_trees_for_occurrences_v2,
+    make_trees_for_terms_locs,
     calculate_tree_props_v2
 )

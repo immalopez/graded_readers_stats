@@ -75,10 +75,10 @@ def tfidfs_pipeline(texts):
     )
 
 
-def trees_pipeline(st_docs):
+def trees_pipeline(storage):
     empty_tuple = (None, None, None, None, None, None)
     return rcompose(
-        partial(map, rpartial(tree_props_pipeline, st_docs)),
+        partial(map, partial(tree_props_pipeline, storage)),
         partial(map, rpartial(avg_tuples, empty_tuple))
     )
 

@@ -11,7 +11,6 @@ from graded_readers_stats.constants import (
 )
 from graded_readers_stats.context import (
     collect_context_words,
-    ctxs_locs_by_term,
     freqs_pipeline,
     tfidfs_pipeline, trees_pipeline, locate_ctx_terms_in_docs,
 )
@@ -28,6 +27,7 @@ from graded_readers_stats.tree import tree_props_pipeline
 
 timer_text = '{name}: {:0.0f} seconds'
 start_main = time.time()
+storage = dict()
 
 ##############################################################################
 #                                Preprocess                                  #
@@ -36,6 +36,7 @@ start_main = time.time()
 with Timer(name='Load data', text=timer_text):
     trial, use_cache = False, False
     terms_df = load(Dataset.VOCABULARY, trial, use_cache)
+    # terms_df = terms_df[:5]
     readers = load(Dataset.READERS, trial, use_cache)
 
 with Timer(name='Group', text=timer_text):
@@ -48,7 +49,7 @@ with Timer(name='Preprocess', text=timer_text):
     terms_df = run(terms_df, vocabulary_pipeline)
     texts_df = run(texts_df, text_analysis_pipeline)
     texts = texts_df[COL_LEMMA]
-    st_docs = texts_df[COL_STANZA_DOC]
+    storage['stanza'] = texts_df[COL_STANZA_DOC]
     num_words = sum(1 for _ in flatten(texts))
 
 ##############################################################################
@@ -66,7 +67,7 @@ with Timer(name='TFIDF', text=timer_text):
     terms_df['TFIDF'] = tfidfs(terms_locs, texts)
 
 with Timer(name='Tree', text=timer_text):
-    terms_df['Trees'] = tree_props_pipeline(terms_locs, st_docs)
+    terms_df['Trees'] = tree_props_pipeline(storage, terms_locs)
 
 
 ##############################################################################
@@ -86,7 +87,7 @@ with Timer(name='Context TFIDF', text=timer_text):
     terms_df['Context TFIDF'] = list(tfidfs_pipeline(texts)(ctxs_locs))
 
 with Timer(name='Context Tree', text=timer_text):
-    terms_df['Context Tree'] = list(trees_pipeline(st_docs)(ctxs_locs))
+    terms_df['Context Tree'] = list(trees_pipeline(storage)(ctxs_locs))
 
 ##############################################################################
 #                                  Others                                    #
