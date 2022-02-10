@@ -35,7 +35,7 @@ start_main = time.time()
 with Timer(name='Load data', text=timer_text):
     trial, use_cache = False, False
     terms_df = load(Dataset.VOCABULARY, trial, use_cache)
-    # terms_df = terms_df[:5]
+    terms_df = terms_df[:5]
     readers = load(Dataset.READERS, trial, use_cache)
 
 with Timer(name='Group', text=timer_text):
