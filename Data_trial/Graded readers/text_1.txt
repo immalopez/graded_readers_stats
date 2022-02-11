@@ -1,9 +1,5 @@
-Title blah word3 blah peter.
+Según la Real Academia Española (RAE), literatura es el «arte de la expresión verbal» (entendiéndose como verbal aquello «que se refiere a la palabra, o se sirve de ella») y, por lo tanto, abarca tanto textos escritos (literatura escrita) como hablados o cantados (literatura oral). La literatura es una de las Bellas Artes y una de las más antiguas formas de expresión artística, caracterizada, según el Diccionario de la Real Academia Española, por la “expresión verbal”. Es decir que alcanza sus fines estéticos mediante la palabra, tanto oral como mayormente escrita. Su uso particular del lenguaje persigue la belleza y la reflexión sobre sí mismo, no sólo mediante el empleo de tropos y figuras retóricas, sino también de un sentido particular del ritmo y el sentido. A esto, además, deben sumarse los permisos que da la ficción: situaciones, imágenes y relatos provenientes de la imaginación o de la realidad misma, pero filtrados a través de la subjetividad.
 
-Trial Graded Text 1 Level Inicial.
-Title word3 blah.
-Peter word3 blah.
-Peter word3.
+En un sentido más restringido y 'neotradicional' (ya que las primeras obras literarias fueron compuestas para ser cantadas y/o recitadas), es la escritura que posee mérito artístico y que privilegia la literariedad, en oposición al lenguaje ordinario de intención menos estética y más práctica. El término literatura designa también al conjunto de producciones literarias de una lengua, de una nación, de una época o incluso de un género (la literatura griega, la literatura del siglo XVIII, la literatura fantástica, etc.) y al conjunto de obras que versan sobre un arte o una ciencia (literatura médica, jurídica, etc.). Es estudiada por la teoría literaria.
 
-Context: word1_context1_before_3 word1_context1_before_2 ¡ word1_context1_before_1 word1 word1_context1_after_1 word1_context1_after_2 word1_context1_after_3 word1.
-Context: word2_context1_before_3 word2_context1_before_2 word2_context1_before_1 word2 word2_context1_after_1 word2_context1_after_2 word2_context1_after_3.
+El concepto de literatura ha cambiado con el tiempo por ser parcialmente subjetivo; en su sentido genérico es el conjunto de cualquier producción escrita u oral de una nación, época o género y, en su sentido restrictivo, se considera que debe tener un valor estético o intelectual.

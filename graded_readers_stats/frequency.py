@@ -1,9 +1,11 @@
 ##############################################################################
 #                            FREQUENCY CALCULATIONS                          #
 ##############################################################################
-from pandas import Int64Index
 import math
 
+from pandas import Int64Index
+
+from graded_readers_stats.config import log
 from graded_readers_stats._typing import *
 from graded_readers_stats.constants import *
 
@@ -268,4 +270,5 @@ def tfidfs(terms_locs, docs):
 def freqs_by_term(terms_locs, words_total):
     terms_counts = [sum(1 for sents in term_locs for _ in sents)
                     for term_locs in terms_locs]
+    log('\tfreqs_by_term() -> terms_counts:', terms_counts)
     return [count / words_total for count in terms_counts]

@@ -3,6 +3,7 @@ import time
 from codetiming import Timer
 from pandas.core.common import flatten
 
+from graded_readers_stats import config
 from graded_readers_stats import utils
 from graded_readers_stats.constants import (
     COL_LEMMA,
@@ -25,6 +26,8 @@ from graded_readers_stats.preprocess import (
 from graded_readers_stats.stats import get_msttr
 from graded_readers_stats.tree import tree_props_pipeline
 
+config.is_debug = False
+
 timer_text = '{name}: {:0.0f} seconds'
 start_main = time.time()
 
@@ -35,7 +38,7 @@ start_main = time.time()
 with Timer(name='Load data', text=timer_text):
     trial, use_cache = False, False
     terms_df = load(Dataset.VOCABULARY, trial, use_cache)
-    terms_df = terms_df[:5]
+    # terms_df = terms_df[:5]
     readers = load(Dataset.READERS, trial, use_cache)
 
 with Timer(name='Group', text=timer_text):
@@ -53,6 +56,7 @@ with Timer(name='Preprocess', text=timer_text):
         'tree': {}
     }
     num_words = sum(1 for _ in flatten(texts))
+    terms_df.drop(columns=COL_STANZA_DOC, inplace=True)
 
 ##############################################################################
 #                                 Terms                                      #
@@ -78,6 +82,7 @@ with Timer(name='Tree', text=timer_text):
 
 with Timer(name='Context collect', text=timer_text):
     ctx_words_by_term = collect_context_words(terms_locs, texts, window=3)
+    terms_df['Context words'] = ctx_words_by_term
 
 with Timer(name='Context locate terms', text=timer_text):
     ctxs_locs = locate_ctx_terms_in_docs(ctx_words_by_term, texts)
