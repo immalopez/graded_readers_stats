@@ -16,9 +16,9 @@ def make_trees_for_terms_locs(storage, terms_locs):
 
 
 def make_tree_for_term_locs(storage, docs_locs):
-    return [make_tree_for_loc(storage, doc_index, sent_loc[0])
-            for doc_index, doc_locs in enumerate(docs_locs)
-            for sent_loc in doc_locs]
+    return [[make_tree_for_loc(storage, doc_index, sent_loc[0])
+             for sent_loc in doc_locs]
+            for doc_index, doc_locs in enumerate(docs_locs)]
 
 
 def make_tree_for_loc(storage, doc_idx, sent_idx) -> Node:
