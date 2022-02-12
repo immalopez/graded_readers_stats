@@ -17,7 +17,7 @@ from graded_readers_stats.context import (
     avg,
 )
 from graded_readers_stats.data import load, Dataset
-from graded_readers_stats.frequency import freqs_by_term, tfidfs, count_terms
+from graded_readers_stats.frequency import freqs_by_term, count_terms
 from graded_readers_stats.preprocess import (
     run,
     vocabulary_pipeline,
@@ -25,6 +25,7 @@ from graded_readers_stats.preprocess import (
     locate_terms_in_docs,
 )
 from graded_readers_stats.stats import get_msttr
+from graded_readers_stats.tfidf import tfidfs
 from graded_readers_stats.tree import tree_props_pipeline
 
 config.is_debug = False

@@ -4,8 +4,9 @@ from typing import List, Set
 from funcy import partial, rpartial, rcompose
 from pandas.core.common import flatten
 
-from graded_readers_stats.frequency import freqs_by_term, tfidfs, count_terms
+from graded_readers_stats.frequency import freqs_by_term, count_terms
 from graded_readers_stats.preprocess import locate_terms_in_docs
+from graded_readers_stats.tfidf import tfidfs
 from graded_readers_stats.tree import tree_props_pipeline
 
 

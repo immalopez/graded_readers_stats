@@ -1,7 +1,7 @@
 import pandas as pd
 
 from graded_readers_stats.context import tfidfs_pipeline
-from graded_readers_stats.frequency import tfidfs, tfidfs_for_groups
+from graded_readers_stats.tfidf import tfidfs, tfidfs_for_groups
 
 
 def test_tfidfs_for_groups():

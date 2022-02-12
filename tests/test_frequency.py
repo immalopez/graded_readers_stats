@@ -1,5 +1,5 @@
-from graded_readers_stats.context import freqs_pipeline
-from graded_readers_stats.frequency import freqs_by_term
+from graded_readers_stats.context import freqs_pipeline, count_pipeline
+from graded_readers_stats.frequency import freqs_by_term, count_terms
 
 
 def test_freqs_by_term_simple():
@@ -9,9 +9,10 @@ def test_freqs_by_term_simple():
         [[], []],
     ]
     words_total = 10
+    counts = count_terms(terms_locs)
 
     # When
-    freqs = freqs_by_term(terms_locs, words_total)
+    freqs = freqs_by_term(counts, words_total)
 
     # Then
     assert [0.1, 0] == freqs
@@ -31,9 +32,10 @@ def test_freqs_by_term_complex():
         [[s, s], [], [], [s, s]],
     ]
     words_total = 10
+    counts = count_terms(terms_locs)
 
     # When
-    freqs = freqs_by_term(terms_locs, words_total)
+    freqs = freqs_by_term(counts, words_total)
 
     # Then
     expected = [
@@ -74,9 +76,10 @@ def test_freqs_pipeline():
         ],
     ]
     words_total = 10
+    counts = list(count_pipeline()(terms_locs))
 
     # When
-    freqs = list(freqs_pipeline(words_total)(terms_locs))
+    freqs = list(freqs_pipeline(words_total)(counts))
 
     # Then
     assert [0.25, 0.1] == freqs
