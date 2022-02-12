@@ -15,7 +15,7 @@ from graded_readers_stats.context import (
     tfidfs_pipeline, trees_pipeline, locate_ctx_terms_in_docs, count_pipeline,
     avg,
 )
-from graded_readers_stats.data import load, Dataset
+from graded_readers_stats.data import load, Dataset, read_pandas_csv
 from graded_readers_stats.frequency import freqs_by_term, count_terms
 from graded_readers_stats.preprocess import (
     run,
@@ -28,8 +28,18 @@ from graded_readers_stats.tfidf import tfidfs
 from graded_readers_stats.tree import tree_props_pipeline
 
 
-def analyze():
+def analyze(args):
+    vocabulary_path = args.vocabulary_path
+    corpus_path = args.corpus_path
+    level = args.level
+
+    print()
     print('ANALYZE START')
+    print()
+    print('\tvocabulary_path = ', vocabulary_path)
+    print('\tcorpus_path = ', corpus_path)
+    print('\tlevel = ', level)
+    print()
 
     timer_text = '{name}: {:0.0f} seconds'
     start_main = time.time()
@@ -39,14 +49,17 @@ def analyze():
 ##############################################################################
 
     with Timer(name='Load data', text=timer_text):
-        trial, use_cache = True, False
-        terms_df = load(Dataset.VOCABULARY, trial, use_cache)
+        # trial, use_cache = True, False
+        terms_df = read_pandas_csv(vocabulary_path)
+        # terms_df = load(Dataset.VOCABULARY, trial, use_cache)
         # terms_df = terms_df[:5]
-        readers = load(Dataset.READERS, trial, use_cache)
+        readers = read_pandas_csv(corpus_path)
+        # readers = load(Dataset.READERS, trial, use_cache)
 
     with Timer(name='Group', text=timer_text):
         reader_by_level = readers.groupby(COL_LEVEL)
-        texts_df = reader_by_level.get_group('Inicial').reset_index(drop=True)
+        texts_df = reader_by_level.get_group(level).reset_index(drop=True)
+        # texts_df = reader_by_level.get_group('Inicial').reset_index(drop=True)
         # texts_df = texts_df[:int(len(texts_df)/2)]
 
     with Timer(name='Preprocess', text=timer_text):
