@@ -126,6 +126,10 @@ def analyze(args):
         joined_text = ' '.join(texts_df['Raw text'])
         print(f'{get_msttr(joined_text)}')
 
-    utils.duration(start_main, 'main')
+    with Timer(name='Export CSV', text=timer_text):
+        terms_df.to_csv(f'./output/{level}.csv')
+
+    print()
+    utils.duration(start_main, 'Total time')
     print('')
     print('ANALYZE END')
