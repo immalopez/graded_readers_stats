@@ -1,115 +1,22 @@
-import time
+import argparse
 
-from codetiming import Timer
-from pandas.core.common import flatten
+import cmd_analyze
 
-from graded_readers_stats import config
-from graded_readers_stats import utils
-from graded_readers_stats.constants import (
-    COL_LEMMA,
-    COL_LEVEL,
-    COL_STANZA_DOC,
-)
-from graded_readers_stats.context import (
-    collect_context_words,
-    freqs_pipeline,
-    tfidfs_pipeline, trees_pipeline, locate_ctx_terms_in_docs, count_pipeline,
-    avg,
-)
-from graded_readers_stats.data import load, Dataset
-from graded_readers_stats.frequency import freqs_by_term, count_terms
-from graded_readers_stats.preprocess import (
-    run,
-    vocabulary_pipeline,
-    text_analysis_pipeline,
-    locate_terms_in_docs,
-)
-from graded_readers_stats.stats import get_msttr
-from graded_readers_stats.tfidf import tfidfs
-from graded_readers_stats.tree import tree_props_pipeline
+parser = argparse.ArgumentParser()
+# parser.add_argument('terms_path',
+#                     help='file path to a CSV with terms/vocabulary')
+# parser.add_argument('texts_path',
+#                     help='file path to a CSV with file paths to texts')
+# parser.add_argument('--level',
+#                     help='only process texts of the specified level column'
+#                          'e.g. --level=Inicial would process only rows with a'
+#                          'value Inicial for the column Level that is assumed'
+#                          'to be present in all loaded texts.')
+#
+# args = parser.parse_args()
+# print(args)
 
-config.is_debug = False
-
-timer_text = '{name}: {:0.0f} seconds'
-start_main = time.time()
-
-##############################################################################
-#                                Preprocess                                  #
-##############################################################################
-
-with Timer(name='Load data', text=timer_text):
-    trial, use_cache = True, False
-    terms_df = load(Dataset.VOCABULARY, trial, use_cache)
-    # terms_df = terms_df[:5]
-    readers = load(Dataset.READERS, trial, use_cache)
-
-with Timer(name='Group', text=timer_text):
-    reader_by_level = readers.groupby(COL_LEVEL)
-    texts_df = reader_by_level.get_group('Inicial').reset_index(drop=True)
-    # texts_df = texts_df[:int(len(texts_df)/2)]
-
-# TODO: Delete redundant columns from DataFrame
-with Timer(name='Preprocess', text=timer_text):
-    terms_df = run(terms_df, vocabulary_pipeline)
-    texts_df = run(texts_df, text_analysis_pipeline)
-    texts = texts_df[COL_LEMMA]
-    storage = {
-        'stanza': texts_df[COL_STANZA_DOC],
-        'tree': {}
-    }
-    num_words = sum(1 for _ in flatten(texts))
-    terms_df.drop(columns=COL_STANZA_DOC, inplace=True)
-
-##############################################################################
-#                                 Terms                                      #
-##############################################################################
-
-with Timer(name='Locate terms', text=timer_text):
-    terms = [term for terms in terms_df[COL_LEMMA] for term in terms]
-    terms_locs = locate_terms_in_docs(terms, texts)
-
-with Timer(name='Frequency', text=timer_text):
-    terms_df['Count'] = terms_counts = count_terms(terms_locs)
-    terms_df['Total'] = num_words
-    terms_df['Frequency'] = freqs_by_term(terms_counts, num_words)
-
-with Timer(name='TFIDF', text=timer_text):
-    terms_df['TFIDF'] = tfidfs(terms_locs, texts)
-
-with Timer(name='Tree', text=timer_text):
-    terms_df['Tree'] = tree_props_pipeline(storage, terms_locs)
-
-
-##############################################################################
-#                                Contexts                                    #
-##############################################################################
-
-with Timer(name='Context collect', text=timer_text):
-    ctx_words_by_term = collect_context_words(terms_locs, texts, window=3)
-    terms_df['Context words'] = ctx_words_by_term
-
-with Timer(name='Context locate terms', text=timer_text):
-    ctxs_locs = locate_ctx_terms_in_docs(ctx_words_by_term, texts)
-
-with Timer(name='Context frequency', text=timer_text):
-    terms_df['Context count per word'] = ctx_counts = list(count_pipeline()(ctxs_locs))
-    terms_df['Context count'] = list(map(avg, ctx_counts))
-    terms_df['Context total'] = num_words
-    terms_df['Context frequency'] = list(freqs_pipeline(num_words)(ctx_counts))
-
-with Timer(name='Context TFIDF', text=timer_text):
-    terms_df['Context TFIDF'] = list(tfidfs_pipeline(texts)(ctxs_locs))
-
-with Timer(name='Context Tree', text=timer_text):
-    terms_df['Context Tree'] = list(trees_pipeline(storage)(ctxs_locs))
-
-##############################################################################
-#                                  Others                                    #
-##############################################################################
-
-with Timer(name='MSTTR', text=timer_text):
-    joined_text = ' '.join(texts_df['Raw text'])
-    print(f'{get_msttr(joined_text)}')
-
-utils.duration(start_main, 'main')
-print('')
+print()
+print('MAIN START')
+cmd_analyze.analyze()
+print('MAIN END')
