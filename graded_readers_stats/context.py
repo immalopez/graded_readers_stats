@@ -4,7 +4,7 @@ from typing import List, Set
 from funcy import partial, rpartial, rcompose
 from pandas.core.common import flatten
 
-from graded_readers_stats.frequency import freqs_by_term, tfidfs
+from graded_readers_stats.frequency import freqs_by_term, tfidfs, count_terms
 from graded_readers_stats.preprocess import locate_terms_in_docs
 from graded_readers_stats.tree import tree_props_pipeline
 
@@ -59,6 +59,13 @@ def locate_ctx_terms_in_docs(ctx_words_by_term, texts):
 def ctxs_locs_by_term(term_loc_dict, ctx_words_by_term):
     return [[term_loc_dict[w] for w in ws]
             for ws in ctx_words_by_term]
+
+
+def count_pipeline():
+    return rcompose(
+        partial(map, count_terms),
+        # partial(map, avg),
+    )
 
 
 def freqs_pipeline(words_total):

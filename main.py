@@ -13,10 +13,11 @@ from graded_readers_stats.constants import (
 from graded_readers_stats.context import (
     collect_context_words,
     freqs_pipeline,
-    tfidfs_pipeline, trees_pipeline, locate_ctx_terms_in_docs,
+    tfidfs_pipeline, trees_pipeline, locate_ctx_terms_in_docs, count_pipeline,
+    avg,
 )
 from graded_readers_stats.data import load, Dataset
-from graded_readers_stats.frequency import freqs_by_term, tfidfs
+from graded_readers_stats.frequency import freqs_by_term, tfidfs, count_terms
 from graded_readers_stats.preprocess import (
     run,
     vocabulary_pipeline,
@@ -36,7 +37,7 @@ start_main = time.time()
 ##############################################################################
 
 with Timer(name='Load data', text=timer_text):
-    trial, use_cache = False, False
+    trial, use_cache = True, False
     terms_df = load(Dataset.VOCABULARY, trial, use_cache)
     # terms_df = terms_df[:5]
     readers = load(Dataset.READERS, trial, use_cache)
@@ -67,7 +68,9 @@ with Timer(name='Locate terms', text=timer_text):
     terms_locs = locate_terms_in_docs(terms, texts)
 
 with Timer(name='Frequency', text=timer_text):
-    terms_df['Frequency'] = freqs_by_term(terms_locs, num_words)
+    terms_df['Count'] = terms_counts = count_terms(terms_locs)
+    terms_df['Total'] = num_words
+    terms_df['Frequency'] = freqs_by_term(terms_counts, num_words)
 
 with Timer(name='TFIDF', text=timer_text):
     terms_df['TFIDF'] = tfidfs(terms_locs, texts)
@@ -88,7 +91,10 @@ with Timer(name='Context locate terms', text=timer_text):
     ctxs_locs = locate_ctx_terms_in_docs(ctx_words_by_term, texts)
 
 with Timer(name='Context frequency', text=timer_text):
-    terms_df['Context frequency'] = list(freqs_pipeline(num_words)(ctxs_locs))
+    terms_df['Context count'] = context_counts = list(count_pipeline()(ctxs_locs))
+    terms_df['Context count average'] = list(map(avg, context_counts))
+    terms_df['Context total'] = num_words
+    terms_df['Context frequency'] = list(freqs_pipeline(num_words)(context_counts))
 
 with Timer(name='Context TFIDF', text=timer_text):
     terms_df['Context TFIDF'] = list(tfidfs_pipeline(texts)(ctxs_locs))

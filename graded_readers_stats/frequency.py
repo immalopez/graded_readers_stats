@@ -267,8 +267,10 @@ def tfidfs(terms_locs, docs):
     return result_tfidfs_per_term
 
 
-def freqs_by_term(terms_locs, words_total):
-    terms_counts = [sum(1 for sents in term_locs for _ in sents)
-                    for term_locs in terms_locs]
-    log('\tfreqs_by_term() -> terms_counts:', terms_counts)
+def count_terms(terms_locs):
+    return [sum(1 for sents in term_locs for _ in sents)
+            for term_locs in terms_locs]
+
+
+def freqs_by_term(terms_counts, words_total):
     return [count / words_total for count in terms_counts]
