@@ -33,3 +33,4 @@ def download_native_corpus(args):
         'Text file': ['Data/Native/text.txt']
     })
     df.to_csv('Data/Native list.csv', index=False, sep=';')
+    print('Download finished successfully!')
