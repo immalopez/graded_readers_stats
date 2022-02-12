@@ -92,10 +92,10 @@ with Timer(name='Context locate terms', text=timer_text):
     ctxs_locs = locate_ctx_terms_in_docs(ctx_words_by_term, texts)
 
 with Timer(name='Context frequency', text=timer_text):
-    terms_df['Context count'] = context_counts = list(count_pipeline()(ctxs_locs))
-    terms_df['Context count average'] = list(map(avg, context_counts))
+    terms_df['Context count per word'] = ctx_counts = list(count_pipeline()(ctxs_locs))
+    terms_df['Context count'] = list(map(avg, ctx_counts))
     terms_df['Context total'] = num_words
-    terms_df['Context frequency'] = list(freqs_pipeline(num_words)(context_counts))
+    terms_df['Context frequency'] = list(freqs_pipeline(num_words)(ctx_counts))
 
 with Timer(name='Context TFIDF', text=timer_text):
     terms_df['Context TFIDF'] = list(tfidfs_pipeline(texts)(ctxs_locs))
