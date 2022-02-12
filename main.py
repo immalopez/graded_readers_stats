@@ -1,6 +1,7 @@
 import argparse
 
 import cmd_analyze
+import cmd_merge_output
 
 parser = argparse.ArgumentParser()
 subparsers = parser.add_subparsers()
@@ -37,7 +38,11 @@ subparser_analyze.set_defaults(func=cmd_analyze.analyze)
 #                               Merge output
 ##############################################################################
 
-# TODO: Add subparser for handling merging
+subparser_analyze = subparsers.add_parser(
+    'merge-output',
+    help='Merge all CSV files into a single main.csv')
+subparser_analyze.set_defaults(func=cmd_merge_output.merge_output)
+
 
 ##############################################################################
 #                                  MAIN

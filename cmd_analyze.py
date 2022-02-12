@@ -116,7 +116,7 @@ def analyze(args):
         terms_df['Context TFIDF'] = list(tfidfs_pipeline(texts)(ctxs_locs))
 
     with Timer(name='Context Tree', text=timer_text):
-        terms_df['Context Tree'] = list(trees_pipeline(storage)(ctxs_locs))
+        terms_df['Context tree'] = list(trees_pipeline(storage)(ctxs_locs))
 
 ##############################################################################
 #                                  Others                                    #
@@ -127,7 +127,7 @@ def analyze(args):
         print(f'{get_msttr(joined_text)}')
 
     with Timer(name='Export CSV', text=timer_text):
-        terms_df.to_csv(f'./output/{level}.csv')
+        terms_df.to_csv(f'./output/{level}.csv', index=False)
 
     print()
     utils.duration(start_main, 'Total time')
