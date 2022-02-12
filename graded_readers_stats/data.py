@@ -89,7 +89,7 @@ def load(
 
 
 def read_pandas_csv(path: str) -> pd.DataFrame:
-    print(f'\tReading csv file at {path}')
+    # print(f'\tReading csv file at {path}')
     return pd.read_csv(path, sep=';')
 
 

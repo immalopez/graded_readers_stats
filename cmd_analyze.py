@@ -35,11 +35,11 @@ def analyze(args):
 
     print()
     print('ANALYZE START')
-    print()
-    print('\tvocabulary_path = ', vocabulary_path)
-    print('\tcorpus_path = ', corpus_path)
-    print('\tlevel = ', level)
-    print()
+    print('---')
+    print('vocabulary_path = ', vocabulary_path)
+    print('corpus_path = ', corpus_path)
+    print('level = ', level)
+    print('---')
 
     timer_text = '{name}: {:0.0f} seconds'
     start_main = time.time()

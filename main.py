@@ -43,6 +43,9 @@ subparser_analyze.set_defaults(func=cmd_analyze.analyze)
 #                                  MAIN
 ##############################################################################
 
+print()
+print('---')
+print()
 print('Parsing arguments...')
 args = parser.parse_args()
 
