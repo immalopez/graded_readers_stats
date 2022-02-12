@@ -1,0 +1,52 @@
+2022-02-12 20:23:20 INFO: Loading these models for language: es (Spanish):
+=======================
+| Processor | Package |
+-----------------------
+| tokenize  | ancora  |
+| mwt       | ancora  |
+| pos       | ancora  |
+| lemma     | ancora  |
+| depparse  | ancora  |
+=======================
+
+2022-02-12 20:23:20 INFO: Use device: cpu
+2022-02-12 20:23:20 INFO: Loading: tokenize
+2022-02-12 20:23:20 INFO: Loading: mwt
+2022-02-12 20:23:20 INFO: Loading: pos
+2022-02-12 20:23:20 INFO: Loading: lemma
+2022-02-12 20:23:20 INFO: Loading: depparse
+2022-02-12 20:23:20 INFO: Done loading processors!
+/Users/plamenandreev/developer/home/graded_readers_stats/venv/lib/python3.9/site-packages/stanza/models/common/beam.py:86: UserWarning: __floordiv__ is deprecated, and its behavior will change in a future version of pytorch. It currently rounds toward 0 (like the 'trunc' function NOT 'floor'). This results in incorrect rounding for negative values. To keep the current behavior, use torch.div(a, b, rounding_mode='trunc'), or for actual floor division, use torch.div(a, b, rounding_mode='floor').
+  prevK = bestScoresId // numWords
+
+---
+
+Parsing arguments...
+Parsing done: Namespace(vocabulary_path='Data/Vocabulary list.csv', corpus_path='Data/Graded readers list.csv', level='Intermedio', func=<function analyze at 0x10c3758b0>)
+
+ANALYZE START
+---
+vocabulary_path =  Data/Vocabulary list.csv
+corpus_path =  Data/Graded readers list.csv
+level =  Intermedio
+---
+Load data: 0 seconds
+Group: 0 seconds
+Preprocess: 73 seconds
+Locate terms: 11 seconds
+Frequency: 0 seconds
+TFIDF: 0 seconds
+Tree: 1 seconds
+Context collect: 0 seconds
+Context locate terms: 18 seconds
+Context frequency: 0 seconds
+Context TFIDF: 1 seconds
+Context Tree: 69 seconds
+{'msttr': 0.9967612878643548}
+MSTTR: 0 seconds
+Export CSV: 0 seconds
+
+Total time (3m 53s)
+---
+
+ANALYZE END
