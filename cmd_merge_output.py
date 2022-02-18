@@ -9,10 +9,32 @@ def path_leaf(path):
     return tail or ntpath.basename(head)
 
 
+def split_tree_column(tree_props):
+    def parse_float(str_float):
+        try:
+            return float(str_float)
+        except ValueError:
+            return str_float
+
+    def parse_tuple(str_tuple) -> (int, int, int, int, int, int):
+        result = str_tuple\
+            .replace('(', '')\
+            .replace(')', '')\
+            .replace(' ', '')\
+            .split(',')
+        result = list(map(parse_float, result))
+        return result
+
+    tree_props = list(map(parse_tuple, tree_props))
+    props_by_column = list(zip(*tree_props))
+    return props_by_column
+
+
 def merge_output(args):
     cwd = os.path.abspath('./output')
     files = os.listdir(cwd)
     output = pd.DataFrame()
+
     for file in files:
         if not file.endswith('.csv') or file.endswith('main.csv'):
             continue
@@ -24,7 +46,8 @@ def merge_output(args):
             'Context count per word'
         ])
         # Avoid re-adding shared columns such as Lexical item, Topic, Subtopic
-        if len(output) > 0:
+        common_columns_already_added = len(output) > 0
+        if common_columns_already_added:
             df = df.drop(columns=[
                 'Lexical item',
                 'Level',
@@ -32,6 +55,26 @@ def merge_output(args):
                 'Subtopic',
                 'Lemma',
             ])
+        # Split Tree props into columns
+        # (min_width, max_width, avg_width, min_height, max_height, avg_height)
+        props_by_column = split_tree_column(df['Tree'])
+        df[f'Tree_{level}_MinW'] = props_by_column[0]
+        df[f'Tree_{level}_MaxW'] = props_by_column[1]
+        df[f'Tree_{level}_AvgW'] = props_by_column[2]
+        df[f'Tree_{level}_MinH'] = props_by_column[3]
+        df[f'Tree_{level}_MaxH'] = props_by_column[4]
+        df[f'Tree_{level}_AvgH'] = props_by_column[5]
+        # df = df.drop(columns=['Tree'])
+
+        props_by_column = split_tree_column(df['Context tree'])
+        df[f'Context_tree_{level}_MinW'] = props_by_column[0]
+        df[f'Context_tree_{level}_MaxW'] = props_by_column[1]
+        df[f'Context_tree_{level}_AvgW'] = props_by_column[2]
+        df[f'Context_tree_{level}_MinH'] = props_by_column[3]
+        df[f'Context_tree_{level}_MaxH'] = props_by_column[4]
+        df[f'Context_tree_{level}_AvgH'] = props_by_column[5]
+        # df = df.drop(columns=['Context tree'])
+
         df = df.rename(columns={
             "Count": f"Count_{level}",
             "Total": f"Total_{level}",
