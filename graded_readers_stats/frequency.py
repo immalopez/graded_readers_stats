@@ -1,11 +1,9 @@
 ##############################################################################
 #                            FREQUENCY CALCULATIONS                          #
 ##############################################################################
-import math
 
 from pandas import Int64Index
 
-from graded_readers_stats.config import log
 from graded_readers_stats._typing import *
 from graded_readers_stats.constants import *
 

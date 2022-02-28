@@ -1,5 +1,6 @@
 from lexicalrichness import LexicalRichness
 
+
 def get_msttr(text):
     """
     Calculates the lexical richness of the text.

@@ -111,8 +111,7 @@ def tfidfs(terms_locs, docs):
     result_tfidfs_per_term = []
     for term_locs in terms_locs:
 
-        # For each document in the group:
-        tfidfs_group = []
+        tfidfs_docs = []
         for doc_idx, doc_sents in enumerate(docs):
             doc_matches = term_locs[doc_idx]
 
@@ -139,10 +138,10 @@ def tfidfs(terms_locs, docs):
                 tfidfs_sents = map(lambda tf: tf * idf_doc, tfs_sents)
                 tfidfs_doc_sum = sum(tfidfs_sents)
                 tfidf_doc_avg = tfidfs_doc_sum / sents_count
-                tfidfs_group.append(tfidf_doc_avg)
+                tfidfs_docs.append(tfidf_doc_avg)
 
         # TF-IDF for current term
-        tfidf_group_avg = sum(tfidfs_group) / len(docs)
-        result_tfidfs_per_term.append(tfidf_group_avg)
+        tfidf_term_avg = sum(tfidfs_docs) / len(docs)
+        result_tfidfs_per_term.append(tfidf_term_avg)
 
     return result_tfidfs_per_term

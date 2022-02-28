@@ -3,6 +3,8 @@ import pytest
 from graded_readers_stats.tree import *
 
 
+# Non-test code is using dot syntax to access properties of classes.
+# DotDict is for duck typing. Without DotDict, the tests wouldn't work.
 class DotDict(dict):
     """dot.notation access to dictionary attributes"""
     __getattr__ = dict.get
@@ -55,6 +57,7 @@ def storage():
         ]
     }
     return DotDict(storage)
+
 
 def test_make_tree_for_loc(storage):
     # When
