@@ -38,6 +38,10 @@ subparser.add_argument(
          'only rows with a value Inicial for the column '
          'Level that is assumed to be present in all '
          'loaded texts.')
+subparser.add_argument('--max_terms', type=int,
+                       help='max number of terms to analyze. Useful for tests')
+subparser.add_argument('--max_docs', type=int,
+                       help='max number of docs to analyze. Useful for tests')
 subparser.set_defaults(func=cmd_analyze.analyze)
 
 ##############################################################################

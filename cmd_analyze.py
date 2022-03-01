@@ -17,6 +17,7 @@ from graded_readers_stats.context import (
 )
 from graded_readers_stats.data import load, Dataset, read_pandas_csv
 from graded_readers_stats.frequency import freqs_by_term, count_terms
+from graded_readers_stats.logit import logit
 from graded_readers_stats.preprocess import (
     run,
     vocabulary_pipeline,
@@ -32,6 +33,8 @@ def analyze(args):
     vocabulary_path = args.vocabulary_path
     corpus_path = args.corpus_path
     level = args.level
+    max_terms = args.max_terms
+    max_docs = args.max_docs
 
     print()
     print('ANALYZE START')
@@ -39,6 +42,8 @@ def analyze(args):
     print('vocabulary_path = ', vocabulary_path)
     print('corpus_path = ', corpus_path)
     print('level = ', level)
+    print('max_terms = ', max_terms)
+    print('max_docs = ', max_docs)
     print('---')
 
     timer_text = '{name}: {:0.0f} seconds'
@@ -49,12 +54,16 @@ def analyze(args):
 ##############################################################################
 
     with Timer(name='Load data', text=timer_text):
-        terms_df = read_pandas_csv(vocabulary_path)
         readers = read_pandas_csv(corpus_path)
+        terms_df = read_pandas_csv(vocabulary_path)
+        if max_terms:
+            terms_df = terms_df[:max_terms]
 
     with Timer(name='Group', text=timer_text):
         reader_by_level = readers.groupby(COL_LEVEL)
         texts_df = reader_by_level.get_group(level).reset_index(drop=True)
+        if max_docs:
+            texts_df = texts_df[:max_docs]
 
     with Timer(name='Preprocess', text=timer_text):
         terms_df = run(terms_df, vocabulary_pipeline)
@@ -70,6 +79,9 @@ def analyze(args):
 ##############################################################################
 #                                 Terms                                      #
 ##############################################################################
+
+    with Timer(name='Logistic Regression', text=timer_text):
+        logit(texts_df)
 
     with Timer(name='Locate terms', text=timer_text):
         terms = [term for terms in terms_df[COL_LEMMA] for term in terms]
