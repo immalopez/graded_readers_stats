@@ -1,6 +1,0 @@
-Trial Graded Text 3 Level Avanzado
-
-A Plamen le gustan las motos.
-En la primera fase, el Plamen se encuentra en la posición 1.
-Después de cada movimiento, el Plamen se mueve a la posición siguiente.
-Context: multi word 1 mw1_context3_after_1 mw2_context3_after_2.
