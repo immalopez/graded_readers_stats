@@ -1,13 +1,19 @@
 ##############################################################################
 #                          LOGISTIC REGRESSION
 ##############################################################################
-
+import numpy as np
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.model_selection import train_test_split
 
 
 def logit(X, y):
-    print(X, y)
+    solver = "saga"
+
+    X_train, X_test, y_train, y_test = train_test_split(
+        X, y, random_state=42, stratify=y, test_size=0.2
+    )
+    print(np.unique(y).shape)
+
     return 0
 
     # data_train, data_test = train_test_split(data,

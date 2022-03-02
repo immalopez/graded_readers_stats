@@ -11,6 +11,7 @@ from graded_readers_stats.constants import *
 
 # Initialized on demand
 nlp_es = None
+nlp_es_simple = None
 
 # ============================== PIPELINE STEPS ===============================
 
@@ -47,6 +48,24 @@ def read_files(file_paths: [str]) -> [str]:
     :return: a list of strings with content of the input files.
     """
     return data.read_files(file_paths)
+
+
+def shrink_text_content(texts) -> [str]:
+    # shrink to 10% of the original size (i.e. throw away 90% of the content)
+    return [t[:round(len(t) * 0.1)] for t in texts]
+
+
+def make_stanza_docs_simple(texts):
+    global nlp_es_simple
+
+    if nlp_es_simple is None:
+        nlp_es_simple = st.Pipeline(
+            lang='es',
+            processors='tokenize,lemma'
+        )
+
+    documents = [st.Document([], text=d) for d in texts]
+    return nlp_es_simple(documents)
 
 
 def make_stanza_docs(texts):
@@ -249,7 +268,13 @@ def collect_vocab_context_in_texts(
 # =========================== PIPELINE EXECUTION ==============================
 # Pipeline steps receive a DataFrame, transform it, and return it for next step
 
-
+shrink_content_step = (shrink_text_content, COL_RAW_TEXT, COL_RAW_TEXT)
+text_analysis_pipeline_simple = [
+    (read_files, COL_TEXT_FILE, COL_RAW_TEXT),
+    (make_stanza_docs_simple, COL_RAW_TEXT, COL_STANZA_DOC),
+    (get_fields, COL_STANZA_DOC, COL_LEMMA, ('lemma',)),
+    (normalize, COL_LEMMA, COL_LEMMA),
+]
 text_analysis_pipeline = [
     (read_files, COL_TEXT_FILE, COL_RAW_TEXT),
     (make_stanza_docs, COL_RAW_TEXT, COL_STANZA_DOC),

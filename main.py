@@ -59,6 +59,8 @@ subparser.add_argument(
     help='file path to a CSV with file paths to texts')
 subparser.add_argument('--max_docs', type=int,
                        help='max number of docs to analyze. Useful for tests')
+subparser.add_argument('--shorten_content', action="store_true",
+                       help='shortens content of docs for faster processing.')
 subparser.set_defaults(func=cmd_bag_of_words.execute)
 
 ##############################################################################
