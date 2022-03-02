@@ -1,8 +1,10 @@
 import argparse
 
-import cmd_analyze
-import cmd_download_native_corpus
-import cmd_merge_output
+from graded_readers_stats.commands import (
+    cmd_download_native_corpus,
+    cmd_merge_output,
+    cmd_analyze
+)
 
 parser = argparse.ArgumentParser()
 subparsers = parser.add_subparsers()

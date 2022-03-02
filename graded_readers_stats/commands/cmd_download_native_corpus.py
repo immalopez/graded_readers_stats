@@ -25,7 +25,7 @@ def download_native_corpus(args):
     text = re.sub(r' \).', ').', text)
     text = re.sub(r' \),', '),', text)
 
-    with open('./Data/Native/text.txt', 'w') as f:
+    with open('../../Data/Native/text.txt', 'w') as f:
         f.write(text)
 
     df = pd.DataFrame({

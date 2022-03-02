@@ -31,7 +31,7 @@ def split_tree_column(tree_props):
 
 
 def merge_output(args):
-    cwd = os.path.abspath('./output')
+    cwd = os.path.abspath('../../output')
     files = os.listdir(cwd)
     output = pd.DataFrame()
 
