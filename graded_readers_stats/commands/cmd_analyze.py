@@ -15,7 +15,7 @@ from graded_readers_stats.context import (
     tfidfs_pipeline, trees_pipeline, locate_ctx_terms_in_docs, count_pipeline,
     avg,
 )
-from graded_readers_stats.data import load, Dataset, read_pandas_csv
+from graded_readers_stats.data import read_pandas_csv
 from graded_readers_stats.frequency import freqs_by_term, count_terms
 from graded_readers_stats.logit import logit
 from graded_readers_stats.preprocess import (
