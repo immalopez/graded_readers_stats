@@ -3,7 +3,8 @@ import argparse
 from graded_readers_stats.commands import (
     cmd_download_native_corpus,
     cmd_merge_output,
-    cmd_analyze
+    cmd_analyze,
+    cmd_bag_of_words
 )
 
 parser = argparse.ArgumentParser()
@@ -45,6 +46,20 @@ subparser.add_argument('--max_terms', type=int,
 subparser.add_argument('--max_docs', type=int,
                        help='max number of docs to analyze. Useful for tests')
 subparser.set_defaults(func=cmd_analyze.analyze)
+
+##############################################################################
+#                               Bag of Words                                 #
+##############################################################################
+
+subparser = subparsers.add_parser(
+    'bag-of-words',
+    help='Predict level using BoW')
+subparser.add_argument(
+    'corpus_path',
+    help='file path to a CSV with file paths to texts')
+subparser.add_argument('--max_docs', type=int,
+                       help='max number of docs to analyze. Useful for tests')
+subparser.set_defaults(func=cmd_bag_of_words.execute)
 
 ##############################################################################
 #                               Merge output
