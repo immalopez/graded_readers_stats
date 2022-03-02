@@ -5,26 +5,21 @@
 from sklearn.feature_extraction.text import CountVectorizer
 from sklearn.model_selection import train_test_split
 
-from graded_readers_stats.constants import (
-    COL_LEVEL,
-    COL_RAW_TEXT,
-)
 
-
-def logit(data):
+def logit(X, y):
+    print(X, y)
     return 0
-    X = data
 
-    data_train, data_test = train_test_split(data,
-                                             test_size=0.2,
-                                             random_state=42)
-    vectorizer = CountVectorizer()
-    vectorizer.fit(data_train[COL_RAW_TEXT])
-    x_train = vectorizer.transform(data_train[COL_RAW_TEXT])
-    x_test = vectorizer.transform(data_test[COL_RAW_TEXT])
-    y_train = data_train[COL_LEVEL]
-    y_test = data_test[COL_LEVEL]
-
+    # data_train, data_test = train_test_split(data,
+    #                                          test_size=0.2,
+    #                                          random_state=42)
+    # vectorizer = CountVectorizer()
+    # vectorizer.fit(data_train[COL_RAW_TEXT])
+    # x_train = vectorizer.transform(data_train[COL_RAW_TEXT])
+    # x_test = vectorizer.transform(data_test[COL_RAW_TEXT])
+    # y_train = data_train[COL_LEVEL]
+    # y_test = data_test[COL_LEVEL]
+    #
     # model = LogisticRegression(max_iter=LR_MAX_ITER, C=LR_C)
     # model.fit(X_train, y_train)
     #

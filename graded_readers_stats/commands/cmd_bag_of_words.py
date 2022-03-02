@@ -1,10 +1,13 @@
 import time
 
 from codetiming import Timer
+from pandas.core.common import flatten
 
 from graded_readers_stats import utils
 from graded_readers_stats.constants import (
     COL_LEMMA,
+    COL_STANZA_DOC,
+    COL_LEVEL,
 )
 from graded_readers_stats.data import read_pandas_csv
 from graded_readers_stats.logit import logit
@@ -39,14 +42,17 @@ def execute(args):
 
     with Timer(name='Preprocess', text=timer_text):
         texts_df = run(texts_df, text_analysis_pipeline)
-        texts = texts_df[COL_LEMMA]
+        texts_df = texts_df.drop(columns=COL_STANZA_DOC)
+        X = texts_df[COL_LEMMA].apply(flatten).apply(list)
+        y = texts_df[COL_LEVEL]
 
 ##############################################################################
 #                             Logistic Regression
 ##############################################################################
 
     with Timer(name='Logistic Regression', text=timer_text):
-        logit(texts_df)
+        result = logit(X, y)
+        print("result", result)
 
 ##############################################################################
 #                                   Done
