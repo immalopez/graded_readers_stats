@@ -58,7 +58,7 @@ def logit(X, y):
     y_test_pred = pd.DataFrame(lr.predict(X_test), index=X_test_index,
                                columns=['lr_bow_pred'])
 
-    print(show_most_informative_features(lr, vectorizer, 20))
+    # print(show_most_informative_features(lr, vectorizer, 20))
     columns = ['lr_bow_pred']
 
     print_report(
