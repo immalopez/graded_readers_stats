@@ -45,12 +45,14 @@ def execute(args):
     with Timer(name='Preprocess', text=timer_text):
         text_analysis_pipeline = text_analysis_pipeline_simple
         if shorten_content:
-            # shorten content before analyzing. Speeds up development!
             text_analysis_pipeline.insert(1, shrink_content_step)
 
         texts_df = run(texts_df, text_analysis_pipeline)
         texts_df = texts_df.drop(columns=COL_STANZA_DOC)
-        X = texts_df[COL_LEMMA].apply(flatten).apply(list)
+        X = texts_df[COL_LEMMA]\
+            .apply(flatten)\
+            .apply(list)\
+            .apply(lambda x: ' '.join(x))
         y = texts_df[COL_LEVEL]
 
 ##############################################################################
