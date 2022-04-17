@@ -22,34 +22,14 @@ def logit(X, y):
     X_test_index = X_test.index
     vectorizer = CountVectorizer()
     vectorizer.fit(X_train)
-    # print("fit\n", vectorizer.get_feature_names_out()[-50:])
     X_train = vectorizer.transform(X_train)
     X_test = vectorizer.transform(X_test)
-    # print("transform\n", vectorizer.get_feature_names_out()[-50:])
 
     tfidf = TfidfTransformer()
     X_train = tfidf.fit_transform(X_train)
     X_test = tfidf.fit_transform(X_test)
-    # print("tfidf\n", vectorizer.get_feature_names_out()[-50:])
-    # vectorizer.fit(data_train[COL_RAW_TEXT])
-    # x_train = vectorizer.transform(data_train[COL_RAW_TEXT])
-    # x_test = vectorizer.transform(data_test[COL_RAW_TEXT])
-    # y_train = data_train[COL_LEVEL]
-    # y_test = data_test[COL_LEVEL]
-
-    # lr = LogisticRegression(
-    #     solver="saga",
-    #     multi_class="multinomial",
-    #     penalty="l1",
-    #     max_iter=100,
-    #     random_state=42,
-    # )
     lr = LogisticRegression(
-        # solver="saga",
-        # multi_class="multinomial",
-        # penalty="l1",
         max_iter=100,
-        # C=1,
         random_state=42,
     )
     scores = cross_val_score(lr, X_train, y_train, cv=5)
@@ -140,6 +120,8 @@ def show_most_informative_features(model, vectorizer, n):
     topn = zip(coefs[:n], coefs[:-(n+1):-1])
     output = []
     for(cp, fnp), (cn, fnn) in topn:
+        # cp = coefficient positive
+        # fnn = feature name negative
         output.append(
             "{:0.6f}{: >15}    {:0.6f}{: >15}".format(cp, fnp, cn, fnn))
     return "\n".join(output)
