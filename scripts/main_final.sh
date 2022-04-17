@@ -8,3 +8,4 @@ venv/bin/python main.py analyze "Data/Vocabulary list.csv" "Data/Native list.csv
 wait
 
 venv/bin/python main.py merge-output
+venv/bin/python main.py bag-of-words "Data/Graded readers list.csv" | tee output/BOW.log

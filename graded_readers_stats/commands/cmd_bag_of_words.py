@@ -60,8 +60,7 @@ def execute(args):
 ##############################################################################
 
     with Timer(name='Logistic Regression', text=timer_text):
-        result = logit(X, y)
-        print("result", result)
+        logit(X, y)
 
 ##############################################################################
 #                                   Done

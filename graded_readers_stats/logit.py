@@ -46,7 +46,6 @@ def logit(X, y):
     y_test_pred = pd.DataFrame(lr.predict(X_test), index=X_test_index,
                                columns=['lr_bow_pred'])
 
-    # print(show_most_informative_features(lr, vectorizer, 20))
     columns = ['lr_bow_pred']
 
     print_report(
@@ -54,7 +53,7 @@ def logit(X, y):
         y_test, y_test_pred,
         lr, vectorizer, columns)
 
-    return 0
+    return None
 
 
 def evaluate(y_train_true, y_train_pred, y_test_true, y_test_pred, column):
@@ -113,17 +112,22 @@ def evaluation_and_conf_mx(y_train_true, y_train_pred,
 
 
 def show_most_informative_features(model, vectorizer, n):
-    tvec = model.coef_
-    coefs = sorted(
-        zip(tvec[0], vectorizer.get_feature_names_out()),
-        key=itemgetter(0), reverse=True)
-    topn = zip(coefs[:n], coefs[:-(n+1):-1])
     output = []
-    for(cp, fnp), (cn, fnn) in topn:
-        # cp = coefficient positive
-        # fnn = feature name negative
-        output.append(
-            "{:0.6f}{: >15}    {:0.6f}{: >15}".format(cp, fnp, cn, fnn))
+    coefs_per_class = model.coef_
+    for cls_name, cls_idx in zip(model.classes_, range(3)):
+        coefs_and_names = sorted(
+            zip(coefs_per_class[cls_idx], vectorizer.get_feature_names_out()),
+            key=itemgetter(0), reverse=True)
+        topn = zip(coefs_and_names[:n], coefs_and_names[:-(n + 1):-1])
+        output.append('---------------------------------------------------')
+        output.append(f"                     {cls_name}")
+        output.append('---------------------------------------------------')
+        for(cp, fnp), (cn, fnn) in topn:
+            # cp = coefficient positive
+            # fnn = feature name negative
+            output.append(
+                "{:0.6f}{: >15}    {:0.6f}{: >15}".format(cp, fnp, cn, fnn))
+
     return "\n".join(output)
 
 
@@ -137,8 +141,8 @@ def print_report(
         y_test_true, y_test_pred,
         columns)
     output.append('  Coef          Feature    Coef            Feature')
-    output.append('--------------------------------------------------')
-    output += [show_most_informative_features(model, vectorizer, 30)]
+    # output.append('--------------------------------------------------')
+    output += [show_most_informative_features(model, vectorizer, 60)]
     print('\n'.join(output))
 
 
