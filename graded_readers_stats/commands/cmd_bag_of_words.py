@@ -53,7 +53,9 @@ def execute(args):
             .apply(flatten)\
             .apply(list)\
             .apply(lambda x: ' '.join(x))
-        y = texts_df[COL_LEVEL]
+        y = texts_df[COL_LEVEL]\
+            # .values
+        # .apply(lambda x: {"Inicial": 1, "Intermedio": 2, "Avanzado": 3}[x])
 
 ##############################################################################
 #                             Logistic Regression

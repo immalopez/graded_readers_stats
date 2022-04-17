@@ -37,16 +37,24 @@ def logit(X, y):
     # y_train = data_train[COL_LEVEL]
     # y_test = data_test[COL_LEVEL]
 
+    # lr = LogisticRegression(
+    #     solver="saga",
+    #     multi_class="multinomial",
+    #     penalty="l1",
+    #     max_iter=100,
+    #     random_state=42,
+    # )
     lr = LogisticRegression(
-        solver="saga",
-        multi_class="multinomial",
-        penalty="l1",
+        # solver="saga",
+        # multi_class="multinomial",
+        # penalty="l1",
         max_iter=100,
+        # C=1,
         random_state=42,
     )
+    scores = cross_val_score(lr, X_train, y_train, cv=5)
     lr.fit(X_train, y_train)
 
-    scores = cross_val_score(lr, X_train, y_train, cv=5)
     print('=== BOW ===')
     print('Cross-validation scores:', scores, sep='\n')
     print('Cross-validation avg. score:', scores.mean(), sep='\n')
