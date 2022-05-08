@@ -68,6 +68,19 @@ def make_stanza_docs_simple(texts):
     return nlp_es_simple(documents)
 
 
+def make_stanza_docs_ner(texts):
+    global nlp_es_simple
+
+    if nlp_es_simple is None:
+        nlp_es_simple = st.Pipeline(
+            lang='es',
+            processors='tokenize,lemma,ner'
+        )
+
+    documents = [st.Document([], text=d) for d in texts]
+    return nlp_es_simple(documents)
+
+
 def make_stanza_docs(texts):
     global nlp_es
 
@@ -272,6 +285,12 @@ shrink_content_step = (shrink_text_content, COL_RAW_TEXT, COL_RAW_TEXT)
 text_analysis_pipeline_simple = [
     (read_files, COL_TEXT_FILE, COL_RAW_TEXT),
     (make_stanza_docs_simple, COL_RAW_TEXT, COL_STANZA_DOC),
+    (get_fields, COL_STANZA_DOC, COL_LEMMA, ('lemma',)),
+    (normalize, COL_LEMMA, COL_LEMMA),
+]
+text_analysis_pipeline_ner = [
+    (read_files, COL_TEXT_FILE, COL_RAW_TEXT),
+    (make_stanza_docs_ner, COL_RAW_TEXT, COL_STANZA_DOC),
     (get_fields, COL_STANZA_DOC, COL_LEMMA, ('lemma',)),
     (normalize, COL_LEMMA, COL_LEMMA),
 ]

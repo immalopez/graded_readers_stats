@@ -1,5 +1,6 @@
 import time
 
+import pandas as pd
 from codetiming import Timer
 from pandas.core.common import flatten
 
@@ -13,7 +14,7 @@ from graded_readers_stats.data import read_pandas_csv
 from graded_readers_stats.logit import logit
 from graded_readers_stats.preprocess import (
     run,
-    text_analysis_pipeline_simple,
+    text_analysis_pipeline_ner,
     shrink_content_step,
 )
 
@@ -22,6 +23,7 @@ def execute(args):
     corpus_path = args.corpus_path
     max_docs = args.max_docs
     shorten_content = args.shorten_content
+    use_ner = args.strip_named_entities
 
     print()
     print('BAG-OF-WORDS START')
@@ -43,17 +45,30 @@ def execute(args):
             texts_df = texts_df[:max_docs]
 
     with Timer(name='Preprocess', text=timer_text):
-        text_analysis_pipeline = text_analysis_pipeline_simple
+        text_analysis_pipeline = text_analysis_pipeline_ner
         if shorten_content:
             text_analysis_pipeline.insert(1, shrink_content_step)
 
         texts_df = run(texts_df, text_analysis_pipeline)
-        texts_df = texts_df.drop(columns=COL_STANZA_DOC)
-        X = texts_df[COL_LEMMA]\
-            .apply(flatten)\
-            .apply(list)\
-            .apply(lambda x: ' '.join(x))
-        y = texts_df[COL_LEVEL]\
+        if use_ner:
+            ents = texts_df[COL_STANZA_DOC]\
+                .apply(lambda x: [e.text for e in x.ents])\
+                .apply(lambda x: [w.lower() for w in x])
+            lemmas = texts_df[COL_LEMMA]\
+                .apply(flatten)\
+                .apply(list)
+            lemmas = pd.Series([
+                list(filter(lambda x: x not in ents[index], lemma))
+                for index, lemma in lemmas.items()
+            ])
+            X = lemmas.apply(lambda x: ' '.join(x))
+        else:
+            X = texts_df[COL_LEMMA]\
+                .apply(flatten)\
+                .apply(list)\
+                .apply(lambda x: ' '.join(x))
+        y = texts_df[COL_LEVEL]
+        # texts_df = texts_df.drop(columns=COL_STANZA_DOC)
 
 ##############################################################################
 #                             Logistic Regression
