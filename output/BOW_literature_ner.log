@@ -1,0 +1,237 @@
+
+---
+
+Parsing arguments...
+Parsing done: Namespace(corpus_path='Data/Literature list.csv', max_docs=None, shorten_content=False, strip_named_entities=True, func=<function execute at 0x130fa8280>)
+
+BAG-OF-WORDS START
+---
+corpus_path =  Data/Literature list.csv
+max_docs =  None
+---
+Load data: 0 seconds
+Preprocess: 1594 seconds
+=== BOW ===
+Cross-validation scores:
+[0.5        0.5        0.66666667 0.8        0.8       ]
+Cross-validation avg. score:
+0.6533333333333333
+Model train score:
+0.6428571428571429
+Model test score:
+0.5714285714285714
+------------------------------
+		lr_bow_pred
+------------------------------
+             Train  |  Test
+------------------------------
+  accuracy 0.642857 0.571429
+ precision 0.642857 0.571429
+    recall 0.642857 0.571429
+        f1 0.642857 0.571429
+------------------------------
+[[ 0  2  0]
+ [ 0 18  0]
+ [ 0  8  0]]
+---
+[[0 1 0]
+ [0 4 0]
+ [0 2 0]]
+
+
+  Coef          Feature    Coef            Feature
+---------------------------------------------------
+                     Adulta
+---------------------------------------------------
+0.294330             de    -0.547696             el
+0.235816             yo    -0.047239       leotoldo
+0.186107            que    -0.038060           niño
+0.152332          haber    -0.035046        fábrica
+0.143946             no    -0.027791           niña
+0.143278             en    -0.025455       príncipe
+0.123987             él    -0.025009         bosque
+0.105900             tú    -0.024891        pequeño
+0.098605            ser    -0.024550       molinero
+0.086912            ese    -0.023639       amarillo
+0.068680            por    -0.022205            día
+0.068086           este    -0.020934      compartir
+0.063981            uno    -0.020485           rosa
+0.062486             mi    -0.020239          volar
+0.050349            qué    -0.019921        invento
+0.049194          decir    -0.019063           tres
+0.046074            con    -0.018927        gigante
+0.044680          carta    -0.018764        lámpara
+0.043054           pero    -0.018550         cohete
+0.037521          mismo    -0.018053          bruja
+0.036594         cierto    -0.018051         muñeco
+0.035055        palabra    -0.017951       aprender
+0.032007            sin    -0.017832          señor
+0.029204        embargo    -0.017724         patito
+0.028858           modo    -0.017412          padre
+0.027756             si    -0.016653         jardín
+0.027678        después    -0.016618           gato
+0.027540         pensar    -0.016256            rey
+0.027472          tomar    -0.016032         ricito
+0.027160           como    -0.015706         cuento
+0.026986       instante    -0.014501          polar
+0.026804            fué    -0.014501            osa
+0.026336          tener    -0.014456         contar
+0.026073       recuerdo    -0.014385          feliz
+0.026003            vez    -0.014126           agua
+0.025718          aquel    -0.013892         gustar
+0.025695           otro    -0.013845           voló
+0.025529          saber    -0.013656           rojo
+0.025421        parecer    -0.013547           pato
+0.025142       estancia    -0.013543          junto
+0.024958         tiempo    -0.013542       entrenar
+0.024705        momento    -0.013533           cada
+0.023570         alguno    -0.013462          vivir
+0.023368          pedro    -0.013458          nuevo
+0.023096         hablar    -0.013382          jugar
+0.022922            tal    -0.013286          mucho
+0.022863          hacer    -0.013135        balleno
+0.022792           idea    -0.012935      convertir
+0.022604      responder    -0.012918            oro
+0.022543       pregunta    -0.012902        planeta
+0.020784         escena    -0.012750       ruiseñor
+0.020447          rublo    -0.012667         madera
+0.020079           algo    -0.012195       princesa
+0.019771         hombre    -0.011898          joven
+0.019654      preguntar    -0.011722            pan
+0.019550          deber    -0.011707            así
+0.019090       advertir    -0.011632        marqués
+0.018877             sí    -0.011632        carabás
+0.018426    posibilidad    -0.011538          bello
+0.018383         mirada    -0.011464          barco
+---------------------------------------------------
+                     Infantil
+---------------------------------------------------
+0.186946       leotoldo    -0.496210             yo
+0.139741            día    -0.269072             el
+0.120534        fábrica    -0.257279             de
+0.111920          poder    -0.254222             no
+0.108387           niña    -0.226799             mi
+0.103753         bosque    -0.226759          decir
+0.103107           para    -0.160109          haber
+0.097190       príncipe    -0.159675            ser
+0.093306          bruja    -0.150013           rosa
+0.092700           casa    -0.140230             en
+0.092391            que    -0.138970         cohete
+0.083771       aprender    -0.134810       molinero
+0.079967           cada    -0.131886        gigante
+0.079870          lugar    -0.129824         muñeco
+0.079853           gato    -0.109842           pero
+0.079496        lámpara    -0.109718           rojo
+0.078664        invento    -0.109419       ruiseñor
+0.077418          volar    -0.105910         jardín
+0.077403          nuevo    -0.086504            qué
+0.073321        nuestro    -0.083296           pues
+0.073248           tres    -0.078389      preguntar
+0.071879            así    -0.068174     carretilla
+0.069795         ricito    -0.066513      responder
+0.069034          vivir    -0.065745          sobre
+0.066137          barco    -0.063886          rosal
+0.065313         patito    -0.063328     estudiante
+0.063548      encontrar    -0.061857         gritar
+0.063447         cuento    -0.060876          tener
+0.061784          mucho    -0.060852          árbol
+0.060833         contar    -0.060794           pelo
+0.060740            osa    -0.060132            ese
+0.060740          polar    -0.057940       replicar
+0.059567        planeta    -0.056455          señor
+0.058930            pan    -0.053124       exclamar
+0.058791       entrenar    -0.052902           mano
+0.058548             él    -0.052863          mismo
+0.058446          mayor    -0.050412     habitación
+0.056395       amarillo    -0.049632          creer
+0.055915      convertir    -0.049348         blanco
+0.054724        carabás    -0.048708          hacia
+0.054724        marqués    -0.046489        embargo
+0.054080           cole    -0.046027         cabeza
+0.054080      coronavir    -0.044111          brazo
+0.054050           allí    -0.043238            ojo
+0.052994      compartir    -0.043057       pardillo
+0.052788        balleno    -0.038473       sristino
+0.050527           pato    -0.038472 verdaderamente
+0.050335       comenzar    -0.038083         espino
+0.049668      descubrir    -0.037825           rata
+0.049384           hada    -0.037746      realmente
+0.049190             al    -0.037428           gran
+0.048900          salir    -0.037059        capullo
+0.048701         animal    -0.036854            dos
+0.046335           amar    -0.036482           rubí
+0.046135          junto    -0.036077        estatua
+0.045031           cosa    -0.035812        corazón
+0.044709        perdido    -0.035073         hablar
+0.044606          donde    -0.034787         contra
+0.044094          virus    -0.034743        candela
+0.043692      chocolate    -0.034503        egoísta
+---------------------------------------------------
+                     Juvenil
+---------------------------------------------------
+0.816768             el    -0.278499            que
+0.260393             yo    -0.182535             él
+0.177565          decir    -0.139707       leotoldo
+0.170498           rosa    -0.117536            día
+0.164313             mi    -0.112349          poder
+0.159359       molinero    -0.097393            uno
+0.157521         cohete    -0.093925           para
+0.150813        gigante    -0.088157           casa
+0.147875         muñeco    -0.085488        fábrica
+0.123375           rojo    -0.083917            con
+0.122563         jardín    -0.080596           niña
+0.122170       ruiseñor    -0.078744         bosque
+0.110276             no    -0.075253          bruja
+0.077178     carretilla    -0.074256             tú
+0.074287          señor    -0.071735       príncipe
+0.071428          rosal    -0.068602          lugar
+0.070968         gritar    -0.066628        nuestro
+0.068766           pelo    -0.066434           cada
+0.066787           pero    -0.065820       aprender
+0.066067          sobre    -0.064013           este
+0.065054           pues    -0.063945          nuevo
+0.064498     estudiante    -0.063236           gato
+0.063934          árbol    -0.062547      encontrar
+0.061069            ser    -0.060732        lámpara
+0.058735      preguntar    -0.060172            así
+0.057567       replicar    -0.058742        invento
+0.055508         blanco    -0.057277            por
+0.055474           mano    -0.057180          volar
+0.055128         cabeza    -0.055571          vivir
+0.053993       exclamar    -0.054673          barco
+0.053554           niño    -0.054286          hacer
+0.048744       pardillo    -0.054184           tres
+0.046374         espino    -0.053763         ricito
+0.046232     habitación    -0.052129          mayor
+0.045017           gran    -0.048498          mucho
+0.044851          hacia    -0.047741         cuento
+0.043909      responder    -0.047589         patito
+0.043827       sristino    -0.047208            pan
+0.042084      realmente    -0.047058       comenzar
+0.041308           rata    -0.046665        planeta
+0.041082        capullo    -0.046377         contar
+0.040678           rubí    -0.046239          polar
+0.039399        estatua    -0.046239            osa
+0.039380        candela    -0.045249       entrenar
+0.038559          coger    -0.043569        también
+0.038358      primavera    -0.043283      coronavir
+0.038194        corazón    -0.043283           cole
+0.037687        egoísta    -0.043093        marqués
+0.037281            ojo    -0.043093        carabás
+0.037037          padre    -0.042980      convertir
+0.036586         hombro    -0.042699          salir
+0.036415        amistad    -0.042652           allí
+0.036405          brazo    -0.042608         hombre
+0.036156            qué    -0.040650           hada
+0.035855 verdaderamente    -0.040472          mujer
+0.034540          tener    -0.039653        balleno
+0.034510          creer    -0.039153           cosa
+0.034076           flor    -0.039122      descubrir
+0.033213       entonces    -0.038840             al
+0.033128         cantar    -0.038779         animal
+Logistic Regression: 1 seconds
+
+Total time (27m 35s)
+---
+
+BAG-OF-WORDS END

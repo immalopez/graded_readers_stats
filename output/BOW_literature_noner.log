@@ -1,0 +1,237 @@
+
+---
+
+Parsing arguments...
+Parsing done: Namespace(corpus_path='Data/Literature list.csv', max_docs=None, shorten_content=False, strip_named_entities=False, func=<function execute at 0x134e5b280>)
+
+BAG-OF-WORDS START
+---
+corpus_path =  Data/Literature list.csv
+max_docs =  None
+---
+Load data: 0 seconds
+Preprocess: 1562 seconds
+=== BOW ===
+Cross-validation scores:
+[0.5        0.5        0.66666667 0.8        0.8       ]
+Cross-validation avg. score:
+0.6533333333333333
+Model train score:
+0.6428571428571429
+Model test score:
+0.5714285714285714
+------------------------------
+		lr_bow_pred
+------------------------------
+             Train  |  Test
+------------------------------
+  accuracy 0.642857 0.571429
+ precision 0.642857 0.571429
+    recall 0.642857 0.571429
+        f1 0.642857 0.571429
+------------------------------
+[[ 0  2  0]
+ [ 0 18  0]
+ [ 0  8  0]]
+---
+[[0 1 0]
+ [0 4 0]
+ [0 2 0]]
+
+
+  Coef          Feature    Coef            Feature
+---------------------------------------------------
+                     Adulta
+---------------------------------------------------
+0.237269             de    -0.041443       leotoldo
+0.212822             yo    -0.039439           niño
+0.155618            que    -0.038251       príncipe
+0.127961   raskolnikoff    -0.035084        pinocho
+0.126556          haber    -0.032831           kris
+0.119509             no    -0.031532          bambi
+0.114862             en    -0.028314           hans
+0.109981          maría    -0.027897           niña
+0.082047            ese    -0.026319        aladino
+0.080370            ser    -0.024627       molinero
+0.079797             tú    -0.024495           rana
+0.074917             él    -0.024122     golondrina
+0.060302         hunter    -0.023838        pequeño
+0.057798          sonia    -0.023083           ojos
+0.057275            por    -0.023083        fábrica
+0.055677           este    -0.023046            rey
+0.054870             mi    -0.022773           rosa
+0.044715      razumikin    -0.022505         bosque
+0.044639            uno    -0.022224            día
+0.043628            qué    -0.022060          peter
+0.042963          carta    -0.021797          lindy
+0.038383          decir    -0.021650        gigante
+0.036519       ivanovna    -0.020700         slappy
+0.036422            con    -0.020525         cohete
+0.034920           pero    -0.019910       rapunzel
+0.033931     petrovitch    -0.019225             el
+0.033306         cierto    -0.018664       amarillo
+0.032463          mismo    -0.018515         jardín
+0.031034        palabra    -0.018500        dorothy
+0.030624          dunia    -0.018151         pájaro
+0.026591            sin    -0.018094          bruja
+0.026300          joven    -0.017940           mamá
+0.026035        embargo    -0.017172           lily
+0.025880  svidrigailoff    -0.017121           gato
+0.025511           modo    -0.017047         patito
+0.025447         pensar    -0.016930       aprender
+0.025033       recuerdo    -0.016853         muñeco
+0.025018       instante    -0.016446           sara
+0.024713       estancia    -0.016241         hansel
+0.023867          tomar    -0.016101          volar
+0.023796        después    -0.015852      compartir
+0.023553            vez    -0.015818        lámpara
+0.022917           como    -0.015613         ricito
+0.022857        parecer    -0.015594           rojo
+0.022817        allende    -0.015510           pato
+0.022797             si    -0.015341           papá
+0.022717       porfirio    -0.014963       ruiseñor
+0.022714          aquel    -0.014848           tres
+0.022682           otro    -0.014800           totó
+0.022429            fué    -0.014657          ariel
+0.022288          saber    -0.014426          feliz
+0.022002           mimí    -0.014276        invento
+0.021857        momento    -0.014235          mucho
+0.021792           idea    -0.014077       castillo
+0.021353         tiempo    -0.013965        familia
+0.021027       pregunta    -0.013890            jed
+0.020125         alguno    -0.013775       princesa
+0.020060         escena    -0.013658         cuento
+0.019854            tal    -0.013575          wendy
+0.019640      responder    -0.013425           cada
+---------------------------------------------------
+                     Infantil
+---------------------------------------------------
+0.176561       leotoldo    -0.624286             el
+0.155891        pinocho    -0.442997             yo
+0.141785          bambi    -0.232065           kris
+0.130208            día    -0.217151             no
+0.111717        aladino    -0.214689             de
+0.110283           niña    -0.206984             mi
+0.103990          peter    -0.200937          decir
+0.098891          poder    -0.193963           hans
+0.097437             él    -0.171526     golondrina
+0.094406           para    -0.154072          lindy
+0.093254            que    -0.147522           rosa
+0.092999       rapunzel    -0.140980            ser
+0.092282           casa    -0.137185         cohete
+0.090580        fábrica    -0.131756         slappy
+0.090580           ojos    -0.129238        gigante
+0.087612         bosque    -0.125707          haber
+0.087019          bruja    -0.119346       molinero
+0.081225        dorothy    -0.111011             en
+0.079871           gato    -0.106804       ruiseñor
+0.076944       aprender    -0.105910         muñeco
+0.076002           cada    -0.104935           lily
+0.075074           rana    -0.103523           rojo
+0.074204          ariel    -0.101457         jardín
+0.073139         hansel    -0.100820           sara
+0.068857         ricito    -0.097993           pero
+0.068717        nuestro    -0.085242   raskolnikoff
+0.066867        lámpara    -0.085152            jed
+0.066674            rey    -0.076581           pues
+0.066276            así    -0.075366            qué
+0.066004          nuevo    -0.072730           wood
+0.065618          lugar    -0.069977          maría
+0.064980           totó    -0.069937      preguntar
+0.064876         patito    -0.066253            amy
+0.063994          wendy    -0.062377          rosal
+0.061081          volar    -0.061421     carretilla
+0.060404        invento    -0.060257     estudiante
+0.059839           tres    -0.059875      responder
+0.059754          vivir    -0.058986            ese
+0.059645           pato    -0.058886         gritar
+0.059135       entrenar    -0.058683          árbol
+0.059031      encontrar    -0.058416          sobre
+0.058528        familia    -0.058319   golondrinita
+0.057102            teo    -0.054855           pelo
+0.056970          mucho    -0.052767          larry
+0.056883          barco    -0.052233       replicar
+0.056688       geppetto    -0.051151          tener
+0.056380         cuento    -0.050944          señor
+0.055931          mayor    -0.049169          jared
+0.055432         contar    -0.046066       exclamar
+0.055404      alexander    -0.045718         blanco
+0.054978        carabás    -0.045272          mismo
+0.054978        marqués    -0.044528           mano
+0.054222      convertir    -0.044258           miró
+0.053349       castillo    -0.043957          creer
+0.053192         gretel    -0.043361          hacia
+0.053090           cole    -0.042307     habitación
+0.053090      coronavir    -0.041262        embargo
+0.052724        planeta    -0.039100         cabeza
+0.052069           mago    -0.038837          brazo
+0.049587            osa    -0.038793       pardillo
+---------------------------------------------------
+                     Juvenil
+---------------------------------------------------
+0.643511             el    -0.248872            que
+0.264896           kris    -0.172354             él
+0.230175             yo    -0.135118       leotoldo
+0.222276           hans    -0.120806        pinocho
+0.195648     golondrina    -0.110254          bambi
+0.175869          lindy    -0.107984            día
+0.170294           rosa    -0.098219          poder
+0.162554          decir    -0.085399        aladino
+0.157710         cohete    -0.085009           casa
+0.152456         slappy    -0.083729           para
+0.152114             mi    -0.082386           niña
+0.150888        gigante    -0.081930          peter
+0.143973       molinero    -0.079815            con
+0.122763         muñeco    -0.073471            uno
+0.122106           lily    -0.073089       rapunzel
+0.121767       ruiseñor    -0.068924          bruja
+0.119971         jardín    -0.067497           ojos
+0.119117           rojo    -0.067497        fábrica
+0.117266           sara    -0.065107         bosque
+0.099042            jed    -0.062750           gato
+0.097641             no    -0.062726        dorothy
+0.083019           wood    -0.062577           cada
+0.076977            amy    -0.062365        nuestro
+0.071198          rosal    -0.061042             tú
+0.070388     carretilla    -0.060014       aprender
+0.068656         gritar    -0.059760           este
+0.066520   golondrinita    -0.059548          ariel
+0.063645           pelo    -0.058132          lugar
+0.063493     estudiante    -0.057605      encontrar
+0.063258          árbol    -0.056898         hansel
+0.063073           pero    -0.055052            así
+0.062178          sobre    -0.054759          nuevo
+0.061402          larry    -0.053244         ricito
+0.061172           pues    -0.052033          hacer
+0.060610            ser    -0.051997            por
+0.057630           niño    -0.051049        lámpara
+0.057216          jared    -0.050578           rana
+0.053277       replicar    -0.050418          wendy
+0.052952         blanco    -0.050180           totó
+0.051708      preguntar    -0.049253          mayor
+0.049876           mano    -0.047829         patito
+0.049695         cabeza    -0.047787          vivir
+0.048402       exclamar    -0.046127        invento
+0.046036         espino    -0.046010          barco
+0.044455       pardillo    -0.045752       entrenar
+0.042746           gran    -0.044991           tres
+0.042056         powell    -0.044980          volar
+0.041865       sristino    -0.044563        familia
+0.040701        capullo    -0.044135           pato
+0.040683          hacia    -0.043930       geppetto
+0.040470          howie    -0.043814            teo
+0.040235      responder    -0.043628            rey
+0.040175     habitación    -0.043543      alexander
+0.039899      realmente    -0.042980        marqués
+0.039427        candela    -0.042980        carabás
+0.039134      primavera    -0.042735          mucho
+0.038810          señor    -0.042722         cuento
+0.038376          manny    -0.042719   raskolnikoff
+0.037985          nieve    -0.042536         contar
+0.037594           rubí    -0.041998      coronavir
+Logistic Regression: 1 seconds
+
+Total time (26m 3s)
+---
+
+BAG-OF-WORDS END

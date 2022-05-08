@@ -1,0 +1,237 @@
+
+---
+
+Parsing arguments...
+Parsing done: Namespace(corpus_path='Data/Graded readers list.csv', max_docs=None, shorten_content=False, strip_named_entities=True, func=<function execute at 0x133716280>)
+
+BAG-OF-WORDS START
+---
+corpus_path =  Data/Graded readers list.csv
+max_docs =  None
+---
+Load data: 0 seconds
+Preprocess: 246 seconds
+=== BOW ===
+Cross-validation scores:
+[0.66666667 0.33333333 0.66666667 0.6        0.4       ]
+Cross-validation avg. score:
+0.5333333333333333
+Model train score:
+0.9642857142857143
+Model test score:
+0.875
+------------------------------
+		lr_bow_pred
+------------------------------
+             Train  |  Test
+------------------------------
+  accuracy 0.964286 0.875000
+ precision 0.964286 0.875000
+    recall 0.964286 0.875000
+        f1 0.964286 0.875000
+------------------------------
+[[ 8  1  0]
+ [ 0 10  0]
+ [ 0  0  9]]
+---
+[[2 0 1]
+ [0 3 0]
+ [0 0 2]]
+
+
+  Coef          Feature    Coef            Feature
+---------------------------------------------------
+                     Avanzado
+---------------------------------------------------
+0.444945            que    -0.253517             yo
+0.214084             tú    -0.207048          estar
+0.161551          balsa    -0.159662             mi
+0.103246          disco    -0.113770          mucho
+0.100201             su    -0.105182             el
+0.083581         gratin    -0.099771            uno
+0.083581           hall    -0.086506             ir
+0.083581          music    -0.082915        camping
+0.081026   departamento    -0.067799       marinero
+0.080299        jesuita    -0.067002          tener
+0.080299      religioso    -0.064966          lunes
+0.078292             él    -0.063664          decir
+0.075726         propio    -0.062525        agencia
+0.071720           como    -0.062507         cuadro
+0.066384           tíaú    -0.061446            ser
+0.063618          forma    -0.059360        vázquez
+0.062349           cosa    -0.058379       sinagoga
+0.062346          indio    -0.057402          hacer
+0.060224       guaraníe    -0.057101  verónicamente
+0.060224      industria    -0.056432            bar
+0.059985           para    -0.055261         dentro
+0.058928           hans    -0.053378        español
+0.058928            leo    -0.053142        ventana
+0.058746          velar    -0.052481          chico
+0.058166         pronto    -0.052166            sol
+0.057684         porque    -0.052062          cerca
+0.057056         nativo    -0.051381          plaza
+0.054855         social    -0.051350       contesto
+0.054276         querío    -0.051211          calor
+0.053936             si    -0.051008        billete
+0.053635           arte    -0.050234          coger
+0.053532        europeo    -0.050086           aire
+0.050665          grupo    -0.050047            pez
+0.050149          belle    -0.049793            día
+0.050149           dama    -0.049745           joya
+0.050149       mantener    -0.048801         pensar
+0.050149         époque    -0.048433         fiesta
+0.049984             tu    -0.048324        alcalde
+0.048784       indígena    -0.047990         marido
+0.048745      americano    -0.046737          mujer
+0.048178        sistema    -0.046666           caso
+0.047602      artístico    -0.046641         mañana
+0.046687         aunque    -0.046557         vecino
+0.046619         hombre    -0.046447          fuego
+0.046008            con    -0.046333            río
+0.045736       italiano    -0.046324            rey
+0.045641           niña    -0.046004          museo
+0.045182           cuyo    -0.045047          nuevo
+0.044965     expedición    -0.044834            ojo
+0.044059    embarcación    -0.044419           leer
+0.044059      polinesio    -0.043917            dos
+0.044059         tronco    -0.043839         entrar
+0.043991   civilización    -0.043643          llave
+0.043967           obra    -0.041813           allí
+0.043642         nombre    -0.041680         sentar
+0.043101        colegio    -0.041382          volar
+0.042650         cuando    -0.041330          nadie
+0.041814       personal    -0.040372        batalla
+0.041798           moto    -0.040245        después
+0.041003     antepasado    -0.039656      inspector
+---------------------------------------------------
+                     Inicial
+---------------------------------------------------
+0.270270          mucho    -0.522539            que
+0.266858            ser    -0.147248             el
+0.237320             no    -0.117295            con
+0.192712          estar    -0.107501             de
+0.170497        camping    -0.086297           como
+0.167421          decir    -0.084743             él
+0.163530            uno    -0.077594         pueblo
+0.131144         cuadro    -0.076481          balsa
+0.129713       contesto    -0.069517          mujer
+0.124620             ir    -0.068905       marinero
+0.123941          lunes    -0.066161             tú
+0.122170        agencia    -0.065775            mar
+0.121078          tener    -0.065582          disco
+0.119608       sinagoga    -0.064093             si
+0.114235  verónicamente    -0.061466             su
+0.112168        español    -0.058638             yo
+0.103373         gustar    -0.053273          fuego
+0.102195        vázquez    -0.050257         propio
+0.096983         ladrón    -0.049644            pez
+0.095439      inspector    -0.049576           ropa
+0.095237        billete    -0.049382           para
+0.090846          señor    -0.044313         aunque
+0.085734          museo    -0.043682            ver
+0.083902            qué    -0.043069   departamento
+0.083464             sí    -0.041166         rambla
+0.083171          saber    -0.041034         contra
+0.082940       pregunta    -0.040687        batalla
+0.082688            día    -0.040646          music
+0.081594           leer    -0.040646           hall
+0.079560          llave    -0.040646         gratin
+0.079168          ahora    -0.040532          aquel
+0.079120           aquí    -0.039497         fuerza
+0.078584     vacaciones    -0.038839         pronto
+0.077859     ventanilla    -0.038742      religioso
+0.075808       trabajar    -0.038742        jesuita
+0.074175          socio    -0.037981        empresa
+0.074131           caso    -0.037560      responder
+0.073857          volar    -0.036886          donde
+0.073773         mañana    -0.036808       multitud
+0.071675    interesante    -0.036735           moto
+0.071661         pensar    -0.036061          forma
+0.068735        emplear    -0.035987         hombre
+0.068724         fuente    -0.035671        embargo
+0.068565         querer    -0.035372           tíaú
+0.067524       artículo    -0.035367         zapato
+0.065634       escribir    -0.034875         camión
+0.065199          quién    -0.034488         porque
+0.063599      chocolate    -0.033330           isla
+0.063594           azul    -0.033027         cuando
+0.063034           buen    -0.032913          pedro
+0.059872          poder    -0.032589         marido
+0.059804    inscripción    -0.032498          brasa
+0.059709          amigo    -0.032075           suyo
+0.059113         semana    -0.032040         lanzar
+0.059077           café    -0.031636          fondo
+0.057876            hoy    -0.031450         varios
+0.057304       entender    -0.031323            leo
+0.056832           cano    -0.031323           hans
+0.056832        jacinto    -0.031252          padre
+0.056506          hucho    -0.031243          pieza
+---------------------------------------------------
+                     Intermedio
+---------------------------------------------------
+0.312155             yo    -0.255535             no
+0.252430             el    -0.205412            ser
+0.169581             mi    -0.156500          mucho
+0.136704       marinero    -0.147922             tú
+0.116255          mujer    -0.103757          decir
+0.111748             de    -0.102988             sí
+0.099720          fuego    -0.092850         gustar
+0.099690            pez    -0.092426          señor
+0.081059        batalla    -0.089344          saber
+0.080579         marido    -0.087583        camping
+0.077952         rambla    -0.085070          balsa
+0.077595            que    -0.084439            ese
+0.075380         vecino    -0.078363       contesto
+0.075161           ropa    -0.077087          haber
+0.073599       multitud    -0.072332       pregunta
+0.071286            con    -0.070971         querer
+0.071202            río    -0.068637         cuadro
+0.069479         camión    -0.063759            uno
+0.066545          pedro    -0.062625         ladrón
+0.066247          brasa    -0.061228       sinagoga
+0.061843           caña    -0.059646        agencia
+0.057737        alcalde    -0.058975          lunes
+0.056722            san    -0.058790        español
+0.055909         contra    -0.058347      interesar
+0.054927         quemar    -0.057134  verónicamente
+0.052998        hoguera    -0.055864           cosa
+0.051296         pueblo    -0.055784      inspector
+0.050675         cámara    -0.054076          tener
+0.050319         tienda    -0.052864          ahora
+0.050097           hora    -0.052799           buen
+0.049888        abierto    -0.052269       trabajar
+0.048297          brazo    -0.052208          bueno
+0.048143          padre    -0.051411           aquí
+0.046771       horchata    -0.049806           arte
+0.046731         añadir    -0.048952     vacaciones
+0.046174          lleno    -0.048910       entender
+0.045664       proteger    -0.048576         ciudad
+0.045553        empezar    -0.047980          poner
+0.045534            mar    -0.047198     extranjero
+0.045314         pescar    -0.046407            hoy
+0.044872          plaza    -0.045887         hablar
+0.044630         lanzar    -0.044378        pequeño
+0.044628         balcón    -0.044265            qué
+0.044592        nuestro    -0.044229        billete
+0.043710            rey    -0.042935          music
+0.043345          hacia    -0.042935           hall
+0.042679         susana    -0.042935         gratin
+0.042531          hacer    -0.042835        vázquez
+0.042027       camiseta    -0.042249         semana
+0.041870           allá    -0.042165    interesante
+0.040185      alrededor    -0.041557      religioso
+0.039997        piscina    -0.041557        jesuita
+0.039748           cura    -0.041388       artículo
+0.039748       manrique    -0.041296           robo
+0.039744       respondí    -0.041143        comprar
+0.039456          joven    -0.039730          museo
+0.039447    secuestrado    -0.039168          claro
+0.039413         timbre    -0.039157     ventanilla
+0.039285         dentro    -0.038736             su
+0.039141       celebrar    -0.038114             ir
+Logistic Regression: 0 seconds
+
+Total time (4m 6s)
+---
+
+BAG-OF-WORDS END

@@ -1,0 +1,237 @@
+
+---
+
+Parsing arguments...
+Parsing done: Namespace(corpus_path='Data/Graded readers list.csv', max_docs=None, shorten_content=False, strip_named_entities=False, func=<function execute at 0x130d09940>)
+
+BAG-OF-WORDS START
+---
+corpus_path =  Data/Graded readers list.csv
+max_docs =  None
+---
+Load data: 0 seconds
+Preprocess: 245 seconds
+=== BOW ===
+Cross-validation scores:
+[0.5        0.5        0.66666667 0.6        0.6       ]
+Cross-validation avg. score:
+0.5733333333333334
+Model train score:
+1.0
+Model test score:
+0.875
+------------------------------
+		lr_bow_pred
+------------------------------
+             Train  |  Test
+------------------------------
+  accuracy 1.000000 0.875000
+ precision 1.000000 0.875000
+    recall 1.000000 0.875000
+        f1 1.000000 0.875000
+------------------------------
+[[ 9  0  0]
+ [ 0 10  0]
+ [ 0  0  9]]
+---
+[[2 0 1]
+ [0 3 0]
+ [0 0 2]]
+
+
+  Coef          Feature    Coef            Feature
+---------------------------------------------------
+                     Avanzado
+---------------------------------------------------
+0.414897            que    -0.234987             yo
+0.214633             tú    -0.190181           lola
+0.206118       carolina    -0.181581          estar
+0.157602      heyerdahl    -0.143898             mi
+0.144469          balsa    -0.128415          frank
+0.138382          laura    -0.120931      margarita
+0.133443        eduardo    -0.120667         tomate
+0.119189          césar    -0.113098           otto
+0.109121           javi    -0.098671        antonio
+0.105068           tiki    -0.091029          mucho
+0.100370           rita    -0.087005        cándido
+0.098531             su    -0.085696          colón
+0.091935            kon    -0.083036         manolo
+0.090073          jorge    -0.081104          jaime
+0.088906          dioni    -0.080398            uno
+0.084872        marisol    -0.077775             ir
+0.084651          disco    -0.075769         martín
+0.082685         gratin    -0.073514         sylvie
+0.082685           hall    -0.072551        camping
+0.082685          music    -0.069479      rodríguez
+0.081550        forster    -0.069357        ricardo
+0.079837        jesuita    -0.064999           lisa
+0.079837      religioso    -0.064564        alberto
+0.078810         felipe    -0.062315           paco
+0.077132             él    -0.062222       marinero
+0.074645         propio    -0.061890       humberto
+0.071046           como    -0.061882         manuel
+0.066685   departamento    -0.061308         cuadro
+0.066685         romero    -0.058356        natalia
+0.065668       pacífico    -0.057777      priscilla
+0.064659           tíaú    -0.055283          tener
+0.061100           para    -0.054188  verónicamente
+0.060663         porque    -0.053039         carmen
+0.059878       guaraníe    -0.052947       sinagoga
+0.059878      industria    -0.052278          hacer
+0.059878       misiones    -0.051646          lunes
+0.059831          indio    -0.051185            bar
+0.059696           cosa    -0.050719      barcelona
+0.059680          forma    -0.050593        vázquez
+0.056458          diana    -0.050455        agencia
+0.054648         querío    -0.050161          decir
+0.053511         pronto    -0.049731         dentro
+0.053280        europeo    -0.048489        ventana
+0.052883         social    -0.048367          duque
+0.052809         nativo    -0.047230          cerca
+0.052541           pepe    -0.046686        alcalde
+0.052534          velar    -0.046668         marido
+0.052441             si    -0.046586           joya
+0.052081             tu    -0.046332          plaza
+0.051555   villaperdida    -0.046135          mujer
+0.049611          belle    -0.045707          calor
+0.049611           dama    -0.045458          fuego
+0.049611       mantener    -0.045438          coger
+0.049611         époque    -0.045193            pez
+0.048498           hans    -0.044593            día
+0.048498            leo    -0.044232          museo
+0.048234          grupo    -0.043992          chico
+0.048148           arte    -0.043420         vecino
+0.047197       indígena    -0.043197           aire
+0.047181      artístico    -0.042919      cristóbal
+---------------------------------------------------
+                     Inicial
+---------------------------------------------------
+0.246365          frank    -0.495203            que
+0.227048           otto    -0.251278             el
+0.221744          mucho    -0.168338             de
+0.204465            ser    -0.148033           pepe
+0.192136        antonio    -0.123151         tomate
+0.183800        cándido    -0.116763            con
+0.177601             no    -0.113546             él
+0.157274          estar    -0.108758       carolina
+0.147581         sylvie    -0.095975           susi
+0.145393        camping    -0.089415         manolo
+0.144238          jaime    -0.085667           como
+0.132800          decir    -0.083814             yo
+0.129730        alberto    -0.080187         javier
+0.128022         cuadro    -0.080041          colón
+0.127942      rodríguez    -0.079103             tú
+0.127900       humberto    -0.077121         pueblo
+0.125727         manuel    -0.076552      heyerdahl
+0.120145           paco    -0.071088             su
+0.117395        natalia    -0.070993           lisa
+0.112979            uno    -0.070173          balsa
+0.111175         carmen    -0.063105      priscilla
+0.109009  verónicamente    -0.062582          mujer
+0.107644       sinagoga    -0.062314             si
+0.104687          lunes    -0.062285       marinero
+0.104652             ir    -0.059932          césar
+0.103779        agencia    -0.058688         martín
+0.103560       contesto    -0.058220            mar
+0.102768           lola    -0.057578           javi
+0.099343          tener    -0.055552      romerales
+0.096929          duque    -0.054967           para
+0.094779         ladrón    -0.054113          disco
+0.094732        ricardo    -0.051682          fuego
+0.092979      inspector    -0.051035           tiki
+0.089090         gustar    -0.050469           rita
+0.088434        español    -0.049756         propio
+0.085630        vázquez    -0.046350          dioni
+0.083741          señor    -0.045510          jorge
+0.083090           sara    -0.045414            pez
+0.082633          museo    -0.045245           ropa
+0.079881        policía    -0.044783        marisol
+0.079299        billete    -0.044655            kon
+0.076740        carmela    -0.043654            ver
+0.072697         martha    -0.043385        yolanda
+0.071762          llave    -0.043385           cuba
+0.071546         garcía    -0.042795          laura
+0.071374           leer    -0.042750      cristóbal
+0.070807         carlos    -0.041678          aquel
+0.070296            día    -0.041622         aunque
+0.069588             sí    -0.041584         felipe
+0.069419           raúl    -0.041006        forster
+0.069030          saber    -0.040544          music
+0.067562     vacaciones    -0.040544           hall
+0.067351       trabajar    -0.040544         gratin
+0.067110           aquí    -0.039239      religioso
+0.066754         toledo    -0.039239        jesuita
+0.066500          quién    -0.038610         porque
+0.065562            qué    -0.037474         rambla
+0.065551         fuente    -0.037315         fuerza
+0.064785         madrid    -0.036907         contra
+0.064756           caso    -0.036337         pronto
+---------------------------------------------------
+                     Intermedio
+---------------------------------------------------
+0.318801             yo    -0.214453             no
+0.293795             el    -0.167763            ser
+0.243818         tomate    -0.135530             tú
+0.172451         manolo    -0.130715          mucho
+0.167042             mi    -0.122448        eduardo
+0.165737          colón    -0.117950          frank
+0.136028             de    -0.113950           otto
+0.135992           lisa    -0.097361       carolina
+0.134457         martín    -0.096794        cándido
+0.124507       marinero    -0.095586          laura
+0.120882      priscilla    -0.093465        antonio
+0.108716          mujer    -0.089899             sí
+0.097140          fuego    -0.083039         gustar
+0.095492           pepe    -0.082640          decir
+0.090607            pez    -0.081854          señor
+0.087413           lola    -0.081050      heyerdahl
+0.086694           susi    -0.078109           rosa
+0.085668      cristóbal    -0.077568          saber
+0.083106           cuba    -0.074296          balsa
+0.083106        yolanda    -0.074068         sylvie
+0.080306            que    -0.072842        camping
+0.077605         marido    -0.072323            ese
+0.073341      margarita    -0.066714         cuadro
+0.072745         marisa    -0.066010       humberto
+0.071912            con    -0.065166        alberto
+0.071114        batalla    -0.063845         manuel
+0.070274         vecino    -0.063134          jaime
+0.070274           ropa    -0.062378       contesto
+0.070083         rambla    -0.061912         querer
+0.065956       multitud    -0.059257          césar
+0.065914          brasa    -0.059173         ladrón
+0.065398            río    -0.059039        natalia
+0.065361          pedro    -0.058463      rodríguez
+0.060955         camión    -0.058136         carmen
+0.060441         habana    -0.057829           paco
+0.059567        alcalde    -0.057377       pregunta
+0.056385           caña    -0.057152         carlos
+0.055537            san    -0.055878          haber
+0.055348         virgen    -0.054822  verónicamente
+0.054516       portugal    -0.054697       sinagoga
+0.054457         quemar    -0.054049      inspector
+0.052886          miami    -0.054033           tiki
+0.052731        hoguera    -0.053324        agencia
+0.050398         pueblo    -0.053042          lunes
+0.049015           hora    -0.051544           javi
+0.048658         contra    -0.050556      interesar
+0.048604        abierto    -0.049906           cosa
+0.047052           vera    -0.049901           rita
+0.046965        empezar    -0.048561          duque
+0.046695         cámara    -0.047306        español
+0.046188          hacer    -0.047279            kon
+0.046056         tienda    -0.046863           buen
+0.045893          padre    -0.046534       trabajar
+0.044222       proteger    -0.044562          jorge
+0.044175          brazo    -0.044060          tener
+0.043347         añadir    -0.043482           aquí
+0.043112          lleno    -0.043170         ciudad
+0.042050       horchata    -0.042785          poner
+0.041585        nuestro    -0.042670           sara
+0.041303         balcón    -0.042635     extranjero
+Logistic Regression: 0 seconds
+
+Total time (4m 6s)
+---
+
+BAG-OF-WORDS END
