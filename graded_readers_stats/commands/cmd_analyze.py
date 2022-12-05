@@ -80,8 +80,8 @@ def analyze(args):
 #                                 Terms                                      #
 ##############################################################################
 
-    with Timer(name='Logistic Regression', text=timer_text):
-        logit(texts_df)
+    # with Timer(name='Logistic Regression', text=timer_text):
+    #     logit(texts_df)
 
     with Timer(name='Locate terms', text=timer_text):
         terms = [term for terms in terms_df[COL_LEMMA] for term in terms]
