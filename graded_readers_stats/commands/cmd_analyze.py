@@ -92,12 +92,12 @@ def analyze(args):
         #   '...': { ... }
         # }
 
-        stats = defaultdict(        # upos
-            lambda: defaultdict(    # feats | deprel
+        stats_upos = defaultdict(   # upos
+            lambda: defaultdict(    # feats
                 int                 # count
-            ),
-            {'num_words': num_words}
+            )
         )
+        stats_upos['num_words'] = num_words
         all_words = [word
                      for doc in stanza_docs
                      for sent in doc.sentences
@@ -105,15 +105,23 @@ def analyze(args):
         for w in all_words:
             feats = (w.feats or 'no_features').split('|')
             for f in feats:
-                stats[w.upos][f] += 1
-                stats[w.upos][w.deprel] += 1
-        for key, value in stats.items():
+                stats_upos[w.upos][f] += 1
+        for key, value in stats_upos.items():
             print(key)
             if isinstance(value, defaultdict):
                 for k, v in sorted(value.items()):
                     print(f'\t{k}: {v} ({v / num_words * 100:.2f}%)')
             else:
                 print(f'\t{key}: {value}')
+        print()
+        print('Stats for deprel:')
+        print()
+        stats_deprel = defaultdict(int)
+        for w in all_words:
+            stats_deprel[w.deprel] += 1
+        for k, v in sorted(stats_deprel.items()):
+            print(f'{k} = {v}')
+        exit(0)
 
         terms_df.drop(columns=COL_STANZA_DOC, inplace=True)
 
