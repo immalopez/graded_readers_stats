@@ -92,6 +92,10 @@ def analyze(args):
         #   '...': { ... }
         # }
 
+        print('---')
+        print()
+        print('upos')
+        print()
         stats_upos = defaultdict(   # upos
             lambda: defaultdict(    # feats
                 int                 # count
@@ -110,11 +114,12 @@ def analyze(args):
             print(key)
             if isinstance(value, defaultdict):
                 for k, v in sorted(value.items()):
-                    print(f'\t{k}: {v} ({v / num_words * 100:.2f}%)')
+                    print(f'    {k}: {v} ({v / num_words * 100:.2f}%)')
             else:
-                print(f'\t{key}: {value}')
+                print(f'    {key}: {value}')
+        print('---')
         print()
-        print('Stats for deprel:')
+        print('deprel:')
         print()
         stats_deprel = defaultdict(int)
         for w in all_words:
