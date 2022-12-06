@@ -27,6 +27,7 @@ from graded_readers_stats.preprocess import (
 from graded_readers_stats.stats import get_msttr
 from graded_readers_stats.tfidf import tfidfs
 from graded_readers_stats.tree import tree_props_pipeline
+from collections import defaultdict
 
 
 def analyze(args):
@@ -74,6 +75,46 @@ def analyze(args):
             'tree': {}
         }
         num_words = sum(1 for _ in flatten(texts))
+
+##############################################################################
+#                                 Stats                                      #
+##############################################################################
+
+    with Timer(name='Stats', text=timer_text):
+        stanza_docs = texts_df[COL_STANZA_DOC]
+
+        # {
+        #   'VERB': {       # upos
+        #       'prop1': 5, # feature = count
+        #       'prop2': 5  # feature = count
+        #   },
+        #   '...': { ... },
+        #   '...': { ... }
+        # }
+
+        stats = defaultdict(        # upos
+            lambda: defaultdict(    # feats | deprel
+                int                 # count
+            ),
+            {'num_words': num_words}
+        )
+        all_words = [word
+                     for doc in stanza_docs
+                     for sent in doc.sentences
+                     for word in sent.words]
+        for w in all_words:
+            feats = (w.feats or 'no_features').split('|')
+            for f in feats:
+                stats[w.upos][f] += 1
+                stats[w.upos][w.deprel] += 1
+        for key, value in stats.items():
+            print(key)
+            if isinstance(value, defaultdict):
+                for k, v in sorted(value.items()):
+                    print(f'\t{k}: {v} ({v / num_words * 100:.2f}%)')
+            else:
+                print(f'\t{key}: {value}')
+
         terms_df.drop(columns=COL_STANZA_DOC, inplace=True)
 
 ##############################################################################
