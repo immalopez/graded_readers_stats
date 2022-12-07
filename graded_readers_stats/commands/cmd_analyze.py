@@ -82,6 +82,10 @@ def analyze(args):
 
     with Timer(name='Stats', text=timer_text):
         stanza_docs = texts_df[COL_STANZA_DOC]
+        all_words = [word
+                     for doc in stanza_docs
+                     for sent in doc.sentences
+                     for word in sent.words]
 
         # {
         #   'VERB': {       # upos
@@ -101,22 +105,21 @@ def analyze(args):
                 int                 # count
             )
         )
-        stats_upos['num_words'] = num_words
-        all_words = [word
-                     for doc in stanza_docs
-                     for sent in doc.sentences
-                     for word in sent.words]
+        counts_upos = defaultdict(int)
         for w in all_words:
             feats = (w.feats or 'no_features').split('|')
+            counts_upos[w.upos] += 1
             for f in feats:
                 stats_upos[w.upos][f] += 1
-        for key, value in stats_upos.items():
-            print(key)
+        for key, value in sorted(stats_upos.items()):
+            count = counts_upos[key]
+            print(key, f'({count}, {count / num_words * 100:.2f}%)')
             if isinstance(value, defaultdict):
                 for k, v in sorted(value.items()):
-                    print(f'    {k}: {v} ({v / num_words * 100:.2f}%)')
+                    print(f'    {k} ({v}, {v / count * 100:.2f}%)')
             else:
                 print(f'    {key}: {value}')
+
         print('---')
         print()
         print('deprel:')
@@ -126,6 +129,7 @@ def analyze(args):
             stats_deprel[w.deprel] += 1
         for k, v in sorted(stats_deprel.items()):
             print(f'{k} = {v}')
+
         exit(0)
 
         terms_df.drop(columns=COL_STANZA_DOC, inplace=True)
