@@ -1,3 +1,18 @@
+from graded_readers_stats.data import read_pandas_csv
+
+# Check the overlap between BOW output and vocabulary terms.
+
+vocabulary_csv_path = "../Data/Vocabulary list.csv"
+vocab_df = read_pandas_csv(vocabulary_csv_path)
+vocab_df["Lexical item"] = vocab_df["Lexical item"].apply(
+    lambda x: x.lower().strip()
+)
+vocab_all_words = set(vocab_df["Lexical item"])
+vocab_level1_words = set(vocab_df[vocab_df["Level"] == "A1-A2"]["Lexical item"])
+vocab_level2_words = set(vocab_df[vocab_df["Level"] == "B1"]["Lexical item"])
+vocab_level3_words = set(vocab_df[vocab_df["Level"] == "B2"]["Lexical item"])
+
+# Words with highest and lowest BOW coefficients
 bow_graded_inicial = {
     "mucho": 0.270270,
     "ser": 0.266858,
@@ -730,3 +745,168 @@ bow_litera_adulta = {
     "bello": -0.011538,
     "barco": -0.011464,
 }
+bow_dicts = {
+    "graded_1": bow_graded_inicial,
+    "graded_2": bow_graded_intermedio,
+    "graded_3": bow_graded_avanzado,
+    "litera_1": bow_litera_infantil,
+    "litera_2": bow_litera_juvenil,
+    "litera_3": bow_litera_adulta,
+}
+
+
+def print_overlap(
+        header: str,
+        words_vocab: set[str],
+        words_bow: set[str]
+) -> None:
+    print("---")
+    print(header)
+    words_overlap = words_vocab.intersection(words_bow)
+    print("Overlap count: ", len(words_overlap))
+    print(sorted(words_overlap))
+
+
+##############################################################################
+#          General overlap between vocabulary and bow words
+##############################################################################
+
+bow_all_words = {}
+for level_key, level_dict_value in bow_dicts.items():
+    bow_all_words.update(level_dict_value)
+bow_all_words = set(bow_all_words.keys())
+
+print_overlap(
+    header="General overlap between ALL vocabulary and ALL bow words "
+           "(both graded and literature)",
+    words_vocab=vocab_all_words,
+    words_bow=bow_all_words
+)
+
+##############################################################################
+#               General overlap with positive bow words
+##############################################################################
+
+bow_all_positive_words = {}
+for k, level_dict in bow_dicts.items():
+    positive_coef = {k: v for k, v in level_dict.items() if v > 0}
+    bow_all_positive_words.update(positive_coef)
+bow_all_positive_words = set(bow_all_positive_words.keys())
+
+print_overlap(
+    header="General overlap between ALL vocabulary and ALL POSITIVE bow words "
+           "(both graded and literature)",
+    words_vocab=vocab_all_words,
+    words_bow=bow_all_positive_words
+)
+
+##############################################################################
+#               General overlap with negative bow words
+##############################################################################
+
+bow_all_negative_words = {}
+for k, level_dict in bow_dicts.items():
+    negative_coef = {k: v for k, v in level_dict.items() if v < 0}
+    bow_all_negative_words.update(negative_coef)
+bow_all_negative_words = set(bow_all_negative_words.keys())
+
+print_overlap(
+    header="General overlap between ALL vocabulary and ALL NEGATIVE bow words "
+           "(both graded and literature)",
+    words_vocab=vocab_all_words,
+    words_bow=bow_all_negative_words
+)
+
+##############################################################################
+#        Overlap matching vocabulary level with positive bow words
+##############################################################################
+
+bow_pos_inicial = {k: v for k, v in bow_graded_inicial.items() if v > 0}
+print_overlap(
+    header="Overlap matching vocabulary A1-A2 with INICIAL positive bow",
+    words_vocab=vocab_level1_words,
+    words_bow=set(bow_pos_inicial.keys())
+)
+
+bow_pos_inter = {k: v for k, v in bow_graded_intermedio.items() if v > 0}
+print_overlap(
+    header="Overlap matching vocabulary B1 with INTERMEDIO positive bow",
+    words_vocab=vocab_level2_words,
+    words_bow=set(bow_pos_inter.keys())
+)
+
+bow_pos_avanzado = {k: v for k, v in bow_graded_avanzado.items() if v > 0}
+print_overlap(
+    header="Overlap matching vocabulary B2 with AVANZADO positive bow",
+    words_vocab=vocab_level3_words,
+    words_bow=set(bow_pos_avanzado.keys())
+)
+
+bow_pos_infantil = {k: v for k, v in bow_litera_infantil.items() if v > 0}
+print_overlap(
+    header="Overlap matching vocabulary A1-A2 with INFANTIL positive bow",
+    words_vocab=vocab_level1_words,
+    words_bow=set(bow_pos_infantil.keys())
+)
+
+bow_pos_juvenil = {k: v for k, v in bow_litera_juvenil.items() if v > 0}
+print_overlap(
+    header="Overlap matching vocabulary B1 with JUVENIL positive bow",
+    words_vocab=vocab_level2_words,
+    words_bow=set(bow_pos_juvenil.keys())
+)
+
+bow_pos_adulta = {k: v for k, v in bow_litera_adulta.items() if v > 0}
+print_overlap(
+    header="Overlap matching vocabulary B2 with ADULTA positive bow",
+    words_vocab=vocab_level3_words,
+    words_bow=set(bow_pos_adulta.keys())
+)
+
+##############################################################################
+#       Overlap matching vocabulary level with negative bow words
+##############################################################################
+
+bow_neg_inicial = {k: v for k, v in bow_graded_inicial.items() if v < 0}
+print_overlap(
+    header="Overlap matching vocabulary A1-A2 with INICIAL NEGATIVE bow",
+    words_vocab=vocab_level1_words,
+    words_bow=set(bow_neg_inicial.keys())
+)
+
+bow_neg_inter = {k: v for k, v in bow_graded_intermedio.items() if v < 0}
+print_overlap(
+    header="Overlap matching vocabulary B1 with INTERMEDIO NEGATIVE bow",
+    words_vocab=vocab_level2_words,
+    words_bow=set(bow_neg_inter.keys())
+)
+
+bow_neg_avanzado = {k: v for k, v in bow_graded_avanzado.items() if v < 0}
+print_overlap(
+    header="Overlap matching vocabulary B2 with AVANZADO NEGATIVE bow",
+    words_vocab=vocab_level3_words,
+    words_bow=set(bow_neg_avanzado.keys())
+)
+
+bow_neg_infantil = {k: v for k, v in bow_litera_infantil.items() if v < 0}
+print_overlap(
+    header="Overlap matching vocabulary A1-A2 with INFANTIL NEGATIVE bow",
+    words_vocab=vocab_level1_words,
+    words_bow=set(bow_neg_infantil.keys())
+)
+
+bow_neg_juvenil = {k: v for k, v in bow_litera_juvenil.items() if v < 0}
+print_overlap(
+    header="Overlap matching vocabulary B1 with JUVENIL NEGATIVE bow",
+    words_vocab=vocab_level2_words,
+    words_bow=set(bow_neg_juvenil.keys())
+)
+
+bow_neg_adulta = {k: v for k, v in bow_litera_adulta.items() if v < 0}
+print_overlap(
+    header="Overlap matching vocabulary B2 with ADULTA NEGATIVE bow",
+    words_vocab=vocab_level3_words,
+    words_bow=set(bow_neg_adulta.keys())
+)
+
+print("Done!")
