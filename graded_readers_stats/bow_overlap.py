@@ -1,19 +1,56 @@
+###############################################################################
+# Goal: Check the overlap between BOW output and vocabulary terms.
+###############################################################################
+from dataclasses import dataclass
+from enum import Enum
+from functools import reduce
+
 from graded_readers_stats.data import read_pandas_csv
 
-# Check the overlap between BOW output and vocabulary terms.
+
+class Level(Enum):
+    LOW = 1
+    MID = 2
+    HIGH = 3
+    MIXED = 4
+
+
+@dataclass
+class Bundle:
+    name: str
+    items: set[str]
+    level: Level
+
+
+def print_overlap(
+        header: str,
+        words_vocab: set[str],
+        words_bow: set[str]
+) -> None:
+    print("---")
+    print(header)
+    words_overlap = words_vocab.intersection(words_bow)
+    print("Overlap count: ", len(words_overlap))
+    print(sorted(words_overlap))
+
+
+###############################################################################
+# DATA
+###############################################################################
 
 vocabulary_csv_path = "../Data/Vocabulary list.csv"
 vocab_df = read_pandas_csv(vocabulary_csv_path)
 vocab_df["Lexical item"] = vocab_df["Lexical item"].apply(
     lambda x: x.lower().strip()
 )
+
 vocab_all_words = set(vocab_df["Lexical item"])
 vocab_level1_words = set(vocab_df[vocab_df["Level"] == "A1-A2"]["Lexical item"])
 vocab_level2_words = set(vocab_df[vocab_df["Level"] == "B1"]["Lexical item"])
 vocab_level3_words = set(vocab_df[vocab_df["Level"] == "B2"]["Lexical item"])
 
-# Words with highest and lowest BOW coefficients
-bow_graded_inicial = {
+# Graded
+bow_graded_1_all = {
     "mucho": 0.270270,
     "ser": 0.266858,
     "no": 0.237320,
@@ -135,7 +172,9 @@ bow_graded_inicial = {
     "padre": -0.031252,
     "pieza": -0.031243,
 }
-bow_graded_intermedio = {
+bow_graded_1_pos = {k: v for k, v in bow_graded_1_all.items() if v > 0}
+bow_graded_1_neg = {k: v for k, v in bow_graded_1_all.items() if v < 0}
+bow_graded_2_all = {
     "yo": 0.312155,
     "el": 0.252430,
     "mi": 0.169581,
@@ -257,7 +296,9 @@ bow_graded_intermedio = {
     "su": -0.038736,
     "ir": -0.038114,
 }
-bow_graded_avanzado = {
+bow_graded_2_pos = {k: v for k, v in bow_graded_2_all.items() if v > 0}
+bow_graded_2_neg = {k: v for k, v in bow_graded_2_all.items() if v < 0}
+bow_graded_3_all = {
     "que": 0.444945,
     "tú": 0.214084,
     "balsa": 0.161551,
@@ -379,7 +420,23 @@ bow_graded_avanzado = {
     "después": -0.040245,
     "inspector": -0.039656,
 }
-bow_litera_infantil = {
+bow_graded_3_pos = {k: v for k, v in bow_graded_3_all.items() if v > 0}
+bow_graded_3_neg = {k: v for k, v in bow_graded_3_all.items() if v < 0}
+bow_graded_all = reduce(
+    lambda x, y: dict(x, **y),
+    (bow_graded_1_all, bow_graded_2_all, bow_graded_3_all)
+)
+bow_graded_pos = reduce(
+    lambda x, y: dict(x, **y),
+    (bow_graded_1_pos, bow_graded_2_pos, bow_graded_3_pos)
+)
+bow_graded_neg = reduce(
+    lambda x, y: dict(x, **y),
+    (bow_graded_1_neg, bow_graded_2_neg, bow_graded_3_neg)
+)
+
+# Literature
+bow_litera_1_all = {
     "leotoldo": 0.186946,
     "día": 0.139741,
     "fábrica": 0.120534,
@@ -501,7 +558,9 @@ bow_litera_infantil = {
     "candela": -0.034743,
     "egoísta": -0.034503,
 }
-bow_litera_juvenil = {
+bow_litera_1_pos = {k: v for k, v in bow_litera_1_all.items() if v > 0}
+bow_litera_1_neg = {k: v for k, v in bow_litera_1_all.items() if v < 0}
+bow_litera_2_all = {
     "el": 0.816768,
     "yo": 0.260393,
     "decir": 0.177565,
@@ -623,7 +682,9 @@ bow_litera_juvenil = {
     "al": -0.038840,
     "animal": -0.038779,
 }
-bow_litera_adulta = {
+bow_litera_2_pos = {k: v for k, v in bow_litera_2_all.items() if v > 0}
+bow_litera_2_neg = {k: v for k, v in bow_litera_2_all.items() if v < 0}
+bow_litera_3_all = {
     "de": 0.294330,
     "yo": 0.235816,
     "que": 0.186107,
@@ -745,168 +806,244 @@ bow_litera_adulta = {
     "bello": -0.011538,
     "barco": -0.011464,
 }
-bow_dicts = {
-    "graded_1": bow_graded_inicial,
-    "graded_2": bow_graded_intermedio,
-    "graded_3": bow_graded_avanzado,
-    "litera_1": bow_litera_infantil,
-    "litera_2": bow_litera_juvenil,
-    "litera_3": bow_litera_adulta,
-}
+bow_litera_3_pos = {k: v for k, v in bow_litera_3_all.items() if v > 0}
+bow_litera_3_neg = {k: v for k, v in bow_litera_3_all.items() if v < 0}
+bow_litera_all = reduce(
+    lambda x, y: dict(x, **y),
+    (bow_litera_1_all, bow_litera_2_all, bow_litera_3_all)
+)
+bow_litera_pos = reduce(
+    lambda x, y: dict(x, **y),
+    (bow_litera_1_pos, bow_litera_2_pos, bow_litera_3_pos)
+)
+bow_litera_neg = reduce(
+    lambda x, y: dict(x, **y),
+    (bow_litera_1_neg, bow_litera_2_neg, bow_litera_3_neg)
+)
 
+# Graded + Literature
+bow_all = reduce(
+    lambda x, y: dict(x, **y),
+    (bow_graded_1_all, bow_graded_2_all, bow_graded_3_all,
+     bow_litera_1_all, bow_litera_2_all, bow_litera_3_all)
+)
+bow_pos = reduce(
+    lambda x, y: dict(x, **y),
+    (bow_graded_1_pos, bow_graded_2_pos, bow_graded_3_pos,
+     bow_litera_1_pos, bow_litera_2_pos, bow_litera_3_pos)
+)
+bow_neg = reduce(
+    lambda x, y: dict(x, **y),
+    (bow_graded_1_neg, bow_graded_2_neg, bow_graded_3_neg,
+     bow_litera_1_neg, bow_litera_2_neg, bow_litera_3_neg)
+)
 
-def print_overlap(
-        header: str,
-        words_vocab: set[str],
-        words_bow: set[str]
-) -> None:
-    print("---")
-    print(header)
-    words_overlap = words_vocab.intersection(words_bow)
-    print("Overlap count: ", len(words_overlap))
-    print(sorted(words_overlap))
+###############################################################################
+# BUNDLES
+###############################################################################
 
+# Vocabulary
+bundle_vocab_level_1 = Bundle(
+    name="Vocab Level 1",
+    items=vocab_level1_words,
+    level=Level.LOW
+)
+bundle_vocab_level_2 = Bundle(
+    name="Vocab Level 2",
+    items=vocab_level2_words,
+    level=Level.MID
+)
+bundle_vocab_level_3 = Bundle(
+    name="Vocab Level 3",
+    items=vocab_level3_words,
+    level=Level.HIGH
+)
+bundle_vocab_all = Bundle(
+    name="Vocab All Levels",
+    items=vocab_all_words,
+    level=Level.MIXED
+)
+
+# Graded Level 1
+bundle_graded_1_all = Bundle(
+    name="All Graded Level 1",
+    items=set(bow_graded_1_all.keys()),
+    level=Level.LOW
+)
+bundle_graded_1_pos = Bundle(
+    name="Positive Graded Level 1",
+    items=set(bow_graded_1_pos.keys()),
+    level=Level.LOW
+)
+bundle_graded_1_neg = Bundle(
+    name="Negative Graded Level 1",
+    items=set(bow_graded_1_neg.keys()),
+    level=Level.LOW
+)
+
+# Graded Level 2
+bundle_graded_2_all = Bundle(
+    name="All Graded Level 2",
+    items=set(bow_graded_2_all.keys()),
+    level=Level.LOW
+)
+bundle_graded_2_pos = Bundle(
+    name="Positive Graded Level 2",
+    items=set(bow_graded_2_pos.keys()),
+    level=Level.LOW
+)
+bundle_graded_2_neg = Bundle(
+    name="Negative Graded Level 2",
+    items=set(bow_graded_2_neg.keys()),
+    level=Level.LOW
+)
+
+# Graded Level 3
+bundle_graded_3_all = Bundle(
+    name="All Graded Level 3",
+    items=set(bow_graded_3_all.keys()),
+    level=Level.LOW
+)
+bundle_graded_3_pos = Bundle(
+    name="Positive Graded Level 3",
+    items=set(bow_graded_3_pos.keys()),
+    level=Level.LOW
+)
+bundle_graded_3_neg = Bundle(
+    name="Negative Graded Level 3",
+    items=set(bow_graded_3_neg.keys()),
+    level=Level.LOW
+)
+
+# Graded All
+bundle_graded_all = Bundle(
+    name="All Graded",
+    items=set(bow_graded_all.keys()),
+    level=Level.LOW
+)
+bundle_graded_pos = Bundle(
+    name="Positive Graded",
+    items=set(bow_graded_pos.keys()),
+    level=Level.LOW
+)
+bundle_graded_neg = Bundle(
+    name="Negative Graded",
+    items=set(bow_graded_neg.keys()),
+    level=Level.LOW
+)
+
+# Litera Level 1
+bundle_litera_1_all = Bundle(
+    name="All Litera Level 1",
+    items=set(bow_litera_1_all.keys()),
+    level=Level.LOW
+)
+bundle_litera_1_pos = Bundle(
+    name="Positive Litera Level 1",
+    items=set(bow_litera_1_pos.keys()),
+    level=Level.LOW
+)
+bundle_litera_1_neg = Bundle(
+    name="Negative Litera Level 1",
+    items=set(bow_litera_1_neg.keys()),
+    level=Level.LOW
+)
+
+# Litera Level 2
+bundle_litera_2_all = Bundle(
+    name="All Litera Level 2",
+    items=set(bow_litera_2_all.keys()),
+    level=Level.LOW
+)
+bundle_litera_2_pos = Bundle(
+    name="Positive Litera Level 2",
+    items=set(bow_litera_2_pos.keys()),
+    level=Level.LOW
+)
+bundle_litera_2_neg = Bundle(
+    name="Negative Litera Level 2",
+    items=set(bow_litera_2_neg.keys()),
+    level=Level.LOW
+)
+
+# Litera Level 3
+bundle_litera_3_all = Bundle(
+    name="All Litera Level 3",
+    items=set(bow_litera_3_all.keys()),
+    level=Level.LOW
+)
+bundle_litera_3_pos = Bundle(
+    name="Positive Litera Level 3",
+    items=set(bow_litera_3_pos.keys()),
+    level=Level.LOW
+)
+bundle_litera_3_neg = Bundle(
+    name="Negative Litera Level 3",
+    items=set(bow_litera_3_neg.keys()),
+    level=Level.LOW
+)
+
+# Litera All
+bundle_litera_all = Bundle(
+    name="All Litera",
+    items=set(bow_litera_all.keys()),
+    level=Level.LOW
+)
+bundle_litera_pos = Bundle(
+    name="Positive Litera",
+    items=set(bow_litera_pos.keys()),
+    level=Level.LOW
+)
+bundle_litera_neg = Bundle(
+    name="Negative Litera",
+    items=set(bow_litera_neg.keys()),
+    level=Level.LOW
+)
+
+# Lists of Bundles
+all_vocab_bundles = [
+    bundle_vocab_level_1,
+    bundle_vocab_level_2,
+    bundle_vocab_level_3,
+    bundle_vocab_all,
+]
+all_text_bundles = [
+    bundle_graded_1_all,
+    bundle_graded_1_pos,
+    bundle_graded_1_neg,
+    bundle_graded_2_all,
+    bundle_graded_2_pos,
+    bundle_graded_2_neg,
+    bundle_graded_3_all,
+    bundle_graded_3_pos,
+    bundle_graded_3_neg,
+    bundle_graded_all,
+    bundle_graded_pos,
+    bundle_graded_neg,
+    bundle_litera_1_all,
+    bundle_litera_1_pos,
+    bundle_litera_1_neg,
+    bundle_litera_2_all,
+    bundle_litera_2_pos,
+    bundle_litera_2_neg,
+    bundle_litera_3_all,
+    bundle_litera_3_pos,
+    bundle_litera_3_neg,
+    bundle_litera_all,
+    bundle_litera_pos,
+    bundle_litera_neg,
+]
 
 ##############################################################################
-#          General overlap between vocabulary and bow words
+# Print overlaps (all combinations)
 ##############################################################################
 
-bow_all_words = {}
-for level_key, level_dict_value in bow_dicts.items():
-    bow_all_words.update(level_dict_value)
-bow_all_words = set(bow_all_words.keys())
-
-print_overlap(
-    header="General overlap between ALL vocabulary and ALL bow words "
-           "(both graded and literature)",
-    words_vocab=vocab_all_words,
-    words_bow=bow_all_words
-)
-
-##############################################################################
-#               General overlap with positive bow words
-##############################################################################
-
-bow_all_positive_words = {}
-for k, level_dict in bow_dicts.items():
-    positive_coef = {k: v for k, v in level_dict.items() if v > 0}
-    bow_all_positive_words.update(positive_coef)
-bow_all_positive_words = set(bow_all_positive_words.keys())
-
-print_overlap(
-    header="General overlap between ALL vocabulary and ALL POSITIVE bow words "
-           "(both graded and literature)",
-    words_vocab=vocab_all_words,
-    words_bow=bow_all_positive_words
-)
-
-##############################################################################
-#               General overlap with negative bow words
-##############################################################################
-
-bow_all_negative_words = {}
-for k, level_dict in bow_dicts.items():
-    negative_coef = {k: v for k, v in level_dict.items() if v < 0}
-    bow_all_negative_words.update(negative_coef)
-bow_all_negative_words = set(bow_all_negative_words.keys())
-
-print_overlap(
-    header="General overlap between ALL vocabulary and ALL NEGATIVE bow words "
-           "(both graded and literature)",
-    words_vocab=vocab_all_words,
-    words_bow=bow_all_negative_words
-)
-
-##############################################################################
-#        Overlap matching vocabulary level with positive bow words
-##############################################################################
-
-bow_pos_inicial = {k: v for k, v in bow_graded_inicial.items() if v > 0}
-print_overlap(
-    header="Overlap matching vocabulary A1-A2 with INICIAL positive bow",
-    words_vocab=vocab_level1_words,
-    words_bow=set(bow_pos_inicial.keys())
-)
-
-bow_pos_inter = {k: v for k, v in bow_graded_intermedio.items() if v > 0}
-print_overlap(
-    header="Overlap matching vocabulary B1 with INTERMEDIO positive bow",
-    words_vocab=vocab_level2_words,
-    words_bow=set(bow_pos_inter.keys())
-)
-
-bow_pos_avanzado = {k: v for k, v in bow_graded_avanzado.items() if v > 0}
-print_overlap(
-    header="Overlap matching vocabulary B2 with AVANZADO positive bow",
-    words_vocab=vocab_level3_words,
-    words_bow=set(bow_pos_avanzado.keys())
-)
-
-bow_pos_infantil = {k: v for k, v in bow_litera_infantil.items() if v > 0}
-print_overlap(
-    header="Overlap matching vocabulary A1-A2 with INFANTIL positive bow",
-    words_vocab=vocab_level1_words,
-    words_bow=set(bow_pos_infantil.keys())
-)
-
-bow_pos_juvenil = {k: v for k, v in bow_litera_juvenil.items() if v > 0}
-print_overlap(
-    header="Overlap matching vocabulary B1 with JUVENIL positive bow",
-    words_vocab=vocab_level2_words,
-    words_bow=set(bow_pos_juvenil.keys())
-)
-
-bow_pos_adulta = {k: v for k, v in bow_litera_adulta.items() if v > 0}
-print_overlap(
-    header="Overlap matching vocabulary B2 with ADULTA positive bow",
-    words_vocab=vocab_level3_words,
-    words_bow=set(bow_pos_adulta.keys())
-)
-
-##############################################################################
-#       Overlap matching vocabulary level with negative bow words
-##############################################################################
-
-bow_neg_inicial = {k: v for k, v in bow_graded_inicial.items() if v < 0}
-print_overlap(
-    header="Overlap matching vocabulary A1-A2 with INICIAL NEGATIVE bow",
-    words_vocab=vocab_level1_words,
-    words_bow=set(bow_neg_inicial.keys())
-)
-
-bow_neg_inter = {k: v for k, v in bow_graded_intermedio.items() if v < 0}
-print_overlap(
-    header="Overlap matching vocabulary B1 with INTERMEDIO NEGATIVE bow",
-    words_vocab=vocab_level2_words,
-    words_bow=set(bow_neg_inter.keys())
-)
-
-bow_neg_avanzado = {k: v for k, v in bow_graded_avanzado.items() if v < 0}
-print_overlap(
-    header="Overlap matching vocabulary B2 with AVANZADO NEGATIVE bow",
-    words_vocab=vocab_level3_words,
-    words_bow=set(bow_neg_avanzado.keys())
-)
-
-bow_neg_infantil = {k: v for k, v in bow_litera_infantil.items() if v < 0}
-print_overlap(
-    header="Overlap matching vocabulary A1-A2 with INFANTIL NEGATIVE bow",
-    words_vocab=vocab_level1_words,
-    words_bow=set(bow_neg_infantil.keys())
-)
-
-bow_neg_juvenil = {k: v for k, v in bow_litera_juvenil.items() if v < 0}
-print_overlap(
-    header="Overlap matching vocabulary B1 with JUVENIL NEGATIVE bow",
-    words_vocab=vocab_level2_words,
-    words_bow=set(bow_neg_juvenil.keys())
-)
-
-bow_neg_adulta = {k: v for k, v in bow_litera_adulta.items() if v < 0}
-print_overlap(
-    header="Overlap matching vocabulary B2 with ADULTA NEGATIVE bow",
-    words_vocab=vocab_level3_words,
-    words_bow=set(bow_neg_adulta.keys())
-)
+for bundle_vocab in all_vocab_bundles:
+    for bundle_text in all_text_bundles:
+        print_overlap(
+            header=f"[{bundle_vocab.name}] x [{bundle_text.name}]",
+            words_vocab=bundle_vocab.items,
+            words_bow=bundle_text.items
+        )
 
 print("Done!")
