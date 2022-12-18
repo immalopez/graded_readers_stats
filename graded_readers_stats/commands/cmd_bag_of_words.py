@@ -22,7 +22,6 @@ from graded_readers_stats.preprocess import (
 def execute(args):
     corpus_path = args.corpus_path
     max_docs = args.max_docs
-    level = args.level
     shorten_content = args.shorten_content
     use_ner = args.strip_named_entities
 
@@ -41,13 +40,9 @@ def execute(args):
 ##############################################################################
 
     with Timer(name='Load data', text=timer_text):
-        texts_ungrouped_df = read_pandas_csv(corpus_path)
+        texts_df = read_pandas_csv(corpus_path)
         if max_docs:
-            texts_ungrouped_df = texts_ungrouped_df[:max_docs]
-
-    with Timer(name='Group', text=timer_text):
-        texts_by_level = texts_ungrouped_df.groupby(COL_LEVEL)
-        texts_df = texts_by_level.get_group(level).reset_index(drop=True)
+            texts_df = texts_df[:max_docs]
 
     with Timer(name='Preprocess', text=timer_text):
         text_analysis_pipeline = text_analysis_pipeline_ner

@@ -125,9 +125,7 @@ def normalize(column):
 def remove_stopwords(column):
     blacklist = stopwords.words("spanish") \
                 + names.words("male.txt") \
-                + names.words("female.txt") \
-                + ["pedro", "leo", "leopoldo", "leopolto", "hans", "vázquez",
-                   "cuyo", "suyo"]
+                + names.words("female.txt")
     return [[[word
               for word in sent
               if word not in blacklist]
