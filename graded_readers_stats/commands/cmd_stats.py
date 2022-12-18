@@ -32,8 +32,11 @@ def execute(args):
 
     start_main = time.time()
 
-    for corpus_path in corpus_paths:
-        _process_corpus_path(corpus_path, max_docs)
+    groups = [group
+              for corpus_path in corpus_paths
+              for group in _split_corpus_into_groups(corpus_path, max_docs)]
+    results = [_calc_stats_for_group(group_df, max_docs)
+               for group_df in groups]
 
     print()
     utils.duration(start_main, 'Total time')
@@ -41,7 +44,7 @@ def execute(args):
     print('STATS END')
 
 
-def _process_corpus_path(corpus_path: str, max_docs: int) -> None:
+def _split_corpus_into_groups(corpus_path: str, max_docs: int) -> list[pd.DataFrame]:
 
     with Timer(name=f'Load data', text=timer_text):
         texts = read_pandas_csv(corpus_path)
@@ -49,18 +52,20 @@ def _process_corpus_path(corpus_path: str, max_docs: int) -> None:
     with Timer(name=f'Group', text=timer_text):
         texts_groupedby = texts.groupby(COL_LEVEL)
         for group_name in texts_groupedby.groups:
+            print("\n---")
             print("Processing group:", group_name)
             group_df = texts_groupedby\
                 .get_group(group_name)\
-                .reset_index(drop=True)
-            _process_group_df(group_df=group_df, max_docs=max_docs)
+                .reset_index(drop=True)\
+                .copy()
+            yield group_df
 
 
-def _process_group_df(group_df: pd.DataFrame, max_docs: int) -> None:
+def _calc_stats_for_group(group_df: pd.DataFrame, max_docs: int):
     texts_df = group_df
 
     if max_docs:
-        texts_df = texts_df[:max_docs]
+        texts_df = texts_df[:max_docs].copy()
 
     with Timer(name='Preprocess', text=timer_text):
         texts_df = run(texts_df, text_analysis_pipeline)
@@ -72,7 +77,6 @@ def _process_group_df(group_df: pd.DataFrame, max_docs: int) -> None:
                      for doc in stanza_docs
                      for sent in doc.sentences
                      for word in sent.words]
-
         print('---')
         print()
         print('upos')
@@ -97,6 +101,7 @@ def _process_group_df(group_df: pd.DataFrame, max_docs: int) -> None:
             else:
                 print(f'    {key}: {value}')
 
+    with Timer(name='Dependency Relations', text=timer_text):
         print('---')
         print()
         print('deprel:')
@@ -106,3 +111,5 @@ def _process_group_df(group_df: pd.DataFrame, max_docs: int) -> None:
             stats_deprel[w.deprel] += 1
         for k, v in sorted(stats_deprel.items()):
             print(f'{k} = {v}')
+
+    return stats_upos
