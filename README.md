@@ -11,8 +11,13 @@ pip install -r requirements.txt
 
 Execute in Python Console to download files:
 ```python console
+import stanza
 stanza.download('es')
+
+import nltk
 nltk.download('cess_esp')
+nltk.download('names')
+nltk.download('stopwords')
 ```
 
 ## Usage

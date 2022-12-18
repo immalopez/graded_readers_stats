@@ -3,11 +3,12 @@
 ##############################################################################
 
 import stanza as st
+from nltk.corpus import stopwords, names
 
 from graded_readers_stats import data
-from graded_readers_stats.utils import *
 from graded_readers_stats._typing import *
 from graded_readers_stats.constants import *
+from graded_readers_stats.utils import *
 
 # Initialized on demand
 nlp_es = None
@@ -117,6 +118,17 @@ def get_fields(documents, key):
 def normalize(column):
     return [[[word.lower()
               for word in sent]
+             for sent in texts]
+            for texts in column]
+
+
+def remove_stopwords(column):
+    blacklist = stopwords.words("spanish") \
+                + names.words("male.txt") \
+                + names.words("female.txt")
+    return [[[word
+              for word in sent
+              if word not in blacklist]
              for sent in texts]
             for texts in column]
 
@@ -293,6 +305,7 @@ text_analysis_pipeline_ner = [
     (make_stanza_docs_ner, COL_RAW_TEXT, COL_STANZA_DOC),
     (get_fields, COL_STANZA_DOC, COL_LEMMA, ('lemma',)),
     (normalize, COL_LEMMA, COL_LEMMA),
+    (remove_stopwords, COL_LEMMA, COL_LEMMA),
 ]
 text_analysis_pipeline = [
     (read_files, COL_TEXT_FILE, COL_RAW_TEXT),

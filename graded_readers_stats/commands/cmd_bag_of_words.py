@@ -51,17 +51,17 @@ def execute(args):
 
         texts_df = run(texts_df, text_analysis_pipeline)
         if use_ner:
-            ents = texts_df[COL_STANZA_DOC]\
+            ner_items = texts_df[COL_STANZA_DOC]\
                 .apply(lambda x: [e.text for e in x.ents])\
                 .apply(lambda x: [w.lower() for w in x])
-            lemmas = texts_df[COL_LEMMA]\
+            lemmas_dict = texts_df[COL_LEMMA]\
                 .apply(flatten)\
                 .apply(list)
-            lemmas = pd.Series([
-                list(filter(lambda x: x not in ents[index], lemma))
-                for index, lemma in lemmas.items()
+            lemmas_series = pd.Series([
+                list(filter(lambda x: x not in ner_items[index], lemma))
+                for index, lemma in lemmas_dict.items()
             ])
-            X = lemmas.apply(lambda x: ' '.join(x))
+            X = lemmas_series.apply(lambda x: ' '.join(x))
         else:
             X = texts_df[COL_LEMMA]\
                 .apply(flatten)\
