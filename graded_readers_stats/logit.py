@@ -118,15 +118,28 @@ def show_most_informative_features(model, vectorizer, n):
         coefs_and_names = sorted(
             zip(coefs_per_class[cls_idx], vectorizer.get_feature_names_out()),
             key=itemgetter(0), reverse=True)
-        topn = zip(coefs_and_names[:n], coefs_and_names[:-(n + 1):-1])
+        topn = list(zip(coefs_and_names[:n], coefs_and_names[:-(n + 1):-1]))
+
         output.append('---------------------------------------------------')
         output.append(f"                     {cls_name}")
         output.append('---------------------------------------------------')
-        for(cp, fnp), (cn, fnn) in topn:
+        for (cp, fnp), (cn, fnn) in topn:
             # cp = coefficient positive
+            # cn = coefficient negative
+            # fnp = feature name positive
             # fnn = feature name negative
             output.append(
                 "{:0.6f}{: >15}    {:0.6f}{: >15}".format(cp, fnp, cn, fnn))
+
+        output.append('---------------------------------------------------')
+        output.append(f"                 {cls_name} as dict")
+        output.append('---------------------------------------------------')
+        output.append(f"{cls_name} = {{")  # '{{' is an escaped '{' in f-string
+        for (cp, fnp), (_, _) in topn:
+            output.append(f'\t"{fnp}": {cp:.6f},')
+        for (_, _), (cn, fnn) in topn:
+            output.append(f'\t"{fnn}": {cn:.6f},')
+        output.append("}")
 
     return "\n".join(output)
 

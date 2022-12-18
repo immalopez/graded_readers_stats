@@ -2,7 +2,7 @@
 ---
 
 Parsing arguments...
-Parsing done: Namespace(corpus_path='Data/Graded readers list.csv', max_docs=None, shorten_content=False, strip_named_entities=True, func=<function execute at 0x133716280>)
+Parsing done: Namespace(corpus_path='Data/Graded readers list.csv', max_docs=None, shorten_content=False, strip_named_entities=True, func=<function execute at 0x16cc3d820>)
 
 BAG-OF-WORDS START
 ---
@@ -10,14 +10,14 @@ corpus_path =  Data/Graded readers list.csv
 max_docs =  None
 ---
 Load data: 0 seconds
-Preprocess: 246 seconds
+Preprocess: 112 seconds
 === BOW ===
 Cross-validation scores:
 [0.66666667 0.33333333 0.66666667 0.6        0.4       ]
 Cross-validation avg. score:
 0.5333333333333333
 Model train score:
-0.9642857142857143
+1.0
 Model test score:
 0.875
 ------------------------------
@@ -25,16 +25,16 @@ Model test score:
 ------------------------------
              Train  |  Test
 ------------------------------
-  accuracy 0.964286 0.875000
- precision 0.964286 0.875000
-    recall 0.964286 0.875000
-        f1 0.964286 0.875000
+  accuracy 1.000000 0.875000
+ precision 1.000000 0.875000
+    recall 1.000000 0.875000
+        f1 1.000000 0.875000
 ------------------------------
-[[ 8  1  0]
+[[ 9  0  0]
  [ 0 10  0]
  [ 0  0  9]]
 ---
-[[2 0 1]
+[[2 1 0]
  [0 3 0]
  [0 0 2]]
 
@@ -43,195 +43,570 @@ Model test score:
 ---------------------------------------------------
                      Avanzado
 ---------------------------------------------------
-0.444945            que    -0.253517             yo
-0.214084             tú    -0.207048          estar
-0.161551          balsa    -0.159662             mi
-0.103246          disco    -0.113770          mucho
-0.100201             su    -0.105182             el
-0.083581         gratin    -0.099771            uno
-0.083581           hall    -0.086506             ir
-0.083581          music    -0.082915        camping
-0.081026   departamento    -0.067799       marinero
-0.080299        jesuita    -0.067002          tener
-0.080299      religioso    -0.064966          lunes
-0.078292             él    -0.063664          decir
-0.075726         propio    -0.062525        agencia
-0.071720           como    -0.062507         cuadro
-0.066384           tíaú    -0.061446            ser
-0.063618          forma    -0.059360        vázquez
-0.062349           cosa    -0.058379       sinagoga
-0.062346          indio    -0.057402          hacer
-0.060224       guaraníe    -0.057101  verónicamente
-0.060224      industria    -0.056432            bar
-0.059985           para    -0.055261         dentro
-0.058928           hans    -0.053378        español
-0.058928            leo    -0.053142        ventana
-0.058746          velar    -0.052481          chico
-0.058166         pronto    -0.052166            sol
-0.057684         porque    -0.052062          cerca
-0.057056         nativo    -0.051381          plaza
-0.054855         social    -0.051350       contesto
-0.054276         querío    -0.051211          calor
-0.053936             si    -0.051008        billete
-0.053635           arte    -0.050234          coger
-0.053532        europeo    -0.050086           aire
-0.050665          grupo    -0.050047            pez
-0.050149          belle    -0.049793            día
-0.050149           dama    -0.049745           joya
-0.050149       mantener    -0.048801         pensar
-0.050149         époque    -0.048433         fiesta
-0.049984             tu    -0.048324        alcalde
-0.048784       indígena    -0.047990         marido
-0.048745      americano    -0.046737          mujer
-0.048178        sistema    -0.046666           caso
-0.047602      artístico    -0.046641         mañana
-0.046687         aunque    -0.046557         vecino
-0.046619         hombre    -0.046447          fuego
-0.046008            con    -0.046333            río
-0.045736       italiano    -0.046324            rey
-0.045641           niña    -0.046004          museo
-0.045182           cuyo    -0.045047          nuevo
-0.044965     expedición    -0.044834            ojo
-0.044059    embarcación    -0.044419           leer
-0.044059      polinesio    -0.043917            dos
-0.044059         tronco    -0.043839         entrar
-0.043991   civilización    -0.043643          llave
-0.043967           obra    -0.041813           allí
-0.043642         nombre    -0.041680         sentar
-0.043101        colegio    -0.041382          volar
-0.042650         cuando    -0.041330          nadie
-0.041814       personal    -0.040372        batalla
-0.041798           moto    -0.040245        después
-0.041003     antepasado    -0.039656      inspector
+0.245066          haber    -0.130872       marinero
+0.244804          balsa    -0.129013        camping
+0.195564          disco    -0.118825         cuadro
+0.152472   departamento    -0.102932       sinagoga
+0.144010             si    -0.099245            bar
+0.137019           cosa    -0.096669         dentro
+0.128874         gratin    -0.094838            pez
+0.128874           hall    -0.094515  verónicamente
+0.128874          music    -0.094210        ventana
+0.124573         querío    -0.093697         marido
+0.122717          indio    -0.093351        agencia
+0.120089           tíaú    -0.092925             ir
+0.108351        jesuita    -0.092579          lunes
+0.108351      religioso    -0.092202            sol
+0.106327         propio    -0.090373         fiesta
+0.106228          forma    -0.090272          plaza
+0.099274         aunque    -0.089452          chico
+0.096254       italiano    -0.088124        español
+0.093629         pronto    -0.087963           joya
+0.090770           niña    -0.087783          cerca
+0.089020          velar    -0.086210          calor
+0.087582          aquel    -0.086082            río
+0.086216         social    -0.085686            rey
+0.083622         hombre    -0.085410          museo
+0.083495         nativo    -0.085300         vecino
+0.081870         nombre    -0.083971       contesto
+0.081264       guaraníe    -0.083517        alcalde
+0.081264      industria    -0.083456          coger
+0.080144          bueno    -0.081462          fuego
+0.079989       personal    -0.080756           aire
+0.079919          grupo    -0.079908          nuevo
+0.079820     expedición    -0.077645          mujer
+0.078056           moto    -0.077355        billete
+0.078055        europeo    -0.074370        batalla
+0.077858      atreviste    -0.072621         sentar
+0.077858       insumiso    -0.071946           leer
+0.077324          belle    -0.071258           caso
+0.077324           dama    -0.070897            ojo
+0.077324       mantener    -0.070563           allí
+0.077324         époque    -0.070339        abierto
+0.075524           cuyo    -0.070197          llave
+0.074587           arte    -0.070193           caña
+0.074150        sistema    -0.070055          volar
+0.071713          patio    -0.069465       nervioso
+0.070530          saber    -0.068849         entrar
+0.070075         música    -0.068833        empezar
+0.070002      americano    -0.068465          verde
+0.069959      artístico    -0.068321           doce
+0.069799        viernes    -0.068294            dos
+0.068766        cambiar    -0.067442       multitud
+0.068470        parecer    -0.066904            día
+0.068363         cuenta    -0.066618           tres
+0.067996       indígena    -0.066298          tener
+0.067558         tratar    -0.066271         mañana
+0.067454       culpable    -0.064095         pensar
+0.066765    embarcación    -0.063885      inspector
+0.066765      polinesio    -0.063745         camión
+0.066765         tronco    -0.063707           alto
+0.066343         hablar    -0.063691         rambla
+0.065658     biblioteca    -0.063299          nadie
+---------------------------------------------------
+                 Avanzado as dict
+---------------------------------------------------
+Avanzado = {
+	"haber": 0.245066,
+	"balsa": 0.244804,
+	"disco": 0.195564,
+	"departamento": 0.152472,
+	"si": 0.144010,
+	"cosa": 0.137019,
+	"gratin": 0.128874,
+	"hall": 0.128874,
+	"music": 0.128874,
+	"querío": 0.124573,
+	"indio": 0.122717,
+	"tíaú": 0.120089,
+	"jesuita": 0.108351,
+	"religioso": 0.108351,
+	"propio": 0.106327,
+	"forma": 0.106228,
+	"aunque": 0.099274,
+	"italiano": 0.096254,
+	"pronto": 0.093629,
+	"niña": 0.090770,
+	"velar": 0.089020,
+	"aquel": 0.087582,
+	"social": 0.086216,
+	"hombre": 0.083622,
+	"nativo": 0.083495,
+	"nombre": 0.081870,
+	"guaraníe": 0.081264,
+	"industria": 0.081264,
+	"bueno": 0.080144,
+	"personal": 0.079989,
+	"grupo": 0.079919,
+	"expedición": 0.079820,
+	"moto": 0.078056,
+	"europeo": 0.078055,
+	"atreviste": 0.077858,
+	"insumiso": 0.077858,
+	"belle": 0.077324,
+	"dama": 0.077324,
+	"mantener": 0.077324,
+	"époque": 0.077324,
+	"cuyo": 0.075524,
+	"arte": 0.074587,
+	"sistema": 0.074150,
+	"patio": 0.071713,
+	"saber": 0.070530,
+	"música": 0.070075,
+	"americano": 0.070002,
+	"artístico": 0.069959,
+	"viernes": 0.069799,
+	"cambiar": 0.068766,
+	"parecer": 0.068470,
+	"cuenta": 0.068363,
+	"indígena": 0.067996,
+	"tratar": 0.067558,
+	"culpable": 0.067454,
+	"embarcación": 0.066765,
+	"polinesio": 0.066765,
+	"tronco": 0.066765,
+	"hablar": 0.066343,
+	"biblioteca": 0.065658,
+	"marinero": -0.130872,
+	"camping": -0.129013,
+	"cuadro": -0.118825,
+	"sinagoga": -0.102932,
+	"bar": -0.099245,
+	"dentro": -0.096669,
+	"pez": -0.094838,
+	"verónicamente": -0.094515,
+	"ventana": -0.094210,
+	"marido": -0.093697,
+	"agencia": -0.093351,
+	"ir": -0.092925,
+	"lunes": -0.092579,
+	"sol": -0.092202,
+	"fiesta": -0.090373,
+	"plaza": -0.090272,
+	"chico": -0.089452,
+	"español": -0.088124,
+	"joya": -0.087963,
+	"cerca": -0.087783,
+	"calor": -0.086210,
+	"río": -0.086082,
+	"rey": -0.085686,
+	"museo": -0.085410,
+	"vecino": -0.085300,
+	"contesto": -0.083971,
+	"alcalde": -0.083517,
+	"coger": -0.083456,
+	"fuego": -0.081462,
+	"aire": -0.080756,
+	"nuevo": -0.079908,
+	"mujer": -0.077645,
+	"billete": -0.077355,
+	"batalla": -0.074370,
+	"sentar": -0.072621,
+	"leer": -0.071946,
+	"caso": -0.071258,
+	"ojo": -0.070897,
+	"allí": -0.070563,
+	"abierto": -0.070339,
+	"llave": -0.070197,
+	"caña": -0.070193,
+	"volar": -0.070055,
+	"nervioso": -0.069465,
+	"entrar": -0.068849,
+	"empezar": -0.068833,
+	"verde": -0.068465,
+	"doce": -0.068321,
+	"dos": -0.068294,
+	"multitud": -0.067442,
+	"día": -0.066904,
+	"tres": -0.066618,
+	"tener": -0.066298,
+	"mañana": -0.066271,
+	"pensar": -0.064095,
+	"inspector": -0.063885,
+	"camión": -0.063745,
+	"alto": -0.063707,
+	"rambla": -0.063691,
+	"nadie": -0.063299,
+}
 ---------------------------------------------------
                      Inicial
 ---------------------------------------------------
-0.270270          mucho    -0.522539            que
-0.266858            ser    -0.147248             el
-0.237320             no    -0.117295            con
-0.192712          estar    -0.107501             de
-0.170497        camping    -0.086297           como
-0.167421          decir    -0.084743             él
-0.163530            uno    -0.077594         pueblo
-0.131144         cuadro    -0.076481          balsa
-0.129713       contesto    -0.069517          mujer
-0.124620             ir    -0.068905       marinero
-0.123941          lunes    -0.066161             tú
-0.122170        agencia    -0.065775            mar
-0.121078          tener    -0.065582          disco
-0.119608       sinagoga    -0.064093             si
-0.114235  verónicamente    -0.061466             su
-0.112168        español    -0.058638             yo
-0.103373         gustar    -0.053273          fuego
-0.102195        vázquez    -0.050257         propio
-0.096983         ladrón    -0.049644            pez
-0.095439      inspector    -0.049576           ropa
-0.095237        billete    -0.049382           para
-0.090846          señor    -0.044313         aunque
-0.085734          museo    -0.043682            ver
-0.083902            qué    -0.043069   departamento
-0.083464             sí    -0.041166         rambla
-0.083171          saber    -0.041034         contra
-0.082940       pregunta    -0.040687        batalla
-0.082688            día    -0.040646          music
-0.081594           leer    -0.040646           hall
-0.079560          llave    -0.040646         gratin
-0.079168          ahora    -0.040532          aquel
-0.079120           aquí    -0.039497         fuerza
-0.078584     vacaciones    -0.038839         pronto
-0.077859     ventanilla    -0.038742      religioso
-0.075808       trabajar    -0.038742        jesuita
-0.074175          socio    -0.037981        empresa
-0.074131           caso    -0.037560      responder
-0.073857          volar    -0.036886          donde
-0.073773         mañana    -0.036808       multitud
-0.071675    interesante    -0.036735           moto
-0.071661         pensar    -0.036061          forma
-0.068735        emplear    -0.035987         hombre
-0.068724         fuente    -0.035671        embargo
-0.068565         querer    -0.035372           tíaú
-0.067524       artículo    -0.035367         zapato
-0.065634       escribir    -0.034875         camión
-0.065199          quién    -0.034488         porque
-0.063599      chocolate    -0.033330           isla
-0.063594           azul    -0.033027         cuando
-0.063034           buen    -0.032913          pedro
-0.059872          poder    -0.032589         marido
-0.059804    inscripción    -0.032498          brasa
-0.059709          amigo    -0.032075           suyo
-0.059113         semana    -0.032040         lanzar
-0.059077           café    -0.031636          fondo
-0.057876            hoy    -0.031450         varios
-0.057304       entender    -0.031323            leo
-0.056832           cano    -0.031323           hans
-0.056832        jacinto    -0.031252          padre
-0.056506          hucho    -0.031243          pieza
+0.254441        camping    -0.158744          mujer
+0.243715         cuadro    -0.155742             si
+0.232683            ser    -0.137623          haber
+0.216836       sinagoga    -0.133730         pueblo
+0.212997       contesto    -0.130698          disco
+0.191669          decir    -0.127942            ver
+0.187560  verónicamente    -0.127750       marinero
+0.176369        agencia    -0.116219            mar
+0.173179          lunes    -0.112708          balsa
+0.172295        español    -0.103854          aquel
+0.169576         ladrón    -0.096054           ropa
+0.161051      inspector    -0.093640            pez
+0.154973          museo    -0.092370          fuego
+0.153468         gustar    -0.090985         aunque
+0.145824        billete    -0.085962   departamento
+0.140848          llave    -0.078994         propio
+0.137703             ir    -0.077854      responder
+0.134744          señor    -0.077356         hombre
+0.132342           leer    -0.075596            dar
+0.122089       pregunta    -0.074396        batalla
+0.121691          tener    -0.074002           moto
+0.120589     vacaciones    -0.072682         fuerza
+0.118761          volar    -0.072035        empresa
+0.118587       artículo    -0.071948         rambla
+0.116344         fuente    -0.070953      encontrar
+0.115968     ventanilla    -0.070697         pronto
+0.113636       trabajar    -0.069451         marido
+0.113518          socio    -0.067889         zapato
+0.109525            día    -0.067590           tíaú
+0.108708           aquí    -0.067585          padre
+0.108418    inscripción    -0.067442         cuenta
+0.107505          ahora    -0.066238       multitud
+0.106248           azul    -0.065045         tiempo
+0.104992    interesante    -0.064097         varios
+0.104782          quién    -0.063768         camión
+0.104432        emplear    -0.063581          fondo
+0.103138       escribir    -0.062960         nombre
+0.102757      chocolate    -0.062960         querío
+0.100710         mañana    -0.062843          forma
+0.099942           café    -0.062601          music
+0.098217           caso    -0.062601           hall
+0.094405           robo    -0.062601         gratin
+0.090374            oca    -0.060240          indio
+0.089461          hucho    -0.060057          viaje
+0.089246        policía    -0.059567            voz
+0.088208          robar    -0.059515          mundo
+0.087350           buen    -0.059251           isla
+0.086521         pensar    -0.059236        embargo
+0.086327      periódico    -0.058704           cara
+0.085892         semana    -0.057691          hacia
+0.085612         bonito    -0.057372           hora
+0.084814           cano    -0.056877        posible
+0.084814        jacinto    -0.056634          pieza
+0.084368        comprar    -0.056614       entonces
+0.083861           cine    -0.056555         añadir
+0.083122         agosto    -0.056391         lanzar
+0.082856         típico    -0.054875          patio
+0.082696          amigo    -0.054632       italiano
+0.080110      comisaría    -0.053430          brasa
+0.080091           joya    -0.052807      seguridad
+---------------------------------------------------
+                 Inicial as dict
+---------------------------------------------------
+Inicial = {
+	"camping": 0.254441,
+	"cuadro": 0.243715,
+	"ser": 0.232683,
+	"sinagoga": 0.216836,
+	"contesto": 0.212997,
+	"decir": 0.191669,
+	"verónicamente": 0.187560,
+	"agencia": 0.176369,
+	"lunes": 0.173179,
+	"español": 0.172295,
+	"ladrón": 0.169576,
+	"inspector": 0.161051,
+	"museo": 0.154973,
+	"gustar": 0.153468,
+	"billete": 0.145824,
+	"llave": 0.140848,
+	"ir": 0.137703,
+	"señor": 0.134744,
+	"leer": 0.132342,
+	"pregunta": 0.122089,
+	"tener": 0.121691,
+	"vacaciones": 0.120589,
+	"volar": 0.118761,
+	"artículo": 0.118587,
+	"fuente": 0.116344,
+	"ventanilla": 0.115968,
+	"trabajar": 0.113636,
+	"socio": 0.113518,
+	"día": 0.109525,
+	"aquí": 0.108708,
+	"inscripción": 0.108418,
+	"ahora": 0.107505,
+	"azul": 0.106248,
+	"interesante": 0.104992,
+	"quién": 0.104782,
+	"emplear": 0.104432,
+	"escribir": 0.103138,
+	"chocolate": 0.102757,
+	"mañana": 0.100710,
+	"café": 0.099942,
+	"caso": 0.098217,
+	"robo": 0.094405,
+	"oca": 0.090374,
+	"hucho": 0.089461,
+	"policía": 0.089246,
+	"robar": 0.088208,
+	"buen": 0.087350,
+	"pensar": 0.086521,
+	"periódico": 0.086327,
+	"semana": 0.085892,
+	"bonito": 0.085612,
+	"cano": 0.084814,
+	"jacinto": 0.084814,
+	"comprar": 0.084368,
+	"cine": 0.083861,
+	"agosto": 0.083122,
+	"típico": 0.082856,
+	"amigo": 0.082696,
+	"comisaría": 0.080110,
+	"joya": 0.080091,
+	"mujer": -0.158744,
+	"si": -0.155742,
+	"haber": -0.137623,
+	"pueblo": -0.133730,
+	"disco": -0.130698,
+	"ver": -0.127942,
+	"marinero": -0.127750,
+	"mar": -0.116219,
+	"balsa": -0.112708,
+	"aquel": -0.103854,
+	"ropa": -0.096054,
+	"pez": -0.093640,
+	"fuego": -0.092370,
+	"aunque": -0.090985,
+	"departamento": -0.085962,
+	"propio": -0.078994,
+	"responder": -0.077854,
+	"hombre": -0.077356,
+	"dar": -0.075596,
+	"batalla": -0.074396,
+	"moto": -0.074002,
+	"fuerza": -0.072682,
+	"empresa": -0.072035,
+	"rambla": -0.071948,
+	"encontrar": -0.070953,
+	"pronto": -0.070697,
+	"marido": -0.069451,
+	"zapato": -0.067889,
+	"tíaú": -0.067590,
+	"padre": -0.067585,
+	"cuenta": -0.067442,
+	"multitud": -0.066238,
+	"tiempo": -0.065045,
+	"varios": -0.064097,
+	"camión": -0.063768,
+	"fondo": -0.063581,
+	"nombre": -0.062960,
+	"querío": -0.062960,
+	"forma": -0.062843,
+	"music": -0.062601,
+	"hall": -0.062601,
+	"gratin": -0.062601,
+	"indio": -0.060240,
+	"viaje": -0.060057,
+	"voz": -0.059567,
+	"mundo": -0.059515,
+	"isla": -0.059251,
+	"embargo": -0.059236,
+	"cara": -0.058704,
+	"hacia": -0.057691,
+	"hora": -0.057372,
+	"posible": -0.056877,
+	"pieza": -0.056634,
+	"entonces": -0.056614,
+	"añadir": -0.056555,
+	"lanzar": -0.056391,
+	"patio": -0.054875,
+	"italiano": -0.054632,
+	"brasa": -0.053430,
+	"seguridad": -0.052807,
+}
 ---------------------------------------------------
                      Intermedio
 ---------------------------------------------------
-0.312155             yo    -0.255535             no
-0.252430             el    -0.205412            ser
-0.169581             mi    -0.156500          mucho
-0.136704       marinero    -0.147922             tú
-0.116255          mujer    -0.103757          decir
-0.111748             de    -0.102988             sí
-0.099720          fuego    -0.092850         gustar
-0.099690            pez    -0.092426          señor
-0.081059        batalla    -0.089344          saber
-0.080579         marido    -0.087583        camping
-0.077952         rambla    -0.085070          balsa
-0.077595            que    -0.084439            ese
-0.075380         vecino    -0.078363       contesto
-0.075161           ropa    -0.077087          haber
-0.073599       multitud    -0.072332       pregunta
-0.071286            con    -0.070971         querer
-0.071202            río    -0.068637         cuadro
-0.069479         camión    -0.063759            uno
-0.066545          pedro    -0.062625         ladrón
-0.066247          brasa    -0.061228       sinagoga
-0.061843           caña    -0.059646        agencia
-0.057737        alcalde    -0.058975          lunes
-0.056722            san    -0.058790        español
-0.055909         contra    -0.058347      interesar
-0.054927         quemar    -0.057134  verónicamente
-0.052998        hoguera    -0.055864           cosa
-0.051296         pueblo    -0.055784      inspector
-0.050675         cámara    -0.054076          tener
-0.050319         tienda    -0.052864          ahora
-0.050097           hora    -0.052799           buen
-0.049888        abierto    -0.052269       trabajar
-0.048297          brazo    -0.052208          bueno
-0.048143          padre    -0.051411           aquí
-0.046771       horchata    -0.049806           arte
-0.046731         añadir    -0.048952     vacaciones
-0.046174          lleno    -0.048910       entender
-0.045664       proteger    -0.048576         ciudad
-0.045553        empezar    -0.047980          poner
-0.045534            mar    -0.047198     extranjero
-0.045314         pescar    -0.046407            hoy
-0.044872          plaza    -0.045887         hablar
-0.044630         lanzar    -0.044378        pequeño
-0.044628         balcón    -0.044265            qué
-0.044592        nuestro    -0.044229        billete
-0.043710            rey    -0.042935          music
-0.043345          hacia    -0.042935           hall
-0.042679         susana    -0.042935         gratin
-0.042531          hacer    -0.042835        vázquez
-0.042027       camiseta    -0.042249         semana
-0.041870           allá    -0.042165    interesante
-0.040185      alrededor    -0.041557      religioso
-0.039997        piscina    -0.041557        jesuita
-0.039748           cura    -0.041388       artículo
-0.039748       manrique    -0.041296           robo
-0.039744       respondí    -0.041143        comprar
-0.039456          joven    -0.039730          museo
-0.039447    secuestrado    -0.039168          claro
-0.039413         timbre    -0.039157     ventanilla
-0.039285         dentro    -0.038736             su
-0.039141       celebrar    -0.038114             ir
+0.258622       marinero    -0.246809            ser
+0.236389          mujer    -0.158052          señor
+0.188478            pez    -0.152244          decir
+0.173832          fuego    -0.150980         gustar
+0.163148         marido    -0.147707          saber
+0.148766        batalla    -0.132097          balsa
+0.143382           ropa    -0.129026       contesto
+0.135701            río    -0.125428        camping
+0.135640         rambla    -0.125133       pregunta
+0.135579         vecino    -0.124889         cuadro
+0.133680       multitud    -0.113905       sinagoga
+0.127514         camión    -0.110606         querer
+0.118337           caña    -0.108029         ladrón
+0.113742          brasa    -0.107444          haber
+0.105969         pueblo    -0.099239           cosa
+0.102830        alcalde    -0.097166      inspector
+0.101544            san    -0.093045  verónicamente
+0.100362           hora    -0.091608      interesar
+0.097761        empezar    -0.089545          bueno
+0.096890         quemar    -0.087136          ahora
+0.096640            mar    -0.084785          poner
+0.094999        abierto    -0.084171        español
+0.094362         tienda    -0.083018        agencia
+0.092479          brazo    -0.082769       entender
+0.092271          padre    -0.082185       trabajar
+0.091449         cámara    -0.082170           aquí
+0.091301          hacer    -0.080600          lunes
+0.090993        hoguera    -0.076653     vacaciones
+0.089787          lleno    -0.076638           buen
+0.088496            rey    -0.074483     extranjero
+0.087956          hacia    -0.074171       artículo
+0.086698         balcón    -0.073568           arte
+0.085675          plaza    -0.072079         ciudad
+0.085672         pescar    -0.070651          llave
+0.085372         añadir    -0.070201        pequeño
+0.083851         lanzar    -0.069985           robo
+0.082635          nuevo    -0.069563          museo
+0.081384       horchata    -0.068892            hoy
+0.080767         susana    -0.068469        billete
+0.080548         dentro    -0.068144          claro
+0.079724         timbre    -0.067630         hablar
+0.079710           allá    -0.066897        comprar
+0.079621       proteger    -0.066510   departamento
+0.079424            ver    -0.066273          music
+0.078832         puerta    -0.066273           hall
+0.077608       respondí    -0.066273         gratin
+0.077410        piscina    -0.065540         semana
+0.076577      izquierda    -0.065115     arqueólogo
+0.076260       recuerdo    -0.064866          disco
+0.076196          joven    -0.063105    interesante
+0.075916       camiseta    -0.062731          quién
+0.075413      alrededor    -0.062477          indio
+0.074986    secuestrado    -0.062011       escribir
+0.074127          pieza    -0.061613         querío
+0.073218          primo    -0.061081        sonreír
+0.072728        después    -0.060920     ventanilla
+0.072036         fuerza    -0.060397           leer
+0.071663       depósito    -0.059897         fuente
+0.071559        enfermo    -0.058901        difícil
+0.070825         cabina    -0.058761          robar
+---------------------------------------------------
+                 Intermedio as dict
+---------------------------------------------------
+Intermedio = {
+	"marinero": 0.258622,
+	"mujer": 0.236389,
+	"pez": 0.188478,
+	"fuego": 0.173832,
+	"marido": 0.163148,
+	"batalla": 0.148766,
+	"ropa": 0.143382,
+	"río": 0.135701,
+	"rambla": 0.135640,
+	"vecino": 0.135579,
+	"multitud": 0.133680,
+	"camión": 0.127514,
+	"caña": 0.118337,
+	"brasa": 0.113742,
+	"pueblo": 0.105969,
+	"alcalde": 0.102830,
+	"san": 0.101544,
+	"hora": 0.100362,
+	"empezar": 0.097761,
+	"quemar": 0.096890,
+	"mar": 0.096640,
+	"abierto": 0.094999,
+	"tienda": 0.094362,
+	"brazo": 0.092479,
+	"padre": 0.092271,
+	"cámara": 0.091449,
+	"hacer": 0.091301,
+	"hoguera": 0.090993,
+	"lleno": 0.089787,
+	"rey": 0.088496,
+	"hacia": 0.087956,
+	"balcón": 0.086698,
+	"plaza": 0.085675,
+	"pescar": 0.085672,
+	"añadir": 0.085372,
+	"lanzar": 0.083851,
+	"nuevo": 0.082635,
+	"horchata": 0.081384,
+	"susana": 0.080767,
+	"dentro": 0.080548,
+	"timbre": 0.079724,
+	"allá": 0.079710,
+	"proteger": 0.079621,
+	"ver": 0.079424,
+	"puerta": 0.078832,
+	"respondí": 0.077608,
+	"piscina": 0.077410,
+	"izquierda": 0.076577,
+	"recuerdo": 0.076260,
+	"joven": 0.076196,
+	"camiseta": 0.075916,
+	"alrededor": 0.075413,
+	"secuestrado": 0.074986,
+	"pieza": 0.074127,
+	"primo": 0.073218,
+	"después": 0.072728,
+	"fuerza": 0.072036,
+	"depósito": 0.071663,
+	"enfermo": 0.071559,
+	"cabina": 0.070825,
+	"ser": -0.246809,
+	"señor": -0.158052,
+	"decir": -0.152244,
+	"gustar": -0.150980,
+	"saber": -0.147707,
+	"balsa": -0.132097,
+	"contesto": -0.129026,
+	"camping": -0.125428,
+	"pregunta": -0.125133,
+	"cuadro": -0.124889,
+	"sinagoga": -0.113905,
+	"querer": -0.110606,
+	"ladrón": -0.108029,
+	"haber": -0.107444,
+	"cosa": -0.099239,
+	"inspector": -0.097166,
+	"verónicamente": -0.093045,
+	"interesar": -0.091608,
+	"bueno": -0.089545,
+	"ahora": -0.087136,
+	"poner": -0.084785,
+	"español": -0.084171,
+	"agencia": -0.083018,
+	"entender": -0.082769,
+	"trabajar": -0.082185,
+	"aquí": -0.082170,
+	"lunes": -0.080600,
+	"vacaciones": -0.076653,
+	"buen": -0.076638,
+	"extranjero": -0.074483,
+	"artículo": -0.074171,
+	"arte": -0.073568,
+	"ciudad": -0.072079,
+	"llave": -0.070651,
+	"pequeño": -0.070201,
+	"robo": -0.069985,
+	"museo": -0.069563,
+	"hoy": -0.068892,
+	"billete": -0.068469,
+	"claro": -0.068144,
+	"hablar": -0.067630,
+	"comprar": -0.066897,
+	"departamento": -0.066510,
+	"music": -0.066273,
+	"hall": -0.066273,
+	"gratin": -0.066273,
+	"semana": -0.065540,
+	"arqueólogo": -0.065115,
+	"disco": -0.064866,
+	"interesante": -0.063105,
+	"quién": -0.062731,
+	"indio": -0.062477,
+	"escribir": -0.062011,
+	"querío": -0.061613,
+	"sonreír": -0.061081,
+	"ventanilla": -0.060920,
+	"leer": -0.060397,
+	"fuente": -0.059897,
+	"difícil": -0.058901,
+	"robar": -0.058761,
+}
 Logistic Regression: 0 seconds
 
-Total time (4m 6s)
+Total time (2m 52s)
 ---
 
 BAG-OF-WORDS END
