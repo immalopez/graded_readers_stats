@@ -57,6 +57,13 @@ subparser = subparsers.add_parser(
 subparser.add_argument(
     'corpus_path',
     help='file path to a CSV with file paths to texts')
+subparser.add_argument(
+    'level',
+    help='only process texts of the specified level '
+         'column e.g. --level=Inicial would process '
+         'only rows with a value Inicial for the column '
+         'Level that is assumed to be present in all '
+         'loaded texts.')
 subparser.add_argument('--max_docs', type=int,
                        help='max number of docs to analyze. Useful for tests')
 subparser.add_argument('--shorten-content', action="store_true",
