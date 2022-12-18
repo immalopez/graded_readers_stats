@@ -1,13 +1,12 @@
+from __future__ import annotations
+
 import time
-from collections import defaultdict
 
 import pandas as pd
 from codetiming import Timer
-from pandas.core.common import flatten
 
 from graded_readers_stats import utils
 from graded_readers_stats.constants import (
-    COL_LEMMA,
     COL_LEVEL,
     COL_STANZA_DOC,
 )
@@ -32,11 +31,11 @@ def execute(args):
 
     start_main = time.time()
 
-    groups = [group
+    groups = [(group_name, group_df)
               for corpus_path in corpus_paths
-              for group in _split_corpus_into_groups(corpus_path, max_docs)]
-    results = [_calc_stats_for_group(group_df, max_docs)
-               for group_df in groups]
+              for group_name, group_df in load_groups(corpus_path, max_docs)]
+    stats = {name: calc_stats_for_group(name, df, max_docs)
+             for name, df in groups}
 
     print()
     utils.duration(start_main, 'Total time')
@@ -44,7 +43,7 @@ def execute(args):
     print('STATS END')
 
 
-def _split_corpus_into_groups(corpus_path: str, max_docs: int) -> list[pd.DataFrame]:
+def load_groups(corpus_path: str, max_docs: int) -> list[pd.DataFrame]:
 
     with Timer(name=f'Load data', text=timer_text):
         texts = read_pandas_csv(corpus_path)
@@ -58,10 +57,14 @@ def _split_corpus_into_groups(corpus_path: str, max_docs: int) -> list[pd.DataFr
                 .get_group(group_name)\
                 .reset_index(drop=True)\
                 .copy()
-            yield group_df
+            yield group_name, group_df
 
 
-def _calc_stats_for_group(group_df: pd.DataFrame, max_docs: int):
+def calc_stats_for_group(
+        group_name: str,
+        group_df: pd.DataFrame,
+        max_docs: int
+):
     texts_df = group_df
 
     if max_docs:
@@ -69,7 +72,6 @@ def _calc_stats_for_group(group_df: pd.DataFrame, max_docs: int):
 
     with Timer(name='Preprocess', text=timer_text):
         texts_df = run(texts_df, text_analysis_pipeline)
-        num_words = sum(1 for _ in flatten(texts_df[COL_LEMMA]))
 
     with Timer(name='UPOS', text=timer_text):
         stanza_docs = texts_df[COL_STANZA_DOC]
@@ -77,39 +79,84 @@ def _calc_stats_for_group(group_df: pd.DataFrame, max_docs: int):
                      for doc in stanza_docs
                      for sent in doc.sentences
                      for word in sent.words]
-        print('---')
-        print()
-        print('upos')
-        print()
-        stats_upos = defaultdict(   # upos
-            lambda: defaultdict(    # feats
-                int                 # count
-            )
-        )
-        counts_upos = defaultdict(int)
+        all_words_count = len(all_words)
+
+        upos_dict = {"count": 0, "vals": {}}
         for w in all_words:
-            feats = (w.feats or 'no_features').split('|')
-            counts_upos[w.upos] += 1
-            for f in feats:
-                stats_upos[w.upos][f] += 1
-        for key, value in sorted(stats_upos.items()):
-            count = counts_upos[key]
-            print(key, f'({count}, {count / num_words * 100:.2f}%)')
-            if isinstance(value, defaultdict):
-                for k, v in sorted(value.items()):
-                    print(f'    {k} ({v}, {v / count * 100:.2f}%)')
-            else:
-                print(f'    {key}: {value}')
+            # count general words
+            upos_dict["count"] += 1
+
+            # init and count the current upos
+            curr_upos = upos_dict["vals"]\
+                .setdefault(w.upos, {"count": 0})
+            curr_upos["count"] += 1
+
+            if w.feats is not None:
+                # init feats container
+                curr_upos.setdefault("vals", {})
+                feats = curr_upos["vals"]
+
+                for f in w.feats.split("|"):
+                    k, v = f.split("=")
+
+                    # init feat
+                    feat = feats.setdefault(k, {"count": 0, "vals": {}})
+                    feat["count"] += 1
+
+                    # init and count value
+                    feat["vals"].setdefault(v, 0)
+                    feat["vals"][v] += 1
+
+        # print('---')
+        # print()
+        # print('upos')
+        # print()
+        # stats_upos = defaultdict(   # upos
+        #     lambda: defaultdict(    # feats
+        #         int                 # count
+        #     )
+        # )
+        # counts_upos = defaultdict(int)
+        # for w in all_words:
+        #     feats = (w.feats or 'no_features').split('|')
+        #     counts_upos[w.upos] += 1
+        #     for f in feats:
+        #         stats_upos[w.upos][f] += 1
+        #
+        # for key, value in sorted(stats_upos.items()):
+        #     count = counts_upos[key]
+        #     assert count == upos_dict["vals"][key]["count"]
+        #     print(key, f'({count}, {count / all_words_count * 100:.2f}%)')
+        #     if isinstance(value, defaultdict):
+        #         for k, v in sorted(value.items()):
+        #             if k != "no_features":
+        #                 foo, bar = k.split("=")
+        #                 assert v == upos_dict["vals"][key]["vals"][foo]["vals"][bar]
+        #             print(f'    {k} ({v}, {v / count * 100:.2f}%)')
+        #     else:
+        #         print(f'    {key}: {value}')
 
     with Timer(name='Dependency Relations', text=timer_text):
-        print('---')
-        print()
-        print('deprel:')
-        print()
-        stats_deprel = defaultdict(int)
+        deprel_dict = {}
         for w in all_words:
-            stats_deprel[w.deprel] += 1
-        for k, v in sorted(stats_deprel.items()):
-            print(f'{k} = {v}')
+            key = w.deprel
+            deprel_dict.setdefault(key, 0)
+            deprel_dict[key] += 1
 
-    return stats_upos
+        # print('---')
+        # print()
+        # print('deprel:')
+        # print()
+        #
+        # stats_deprel = defaultdict(int)
+        # for w in all_words:
+        #     stats_deprel[w.deprel] += 1
+        # for k, v in sorted(stats_deprel.items()):
+        #     print(f'{k} = {v}')
+        # for w in all_words:
+        #     assert deprel[w.deprel] == stats_deprel[w.deprel]
+
+    return {
+        "upos": upos_dict,
+        "deprel": deprel_dict
+    }
