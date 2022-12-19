@@ -40,12 +40,6 @@ def execute(args):
     stats = {name: calc_stats_for_group(name, df, max_docs)
              for name, df in groups}
     group_names = [name for name, _ in groups]
-    # deprel_zipped = zip_longest(
-    #     stats["Inicial"]["deprel"],
-    #     stats["Intermedio"]["deprel"],
-    #     stats["Avanzado"]["deprel"],
-    #     fillvalue=None
-    # )
 
     df = pd.DataFrame(
         {k: [stats[nn]["deprel"].setdefault(k, 0) for nn in group_names]
@@ -54,13 +48,6 @@ def execute(args):
          },
         index=group_names
     )
-    # df = pd.DataFrame({
-    #     "root": [stats[name]["deprel"]["root"]
-    #              for name in group_names],
-    #     "count": [stats[name]["upos"]["count"]
-    #               for name in group_names],
-    #     "level": group_names
-    # }, index=group_names)
 
     ll = sorted(list(stats["Inicial"]["deprel"].keys()))
     for i in range(0, len(ll), 3):
@@ -68,10 +55,6 @@ def execute(args):
         plt.xticks(rotation=0, ha='right')
         plt.savefig(f"output/stats/deprel-image-{i}.png")
         plt.show()
-
-    # df = pd.DataFrame({"a": [1, 2, 3], "b": [5, 7, 9]})
-
-    # pd.DataFrame(data=stats)
 
     print()
     utils.duration(start_main, 'Total time')
