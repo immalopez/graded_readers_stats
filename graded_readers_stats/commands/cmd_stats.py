@@ -39,7 +39,10 @@ def execute(args):
               for group_name, group_df in load_groups(corpus_path, max_docs)]
     stats = {name: calc_stats_for_group(name, df, max_docs)
              for name, df in groups}
+
+    sort_order = {"Inicial": 0, "Intermedio": 1, "Avanzado": 2}
     group_names = [name for name, _ in groups]
+    group_names = sorted(group_names, key=lambda x: sort_order[x])
 
     df = pd.DataFrame(
         {k: [stats[nn]["deprel"].setdefault(k, 0) for nn in group_names]
@@ -51,9 +54,9 @@ def execute(args):
 
     ll = sorted(list(stats["Inicial"]["deprel"].keys()))
     for i in range(0, len(ll), 3):
-        df.plot(kind="bar", y=ll[i:3+i])
+        df.plot(kind="bar", y=ll[i:3+i], subplots=True, figsize=(5, 15))
         plt.xticks(rotation=0, ha='right')
-        plt.savefig(f"output/stats/deprel-image-{i}.png")
+        # plt.savefig(f"output/stats/deprel-image-{i}.png")
         plt.show()
 
     print()
