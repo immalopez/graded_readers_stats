@@ -1,37 +1,51 @@
-﻿Title;Level;Publisher;Text file;Type
-Una música tan triste;Avanzado;Edinumen;Data/Graded readers/1632203982331-save-text-to-file--.txt;Graded reader
-Misiones guaraníes;Avanzado;Editorial S.M.;Data/Graded readers/1632204071996-save-text-to-file--.txt;Graded reader
-Una etiqueta olvidada;Avanzado;Difusión;Data/Graded readers/1632204141438-save-text-to-file--.txt;Graded reader
-Los polifacéticos;Avanzado;Editorial S.M.;Data/Graded readers/1632204205864-save-text-to-file--.txt;Graded reader
-Los labios de Bárbara;Avanzado;Edinumen;Data/Graded readers/1632204252964-save-text-to-file--.txt;Graded reader
-Noventa y seis horas y media en ninguna parte;Avanzado;Edinumen;Data/Graded readers/1632204296036-save-text-to-file--.txt;Graded reader
-La Poesía del Romanticismo;Avanzado;SGEL;Data/Graded readers/1632204393111-save-text-to-file--.txt;Graded reader
-Do de pecho;Avanzado;Edelsa;Data/Graded readers/1632204422287-save-text-to-file--.txt;Graded reader
-París de la Belle époque;Avanzado;Editorial S.M.;Data/Graded readers/1632204466344-save-text-to-file--.txt;Graded reader
-Congreso en Granada;Avanzado;Edelsa;Data/Graded readers/1632204603082-save-text-to-file--.txt;Graded reader
-La última novela;Avanzado;Edinumen;Data/Graded readers/1632204647408-save-text-to-file--.txt;Graded reader
-La expedición de la Kon-Tiki;Avanzado;Editorial S.M.;Data/Graded readers/1632204778802-save-text-to-file--.txt;Graded reader
-Un sueño muy extraño;Intermedio;SGEL;Data/Graded readers/1632204855822-save-text-to-file--.txt;Graded reader
-Lola;Intermedio;Edelsa;Data/Graded readers/1632204907273-save-text-to-file--.txt;Graded reader
-El secreto de Cristóbal Colón;Intermedio;Santillana;Data/Graded readers/1632204971860-save-text-to-file--.txt;Graded reader
-Una morena y una rubia;Intermedio;Edelsa;Data/Graded readers/1632205024738-save-text-to-file--.txt;Graded reader
-La batalla del tomate;Intermedio;Difusión;Data/Graded readers/1632205075317-save-text-to-file--.txt;Graded reader
-Memorias de septiembre;Intermedio;Edinumen;Data/Graded readers/1632205134589-save-text-to-file--.txt;Graded reader
-Muerte entre muñecos;Intermedio;Edinumen;Data/Graded readers/1632205529113-save-text-to-file--.txt;Graded reader
-Guantanameras;Intermedio;Difusión;Data/Graded readers/1632205617414-save-text-to-file--.txt;Graded reader
-Una mujer en apuros;Intermedio;SGEL;Data/Graded readers/1632205671361-save-text-to-file--.txt;Graded reader
-En busca del oro carmesí;Intermedio;Difusión;Data/Graded readers/1632205728301-save-text-to-file--.txt;Graded reader
-El paso del fuego;Intermedio;Difusión;Data/Graded readers/1632205766650-save-text-to-file--.txt;Graded reader
-El sueño de Otto;Inicial;Santillana;Data/Graded readers/1632205841648-save-text-to-file--.txt;Graded reader
-Gente que lee;Inicial;Difusión;Data/Graded readers/1632205886223-save-text-to-file--.txt;Graded reader
-Amnesia;Inicial;Edinumen;Data/Graded readers/1632205940650-save-text-to-file--.txt;Graded reader
-El delfín;Inicial;Coloquio;Data/Graded readers/1632205998349-save-text-to-file--.txt;Graded reader
-Por soñar…;Inicial;Santillana;Data/Graded readers/1632206610531-save-text-to-file--.txt;Graded reader
-Lejos de casa;Inicial;Difusión;Data/Graded readers/1632206670376-save-text-to-file--.txt;Graded reader
-Vuelo 505 con destino a Caracas;Inicial;Difusión;Data/Graded readers/1632206725259-save-text-to-file--.txt;Graded reader
-El hombre del bar;Inicial;Santillana;Data/Graded readers/1632206794179-save-text-to-file--.txt;Graded reader
-El misterio de la llave;Inicial;Santillana;Data/Graded readers/1632206842438-save-text-to-file--.txt;Graded reader
-Paisaje de otoño;Inicial;Edinumen;Data/Graded readers/1632206897314-save-text-to-file--.txt;Graded reader
-Doce a las doce;Inicial;Edelsa;Data/Graded readers/1632206957792-save-text-to-file--.txt;Graded reader
-Amor en línea;Inicial;Difusión;Data/Graded readers/Amor en linea.txt;Graded reader
-Sin noticias;Inicial;Difusión;Data/Graded readers/Sin noticias.txt;Graded reader
+﻿Title,Level,Publisher,Text file,Type
+Una música tan triste,Avanzado,Edinumen,Data/Graded readers/1632203982331-save-text-to-file--.txt,Graded reader
+Misiones guaraníes,Avanzado,Editorial S.M.,Data/Graded readers/1632204071996-save-text-to-file--.txt,Graded reader
+Una etiqueta olvidada,Avanzado,Difusión,Data/Graded readers/1632204141438-save-text-to-file--.txt,Graded reader
+Los polifacéticos,Avanzado,Editorial S.M.,Data/Graded readers/1632204205864-save-text-to-file--.txt,Graded reader
+Los labios de Bárbara,Avanzado,Edinumen,Data/Graded readers/1632204252964-save-text-to-file--.txt,Graded reader
+Noventa y seis horas y media en ninguna parte,Avanzado,Edinumen,Data/Graded readers/1632204296036-save-text-to-file--.txt,Graded reader
+La Poesía del Romanticismo,Avanzado,SGEL,Data/Graded readers/1632204393111-save-text-to-file--.txt,Graded reader
+Do de pecho,Avanzado,Edelsa,Data/Graded readers/1632204422287-save-text-to-file--.txt,Graded reader
+París de la Belle époque,Avanzado,Editorial S.M.,Data/Graded readers/1632204466344-save-text-to-file--.txt,Graded reader
+Congreso en Granada,Avanzado,Edelsa,Data/Graded readers/1632204603082-save-text-to-file--.txt,Graded reader
+La última novela,Avanzado,Edinumen,Data/Graded readers/1632204647408-save-text-to-file--.txt,Graded reader
+La expedición de la Kon-Tiki,Avanzado,Editorial S.M.,Data/Graded readers/1632204778802-save-text-to-file--.txt,Graded reader
+Don Quijote de la Mancha. Parte I.,Avanzado,Grafisk Forlag,Data/Graded readers/DonQuijote1.txt,Graded reader
+Don Quijote de la Mancha. Parte II.,Avanzado,Grafisk Forlag,Data/Graded readers/DonQuijote2.txt,Graded reader
+Un sueño muy extraño,Intermedio,SGEL,Data/Graded readers/1632204855822-save-text-to-file--.txt,Graded reader
+Lola,Intermedio,Edelsa,Data/Graded readers/1632204907273-save-text-to-file--.txt,Graded reader
+El secreto de Cristóbal Colón,Intermedio,Santillana,Data/Graded readers/1632204971860-save-text-to-file--.txt,Graded reader
+Una morena y una rubia,Intermedio,Edelsa,Data/Graded readers/1632205024738-save-text-to-file--.txt,Graded reader
+La batalla del tomate,Intermedio,Difusión,Data/Graded readers/1632205075317-save-text-to-file--.txt,Graded reader
+Memorias de septiembre,Intermedio,Edinumen,Data/Graded readers/1632205134589-save-text-to-file--.txt,Graded reader
+Muerte entre muñecos,Intermedio,Edinumen,Data/Graded readers/1632205529113-save-text-to-file--.txt,Graded reader
+Guantanameras,Intermedio,Difusión,Data/Graded readers/1632205617414-save-text-to-file--.txt,Graded reader
+Una mujer en apuros,Intermedio,SGEL,Data/Graded readers/1632205671361-save-text-to-file--.txt,Graded reader
+En busca del oro carmesí,Intermedio,Difusión,Data/Graded readers/1632205728301-save-text-to-file--.txt,Graded reader
+El paso del fuego,Intermedio,Difusión,Data/Graded readers/1632205766650-save-text-to-file--.txt,Graded reader
+Taxi a Coyoacán,Intermedio,Difusión,Data/Graded readers/TaxiACoyoacan.txt,Graded reader
+Las nietas de mayo,Intermedio,Difusión,Data/Graded readers/LasNietasDeMayo.txt,Graded reader
+Más conchas que un galápago,Intermedio,Difusión,Data/Graded readers/MasConchasQueUnGalapago.txt,Graded reader
+Lazarillo de Tormes,Intermedio,Grafisk Forlag,Data/Graded readers/LazarilloDeTormes.txt,Graded reader
+Las hermanas coloradas,Intermedio,Grafisk Forlag,Data/Graded readers/LasHermanasColoradas.txt,Graded reader
+Leyendas de Guatemala,Intermedio,Grafisk Forlag,Data/Graded readers/LeyendasDeGuatemala.txt,Graded reader
+Papel mojado,Intermedio,Grafisk Forlag,Data/Graded readers/PapelMojado.txt,Graded reader
+Réquiem por un campesino español,Intermedio,Grafisk Forlag,Data/Graded readers/RequiemCampesino.txt,Graded reader
+El sueño de Otto,Inicial,Santillana,Data/Graded readers/1632205841648-save-text-to-file--.txt,Graded reader
+Gente que lee,Inicial,Difusión,Data/Graded readers/1632205886223-save-text-to-file--.txt,Graded reader
+Amnesia,Inicial,Edinumen,Data/Graded readers/1632205940650-save-text-to-file--.txt,Graded reader
+El delfín,Inicial,Coloquio,Data/Graded readers/1632205998349-save-text-to-file--.txt,Graded reader
+Por soñar…,Inicial,Santillana,Data/Graded readers/1632206610531-save-text-to-file--.txt,Graded reader
+Lejos de casa,Inicial,Difusión,Data/Graded readers/1632206670376-save-text-to-file--.txt,Graded reader
+Vuelo 505 con destino a Caracas,Inicial,Difusión,Data/Graded readers/1632206725259-save-text-to-file--.txt,Graded reader
+El hombre del bar,Inicial,Santillana,Data/Graded readers/1632206794179-save-text-to-file--.txt,Graded reader
+El misterio de la llave,Inicial,Santillana,Data/Graded readers/1632206842438-save-text-to-file--.txt,Graded reader
+Paisaje de otoño,Inicial,Edinumen,Data/Graded readers/1632206897314-save-text-to-file--.txt,Graded reader
+Doce a las doce,Inicial,Edelsa,Data/Graded readers/1632206957792-save-text-to-file--.txt,Graded reader
+Amor en línea,Inicial,Difusión,Data/Graded readers/Amor en línea.txt,Graded reader
+Sin noticias,Inicial,Difusión,Data/Graded readers/Sin noticias.txt,Graded reader
+Apartamento en la Costa Brava,Inicial,Difusión,Data/Graded readers/ApartamentoEnLaCostaBrava.txt,Graded reader
+Fantasmas en la escalera,Inicial,Difusión,Data/Graded readers/FantasmasEnLaEscalera.txt,Graded reader
+Vacaciones al sol,Inicial,Difusión,Data/Graded readers/VacacionesAlSol.txt,Graded reader
+Muy lejos de Madrid,Inicial,Grafisk Forlag,Data/Graded readers/MuyLejosDeMadrid.txt,Graded reader
