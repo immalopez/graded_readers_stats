@@ -75,6 +75,7 @@ def analyze(args):
             'tree': {}
         }
         num_words = sum(1 for _ in flatten(texts))
+        print("num of words:", num_words)
 
 ##############################################################################
 #                                 Stats                                      #
