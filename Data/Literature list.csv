@@ -1,6 +1,6 @@
 ﻿Title;Level;Publisher;Text file;License
 En Familia;Infantil;Fundación Montemadrid;Data/Literature/En familia.txt;Creative commons
-Pájaro Amarillo;Infantil;Apila Ediciones;Data/Literature/Pajaro Amarillo.txt;Creative commons
+Pájaro amarillo;Infantil;Apila Ediciones;Data/Literature/Pajaro Amarillo.txt;Creative commons
 Mi casa es un castillo;Infantil;El Hilo Ediciones;Data/Literature/Mi casa es un castillo.txt;Creative commons
 Coronavirus no es un príncipe ni una princesa;Infantil;Audacia Comunicación;Data/Literature/Coronavirus no es un principe ni una princesa.txt;Creative commons
 Leotolda;Infantil;Silonia;Data/Literature/Leotolda.txt;Creative commons
@@ -21,6 +21,14 @@ El patito feo;Infantil;Mundo Primaria;Data/Literature/1634636792750-save-text-to
 El gato con botas;Infantil;Mundo Primaria;Data/Literature/1634636834168-save-text-to-file--.txt;SafeCreative
 Aladino;Infantil;Mundo Primaria;Data/Literature/1634636875361-save-text-to-file--.txt;SafeCreative
 Ricitos de Oro;Infantil;Mundo Primaria;Data/Literature/1634636921135-save-text-to-file--.txt;SafeCreative
+Historia de una gaviota y el gato que la enseñó a volar;Infantil;Tusquets;Data/Literature/HistoriaDeUnaGaviota.txt;Tusquets
+El Principito;Infantil;Creative Commons;Data/Literature/ElPrincipito.txt;Creative commons
+Jack y las habichuelas mágicas;Infantil;Letra Impresa;Data/Literature/JackYLasHabichuelasMagicas.txt;Letra Impresa
+Los siete cabritos y el lobo;Infantil;Son cuentos infantiles;Data/Literature/Los siete cabritos y el lobo.txt;Creative commons
+La reina de las nieves;Infantil;Ciudad Seva;Data/Literature/LaReinaDeLasNieves.txt;Creative commons
+El flautista de Hamelin;Infantil;Teatro musical infantil;Data/Literature/ElFlautistaDeHamelin.txt;Creative commons
+El soldadito de plomo;Infantil;Ciudad Seva;Data/Literature/ElSoldaditoDePlomo.txt;Creative commons
+Los cisnes salvajes;Infantil;Ciudad Seva;Data/Literature/LosCisnesSalvajes.txt;Creative commons
 El príncipe feliz;Juvenil;Elejandria;Data/Literature/El principe feliz.txt;Creative commons
 El ruiseñor y la rosa;Juvenil;Elejandria;Data/Literature/El ruisenor y la rosa.txt;Creative commons
 El gigante egoísta;Juvenil;Elejandria;Data/Literature/El gigante egoista.txt;Creative commons
@@ -33,4 +41,11 @@ Aventura espeluznante;Juvenil;Ediciones B;Data/Literature/Aventura espeluznante.
 Caperucita en Manhattan;Juvenil;Siruela;Data/Literature/Caperucita en Manhattan.txt;Siruela
 Crimen y castigo;Adulta;Gutenberg;Data/Literature/Crimen y castigo.txt;Creative commons
 El túnel;Adulta;Cátedra;Data/Literature/El tunel.txt;Cátedra
-El árbol de la ciencia;Adulta;Gutenberg;Data/Literature/El arbol de la ciencia.txt;
+El milagro secreto;Adulta;Biblioteca Ayacucho;Data/Literature/ElMilagroSecreto.txt;Biblioteca Ayacucho
+Más allá del muro del sueño;Adulta;Libros Tauro;Data/Literature/MasAllaDelMuroDelSueno.txt;Libros Tauro
+El extranjero;Adulta;Alianza;Data/Literature/ElExtranjero.txt;Alianza
+Crónica de una muerte anunciada;Adulta;Debolsillo;Data/Literature/CronicaDeUnaMuerteAnunciada.txt;Debolsillo
+La familia de Pascual Duarte;Adulta;Austral;Data/Literature/LaFamiliaDePascualDuarte.txt;Austral
+Pedro Páramo;Adulta;Cátedra;Data/Literature/PedroParamo.txt;Cátedra
+El proceso;Adulta;Debolsillo;Data/Literature/ElProceso.txt;Debolsillo
+El árbol de la ciencia;Adulta;Gutenberg;Data/Literature/El arbol de la ciencia.txt;Creative commons
