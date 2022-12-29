@@ -33,7 +33,7 @@ DON QUIJOTE FUE ARMADO CABALLERO.
 Lo que más le fatigaba a don Quijote era el no verse armado caballero; y así, llevado de este pensamiento, se dio prisa a terminar la cena, la cual acabada, llamó al ventero y se puso de rodillas ante él diciéndole:
 - No me levantaré jamás de donde estoy, valiente caballero, hasta que vuestra cortesía me conceda el lavor que quiero pedirle, el cual resultará en alabanza vuestra y en provecho del género humano.
 El ventero, que vio a don Quijote a sus pies y oyó semejantes razones, estaba confuso mirándole, sin saber qué hacer ni qué decirle, y le rogaba que se levantase; pero don Quijote no quería hacerlo, hasta que el ventero tuvo que decirle que él le concedía el don pedido.
--No esperaba yo menos de vuestra grandeza, señor mío - respondió don Quijote -; y así os digo que el favor que os he pedido, y que de vuestra liberalidad me ha sido concedido, es que mañana me habéis de armar caballero, y esta noche en este castillo yo velaré las armas.
+- No esperaba yo menos de vuestra grandeza, señor mío - respondió don Quijote -; y así os digo que el favor que os he pedido, y que de vuestra liberalidad me ha sido concedido, es que mañana me habéis de armar caballero, y esta noche en este castillo yo velaré las armas.
 El ventero que era un poco burlón, y ya tenía algunas sospechas de la falta de juicio de don Quijote, para tener de qué reír aquella noche, determinó seguirle el humor, y le dijo que era muy justo lo que descaba y pedía, y que todo se haría de manera que él quedase armado caballero, y tan caballero, que no pudiese serto más en el mundo.
 Preguntóle si llevaba dineros; respondiole don Quijote
 que no los traía, porque él nunca había leído en las historias de los caballeros andantes que ninguno los hubiese llevado consigo. El ventero le dijo que en esto se engañaba: que en las historias no se escribía, por haberles parecido a los autores de ellas que no era necesario escribir una cosa tan clara y tan necesaria de llevarse como eran dineros y camisas limpias; y así, tuviese por cierto que todos los caballeros andantes llevaban esto, por lo que pudiese sucederles; y que también llevaban lo necesario para curar las heridas que recibían, porque no todas las veces en los campos donde combatían y salían heridos, había quien los curase; y por esto le daba por consejo que no caminase de allí en adelante sin dinero y sin las cosas dichas. Don Quijote le prometió hacer lo que le aconsejaba con toda puntualidad; y así se dio orden para que velase las armas en un corral grande que a un lado de la venta estaba; don Quijote las puso junto a un pozo, cogió su lanza y comenzó a pasear por delante de las armas al unto que comenzaba a anochecer.
@@ -109,14 +109,13 @@ Por tomar muchos juntos, se le cayó uno a los pies del barbero, que quiso saber
 Dádmelo acá, vecino, que he hallado en él un tesoro. Por su estilo, éste es el mejor libro del mundo: aquí comen los caballeros, duermen y mueren en sus camas, con otras cosas de que todos los demás libros de este género carecen.
 - ¿Y qué haremos - dijo el barbero - de estos pequeños
 libros que quedan?
-- Estos - dijo el cura - no deben de ser de caballerías, sino de poesía. Estos no merecen ser quemados, como los demás, porque no hacen ni harán el daño que los de caba-
-Ilerías han hecho.
+- Estos - dijo el cura - no deben de ser de caballerías, sino de poesía. Estos no merecen ser quemados, como los demás, porque no hacen ni harán el daño que los de caballerías han hecho.
 - ¡Ay, señor! - dijo la sobrina. Bien los puede vuestra merced mandar quemar como a los demás; porque quizá habiendo sanado mi señor tío de la enfermedad caballeresca, leyendo éstos, se le ocurriese hacerse pastor y andar por los bosques cantando, y, lo que sería peor, hacerse poeta, que, según dicen, es enfermedad que no se cura.
 - Verdad dice esta doncella - dijo el cura -.
 Estando en esto, comenzó a dar voces don Quijote diciendo:
 - Aquí, aquí, valientes caballeros; aquí es necesario mostrar la fuerza de vuestros brazos.
 Por acudir a estas voces, no siguieron adelante con el examen de los libros que quedaban.
-Cuando llegaron a donde don Quijote estaba, ya él es-
+Cuando llegaron a donde don Quijote estaba, ya él es -
 Tirante el Blanco, ver página 112.
 ¡Válgame Dios!, valer, ayudar, frase exclamativa que se emplea para mostrar asombro.
 taba levantado de la cama, y seguía dando voces. Le volvieron por fuerza al lecho; diéronle de comer, y quedóse otra vez dormido, y ellos, admirados de su locura.
@@ -222,7 +221,7 @@ Sancho le daba voces, diciéndole:
 - Vuélvase vuestra merced, señor don Quijote; que son carneros y ovejas los que va a atacar. ¿Qué locura es ésa?
 ¿Qué es lo que hace?
 Don Quijote en altas voces iba diciendo:
--Ea, caballeros, los que seguís las banderas del valeroso Pentapolín del Arremangado Brazo, seguidme todos: veréis qué facilmente le doy el triunfo sobre su enemigo
+- Ea, caballeros, los que seguís las banderas del valeroso Pentapolín del Arremangado Brazo, seguidme todos: veréis qué facilmente le doy el triunfo sobre su enemigo
 Alifanfarón.
 Diciendo esto, se entró por medio del ejército de las ovejas y comenzó a alancearlas con tanto valor, como si de verdad alanceara a su peor enemigo. Los pastores que venían con el rebaño le daban voces que no hiciese
 aquello; pero viendo que no les hacía caso, comenzaron a tirarle piedras.
@@ -297,7 +296,7 @@ Te digo esto porque si anoche nos cerró la suerte la puerta de la que buscábam
 - Pues ése es el yelmo de Mambrino - dijo don Quijote -.
 Apártate y déjame con él a solas; verás cómo sin hablar palabra concluyo esta aventura y queda por mío el yelmo.
 Era, pues, el caso que el yelmo y el caballo y el caballero que don Quijote veía era esto: que en aquellos alrededores había dos aldeas, la una tan pequeña que no tenía botica ni barbero, y la otra, que estaba junto a ella, sí; y así, el barbero de la mayor servía a la menor, en la cual tuvo necesidad uno de hacerse la barba, para lo cual venía el barbero y traía una bacia de azófar; y quiso la suerte que, al tiempo que venía, comenzó a llover, y porque no se le manchase el sombrero, que debía de ser nuevo, se puso la bacía sobre la cabeza; y, como estaba limpia, desde media legua relumbraba. Venía sobre un asno, como Sancho dijo, aunque a don Quijote le pareciera caballo, y la bacía, yelmo de oro; que todas las cosas que veía las aplicaba con mucha facilidad a sus caballerías y pensamientos. Y cuando el vio que el pobre caballero llegaba cerca, sin hablar con él, a todo correr de Rocinante, arremetió con la lanza, llevando intención de pasarle de parte a parte; cua llegaba cerca de él, sin detener la fuerza de su c dijo:
--Defiéndete, maldita criatura, o entrégame de tu tad lo que con tanta razón se me debe
+- Defiéndete, maldita criatura, o entrégame de tu tad lo que con tanta razón se me debe
 El barbero, que, tan sin pensarlo ni temerlo vio venir aquella figura sobre sí, no tuvo otro remedio para poder librarse del golpe de la lanza que dejarse caer del asno abajo. Apenas hubo tocado el suelo, cuando se levantó ligero y comenzó a correr por aquel campo, tan aprisa que no le alcanzara el mismo viento. Dejóse la bacía en el suelo, con la cual se contentó don Quijote. Mandó a Sancho que levantase el yelmo, el cual tomándolo en las manos dijo:
 - Por Dios que la bacía es buena.
 Y dándosela a su amo, éste se la puso en la cabeza y dijo:
@@ -337,7 +336,7 @@ ladrón, si no quiere que le haga callar contra su voluntad.
 - Dice verdad - dijo el guarda -, que él mismo ha escrito su historia y deja empeñado el libro en la cárcel por doscientos reales.
 Don Quijote, volviéndose a todos los presos dijo:
 - De todo cuanto me habéis dicho, hermanos, he sacado en limpio que, aunque os han castigado por vuestras culpas, las penas que vais a padecer no os dan mucho gusto, y que vais a ellas de muy mala gana y muy contra vuestra voluntad. Quiero, pues, rogar a estos señores que os guardan que sean servidos de desataros y dejaros ir en paz.
--¡Bueno está lo que dice! - replicó el comisario -.
+- ¡Bueno está lo que dice! - replicó el comisario -.
 Quiere que le dejemos los forzados del Rey, como si tuviéramos autoridad para soltarlos, o él la tuviera para mandárnoslo. Váyase vuestra merced, señor, por su camino.
 Don Quijote arremetió contra él con tanta rapidez, que, sin darle tiempo para defenderse, lo tiró al suelo, mal herido de una lanzada; éste era el de la escopeta. Los demás guardianes quedaron asombrados del no esperado suceso; pero, volviendo en sí con rapidez, echaron mano a sus espadas y arremetieron contra don Quijote, que los esperaba con mucha calma, y sin duda lo hubiera pasado
 mal, si los galeotes, viendo la ocasión que se les ofrecía de alcanzar la libertad, no hubiesen procurado romper la cadena donde venían sujetos. Los guardianes, entre atender que no se escaparan los galeotes y acometer a don Quijote, no hicieron cosa que fuese de provecho. Ayudó Sancho a que se soltara Ginés de Pasamonte, el cual, arremetiendo contra el comisario caído, le quitó la espada y la escopeta e hizo que no quedara guardián alguno en todo el campo, porque todos fueron huyendo, así de la escopeta como de las muchas pedradas que los galeotes ya sueltos les tiraban.
@@ -363,7 +362,7 @@ para que le diesen tres asnos, de cinco que don Quijote había dejado en su casa
 Sancho iba detrás de su amo, y como le pareció que iban por parte segura, no tenía otra preocupación que comer, y así iba comiendo sin pensar en aventuras.
 Alzó los ojos y vio que su amo estaba parado, procurando levantar algo con la punta de la lanza, por lo cual se dio prisa a llegar a ayudarle, si fuese necesario, y cuando llegó, ya don Quijote alzaba con la punta de la lanza una maleta. Mandóle don Quijote que mirase lo que en la maleta venía. Sancho lo hizo con mucha rapidez y, aunque la maleta estaba cerrada con cadena y candado, vio por la parte que se había roto que en ella había cuatro camisas y, entre unas cosas, unos cuantos escudos de oro.
 Al verlos, exclamó:
--¡Bendito sea Dios, que nos ha dado una aventura que sea de provecho!
+- ¡Bendito sea Dios, que nos ha dado una aventura que sea de provecho!
 Buscando más, encontró un librito de memoria. Este se lo pidió don Quijote y le mandó que se guardase el dinero
 y lo tomase para él. Sancho le besó las manos por el favor que don Quijote le hacia y continuaron su camino a través de la Sierra.
 Poco a poco iban entrando en ella. Sancho deseaba hablar con su amo y esperaba que don Quijote comenzase a hablar, hasta que, no pudiendo aguantar tanto silencio, le dijo:
@@ -417,7 +416,7 @@ Don Quijote sacó el librillo y con mucho sosiego escribió la carta. Una vez ac
 - Escucha - dijo don Quijote.
 tiene. Si tu hermosura me desprecia, aunque yo sea muy sufrido, mal podré sostenerme en esta pena, que, además de ser fuerte, es muy duradera. Mi buen escudero Sancho te dará entera relación del modo en que por tu causa quedo.
 Si quieres ayudarme, tuyo soy; si no haz lo que te viniere en gusto; que con acabar mi vida habré satisfecho a tu crueldad y a mi deseo. Tuyo hasta la muerte, El Caballero de la Triste Figura».
--Esta carta es lo mejor que he oído - dijo Sancho -. Digo de verdad que no hay cosa que vuestra merced no sepa.
+- Esta carta es lo mejor que he oído - dijo Sancho -. Digo de verdad que no hay cosa que vuestra merced no sepa.
 - Todo es necesario - respondió don Quijote - para el oficio que yo tengo.
 - Ponga vuestra merced en esta otra hoja - dijo Sanchola cédula de los tres pollinos, y firmela con mucha claridad, para que cuando la vean la conozcan.
 - Así lo haré - dijo don Quijote.
@@ -517,7 +516,7 @@ Estaban hablando de todo esto, cuando del lugar donde reposaba don Quijote sali�
 voces:
 - Acudid, señores, pronto y ayudad a mi señor, que anda envuelto en la más reñida batalla que mis ojos han visto;
 ha dado tal cuchillada al gigante enemigo de la señora princesa que le ha partido la cabeza al medio.
--¿Qué dices, hermano? - dijo el cura - ¿Cómo puede ser eso estando el gigante a más de dos mil leguas de aquí?
+- ¿Qué dices, hermano? - dijo el cura - ¿Cómo puede ser eso estando el gigante a más de dos mil leguas de aquí?
 En esto oyeron gran ruido en el aposento y que don
 Quijote decía a voces:
 - ¡Detente que aquí te tengo, y no te ha de valer tu cimitarra!
