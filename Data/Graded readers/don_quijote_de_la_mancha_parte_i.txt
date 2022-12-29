@@ -4,8 +4,7 @@ Mancha
 PRIMERA PARTE
 DE COMO ERA DON QUIJOTE
 En un lugar de la Mancha, de cuyo nombre no quiero acordarme, no hace mucho tiempo que vivía un hidalgo de los de lanza en astillero, adarga antigua, rocín flaco y galgo corredor. Tenía en su casa un ama que pasaba de los cuarenta años, una sobrina que no llegaba a los veinte, y un mozo.
-Tenía el hidalgo unos cincuenta años, era seco de carnes, seco de rostro, gran madrugador y amigo de la
-caza.
+Tenía el hidalgo unos cincuenta años, era seco de carnes, seco de rostro, gran madrugador y amigo de la caza.
 Este hidalgo, en los ratos en que estaba libre (que eran los más del año), se dedicaba a leer libros de caballerías, con tanta afición y gusto, que olvidó casi del todo la caza y aun el cuidado de su hacienda; y llegó a tanto su curiosidad y locura en esto, que vendió parte de sus tierras para
 comprar libros de caballerías en los que leer. El pobre caballero perdía el juicio, y se hundió tanto en la lectura de estos libros que se pasaba las noches y los días leyendo; y así, del poco dormir y del mucho leer, se le secó el cerebro. Se le llenó la cabeza de todo aquello que leía en los libros, así de encantamientos como de batallas, heridas, amores y disparates imposibles, y se le quedó de tal modo en la imaginación que era verdad todo aquello que leía, que para él no había otra historia más cierta en el mundo.
 Perdido ya el juicio, vino a dar en el más extraño pensamiento en que jamás dio loco alguno en el mundo, y fue que le pareció necesario hacerse caballero andante y, con sus armas y caballo, irse a buscar aventuras y a ejercer todo aquello que había leído que hacían los caballeros andantes, deshaciendo todo género de ofensas y poniéndose en ocasiones y peligros donde, acabándolos, lograse eterno nombre y fama. Y así lo primero que hizo fue limpiar unas armas que habían sido de sus bisabuelos.
@@ -61,8 +60,7 @@ Quijote la voz y dijo:
 Paráronse los mercaderes al ver la extraña figura del que tales palabras decía, y por la figura y lo que decía, vieron la locura de su dueño; mas quisieron ver despacio en qué acabaría aquella confesión que se les pedía, y uno de ellos, que era un poco burlón, le dijo:
 - Señor caballero, nosotros no conocemos quién sea esa buena señora; muéstrenosla vuestra merced, y si ella fuere de tanta hermosura como vuestra merced dice, de buena gana confesaremos la verdad que por parte vuestra nos es pedida.
 - Si os la mostrara - replicó don Quijote -, ¿qué hiciérais vosotros en confesar una verdad tan clara? La importancia está en que sin verla lo habéis de creer, confesar, afirmar y defender; y de lo contrario, ya vengáis uno a uno, como pide la orden de la caballería, ya todos juntos,
-como es mala costumbre entre gente de vuestra clase, aquí os espero, confiado en la razón que tengo de mi
-parte.
+como es mala costumbre entre gente de vuestra clase, aquí os espero, confiado en la razón que tengo de mi parte.
 - Señor caballero - replicó el mercader -, suplico a vuestra merced en nombre de todos estos príncipes que aquí estamos, que, porque no carguemos nuestras conciencias confesando una cosa jamás vista ni oída por nosotros, vuestra merced nos muestre algún retrato de esa señora, aunque sea como un grano de trigo; y quedaremos con esto satisfechos y seguros, y vuestra merced quedará contento; y aun creo que estamos tan de su parte que, aunque su retrato nos muestre que es tuerta de un ojo, por complacer a vuestra merced, diremos en su favor todo lo que quisiere.
 Don Quijote respondió lleno de cólera : - Vosotros pagaréis la gran ofensa que habéis hecho a tan gran belleza como es la de mi señora.
 Y al decir esto, arremetió con la lanza baja contra el que lo había dicho, con tal fuerza, que, si la buena suerte no hiciera que en la mitad del camino tropezara y cayera Rocinante, lo pasara mal el atrevido mercader. Cayó Rocinante y también su amo y queriéndose levantar, jamás pudo porque se lo impedían las armas. Y mientras luchaba por levantarse y no podía, estaba diciendo:
@@ -123,7 +121,6 @@ Aquella noche quemó el ama cuantos libros había en el corral y en toda la casa
 Uno de los remedios que el cura y el barbero dieron, por entonces, para el mal de su amigo, fue que le tapiasen el aposento de los libros, para que cuando se levantase no los encontrara; y así fue hecho con mucha prisa. Dos días después se levantó don Quijote, y lo primero que hizo fue ir a ver a sus libros; y como no encontrara el aposento donde lo había dejado, andaba de una a otra parte buscándolo. Llegaba a donde estaba la puerta antes, tocaba la pared con las manos y miraba a todas partes sin decir una sola palabra. Al cabo de un rato, le preguntó
 responder, le dijo:
 - ¿Qué aposento busca vuestra merced? Ya no hay aposento ni libros en esta casa, porque todo se lo llevó el mismo diablo.
-_
 No era el diablo - replicó la sobrina -, sino un encantador que vino sobre una nube, después del día que vuestra merced de aquí se fue. Entró en el aposento, y no sé qué hizo dentro. Al rato salió volando y la casa quedó llena de humo. Cuando fuimos a mirar lo que había hecho no vimos libros ni aposento; sólo nos acordamos muy bien que, aquel mal viejo, dijo en altas voces cuando salía que, por enemistad secreta que tenía al dueño de aquellos libros y aposento, dejaba hecho en aquella casa el daño que después se vería. Dijo también que se llamaba el sabio Muñatón.
 - Frestón diría - dijo don Quijote.
 - No sé - respondió el ama - si se llamaba Frestón o
@@ -136,7 +133,6 @@ Sin embargo, en este tiempo solicitó a un labrador vecino suyo, hombre de bien,
 Deciale, entre otras cosas, don Quijote que se dispusiese a ir con él de buena gana, porque tal vez le podía suceder alguna aventura en que ganase alguna ínsula y le dejase a él por gobernador de ella. Con estas promesas y otras tales, Sancho Panza, que así se llamaba el labrador, dejó a su mujer y a sus hijos y se fue como escudero de su vecino.
 Dio luego don Quijote orden de buscar dineros. Vendiendo una cosa, empeñando otra y malvendiéndolas todas, reunió una razonable cantidad. Avisó a su escudero Sancho del día y la hora que pensaba ponerse en camino, para que él se buscase lo que le fuera más necesario: sobre todo le encargó que llevase alforjas. Él dijo que las llevaría, y que también pensaba llevar un asno que tenía muy bueno, porque él no estaba acostumbrado a andar mucho a pie. Don Quijote se proveyó de camisas y de las demás cosas que él pudo, conforme al consejo que el ventero
 le había dado; todo lo cual hecho y cumplido, sin despedirse Panza de sus hijos y mujer, ni don Quijote de su ama y sobrina, una noche se salieron del lugar sin que persona los viese; en la cual caminaron tanto, que al amanecer estuvieron seguros de que no los hallarían aunque los buscasen.
-•
 Iba Sancho Panza sobre su asno con sus alforjas y su bota, con mucho deseo de verse gobernador de la ínsula que su amo le había prometido. Acertó don Quijote a tomar el mismo camino que había tomado en su primer viaje, por el campo de Montiel, y caminaba con menos pena que la vez pasada porque, por ser la hora de la mañana, los rayos del sol no le fatigaban. Dijo en esto Sancho a su amo:
 - Mire vuestra merced, señor caballero andante, que no se le olvide lo que me tiene prometido de la insula;
 que yo la sabré gobernar, aunque sea grande.
@@ -494,8 +490,7 @@ Esto no lo consentiré yo de ninguna manera - dijo el
 cura -; vaya vuestra merced a caballo, pues estando a caballo acaba las mayores aventuras que se han visto en nuestro tiempo; a mí me bastará subir en una de las mulas de estos señores que con vuestras mercedes caminan.
 Don Quijote le dijo a la doncella:
 - Señora mía, guíe vuestra hermosura por donde más gusto le diere.
-- ¿Hacia qué reino quiere guiar vuestra merced? Es acaso hacia el de Micomicón? Que sí debe ser, o yo sé
-poco de reinos.
+- ¿Hacia qué reino quiere guiar vuestra merced? Es acaso hacia el de Micomicón? Que sí debe ser, o yo sé poco de reinos.
 Ella respondió:
 - Sí, señor; hacia ese reino es mi camino.
 - Si es así - dijo el cura -, por la mitad de mi pueblo hemos de pasar, y allí tomará vuestra merced el camino de Cartagena, donde se podrá embarcar; y si hay viento favorable y mar tranquilo, en poco menos de nueve años podrá estar cerca del reino de vuestra grandeza.
@@ -512,8 +507,7 @@ Al otro día llegaron a la venta, espanto de Sancho, y aunque él hubiera querid
 La ventera y el ventero, que vieron venir a don Quijote y a Sancho, salieron a recibirlos, dando señales de mucha alegría. Don Quijote pidió que le preparasen un lecho y se
 acostó, porque venía muy cansado y falto de sueño. E cura pidió que les preparasen de comer lo que hubiera en la venta, y el ventero, con la esperanza del pago, les preparó una buena comida. Mientras ellos comían, don Quijote estaba durmiendo, pues no quisieron despertarle, pensando que le haría mejor el descanso que la comida.
 Hablaron, entre otras cosas, de la extraña locura de don Quijote y, cuando Sancho no estaba allí, la ventera les contó lo que le habían hecho con la manta.
-Estaban hablando de todo esto, cuando del lugar donde reposaba don Quijote salió Sancho diciendo a grandes
-voces:
+Estaban hablando de todo esto, cuando del lugar donde reposaba don Quijote salió Sancho diciendo a grandes voces:
 - Acudid, señores, pronto y ayudad a mi señor, que anda envuelto en la más reñida batalla que mis ojos han visto;
 ha dado tal cuchillada al gigante enemigo de la señora princesa que le ha partido la cabeza al medio.
 - ¿Qué dices, hermano? - dijo el cura - ¿Cómo puede ser eso estando el gigante a más de dos mil leguas de aquí?
