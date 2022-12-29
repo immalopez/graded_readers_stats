@@ -10,15 +10,15 @@ Un hombre de unos cuarenta años con una chaqueta negra entra en el bar. Mira a 
 Ella no conoce a ese hombre que le habla así. «¡Qué hombre tan raro!», piensa.
  — Mira, te voy a explicar algo. El tiempo es muy importante. Y hoy hace sol. Los días de sol son buenos pero los días sin sol son un poco tristes. Cuando llueve, malo... Por favor — llama al camarero — , una cerveza...
  — Enseguida — contesta éste.
- —... los peores son los días de lluvia y viento... — continúa el hombre de la chaqueta negra — . Todo fue en un día de lluvia y viento...
- — Veo que sabes muchas cosas del tiempo — dice Laura con humor — . Le divierte ese hombre. Le parece muy simpático.
- — La verdad es que no me interesa tanto el tiempo — contesta éste — . ¿Conoces esta canción?: «Tengo que hablarte de unas perlas ensangrentadas...» — empieza a cantar bajito.
+ —... los peores son los días de lluvia y viento... — continúa el hombre de la chaqueta negra —. Todo fue en un día de lluvia y viento...
+ — Veo que sabes muchas cosas del tiempo — dice Laura con humor —. Le divierte ese hombre. Le parece muy simpático.
+ — La verdad es que no me interesa tanto el tiempo — contesta éste —. ¿Conoces esta canción?: «Tengo que hablarte de unas perlas ensangrentadas...» — empieza a cantar bajito.
 El camarero trae la cerveza. El hombre deja en la mesa su pequeña cartera de mano y empieza a beber. Laura mira a su alrededor. Una chica de pelo oscuro y ojos negros la está mirando. «¡Qué chica tan guapa!», piensa Laura. Ella, en cambio, no es guapa ni fea, ni alta ni baja, pero tiene unos ojos grises siempre alegres y el pelo claro, muy bonito.
 El hombre de la chaqueta negra saca un paquete de cigarrillos del bolsillo.
  — ¿Fumas? — pregunta a Laura.
  — No, gracias.
 Enciende su cigarrillo y enseguida llama al camarero. Laura mira las manos del hombre. «¡Qué nervioso está!», piensa ella.
- — ¿Cuánto es? — pregunta — . Todo junto, pago yo.
+ — ¿Cuánto es? — pregunta —. Todo junto, pago yo.
  — Bueno — contesta Laura — , gracias, pero...
 El hombre paga. Después sonríe y se va. «¡Qué persona tan rara!», piensa Laura. Pero ya debe irse. Coge su bolso y pregunta al camarero.
  — ¿Dónde están los servicios, por favor?
@@ -50,7 +50,7 @@ Sentada en una mesa cerca de la puerta del Café de la Ópera, Laura se siente m
  — ¡Qué miedo he pasado! — dice — , muchas gracias.
  — De nada, mujer. Ha sido todo tan rápido...
  — ¿Por qué pasan estas cosas?
- — La vida es muy extraña — contesta Ana — . Vamos a pedir algo. No vamos a pensar más en esto, ¿vale?
+ — La vida es muy extraña — contesta Ana —. Vamos a pedir algo. No vamos a pensar más en esto, ¿vale?
 Mientras esperan al camarero, empiezan a charlar.
  — Dime, Laura. Tú eres de Barcelona, ¿verdad?
  — Sí. Y tú, Ana, ¿de dónde eres?
@@ -69,12 +69,12 @@ Laura escucha a la mujer, que de pronto se ha puesto muy seria.
 Un camarero se acerca a al gitana.
  — Por favor, aquí no se puede pedir — le dice.
 Pero la mujer no lo escucha.
- — Toma, hija. Esto es para ti — saca una pequeña cruz del bolsillo — . Esto te va a proteger.
+ — Toma, hija. Esto es para ti — saca una pequeña cruz del bolsillo —. Esto te va a proteger.
  — ¿Protegerme? ¿De qué? — pregunta Laura.
 El camarero coge a la mujer por el brazo.
- — Ya voy, ya voy... — le dice la mujer — . Veo un peligro, hija — le dice todavía a Laura mientras el camarero la lleva hacia la puerta...
+ — Ya voy, ya voy... — le dice la mujer —. Veo un peligro, hija — le dice todavía a Laura mientras el camarero la lleva hacia la puerta...
 La gitana sale del bar. Habla sola. Ana la mira a ella y luego a Laura. Se ha puesto pálida.
- — ¡Qué mujer tan extraña! — dice Laura — . Además, después de esos hombres...
+ — ¡Qué mujer tan extraña! — dice Laura —. Además, después de esos hombres...
  — ¡Oh!, olvida eso, ya ha pasado todo — dice Ana.
  — Sí, es verdad. ¿Nos vamos?
 En la calle, las chicas se dicen adiós.
@@ -90,7 +90,7 @@ Ana, la chica de los ojos negros, está allí y le sonríe.
  — ¡Eh, Laura! Soy yo, Ana. ¿Te he asustado?
  — Sí, es verdad. Me has asustado. Pero ¡qué contenta estoy de verte!
  — ¿Qué te pasa?
- — ¡Ana! — Laura contesta bajito — . Me siguen.
+ — ¡Ana! — Laura contesta bajito —. Me siguen.
  — ¿Qué?
  — Que me siguen.
  — ¿Quién?
@@ -101,7 +101,7 @@ Ahora que está con Ana, Laura se siente más segura.
  — Oye, Laura, ¿seguro que no conoces a esos hombres?
  — No, es la primera vez que los veo...
  — Mmmm — dice Ana.
- — ¡Mira! — Laura coge a Ana del brazo — . ¡Allí están!
+ — ¡Mira! — Laura coge a Ana del brazo —. ¡Allí están!
 Ana mira hacia atrás y ve a los dos hombres.
  — Es verdad — dice Ana, preocupada.
  — Sí...
@@ -124,21 +124,21 @@ Laura se queda un momento en silencio.
  — Sí, claro que sí — contesta Ana.
 V
 La catedral está bastante oscura. Llega Laura, cansada pero sola por fin. Busca a Ana entre la gente que está visitando la catedral. La encuentra delante de una Virgen.
- — He estado muy pocas veces en una iglesia. ¡Mira qué vírgenes tan bonitas! — dice Ana — . Y aquella de allí... ¿la ves? Parece que me está mirando.
+ — He estado muy pocas veces en una iglesia. ¡Mira qué vírgenes tan bonitas! — dice Ana —. Y aquella de allí... ¿la ves? Parece que me está mirando.
  — Sí, Ana, pero a mí no me gustan las iglesias...
  — A mí tampoco, pero esa mujer, la Virgen...
  — Mira, Ana. Creo que ahora no me han seguido. Vamos a sentarnos.
 Laura saca la cartera de su bolso. Dentro hay varias cosas: unas llaves, una foto, un trozo de papel... Hay poca luz y no pueden ver bien la foto ni leer el papel.
 Ana enciende una cerilla. Miran la foto. En ella hay tres hombres y una mujer. Laura cree reconocer al hombre del bar, el hombre de la chaqueta negra. En el papel hay algo escrito. Laura empieza a leer.
  — Las murallas son las paredes de mi casa. La casa es la mitad de mi tesoro. XX...y 2. Las perlas también. ¡Las perlas!... Ese hombre me ha hablado de unas perlas...
- — ¿Y esto, qué es? — pregunta Ana, que ve un dibujo en el papel — . Aquí hay un bar en una playa.
+ — ¿Y esto, qué es? — pregunta Ana, que ve un dibujo en el papel —. Aquí hay un bar en una playa.
  — ¿Perlas? — pregunta Ana.
  — Sí, perlas ensangrentadas... ¿Sabes Ana? Creo que este papel es un mensaje.
- — ¿Y esto, qué es? — pregunta Ana, que ve un pequeño dibujo en el papel — . Aquí hay un bar en una playa. ¡Huy! ¡Mi dedo!
+ — ¿Y esto, qué es? — pregunta Ana, que ve un pequeño dibujo en el papel —. Aquí hay un bar en una playa. ¡Huy! ¡Mi dedo!
 Ana apaga la cerilla y se levanta.
  — Vamos fuera. Allí hay más luz.
 Salen de la catedral y se sientan en un banco.
- — Bueno, vamos a ver — dice Laura — . Un bar en la playa...
+ — Bueno, vamos a ver — dice Laura —. Un bar en la playa...
  — Hay olas en el mar.
  — ¡Ya lo tengo! ¡Ana, me parece que lo he entendido!
 Bar, cielo, ola.
@@ -160,10 +160,10 @@ La calle Portaferrisa es una calle que va desde la catedral hasta las Ramblas. N
  — Sí. Vamos allí.
  — Vamos, Laura.
 Las dos chicas llegan rápidamente a la calle Banys Nous.
- — ¡Qué calle tan bonita! — dice Ana — . Me gusta, es tan estrecha...
+ — ¡Qué calle tan bonita! — dice Ana —. Me gusta, es tan estrecha...
 La calle Banys Nous y la calle de la Palla son dos callecitas que se encuentran casi en el centro del barri gótic. En la calle de la Palla hay una pequeña y moderna plaza con trozos de la primera muralla de Barcelona. Laura se ha parado delante de un viejo bar llamado «El Portalón».
  — ¿Sabes? — dice Laura — , he venido aquí muchas veces.
- — ¡Qué sitio tan interesante! — dice Ana — . Mira, Laura. Aquí, al lado, está el número veinte.
+ — ¡Qué sitio tan interesante! — dice Ana —. Mira, Laura. Aquí, al lado, está el número veinte.
  — ¿El veinte?
  — Sí, ¿te acuerdas? El mensaje hablaba de dos «X». Dos «X» son veinte.
  — Sí, tienes razón, Ana, «XX y dos...».
@@ -171,14 +171,14 @@ La calle Banys Nous y la calle de la Palla son dos callecitas que se encuentran 
  — Seguro que dentro hay trozos de la muralla de Barcelona. Pero ¿en qué número? ¿En el veinte o en el veintidós?
  — O en el cuarenta y cuatro — dice Ana.
  — No, en el cuarenta y cuatro no puede ser. La calle no tiene ese número. Acaba aquí.
- — Tengo una idea — dice Ana — . Vamos a probar las llaves de la cartera. Si alguna de ellas abre la puerta del veinte, podemos subir al segundo piso — número dos — y llamar.
+ — Tengo una idea — dice Ana —. Vamos a probar las llaves de la cartera. Si alguna de ellas abre la puerta del veinte, podemos subir al segundo piso — número dos — y llamar.
  — ¿Y si hay alguien? — pregunta Laura.
  — Salimos rápido. Tenemos que dejar la puerta de la calle abierta, claro.
  — ¿Sabes? Tengo miedo.
  — Yo también.
 Las chicas se han quedado paradas, sin hablar por un momento.
  — ¿Qué hacemos entonces? — pregunta por fin Laura.
- — Dame las llaves — dice Ana — . Si encontramos al hombre que habló contigo en el bar, le damos la cartera y ya está. Te ha parecido simpático, ¿verdad?
+ — Dame las llaves — dice Ana —. Si encontramos al hombre que habló contigo en el bar, le damos la cartera y ya está. Te ha parecido simpático, ¿verdad?
  — Sí. Pero era un poco raro...
 Laura se queda pensando pero por fin se decide.
  — Bueno, vamos. Tengo que saber por qué me siguen. Ana coge una llave grande y con ella intenta abrir la puerta del número 20. ¡La puerta se abre! Laura tiene miedo pero sigue a Ana que sube la escalera. Cuando llegan al segundo piso se paran delante de una puerta. Laura mira a Ana. ¿Qué hacer ahora?
@@ -205,7 +205,7 @@ La viejecita se para en medio de la habitación. Laura y Ana se miran con sorpre
  — Pasan cosas muy extrañas en esta casa. Esta mañana... — continúa la vieja — aquel hombre... cosas muy raras... ¿Quién es ése? — dice cuando, de repente, ve al hombre en el suelo.
  — Está muerto — contesta Laura.
  — Ya lo decía yo... ya lo decía yo... Aquí pasa algo malo. Ya lo decía yo.
- — Tenemos que llamar a la policía — dice Laura, que se siente un poco más segura con la vieja allí — . Me pregunto si hay un teléfono aquí.
+ — Tenemos que llamar a la policía — dice Laura, que se siente un poco más segura con la vieja allí —. Me pregunto si hay un teléfono aquí.
  — Voy a mirar — dice Ana.
 Hay una habitación a la derecha y otra a la izquierda. Ana entra en la habitación de la derecha. Ve una cama y en el suelo un teléfono. Laura va a la habitación de la izquierda. Allí no hay nada. Sólo un armario y una jaula con la puerta abierta.
 Cuando Laura entra en la habitación del teléfono, Ana está mirando debajo de la cama.
@@ -227,7 +227,7 @@ Laura y el inspector Ibáñez se conocen desde hace algún tiempo. Él ayudó a 
  — No muy bien. Estoy en un piso de la calle Banys Nous. En la habitación de al lado hay un hombre muerto.
  — ¿Qué ha pasado? — pregunta Ibáñez preocupado.
 Laura se lo explica todo.
- — Laura, escúchame bien — le dice Ibáñez — . Tenéis que salir del piso. Dejadlo todo como está y salid deprisa. Puede ser muy peligroso. Esperadme en «El Portalón». ¿Sabes dónde está?
+ — Laura, escúchame bien — le dice Ibáñez —. Tenéis que salir del piso. Dejadlo todo como está y salid deprisa. Puede ser muy peligroso. Esperadme en «El Portalón». ¿Sabes dónde está?
  — Sí, claro. Aquí al lado.
  — Yo voy enseguida. Y mucho cuidado, Laura...
 Laura mira a Ana que está a su lado.
