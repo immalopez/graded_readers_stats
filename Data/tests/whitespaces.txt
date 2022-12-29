@@ -1,0 +1,30 @@
+
+  
+
+ 
+
+Pepa mira el taxímetro. 
+
+
+Oye, oye, no te cabrees. Tú me has preguntado y yo te he respondido.
+Si no te gusta no te metas conmigo.
+				Además, ya te he dicho que nosotros éramos simpatizantes,
+	pero no estábamos		de acuerdo en todas esas cosas. ¿En cuál no estoy de acuerdo? Dejémoslo. Aparte de que después de todo lo que pasó con Laura yo he cambiado mucho.
+
+     
+
+
+Bueno, la cosa es que siempre salíamos juntos los fines de semana.
+
+
+	  
+
+Empezábamos en Moncloa por  la tarde y acabábamos borrachos como cubas a las mil de la noche en cualquier sitio. Normalmente conocíamos a algunas tías y... bueno, ya sabes. Pero no importaba mucho. En realidad nos divertíamos solos. Si nada más piensas en mujeres
+
+grafía   original
+
+TODO: search for lowercase chars at the beginning of a line and empty line before that.
+
+ — Eres profesora, ¿ verdad?
+                    ^ <- unexpected whitespace after opening question mark
+

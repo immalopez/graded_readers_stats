@@ -1,0 +1,40 @@
+-Bueno.
+–Bueno.
+—Bueno.
+Bueno-.
+Bueno–.
+Bueno—.
+-Bueno-.
+–Bueno–.
+—Bueno—.
+
+-¿tienen teléfono?
+–¿tienen teléfono?
+—¿tienen teléfono?
+¿tienen teléfono?-
+¿tienen teléfono?–
+¿tienen teléfono?—
+-¿tienen teléfono?-
+–¿tienen teléfono?–
+—¿tienen teléfono?—
+
+-bueno, -¿le gusta?
+-bueno, ¿le gusta?
+-bueno,-¿le gusta?
+
+Incorrect:
+ — Pues yo eso no lo veo tan raro... — dice Susi — . La compraría para alguna chica...
+                                                ^^^
+
+Correct:
+ — Pues yo eso no lo veo tan raro... — dice Susi. La compraría para alguna chica...
+                                                ^ <- collapsed
+
+Variants:
+- .
+- ,
+- !
+- ?
+
+ — Conocemos muy bien los aeropuertos españoles... — — explica Ruth.
+                                                   ^^^ can be merged into one

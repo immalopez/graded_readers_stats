@@ -1,0 +1,40 @@
+ —Buenos días—le responde la vieja...mirándole de arriba abajo.
+                                     ^ <- space expected
+
+(...) <- indicates missing text, we can delete this
+(…) <- variant
+ .  (sentence end surrounded with space before)
+
+other variants:
+;
+:
+,
+!
+?
+
+* * *
+***
+---
+—————–
+
+these paragraph separators are not needed
+
+TODO: Delete "Preguntas:" paragraphs
+
+Fue una Navidad. delante del pesebre del Niño Jesús.
+               ^ <- probably should be a comma
+
+una frase que acaba con dos puntos así..
+                                      ^^ <- fix by adding one more dot
+
+- Es verdad - hablé el último-,
+                             ^ <- expected a space before dash
+
+iVosotros!
+^ <- OCR didn't detect this as an inverse exclamation mark
+
+caminos ...!
+       ^ <- unexpected space before dots
+
+- icriiii . . . criiii!
+          ^^^^^ <- merge dots without spaces
