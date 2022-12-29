@@ -129,54 +129,12 @@ def calc_stats_for_group(
                     feat["vals"].setdefault(v, 0)
                     feat["vals"][v] += 1
 
-        # print('---')
-        # print()
-        # print('upos')
-        # print()
-        # stats_upos = defaultdict(   # upos
-        #     lambda: defaultdict(    # feats
-        #         int                 # count
-        #     )
-        # )
-        # counts_upos = defaultdict(int)
-        # for w in all_words:
-        #     feats = (w.feats or 'no_features').split('|')
-        #     counts_upos[w.upos] += 1
-        #     for f in feats:
-        #         stats_upos[w.upos][f] += 1
-        #
-        # for key, value in sorted(stats_upos.items()):
-        #     count = counts_upos[key]
-        #     assert count == upos_dict["vals"][key]["count"]
-        #     print(key, f'({count}, {count / all_words_count * 100:.2f}%)')
-        #     if isinstance(value, defaultdict):
-        #         for k, v in sorted(value.items()):
-        #             if k != "no_features":
-        #                 foo, bar = k.split("=")
-        #                 assert v == upos_dict["vals"][key]["vals"][foo]["vals"][bar]
-        #             print(f'    {k} ({v}, {v / count * 100:.2f}%)')
-        #     else:
-        #         print(f'    {key}: {value}')
-
     with Timer(name='Dependency Relations', text=timer_text):
         deprel_dict = {}
         for w in all_words:
             key = w.deprel
             deprel_dict.setdefault(key, 0)
             deprel_dict[key] += 1
-
-        # print('---')
-        # print()
-        # print('deprel:')
-        # print()
-        #
-        # stats_deprel = defaultdict(int)
-        # for w in all_words:
-        #     stats_deprel[w.deprel] += 1
-        # for k, v in sorted(stats_deprel.items()):
-        #     print(f'{k} = {v}')
-        # for w in all_words:
-        #     assert deprel[w.deprel] == stats_deprel[w.deprel]
 
     return {
         "upos": upos_dict,

@@ -17,7 +17,6 @@ from graded_readers_stats.context import (
 )
 from graded_readers_stats.data import read_pandas_csv
 from graded_readers_stats.frequency import freqs_by_term, count_terms
-from graded_readers_stats.logit import logit
 from graded_readers_stats.preprocess import (
     run,
     vocabulary_pipeline,
@@ -78,58 +77,8 @@ def analyze(args):
         print("num of words:", num_words)
 
 ##############################################################################
-#                                 Stats                                      #
-##############################################################################
-
-    with Timer(name='POS Stats', text=timer_text):
-        stanza_docs = texts_df[COL_STANZA_DOC]
-        all_words = [word
-                     for doc in stanza_docs
-                     for sent in doc.sentences
-                     for word in sent.words]
-
-        print('---')
-        print()
-        print('upos')
-        print()
-        stats_upos = defaultdict(   # upos
-            lambda: defaultdict(    # feats
-                int                 # count
-            )
-        )
-        counts_upos = defaultdict(int)
-        for w in all_words:
-            feats = (w.feats or 'no_features').split('|')
-            counts_upos[w.upos] += 1
-            for f in feats:
-                stats_upos[w.upos][f] += 1
-        for key, value in sorted(stats_upos.items()):
-            count = counts_upos[key]
-            print(key, f'({count}, {count / num_words * 100:.2f}%)')
-            if isinstance(value, defaultdict):
-                for k, v in sorted(value.items()):
-                    print(f'    {k} ({v}, {v / count * 100:.2f}%)')
-            else:
-                print(f'    {key}: {value}')
-
-        print('---')
-        print()
-        print('deprel:')
-        print()
-        stats_deprel = defaultdict(int)
-        for w in all_words:
-            stats_deprel[w.deprel] += 1
-        for k, v in sorted(stats_deprel.items()):
-            print(f'{k} = {v}')
-
-        terms_df.drop(columns=COL_STANZA_DOC, inplace=True)
-
-##############################################################################
 #                                 Terms                                      #
 ##############################################################################
-
-    # with Timer(name='Logistic Regression', text=timer_text):
-    #     logit(texts_df)
 
     with Timer(name='Locate terms', text=timer_text):
         terms = [term for terms in terms_df[COL_LEMMA] for term in terms]
