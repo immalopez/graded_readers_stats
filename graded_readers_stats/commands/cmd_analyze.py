@@ -26,7 +26,6 @@ from graded_readers_stats.preprocess import (
 from graded_readers_stats.stats import get_msttr
 from graded_readers_stats.tfidf import tfidfs
 from graded_readers_stats.tree import tree_props_pipeline
-from collections import defaultdict
 
 
 def analyze(args):
