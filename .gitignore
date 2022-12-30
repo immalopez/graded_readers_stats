@@ -2,7 +2,7 @@
 __pycache__/
 graded_readers_stats/__pycache__/
 .DS_Store
-Data/cache/
+data/cache/
 Data_trial/cache/
 graded_readers_stats.xlsx
 graded_readers_stats.csv

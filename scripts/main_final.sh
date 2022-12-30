@@ -1,12 +1,12 @@
-venv/bin/python main.py analyze "Data/Vocabulary list.csv" "Data/Graded readers list.csv" Inicial | tee output/Inicial.log &
-venv/bin/python main.py analyze "Data/Vocabulary list.csv" "Data/Graded readers list.csv" Intermedio | tee output/Intermedio.log &
-venv/bin/python main.py analyze "Data/Vocabulary list.csv" "Data/Graded readers list.csv" Avanzado | tee output/Avanzado.log &
-venv/bin/python main.py analyze "Data/Vocabulary list.csv" "Data/Literature list.csv" Infantil | tee output/Infantil.log &
-venv/bin/python main.py analyze "Data/Vocabulary list.csv" "Data/Literature list.csv" Juvenil | tee output/Juvenil.log &
-venv/bin/python main.py analyze "Data/Vocabulary list.csv" "Data/Literature list.csv" Adulta | tee output/Adulta.log &
-venv/bin/python main.py analyze "Data/Vocabulary list.csv" "Data/Native list.csv" Native | tee output/Native.log &
+venv/bin/python main.py analyze "data/vocabulary.csv" "data/readers/readers.csv" Inicial | tee output/readers_1.log &
+venv/bin/python main.py analyze "data/vocabulary.csv" "data/readers/readers.csv" Intermedio | tee output/readers_2.log &
+venv/bin/python main.py analyze "data/vocabulary.csv" "data/readers/readers.csv" Avanzado | tee output/readers_3.log &
+venv/bin/python main.py analyze "data/vocabulary.csv" "data/literature/literature.csv" Infantil | tee output/literature_1.log &
+venv/bin/python main.py analyze "data/vocabulary.csv" "data/literature/literature.csv" Juvenil | tee output/literature_2.log &
+venv/bin/python main.py analyze "data/vocabulary.csv" "data/literature/literature.csv" Adulta | tee output/literature_3.log &
+venv/bin/python main.py analyze "data/vocabulary.csv" "data/native/native.csv" Native | tee output/native.log &
 wait
 
 venv/bin/python main.py merge-output
-venv/bin/python main.py bag-of-words "Data/Graded readers list.csv" | tee output/BOW_graded_readers.log
-venv/bin/python main.py bag-of-words "Data/Literature list.csv" | tee output/BOW_literature.log
+venv/bin/python main.py bag-of-words "data/readers/readers.csv" | tee output/readers_bow.log
+venv/bin/python main.py bag-of-words "data/literature/literature.csv" | tee output/literature_bow.log

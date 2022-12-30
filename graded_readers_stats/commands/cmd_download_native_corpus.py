@@ -25,12 +25,12 @@ def download_native_corpus(args):
     text = re.sub(r' \).', ').', text)
     text = re.sub(r' \),', '),', text)
 
-    with open('../../Data/Native/text.txt', 'w') as f:
+    with open('../../data/native/text.txt', 'w') as f:
         f.write(text)
 
     df = pd.DataFrame({
         'Level': ['Native'],
-        'Text file': ['Data/Native/text.txt']
+        'Text file': ['data/native/text.txt']
     })
-    df.to_csv('Data/Native list.csv', index=False, sep=';')
+    df.to_csv('data/native.csv', index=False, sep=';')
     print('Download finished successfully!')

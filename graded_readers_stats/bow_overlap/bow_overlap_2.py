@@ -29,7 +29,7 @@ def print_overlap(
 # DATA
 ###############################################################################
 
-vocabulary_csv_path = "../../Data/Vocabulary list.csv"
+vocabulary_csv_path = "../../data/vocabulary.csv"
 vocab_df = read_pandas_csv(vocabulary_csv_path)
 vocab_df["Lexical item"] = vocab_df["Lexical item"].apply(
     lambda x: x.lower().strip()

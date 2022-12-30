@@ -17,7 +17,7 @@ from graded_readers_stats.constants import COL_RAW_TEXT
 
 pd.set_option('display.max_columns', 99)
 
-FOLDER_DATA = './Data/'
+FOLDER_DATA = './data/'
 FOLDER_DATA_TRIAL = './Data_trial/'
 
 
@@ -32,19 +32,19 @@ DatasetInfo = namedtuple('DatasetInfo', ['csv_file', 'cache_file'])
 
 datasets = {
     Dataset.VOCABULARY: DatasetInfo(
-        csv_file='Vocabulary list.csv',
+        csv_file='vocabulary.csv',
         cache_file='cache/vocabulary.pkl',
     ),
     Dataset.READERS: DatasetInfo(
-        csv_file='Graded readers list.csv',
+        csv_file='readers.csv',
         cache_file='cache/readers.pkl',
     ),
     Dataset.LITERATURE: DatasetInfo(
-        csv_file='Literature list.csv',
+        csv_file='literature.csv',
         cache_file='cache/literature.pkl',
     ),
     Dataset.NATIVE: DatasetInfo(
-        csv_file='Native list.csv',
+        csv_file='native.csv',
         cache_file='cache/native.pkl',
     ),
 }
