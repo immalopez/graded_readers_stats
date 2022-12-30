@@ -73,8 +73,8 @@ def analyze(args):
             'tree': {}
         }
         num_words = sum(1 for _ in flatten(texts))
-        print("num of words:", num_words)
-        terms_df.drop(columns=COL_STANZA_DOC, inplace=True)
+        texts_df = texts_df.drop(columns=COL_STANZA_DOC)
+        terms_df = terms_df.drop(columns=COL_STANZA_DOC)
 
 ##############################################################################
 #                                 Terms                                      #

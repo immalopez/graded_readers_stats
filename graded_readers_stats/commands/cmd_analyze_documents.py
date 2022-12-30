@@ -1,13 +1,14 @@
 import time
 
+import numpy as np
 from codetiming import Timer
 from pandas.core.common import flatten
 
 from graded_readers_stats import utils
 from graded_readers_stats.constants import (
     COL_LEMMA,
-    COL_LEVEL,
     COL_STANZA_DOC,
+    COL_LEVEL,
 )
 from graded_readers_stats.context import (
     collect_context_words,
@@ -16,7 +17,11 @@ from graded_readers_stats.context import (
     avg,
 )
 from graded_readers_stats.data import read_pandas_csv
-from graded_readers_stats.frequency import freqs_by_term, count_terms
+from graded_readers_stats.frequency import (
+    freqs_by_term,
+    count_terms,
+    count_doc_terms,
+)
 from graded_readers_stats.preprocess import (
     run,
     vocabulary_pipeline,
@@ -51,39 +56,77 @@ def analyze(args):
 ##############################################################################
 
     with Timer(name='Load data', text=timer_text):
-        readers = read_pandas_csv(corpus_path)
         terms_df = read_pandas_csv(vocabulary_path)
+        texts_df = read_pandas_csv(corpus_path)
         if max_terms:
             terms_df = terms_df[:max_terms]
+        if max_docs:
+            texts_df = texts_df[:max_docs]
 
-#     with Timer(name='Group', text=timer_text):
-#         reader_by_level = readers.groupby(COL_LEVEL)
-#         texts_df = reader_by_level.get_group(level).reset_index(drop=True)
-#         if max_docs:
-#             texts_df = texts_df[:max_docs]
-#
-#     with Timer(name='Preprocess', text=timer_text):
-#         terms_df = run(terms_df, vocabulary_pipeline)
-#         texts_df = run(texts_df, text_analysis_pipeline)
-#         texts = texts_df[COL_LEMMA]
-#         storage = {
-#             'stanza': texts_df[COL_STANZA_DOC],
-#             'tree': {}
-#         }
-#         num_words = sum(1 for _ in flatten(texts))
-#         print("num of words:", num_words)
-#         terms_df.drop(columns=COL_STANZA_DOC, inplace=True)
-#
-# ##############################################################################
-# #                                 Terms                                      #
-# ##############################################################################
-#
-#     with Timer(name='Locate terms', text=timer_text):
-#         terms = [term for terms in terms_df[COL_LEMMA] for term in terms]
-#         terms_locs = locate_terms_in_docs(terms, texts)
-#
-#     with Timer(name='Frequency', text=timer_text):
-#         terms_df['Count'] = terms_counts = count_terms(terms_locs)
+    with Timer(name='Preprocess', text=timer_text):
+        texts_df = run(texts_df, text_analysis_pipeline)
+        terms_df = run(terms_df, vocabulary_pipeline)
+        texts = texts_df[COL_LEMMA]
+        storage = {
+            'stanza': texts_df[COL_STANZA_DOC],
+            'tree': {}
+        }
+        num_words = sum(1 for _ in flatten(texts))
+        texts_df = texts_df.drop(columns=[
+            COL_STANZA_DOC,
+            "Publisher",
+            "Text file",
+            "Type",
+        ])
+        terms_df = terms_df.drop(columns=[
+            COL_STANZA_DOC,
+            "Topic",
+            "Subtopic",
+        ])
+
+##############################################################################
+#                                 Terms                                      #
+##############################################################################
+
+    with Timer(name='Locate terms', text=timer_text):
+        terms = [term for terms in terms_df[COL_LEMMA] for term in terms]
+
+        # term0: [doc0, doc1, docN]
+        # term1: [doc0, doc1, docN]
+        # termN: [doc0, doc1, docN]
+        # where doc = [sent0, sent1,...]
+        # where sent = [word0, word1,...]
+        #
+        # example:
+        # [ <- terms container
+        #   [ <- term start
+        #     [ <- doc start
+        #       [w0, w1, w2, ...], <- sent
+        #       [w0, w1, w2, ...], <- sent
+        #       [...], <- sent
+        #     ], <- doc
+        #     [...], <- doc
+        #   ], <- term end
+        #   [...], <- term
+        # ] <- terms container
+        terms_locs = locate_terms_in_docs(terms, texts)
+
+    with Timer(name='Frequency', text=timer_text):
+        docs_locs = np.array(terms_locs, dtype=object).transpose().tolist()
+        levels = terms_df[COL_LEVEL].unique()
+        for level in levels:
+            term_indices = terms_df \
+                .groupby(COL_LEVEL) \
+                .get_group(level) \
+                .index \
+                .to_list()
+            texts_df[f'Count {level}'] = count_doc_terms(
+                docs_locs,
+                term_indices
+            )
+        print()
+
+#         texts_df['Count'] = terms_counts = count_terms(terms_locs)
 #         terms_df['Total'] = num_words
 #         terms_df['Frequency'] = freqs_by_term(terms_counts, num_words)
 #
