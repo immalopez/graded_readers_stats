@@ -74,6 +74,7 @@ def analyze(args):
         }
         num_words = sum(1 for _ in flatten(texts))
         print("num of words:", num_words)
+        terms_df.drop(columns=COL_STANZA_DOC, inplace=True)
 
 ##############################################################################
 #                                 Terms                                      #
