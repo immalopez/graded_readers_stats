@@ -1,7 +1,8 @@
 import argparse
 
 from graded_readers_stats.commands import (
-    cmd_analyze,
+    cmd_analyze_documents,
+    cmd_analyze_vocabulary,
     cmd_bag_of_words,
     cmd_download_native_corpus,
     cmd_merge_output,
@@ -23,12 +24,12 @@ subparser.set_defaults(
 )
 
 ##############################################################################
-#                                 Analyze                                    #
+#                            Analyze Vocabulary                              #
 ##############################################################################
 
 subparser = subparsers.add_parser(
     'analyze',
-    help='Calculate Freq, TFIDF and Tree')
+    help='Calculate Freq, TFIDF and Tree per vocabulary item.')
 subparser.add_argument(
     'vocabulary_path',
     help='file path to a CSV with terms/vocabulary')
@@ -42,11 +43,35 @@ subparser.add_argument(
          'only rows with a value Inicial for the column '
          'Level that is assumed to be present in all '
          'loaded texts.')
-subparser.add_argument('--max_terms', type=int,
-                       help='max number of terms to analyze. Useful for tests')
-subparser.add_argument('--max_docs', type=int,
-                       help='max number of docs to analyze. Useful for tests')
-subparser.set_defaults(func=cmd_analyze.analyze)
+subparser.add_argument(
+    '--max_terms', type=int,
+    help='max number of terms to analyze. Useful for tests')
+subparser.add_argument(
+    '--max_docs', type=int,
+    help='max number of docs to analyze. Useful for tests')
+subparser.set_defaults(func=cmd_analyze_vocabulary.analyze)
+
+##############################################################################
+#                            Analyze Documents                               #
+##############################################################################
+
+subparser = subparsers.add_parser(
+    'analyze-documents',
+    help='Calculate Freq, TFIDF and Tree per document')
+subparser.add_argument(
+    'vocabulary_path',
+    help='file path to a CSV with terms/vocabulary')
+subparser.add_argument(
+    'corpus_path',
+    help='file path to a CSV with file paths to texts')
+subparser.add_argument(
+    '--max_terms', type=int,
+    help='max number of terms to analyze. Useful for tests')
+subparser.add_argument(
+    '--max_docs', type=int,
+    help='max number of docs to analyze. Useful for tests')
+subparser.set_defaults(func=cmd_analyze_documents.analyze)
+
 
 ##############################################################################
 #                                   Stats                                    #
@@ -59,8 +84,9 @@ subparser.add_argument(
     '--corpus_paths',
     nargs='+',
     help='file path(s) to a CSV with file paths to texts')
-subparser.add_argument('--max_docs', type=int,
-                       help='max number of docs to analyze. Useful for tests')
+subparser.add_argument(
+    '--max_docs', type=int,
+    help='max number of docs to analyze. Useful for tests')
 subparser.set_defaults(func=cmd_stats.execute)
 
 ##############################################################################
@@ -73,12 +99,15 @@ subparser = subparsers.add_parser(
 subparser.add_argument(
     'corpus_path',
     help='file path to a CSV with file paths to texts')
-subparser.add_argument('--max_docs', type=int,
-                       help='max number of docs to analyze. Useful for tests')
-subparser.add_argument('--shorten-content', action="store_true",
-                       help='shortens content of docs for faster processing.')
-subparser.add_argument('--strip-named-entities', action='store_true',
-                       help='detect and strip Named Entities using Stanza.')
+subparser.add_argument(
+    '--max_docs', type=int,
+    help='max number of docs to analyze. Useful for tests')
+subparser.add_argument(
+    '--shorten-content', action="store_true",
+    help='shortens content of docs for faster processing.')
+subparser.add_argument(
+    '--strip-named-entities', action='store_true',
+    help='detect and strip Named Entities using Stanza.')
 subparser.set_defaults(func=cmd_bag_of_words.execute)
 
 ##############################################################################
