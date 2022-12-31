@@ -124,7 +124,7 @@ def frequency_in_texts_grouped_by_level(
     return results
 
 
-def count_doc_terms(docs_locs, term_indices: set):
+def count_doc_terms(docs_locs, term_indices):
     return [
         sum(len(doc_locs[index]) for index in term_indices)
         for doc_locs in docs_locs

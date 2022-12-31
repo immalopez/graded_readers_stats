@@ -124,12 +124,17 @@ def analyze(args):
                 docs_locs,
                 term_indices
             )
+        texts_df["Count all"] = count_doc_terms(
+            docs_locs,
+            term_indices=range(0, len(terms_df))  # all terms
+        )
+        texts_df["Total"] = texts_df["Lemma"]\
+            .apply(lambda x: sum(1 for _ in flatten(x)))
+        for level in levels:
+            texts_df[f"Freq {level}"] \
+                = texts_df[f"Count {level}"] / texts_df["Total"]
         print()
 
-#         texts_df['Count'] = terms_counts = count_terms(terms_locs)
-#         terms_df['Total'] = num_words
-#         terms_df['Frequency'] = freqs_by_term(terms_counts, num_words)
-#
 #     with Timer(name='TFIDF', text=timer_text):
 #         terms_df['TFIDF'] = tfidfs(terms_locs, texts)
 #
