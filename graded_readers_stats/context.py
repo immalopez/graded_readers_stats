@@ -7,7 +7,7 @@ from pandas.core.common import flatten
 from graded_readers_stats.frequency import freqs_by_term, count_terms
 from graded_readers_stats.preprocess import locate_terms_in_docs
 from graded_readers_stats.tfidf import tfidfs
-from graded_readers_stats.tree import tree_props_pipeline
+from graded_readers_stats.tree import terms_tree_props_pipeline
 
 
 def collect_context_words(terms_locs, docs, window) -> List[Set[str]]:
@@ -86,7 +86,7 @@ def tfidfs_pipeline(texts):
 def trees_pipeline(storage):
     empty_tuple = (None, None, None, None, None, None)
     return rcompose(
-        partial(map, partial(tree_props_pipeline, storage)),
+        partial(map, partial(terms_tree_props_pipeline, storage)),
         partial(map, rpartial(avg_tuples, empty_tuple))
     )
 

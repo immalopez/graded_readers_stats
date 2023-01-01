@@ -14,7 +14,7 @@ def test_tree_props():
     df = pd.DataFrame(data)
 
     # When
-    new_column, tree_props = calculate_tree_props(df, column)
+    new_column, tree_props = deprecated_calculate_tree_props(df, column)
 
     # Then
     assert column + TREES_PROPS == new_column

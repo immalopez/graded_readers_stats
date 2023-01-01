@@ -31,7 +31,10 @@ from graded_readers_stats.preprocess import (
 )
 from graded_readers_stats.stats import get_msttr
 from graded_readers_stats.tfidf import tfidfs, tfidfs_2
-from graded_readers_stats.tree import tree_props_pipeline
+from graded_readers_stats.tree import (
+    terms_tree_props_pipeline,
+    texts_tree_props_pipeline,
+)
 
 
 def analyze(args):
@@ -106,7 +109,7 @@ def analyze(args):
                 docs_locs,
                 term_indices
             )
-        texts_df["Count all"] = count_doc_terms(
+        texts_df["Count"] = count_doc_terms(
             docs_locs,
             term_indices=range(0, len(terms_df))  # all terms
         )
@@ -115,8 +118,8 @@ def analyze(args):
         for level in levels:
             texts_df[f"Freq {level}"] \
                 = texts_df[f"Count {level}"] / texts_df["Total"]
-        texts_df[f"Freq all"] \
-            = texts_df[f"Count all"] / texts_df["Total"]
+        texts_df[f"Freq"] \
+            = texts_df[f"Count"] / texts_df["Total"]
         print()
 
     with Timer(name='TFIDF', text=timer_text):
@@ -131,6 +134,7 @@ def analyze(args):
             sum(doc_matches)
             for doc_matches in docs_matches
         ]
+        # [4, 2]
 
         term_matches = [sum(column) for column in zip(*docs_matches)]
         # [1, 1, 1, 2, 1]
@@ -139,7 +143,7 @@ def analyze(args):
         # 2
 
         term_idfs = [
-            math.log10(doc_count / matched)
+            math.log10(doc_count / matched) if matched > 0 else 0
             for matched in term_matches
         ]
         # [0.3010, 0.3010, 0.3010, 0.0000, 0.3010]
@@ -161,15 +165,31 @@ def analyze(args):
         # [0.2257, 0.1505]
 
         texts_df["IDF"] = doc_avg_idfs
-        texts_df['TFIDF'] = texts_df["Freq all"] * texts_df["IDF"]
+        texts_df['TFIDF'] = texts_df["Freq"] * texts_df["IDF"]
         # 0.03099
         # 0.01881
-        print()
 
-#     with Timer(name='Tree', text=timer_text):
-#         terms_df['Tree'] = tree_props_pipeline(storage, terms_locs)
+        texts_df = texts_df.drop(columns="IDF")
+        print("breakpoint")
+
+    with Timer(name='Tree', text=timer_text):
+        texts_df["Tree"] = texts_tree_props_pipeline(storage, docs_locs)
+        print("breakpoint")
+
+# def make_trees_for_terms_docs_sents_term_loc(storage, terms_locs):
+#     return [make_tree_for_docs_sents_term_loc(storage, docs_sents_term_loc)
+#             for docs_sents_term_loc in terms_locs]
 #
 #
+# def make_tree_for_docs_sents_term_loc(storage, docs_sents_term_loc):
+#     return [[make_tree_for_loc(storage, doc_index, term_loc[0])  # 0 = sent idx
+#              for term_loc in sents_locs]
+#             for doc_index, sents_locs in enumerate(docs_sents_term_loc)]
+#
+#
+# def make_tree_for_loc(storage, doc_idx, sent_idx) -> Node:
+
+
 # ##############################################################################
 # #                                Contexts                                    #
 # ##############################################################################

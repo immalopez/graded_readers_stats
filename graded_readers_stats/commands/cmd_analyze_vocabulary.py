@@ -25,7 +25,7 @@ from graded_readers_stats.preprocess import (
 )
 from graded_readers_stats.stats import get_msttr
 from graded_readers_stats.tfidf import tfidfs
-from graded_readers_stats.tree import tree_props_pipeline
+from graded_readers_stats.tree import terms_tree_props_pipeline
 
 
 def analyze(args):
@@ -93,7 +93,7 @@ def analyze(args):
         terms_df['TFIDF'] = tfidfs(terms_locs, texts)
 
     with Timer(name='Tree', text=timer_text):
-        terms_df['Tree'] = tree_props_pipeline(storage, terms_locs)
+        terms_df['Tree'] = terms_tree_props_pipeline(storage, terms_locs)
 
 
 ##############################################################################
