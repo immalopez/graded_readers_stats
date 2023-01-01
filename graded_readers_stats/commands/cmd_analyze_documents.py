@@ -177,13 +177,33 @@ def analyze(args):
 ##############################################################################
 
     with Timer(name='Context collect', text=timer_text):
-        ctx_words = collect_context_words_by_docs(docs_locs, texts, window=3)
-        texts_df['Context words'] = ctx_words
+        ctx_words_by_terms = collect_context_words_by_terms(
+            terms_locs,
+            texts,
+            window=3
+        )
+        ctx_words_by_docs = collect_context_words_by_docs(
+            docs_locs,
+            texts,
+            window=3
+        )
+        texts_df['Context words'] = ctx_words_by_docs
+
+    with Timer(name='Context locate terms', text=timer_text):
+        ctxs_locs_by_terms = locate_ctx_terms_in_docs(ctx_words_by_terms, texts)
+        terms_count = len(terms_df)
+        ctxs_locs_by_docs = [[] for _ in range(doc_count)]
+        for term_idx, term in enumerate(ctxs_locs_by_terms):
+            for subterm_idx, subterm in enumerate(term):
+                for doc_idx, doc_locs in enumerate(subterm):
+                    if len(doc_locs):
+                        while len(ctxs_locs_by_docs[doc_idx]) <= subterm_idx:
+                            ctxs_locs_by_docs[doc_idx].append(
+                                [[] for _ in range(terms_count)]
+                            )
+                        ctxs_locs_by_docs[doc_idx][subterm_idx][term_idx] = doc_locs
         print()
-#
-#     with Timer(name='Context locate terms', text=timer_text):
-#         ctxs_locs = locate_ctx_terms_in_docs(ctx_words_by_term, texts)
-#
+
 #     with Timer(name='Context frequency', text=timer_text):
 #         terms_df['Context count per word'] = ctx_counts \
 #             = list(count_pipeline()(ctxs_locs))
