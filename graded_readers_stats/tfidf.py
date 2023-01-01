@@ -93,9 +93,9 @@ def tfidfs(terms_locs, docs):
 
     docs
     ---
-    docs is a list, where each
-        doc is a list of sents, where each
-            sent is a list of words.
+    docs is a list of doc where each
+        doc is a list of sent where each
+            sent is a list of word
     [
         [['This', 'is', 'a', 'sentence', '.'], ['And', 'this', 'as', 'well']],
         [['Another', 'sentence']]
@@ -145,3 +145,7 @@ def tfidfs(terms_locs, docs):
         result_tfidfs_per_term.append(tfidf_term_avg)
 
     return result_tfidfs_per_term
+
+
+def tfidfs_2(docs_locs, docs):
+    pass

@@ -1,3 +1,4 @@
+import math
 import time
 
 import numpy as np
@@ -29,7 +30,7 @@ from graded_readers_stats.preprocess import (
     locate_terms_in_docs,
 )
 from graded_readers_stats.stats import get_msttr
-from graded_readers_stats.tfidf import tfidfs
+from graded_readers_stats.tfidf import tfidfs, tfidfs_2
 from graded_readers_stats.tree import tree_props_pipeline
 
 
@@ -90,29 +91,10 @@ def analyze(args):
 
     with Timer(name='Locate terms', text=timer_text):
         terms = [term for terms in terms_df[COL_LEMMA] for term in terms]
-
-        # term0: [doc0, doc1, docN]
-        # term1: [doc0, doc1, docN]
-        # termN: [doc0, doc1, docN]
-        # where doc = [sent0, sent1,...]
-        # where sent = [word0, word1,...]
-        #
-        # example:
-        # [ <- terms container
-        #   [ <- term start
-        #     [ <- doc start
-        #       [w0, w1, w2, ...], <- sent
-        #       [w0, w1, w2, ...], <- sent
-        #       [...], <- sent
-        #     ], <- doc
-        #     [...], <- doc
-        #   ], <- term end
-        #   [...], <- term
-        # ] <- terms container
         terms_locs = locate_terms_in_docs(terms, texts)
 
     with Timer(name='Frequency', text=timer_text):
-        docs_locs = np.array(terms_locs, dtype=object).transpose().tolist()
+        docs_locs = list(zip(*terms_locs))
         levels = terms_df[COL_LEVEL].unique()
         for level in levels:
             term_indices = terms_df \
@@ -133,11 +115,57 @@ def analyze(args):
         for level in levels:
             texts_df[f"Freq {level}"] \
                 = texts_df[f"Count {level}"] / texts_df["Total"]
+        texts_df[f"Freq all"] \
+            = texts_df[f"Count all"] / texts_df["Total"]
         print()
 
-#     with Timer(name='TFIDF', text=timer_text):
-#         terms_df['TFIDF'] = tfidfs(terms_locs, texts)
-#
+    with Timer(name='TFIDF', text=timer_text):
+        docs_matches = [
+            [1 if len(doc) else 0 for doc in doc_locs]
+            for doc_locs in docs_locs
+        ]
+        # [1, 1, 0, 1, 1]
+        # [0, 0, 1, 1, 0]
+
+        docs_match_counts = [
+            sum(doc_matches)
+            for doc_matches in docs_matches
+        ]
+
+        term_matches = [sum(column) for column in zip(*docs_matches)]
+        # [1, 1, 1, 2, 1]
+
+        doc_count = len(docs_locs)
+        # 2
+
+        term_idfs = [
+            math.log10(doc_count / matched)
+            for matched in term_matches
+        ]
+        # [0.3010, 0.3010, 0.3010, 0.0000, 0.3010]
+
+        docs_idfs = [
+            [term_idfs[idx] if bit else 0 for idx, bit in enumerate(doc_mask)]
+            for doc_mask in docs_matches
+        ]
+        # [
+        #   [0.3010, 0.3010, 0, 0.0, 0.3010],
+        #   [0, 0, 0.3010, 0.0, 0]
+        # ]
+
+        doc_avg_idfs = [
+            sum(doc_idfs) / docs_match_counts[doc_idx]
+            if docs_match_counts[doc_idx] > 0 else 0
+            for doc_idx, doc_idfs in enumerate(docs_idfs)
+        ]
+        # [0.2257, 0.1505]
+
+        texts_df["IDF"] = doc_avg_idfs
+        texts_df['TFIDF'] = texts_df["Freq all"] * texts_df["IDF"]
+        # 0.03099
+        # 0.01881
+        print()
+
 #     with Timer(name='Tree', text=timer_text):
 #         terms_df['Tree'] = tree_props_pipeline(storage, terms_locs)
 #
