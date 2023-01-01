@@ -12,10 +12,10 @@ from graded_readers_stats.constants import (
     COL_LEVEL,
 )
 from graded_readers_stats.context import (
-    collect_context_words,
+    collect_context_words_by_terms,
     freqs_pipeline,
     tfidfs_pipeline, trees_pipeline, locate_ctx_terms_in_docs, count_pipeline,
-    avg,
+    avg, collect_context_words_by_docs,
 )
 from graded_readers_stats.data import read_pandas_csv
 from graded_readers_stats.frequency import (
@@ -75,7 +75,6 @@ def analyze(args):
             'stanza': texts_df[COL_STANZA_DOC],
             'tree': {}
         }
-        num_words = sum(1 for _ in flatten(texts))
         texts_df = texts_df.drop(columns=[
             COL_STANZA_DOC,
             "Publisher",
@@ -120,7 +119,6 @@ def analyze(args):
                 = texts_df[f"Count {level}"] / texts_df["Total"]
         texts_df[f"Freq"] \
             = texts_df[f"Count"] / texts_df["Total"]
-        print()
 
     with Timer(name='TFIDF', text=timer_text):
         docs_matches = [
@@ -170,33 +168,18 @@ def analyze(args):
         # 0.01881
 
         texts_df = texts_df.drop(columns="IDF")
-        print("breakpoint")
 
     with Timer(name='Tree', text=timer_text):
         texts_df["Tree"] = texts_tree_props_pipeline(storage, docs_locs)
-        print("breakpoint")
 
-# def make_trees_for_terms_docs_sents_term_loc(storage, terms_locs):
-#     return [make_tree_for_docs_sents_term_loc(storage, docs_sents_term_loc)
-#             for docs_sents_term_loc in terms_locs]
-#
-#
-# def make_tree_for_docs_sents_term_loc(storage, docs_sents_term_loc):
-#     return [[make_tree_for_loc(storage, doc_index, term_loc[0])  # 0 = sent idx
-#              for term_loc in sents_locs]
-#             for doc_index, sents_locs in enumerate(docs_sents_term_loc)]
-#
-#
-# def make_tree_for_loc(storage, doc_idx, sent_idx) -> Node:
+##############################################################################
+#                                Contexts                                    #
+##############################################################################
 
-
-# ##############################################################################
-# #                                Contexts                                    #
-# ##############################################################################
-#
-#     with Timer(name='Context collect', text=timer_text):
-#         ctx_words_by_term = collect_context_words(terms_locs, texts, window=3)
-#         terms_df['Context words'] = ctx_words_by_term
+    with Timer(name='Context collect', text=timer_text):
+        ctx_words = collect_context_words_by_docs(docs_locs, texts, window=3)
+        texts_df['Context words'] = ctx_words
+        print()
 #
 #     with Timer(name='Context locate terms', text=timer_text):
 #         ctxs_locs = locate_ctx_terms_in_docs(ctx_words_by_term, texts)

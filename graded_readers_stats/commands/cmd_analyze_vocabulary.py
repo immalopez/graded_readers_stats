@@ -10,7 +10,7 @@ from graded_readers_stats.constants import (
     COL_STANZA_DOC,
 )
 from graded_readers_stats.context import (
-    collect_context_words,
+    collect_context_words_by_terms,
     freqs_pipeline,
     tfidfs_pipeline, trees_pipeline, locate_ctx_terms_in_docs, count_pipeline,
     avg,
@@ -101,7 +101,7 @@ def analyze(args):
 ##############################################################################
 
     with Timer(name='Context collect', text=timer_text):
-        ctx_words_by_term = collect_context_words(terms_locs, texts, window=3)
+        ctx_words_by_term = collect_context_words_by_terms(terms_locs, texts, window=3)
         terms_df['Context words'] = ctx_words_by_term
 
     with Timer(name='Context locate terms', text=timer_text):

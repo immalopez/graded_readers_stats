@@ -1,8 +1,8 @@
 import pytest
 
 from graded_readers_stats.context import (
-    collect_context_words,
-    collect_context_words_single
+    collect_context_words_by_terms,
+    collect_context_words_for_term
 )
 
 
@@ -48,7 +48,7 @@ def test_collect_context_single_term(terms_locs, docs):
     another_locs = terms_locs[0]  # list of locations per doc
 
     # When
-    words = collect_context_words_single(another_locs, docs, 1)
+    words = collect_context_words_for_term(another_locs, docs, 1)
 
     # Then
     assert {'is', 'sentence'} == words
@@ -59,7 +59,7 @@ def test_collect_context_multiword_term(terms_locs, docs):
     is_it_locs = terms_locs[2]  # list of locations per doc
 
     # When
-    words = collect_context_words_single(is_it_locs, docs, 1)
+    words = collect_context_words_for_term(is_it_locs, docs, 1)
 
     # Then
     assert {'how', 'going'} == words
@@ -70,7 +70,7 @@ def test_collect_context_window_param(terms_locs, docs):
     is_it_locs = terms_locs[2]  # list of locations per doc
 
     # When
-    words = collect_context_words_single(is_it_locs, docs, 2)
+    words = collect_context_words_for_term(is_it_locs, docs, 2)
 
     # Then
     assert {'how', 'going', 'today'} == words
@@ -78,7 +78,7 @@ def test_collect_context_window_param(terms_locs, docs):
 
 def test_collect_context_list_of_terms(terms_locs, docs):
     # When
-    words = collect_context_words(terms_locs, docs, 1)
+    words = collect_context_words_by_terms(terms_locs, docs, 1)
 
     # Then
     expected = [
