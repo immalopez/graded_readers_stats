@@ -192,14 +192,10 @@ def analyze(args):
     with Timer(name='Context locate terms', text=timer_text):
         ctxs_locs_by_terms = locate_ctx_terms_in_docs(ctx_words_by_terms, texts)
         terms_count = len(terms_df)
-        count = 0
-        docs = []
         ctxs_locs_by_docs = [[] for _ in range(doc_count)]
         for term_idx, term in enumerate(ctxs_locs_by_terms):
             for ctxterm_idx, ctxterm in enumerate(term):
                 for doc_idx, doc_locs in enumerate(ctxterm):
-                    count += 1
-                    docs.append(doc_locs)
                     if len(doc_locs):
                         while len(ctxs_locs_by_docs[doc_idx]) <= ctxterm_idx:
                             ctxs_locs_by_docs[doc_idx].append(
@@ -209,15 +205,18 @@ def analyze(args):
 
     with Timer(name='Context frequency', text=timer_text):
         print()
-        ctx_counts = [
-            [sum(1 for term in ctxterm for loc in term) for subterm in doc]
+        ctx_counts = [  # list of docs
+            [   # list of ctx term counts
+                sum(1 for term in ctxterm for loc in term)
+                for ctxterm in doc
+            ]
             for doc in ctxs_locs_by_docs
         ]
         texts_df['Context count per word'] = ctx_counts
-        terms_df['Context count per word'] = ctx_counts = list(count_pipeline()(ctxs_locs))
-        terms_df['Context count'] = list(map(avg, ctx_counts))
-        terms_df['Context total'] = num_words
-        terms_df['Context frequency'] = list(freqs_pipeline(num_words)(ctx_counts))
+        texts_df['Context count'] = list(map(avg, ctx_counts))
+        texts_df['Context total'] = texts_df['Total']
+        texts_df['Context frequency'] = \
+            texts_df['Context count'] / texts_df['Context total']
 #
 #     with Timer(name='Context TFIDF', text=timer_text):
 #         terms_df['Context TFIDF'] = list(tfidfs_pipeline(texts)(ctxs_locs))
