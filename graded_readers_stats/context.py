@@ -19,10 +19,10 @@ def collect_context_words_for_term(term_locs, docs, window) -> Set[str]:
     from string import punctuation
 
     contexts = []
-    for doc_index, doc_locs in enumerate(term_locs):
+    for doc_index, locs in enumerate(term_locs):
         doc = docs[doc_index]
         contexts.append(
-            context_words_for_doc_and_sent_idx(doc, doc_locs, window)
+            context_words_for_doc_and_locs(doc, locs, window)
         )
 
     flattened = [word for words in contexts for word in words]
@@ -35,19 +35,18 @@ def collect_context_words_for_term(term_locs, docs, window) -> Set[str]:
 
 def collect_context_words_by_docs(docs_locs, docs, window) -> List[Set[str]]:
     return [
-        collect_context_words_for_sents_locs(doc_idx, sents_locs, docs, window)
+        collect_context_words_for_doc(docs[doc_idx], sents_locs, window)
         for doc_idx, sents_locs in enumerate(docs_locs)
     ]
 
 
-def collect_context_words_for_sents_locs(doc_idx, sents_locs, docs, window) -> Set[str]:
+def collect_context_words_for_doc(doc, sents_locs, window) -> Set[str]:
     from string import punctuation
 
     contexts = []
-    for term_locs in sents_locs:
-        doc = docs[doc_idx]
+    for locs in sents_locs:
         contexts.append(
-            context_words_for_doc_and_sent_idx(doc, term_locs, window)
+            context_words_for_doc_and_locs(doc, locs, window)
         )
 
     flattened = [word for words in contexts for word in words]
@@ -58,7 +57,7 @@ def collect_context_words_for_sents_locs(doc_idx, sents_locs, docs, window) -> S
     return set(sanitized)
 
 
-def context_words_for_doc_and_sent_idx(doc, locs, window):
+def context_words_for_doc_and_locs(doc, locs, window):
     contexts = []
     for sent_loc in locs:
         sent_index = sent_loc[0]
@@ -79,10 +78,10 @@ def context_words_for_doc_and_sent_idx(doc, locs, window):
 
 def locate_ctx_terms_in_docs(ctx_words_by_term, texts):
     ctx_terms_flat = list(flatten(ctx_words_by_term))
-    ctx_terms_wrap = [[word] for word in ctx_terms_flat]
-    ctx_terms_locs = locate_terms_in_docs(ctx_terms_wrap, texts)
-    ctx_term_loc_dict = dict(zip(ctx_terms_flat, ctx_terms_locs))
-    ctxs_locs = ctxs_locs_by_term(ctx_term_loc_dict, ctx_words_by_term)
+    ctx_terms = [[word] for word in ctx_terms_flat]
+    ctx_locs_flat = locate_terms_in_docs(ctx_terms, texts)
+    word_to_locs_mapping = dict(zip(ctx_terms_flat, ctx_locs_flat))
+    ctxs_locs = ctxs_locs_by_term(word_to_locs_mapping, ctx_words_by_term)
     return ctxs_locs
 
 
