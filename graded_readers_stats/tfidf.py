@@ -147,5 +147,42 @@ def tfidfs(terms_locs, docs):
     return result_tfidfs_per_term
 
 
-def tfidfs_2(docs_locs, docs):
-    pass
+def calc_doc_avg_idfs(docs_terms_locs):
+    doc_matches_mask = [
+        [1 if len(locs) else 0 for locs in terms_locs]
+        for terms_locs in docs_terms_locs
+    ]
+    # [1, 1, 0, 1, 1]
+    # [0, 0, 1, 1, 0]
+    docs_match_counts = [
+        sum(doc_matches)
+        for doc_matches in doc_matches_mask
+    ]
+    # [4, 2]
+    term_match_counts = [sum(column)
+                         for column in zip(*doc_matches_mask)]
+    # [1, 1, 1, 2, 1]
+    doc_count = len(docs_terms_locs)
+    # 2
+    term_idfs = [
+        math.log10(doc_count / matched) if matched > 0 else 0
+        for matched in term_match_counts
+    ]
+    # [0.3010, 0.3010, 0.3010, 0.0000, 0.3010]
+    docs_idfs = [
+        [term_idfs[idx] if bit else 0
+         for idx, bit in enumerate(doc_mask)]
+        for doc_mask in doc_matches_mask
+    ]
+    # [
+    #   [0.3010, 0.3010, 0, 0.0, 0.3010],
+    #   [0, 0, 0.3010, 0.0, 0]
+    # ]
+    doc_avg_idfs = [
+        sum(doc_idfs) / docs_match_counts[doc_idx]
+        if docs_match_counts[doc_idx] > 0 else 0
+        for doc_idx, doc_idfs in enumerate(docs_idfs)
+    ]
+    # [0.2257, 0.1505]
+    return doc_avg_idfs
+

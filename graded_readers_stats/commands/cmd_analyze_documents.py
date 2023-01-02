@@ -1,11 +1,8 @@
-import math
 import time
 
-import numpy as np
 from codetiming import Timer
 from pandas.core.common import flatten
 
-from graded_readers_stats import utils
 from graded_readers_stats.constants import (
     COL_LEMMA,
     COL_STANZA_DOC,
@@ -13,14 +10,11 @@ from graded_readers_stats.constants import (
 )
 from graded_readers_stats.context import (
     collect_context_words_by_terms,
-    freqs_pipeline,
-    tfidfs_pipeline, trees_pipeline, locate_ctx_terms_in_docs, count_pipeline,
-    avg, collect_context_words_by_docs,
+    tfidfs_pipeline, locate_ctx_terms_in_docs, avg,
+    collect_context_words_by_docs,
 )
 from graded_readers_stats.data import read_pandas_csv
 from graded_readers_stats.frequency import (
-    freqs_by_term,
-    count_terms,
     count_doc_terms,
 )
 from graded_readers_stats.preprocess import (
@@ -29,10 +23,8 @@ from graded_readers_stats.preprocess import (
     text_analysis_pipeline,
     locate_terms_in_docs,
 )
-from graded_readers_stats.stats import get_msttr
-from graded_readers_stats.tfidf import tfidfs, tfidfs_2
+from graded_readers_stats.tfidf import calc_doc_avg_idfs
 from graded_readers_stats.tree import (
-    terms_tree_props_pipeline,
     texts_tree_props_pipeline,
 )
 
@@ -121,48 +113,8 @@ def analyze(args):
             = texts_df[f"Count"] / texts_df["Total"]
 
     with Timer(name='TFIDF', text=timer_text):
-        docs_matches = [
-            [1 if len(doc) else 0 for doc in doc_locs]
-            for doc_locs in docs_locs
-        ]
-        # [1, 1, 0, 1, 1]
-        # [0, 0, 1, 1, 0]
 
-        docs_match_counts = [
-            sum(doc_matches)
-            for doc_matches in docs_matches
-        ]
-        # [4, 2]
-
-        term_matches = [sum(column) for column in zip(*docs_matches)]
-        # [1, 1, 1, 2, 1]
-
-        doc_count = len(docs_locs)
-        # 2
-
-        term_idfs = [
-            math.log10(doc_count / matched) if matched > 0 else 0
-            for matched in term_matches
-        ]
-        # [0.3010, 0.3010, 0.3010, 0.0000, 0.3010]
-
-        docs_idfs = [
-            [term_idfs[idx] if bit else 0 for idx, bit in enumerate(doc_mask)]
-            for doc_mask in docs_matches
-        ]
-        # [
-        #   [0.3010, 0.3010, 0, 0.0, 0.3010],
-        #   [0, 0, 0.3010, 0.0, 0]
-        # ]
-
-        doc_avg_idfs = [
-            sum(doc_idfs) / docs_match_counts[doc_idx]
-            if docs_match_counts[doc_idx] > 0 else 0
-            for doc_idx, doc_idfs in enumerate(docs_idfs)
-        ]
-        # [0.2257, 0.1505]
-
-        texts_df["IDF"] = doc_avg_idfs
+        texts_df["IDF"] = calc_doc_avg_idfs(docs_locs)
         texts_df['TFIDF'] = texts_df["Freq"] * texts_df["IDF"]
         # 0.03099
         # 0.01881
@@ -204,7 +156,6 @@ def analyze(args):
                         ctxs_locs_by_docs[doc_idx][ctxterm_idx][term_idx] = doc_locs
 
     with Timer(name='Context frequency', text=timer_text):
-        print()
         ctx_counts = [  # list of docs
             [   # list of ctx term counts
                 sum(1 for term in ctxterm for loc in term)
@@ -218,9 +169,9 @@ def analyze(args):
         texts_df['Context frequency'] = \
             texts_df['Context count'] / texts_df['Context total']
 #
-#     with Timer(name='Context TFIDF', text=timer_text):
-#         terms_df['Context TFIDF'] = list(tfidfs_pipeline(texts)(ctxs_locs))
-#
+    with Timer(name='Context TFIDF', text=timer_text):
+        terms_df['Context TFIDF'] = list(tfidfs_pipeline(texts)(ctxs_locs_by_terms))
+
 #     with Timer(name='Context Tree', text=timer_text):
 #         terms_df['Context tree'] = list(trees_pipeline(storage)(ctxs_locs))
 #
