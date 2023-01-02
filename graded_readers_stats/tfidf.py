@@ -186,3 +186,9 @@ def calc_doc_avg_idfs(docs_terms_locs):
     # [0.2257, 0.1505]
     return doc_avg_idfs
 
+    # texts_df["IDF"] = calc_doc_avg_idfs(docs_locs)
+    # texts_df['TFIDF'] = texts_df["Freq"] * texts_df["IDF"]
+    # 0.03099
+    # 0.01881
+
+
