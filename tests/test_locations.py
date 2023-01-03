@@ -45,24 +45,24 @@ def test_transpose_locations_from_terms_to_docs_with_word_el_at_index_1():
     ctxs_locs_by_terms = \
         [
             {  # term "agua"
-                "caliente": [  # context "caliente"
+                "caliente": [
                     [(2, (2, 3))],  # doc
                     [],             # doc
                     [],             # doc
                 ],
-                "el": [  # context "el"
+                "el": [
                     [(0, (0, 1)), (2, (0, 1))],  # doc
                     [(0, (0, 1))],               # doc
                     [],                          # doc
                 ],
-                "fría": [  # context "fría"
+                "fría": [
                     [(0, (2, 3))],  # doc
                     [],             # doc
                     [],             # doc
                 ]
             },
             {  # term "coche"
-                "el": [  # context "el"
+                "el": [
                     [(0, (0, 1)), (2, (0, 1))],  # doc
                     [(0, (0, 1))],               # doc
                     [],                          # doc
@@ -86,21 +86,21 @@ def test_transpose_locations_from_terms_to_docs_with_word_el_at_index_1():
     assert 1 == len(docs_locs[1]["el"][0]), "'el' appears once in second doc"
     assert [
                {  # doc
-                   "caliente": [  # context "caliente"
+                   "caliente": [
                        [(2, (2, 3))],  # term "agua"
                        []              # term "coche"
                    ],
-                   "el": [  # context "el"
+                   "el": [
                        [(0, (0, 1)), (2, (0, 1))],  # term "agua"
                        [(0, (0, 1)), (2, (0, 1))],  # term "coche"
                    ],
-                   "fría": [  # context "fría"
+                   "fría": [
                        [(0, (2, 3))],  # term "agua"
                        []              # term "coche"
                    ]
                },
                {  # doc
-                   "el": [  # context "el"
+                   "el": [
                        [(0, (0, 1))],  # term "agua"
                        [(0, (0, 1))]   # term "coche"
                    ]
@@ -138,24 +138,24 @@ def test_transpose_locations_from_terms_to_docs_with_word_el_at_index_0():
     ctxs_locs_by_terms = \
         [
             {  # term "agua"
-                "el": [  # context "el"
+                "el": [
                     [(0, (0, 1)), (2, (0, 1))],  # doc
                     [(0, (0, 1))],               # doc
                     [],                          # doc
                 ],
-                "caliente": [  # context "caliente"
+                "caliente": [
                     [(2, (2, 3))],  # doc
                     [],             # doc
                     [],             # doc
                 ],
-                "fría": [  # context "fría"
+                "fría": [
                     [(0, (2, 3))],  # doc
                     [],             # doc
                     [],             # doc
                 ]
             },
             {  # term "coche"
-                "el": [  # context "el"
+                "el": [
                     [(0, (0, 1)), (2, (0, 1))],  # doc
                     [(0, (0, 1))],               # doc
                     [],                          # doc
@@ -178,27 +178,27 @@ def test_transpose_locations_from_terms_to_docs_with_word_el_at_index_0():
     assert len(docs_locs[0]["el"][1]) == 2, "'el' appears twice in first doc"
     assert len(docs_locs[1]["el"][0]) == 1, "'el' appears once in second doc"
     assert [
-        {  # doc
-            "el": [  # context "el"
+        {  # doc 0
+            "el": [
                 [(0, (0, 1)), (2, (0, 1))],  # term "agua"
                 [(0, (0, 1)), (2, (0, 1))],  # term "coche"
             ],
-            "caliente": [  # context "caliente"
+            "caliente": [
                 [(2, (2, 3))],  # term "agua"
                 []              # term "coche"
             ],
-            "fría": [  # context "fría"
+            "fría": [
                 [(0, (2, 3))],  # term "agua"
                 []              # term "coche"
             ]
         },
-        {  # doc
-            "el": [  # context "el"
+        {  # doc 1
+            "el": [
                 [(0, (0, 1))],  # term "agua"
                 [(0, (0, 1))]   # term "coche"
             ]
         },
-        {  # doc
+        {  # doc 2
             # no context
         }
     ] == docs_locs
