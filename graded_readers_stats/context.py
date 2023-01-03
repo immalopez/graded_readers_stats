@@ -85,6 +85,24 @@ def locate_ctx_terms_in_docs(ctx_words_by_term, texts):
     return ctxs_locs
 
 
+def transpose_ctx_terms_to_docs_locations(
+        ctxs_locs_by_terms,
+        terms_count,
+        docs_count,
+):
+    ctxs_locs_by_docs = [{} for _ in range(docs_count)]
+    for t_index, t in enumerate(ctxs_locs_by_terms):
+        for c_key, c_value in t.items():
+            for d_index, d in enumerate(c_value):
+                if len(d):
+                    ctxs_locs_by_docs[d_index].setdefault(
+                        c_key,  # get value for key
+                        [[] for _ in range(terms_count)]  # value if missing
+                    )[t_index] = d
+    # Note: d = doc, c = context word, t = term
+    return ctxs_locs_by_docs
+
+
 def ctxs_locs_by_term(term_loc_dict, ctx_words_by_term):
     return [[term_loc_dict[w] for w in ws]
             for ws in ctx_words_by_term]

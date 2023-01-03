@@ -1,8 +1,10 @@
 import pytest
 
 from graded_readers_stats import preprocess
-from graded_readers_stats.context import locate_ctx_terms_in_docs
-
+from graded_readers_stats.context import (
+    locate_ctx_terms_in_docs,
+    transpose_ctx_terms_to_docs_locations,
+)
 
 @pytest.fixture
 def terms():
@@ -200,25 +202,6 @@ def test_transpose_locations_from_terms_to_docs_with_word_el_at_index_0():
             # no context
         }
     ] == docs_locs
-
-
-
-def transpose_ctx_terms_to_docs_locations(
-        ctxs_locs_by_terms,
-        terms_count,
-        docs_count,
-):
-    ctxs_locs_by_docs = [{} for _ in range(docs_count)]
-    for t_index, t in enumerate(ctxs_locs_by_terms):
-        for c_key, c_value in t.items():
-            for d_index, d in enumerate(c_value):
-                if len(d):
-                    ctxs_locs_by_docs[d_index].setdefault(
-                        c_key,  # get value for key
-                        [[] for _ in range(terms_count)]  # value if missing
-                    )[t_index] = d
-    # Note: d = doc, c = context word, t = term
-    return ctxs_locs_by_docs
 
 
 def test_locations_structure(terms, docs):
