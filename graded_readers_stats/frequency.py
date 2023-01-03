@@ -136,5 +136,16 @@ def count_terms(terms_locs):
             for term_locs in terms_locs]
 
 
+def context_counts_per_doc(locations_by_docs):
+    return [  # list of docs
+        [  # list of counts per context word
+            sum(1 for _ in {loc for locs in context for loc in locs})
+            for context in doc.values()
+        ]
+        for doc in locations_by_docs
+    ]
+    # Note: d = doc, c = context word, t = term
+
+
 def freqs_by_term(terms_counts, words_total):
     return [count / words_total for count in terms_counts]

@@ -207,3 +207,12 @@ def test_tfidfs_pipeline():
 
     # Then
     assert [0.01505149978319906, 0] == result
+
+
+def test_calc_avg_idf_for_context():
+    # Given
+
+    # When
+
+    # Then
+    assert False

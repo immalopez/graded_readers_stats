@@ -1,5 +1,6 @@
 from graded_readers_stats.context import freqs_pipeline, count_pipeline
-from graded_readers_stats.frequency import freqs_by_term, count_terms
+from graded_readers_stats.frequency import freqs_by_term, count_terms, \
+    context_counts_per_doc
 
 
 def test_freqs_by_term_simple():
@@ -83,3 +84,58 @@ def test_freqs_pipeline():
 
     # Then
     assert [0.25, 0.1] == freqs
+
+
+def test_context_counts_per_doc():
+    # Given
+
+    # term 0 -> agua
+    # term 1 -> coche
+
+    # text 0
+    # El AGUA fría.
+    # Esta frase vacía.
+    # El AGUA caliente.
+
+    # text 1
+    # El coche.
+
+    # text 2
+    # empty
+
+    locations_by_docs = [
+        {  # doc
+            'el': [  # context
+                [(0, (0, 1)), (2, (0, 1))],  # term agua
+                [(0, (0, 1)), (2, (0, 1))],  # term coche locs duplicated
+            ],
+            'fría': [  # context
+                [(0, (2, 3))],  # term
+                [],             # term
+            ],
+            'caliente': [  # context
+                [(2, (2, 3))],  # term
+                [],             # term
+            ]
+        },
+        {  # doc
+            'el': [  # context
+                [(0, (0, 1))],  # term
+                [(0, (0, 1))],  # term
+            ]
+        },
+        {  # doc without matches
+        }
+    ]
+
+    # When
+    counts = context_counts_per_doc(locations_by_docs)
+
+    # Then
+    assert [
+               [2, 1, 1],
+               [1],
+               [],
+           ] == counts
+
+
