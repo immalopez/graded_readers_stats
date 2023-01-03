@@ -20,6 +20,119 @@ def docs():
     ]
 
 
+def test_transpose_locations_from_terms_to_docs_with_word_el_at_index_0():
+    terms = [
+        ["agua"],
+        ["coche"],
+    ]
+    docs = [
+        [  # doc 1
+            ["el", "agua", "fría", "."],
+            ["esta", "frase", "vacía", "."],
+            ["el", "agua", "caliente", "."],
+        ],
+        [  # doc 2
+            ["el", "coche", "."],
+        ],
+        [  # doc 3
+            ["empty"]
+        ]
+    ]
+    terms_count = len(terms)
+    docs_count = len(docs)
+    ctx_words_by_terms = [
+        {'el', 'caliente', 'fría'},  # term "agua"
+        {'el'},                      # term "coche"
+    ]
+    ctxs_locs_by_terms = \
+        [
+            [  # term "agua"
+                [  # context "el"
+                    [(0, (0, 1)), (2, (0, 1))],  # doc
+                    [(0, (0, 1))],               # doc
+                    [],                          # doc
+                ],
+                [  # context "caliente"
+                    [(2, (2, 3))],  # doc
+                    [],             # doc
+                    [],             # doc
+                ],
+                [  # context "fría"
+                    [(0, (2, 3))],  # doc
+                    [],             # doc
+                    [],             # doc
+                ]
+            ],
+            [  # term "coche"
+                [  # context "el"
+                    [(0, (0, 1)), (2, (0, 1))],  # doc
+                    [(0, (0, 1))],               # doc
+                    [],                          # doc
+                ]
+            ]
+        ]
+
+    # When
+    docs_locs = transpose_ctx_terms_to_docs_locations(
+        ctxs_locs_by_terms,
+        terms_count,
+        docs_count,
+    )
+
+    # Then
+    assert len(docs_locs) == docs_count, "docs count"
+    assert len(docs_locs[0]) == 3, "context words count"
+    assert len(docs_locs[0][0]) == terms_count, "terms count per context"
+    assert len(docs_locs[0][0][0]) == 2, "'el' appears twice in first doc"
+    assert len(docs_locs[0][0][1]) == 2, "'el' appears twice in first doc"
+    assert len(docs_locs[1][0][0]) == 1, "'el' appears once in second doc"
+    assert [
+        [  # doc
+            [  # context "el"
+                [(0, (0, 1)), (2, (0, 1))],  # term "agua"
+                [(0, (0, 1)), (2, (0, 1))],  # term "coche"
+            ],
+            [  # context "caliente"
+                [(2, (2, 3))],  # term "agua"
+                []              # term "coche"
+            ],
+            [  # context "fría"
+                [(0, (2, 3))],  # term "agua"
+                []              # term "coche"
+            ]
+        ],
+        [  # doc
+            [  # context "el"
+                [(0, (0, 1))],  # term "agua"
+                [(0, (0, 1))]   # term "coche"
+            ]
+        ],
+        [  # doc
+            # no context
+        ]
+    ] == docs_locs
+
+
+
+def transpose_ctx_terms_to_docs_locations(
+        ctxs_locs_by_terms,
+        terms_count,
+        docs_count,
+):
+    ctxs_locs_by_docs = [[] for _ in range(docs_count)]
+    for ti, t in enumerate(ctxs_locs_by_terms):
+        for ci, c in enumerate(t):
+            for di, d in enumerate(c):
+                if len(d):
+                    while len(ctxs_locs_by_docs[di]) <= ci:
+                        ctxs_locs_by_docs[di].append(
+                            [[] for _ in range(terms_count)]
+                        )
+                    ctxs_locs_by_docs[di][ci][ti] = d
+    # Note: d = doc, c = context word, t = term
+    return ctxs_locs_by_docs
+
+
 def test_locations_structure(terms, docs):
     # When
     term_locs = preprocess.locate_terms_in_docs(terms, docs)
