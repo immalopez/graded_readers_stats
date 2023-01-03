@@ -25,7 +25,8 @@ from graded_readers_stats.preprocess import (
     text_analysis_pipeline,
     locate_terms_in_docs,
 )
-from graded_readers_stats.tfidf import calc_mean_doc_idfs
+from graded_readers_stats.tfidf import calc_mean_doc_idfs, \
+    calc_mean_doc_context_idfs
 from graded_readers_stats.tree import (
     texts_tree_props_pipeline,
 )
@@ -137,9 +138,8 @@ def analyze(args):
             texts,
             window=3
         )
-        # context_words_by_terms = [['fría', 'el', 'caliente'], ['el']]
-        # context_words_by_docs = [['fría', 'el', 'caliente'], ['el'], []]
-        texts_df['Context words'] = context_words_by_docs
+        # For debugging only
+        # texts_df['Context words'] = context_words_by_docs
 
     with Timer(name='Context locate terms', text=timer_text):
         ctxs_locs_by_term_indices = locate_ctx_terms_in_docs(
@@ -160,20 +160,21 @@ def analyze(args):
 
     with Timer(name='Context frequency', text=timer_text):
         context_counts_by_doc = context_counts_per_doc(ctxs_locs_by_docs)
-        texts_df['Context count per word'] = context_counts_by_doc
+        # For debugging only
+        # texts_df['Context count per word'] = context_counts_by_doc
         texts_df['Context count'] = list(map(avg, context_counts_by_doc))
-        texts_df['Context total'] = texts_df['Total']
-        texts_df['Context frequency'] = \
-            texts_df['Context count'] / texts_df['Context total']
+        texts_df['Context freq'] = \
+            texts_df['Context count'] / texts_df['Total']
 
     with Timer(name='Context TFIDF', text=timer_text):
-        pass
+        texts_df["Context IDF"] = calc_mean_doc_context_idfs(ctxs_locs_by_docs)
+        texts_df['Context TFIDF'] = texts_df["Context freq"] * texts_df["Context IDF"]
+        texts_df = texts_df.drop(columns="Context IDF")
 
-# terms_df['Context TFIDF'] = list(tfidfs_pipeline(texts)(context_terms))
+    with Timer(name='Context Tree', text=timer_text):
+        print("breakpoint")
+        # terms_df['Context tree'] = list(trees_pipeline(storage)(ctxs_locs))
 
-#     with Timer(name='Context Tree', text=timer_text):
-#         terms_df['Context tree'] = list(trees_pipeline(storage)(ctxs_locs))
-#
 # ##############################################################################
 # #                                  Others                                    #
 # ##############################################################################
