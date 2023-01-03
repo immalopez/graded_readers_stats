@@ -13,7 +13,7 @@ from graded_readers_stats.context import (
     collect_context_words_by_docs,
     collect_context_words_by_terms,
     locate_ctx_terms_in_docs,
-    tfidfs_pipeline,
+    tfidfs_pipeline, transpose_ctx_terms_to_docs_locations, to_list_of_dicts,
 )
 from graded_readers_stats.data import read_pandas_csv
 from graded_readers_stats.frequency import (
@@ -127,38 +127,38 @@ def analyze(args):
 ##############################################################################
 
     with Timer(name='Context collect', text=timer_text):
-        ctx_words_by_terms = collect_context_words_by_terms(
+        context_words_by_terms = collect_context_words_by_terms(
             terms_locs,
             texts,
             window=3
         )
-        ctx_words_by_docs = collect_context_words_by_docs(
+        context_words_by_docs = collect_context_words_by_docs(
             docs_locs,
             texts,
             window=3
         )
-        texts_df['Context words'] = ctx_words_by_docs
+        # context_words_by_terms = [['fría', 'el', 'caliente'], ['el']]
+        # context_words_by_docs = [['fría', 'el', 'caliente'], ['el'], []]
+        texts_df['Context words'] = context_words_by_docs
 
     with Timer(name='Context locate terms', text=timer_text):
-        ctxs_locs_by_terms = locate_ctx_terms_in_docs(ctx_words_by_terms, texts)
+        context_terms = locate_ctx_terms_in_docs(context_words_by_terms, texts)
+        context_terms_dicts = to_list_of_dicts(
+            context_words_by_terms,
+            context_terms
+        )
         docs_count = len(texts_df)
         terms_count = len(terms_df)
-        ctxs_locs_by_docs = [[] for _ in range(docs_count)]
-        for ti, t in enumerate(ctxs_locs_by_terms):
-            for ci, c in enumerate(t):
-                for di, d in enumerate(c):
-                    if len(d):
-                        while len(ctxs_locs_by_docs[di]) <= ci:
-                            ctxs_locs_by_docs[di].append(
-                                [[] for _ in range(terms_count)]
-                            )
-                        ctxs_locs_by_docs[di][ci][ti] = d
-        # Note: d = doc, c = context word, t = term
+        ctxs_locs_by_docs = transpose_ctx_terms_to_docs_locations(
+            context_terms_dicts,
+            terms_count,
+            docs_count,
+        )
 
     with Timer(name='Context frequency', text=timer_text):
         ctx_counts = [  # list of docs
-            [   # list of ctx term counts
-                sum(1 for t in c for _ in t) for c in d
+            [   # list of context term counts
+                sum(1 for t in c for _ in t) for c in d.values()
             ]
             for d in ctxs_locs_by_docs
         ]  # d = doc, c = context word, t = term
@@ -169,7 +169,7 @@ def analyze(args):
             texts_df['Context count'] / texts_df['Context total']
 
     with Timer(name='Context TFIDF', text=timer_text):
-        terms_df['Context TFIDF'] = list(tfidfs_pipeline(texts)(ctxs_locs_by_terms))
+        terms_df['Context TFIDF'] = list(tfidfs_pipeline(texts)(context_terms))
 
 #     with Timer(name='Context Tree', text=timer_text):
 #         terms_df['Context tree'] = list(trees_pipeline(storage)(ctxs_locs))

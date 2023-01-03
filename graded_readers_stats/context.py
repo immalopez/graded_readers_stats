@@ -10,12 +10,12 @@ from graded_readers_stats.tfidf import tfidfs
 from graded_readers_stats.tree import terms_tree_props_pipeline
 
 
-def collect_context_words_by_terms(terms_locs, docs, window) -> List[Set[str]]:
+def collect_context_words_by_terms(terms_locs, docs, window) -> List[List[str]]:
     return [collect_context_words_for_term(term_locs, docs, window)
             for term_locs in terms_locs]
 
 
-def collect_context_words_for_term(term_locs, docs, window) -> Set[str]:
+def collect_context_words_for_term(term_locs, docs, window) -> List[str]:
     from string import punctuation
 
     contexts = []
@@ -30,17 +30,17 @@ def collect_context_words_for_term(term_locs, docs, window) -> Set[str]:
                  for word in flattened
                  if word not in punctuation + r'¡¿–—']
 
-    return set(sanitized)
+    return list(dict.fromkeys(sanitized))
 
 
-def collect_context_words_by_docs(docs_locs, docs, window) -> List[Set[str]]:
+def collect_context_words_by_docs(docs_locs, docs, window) -> List[List[str]]:
     return [
         collect_context_words_for_doc(docs[doc_idx], sents_locs, window)
         for doc_idx, sents_locs in enumerate(docs_locs)
     ]
 
 
-def collect_context_words_for_doc(doc, sents_locs, window) -> Set[str]:
+def collect_context_words_for_doc(doc, sents_locs, window) -> List[str]:
     from string import punctuation
 
     contexts = []
@@ -54,7 +54,7 @@ def collect_context_words_for_doc(doc, sents_locs, window) -> Set[str]:
                  for word in flattened
                  if word not in punctuation + r'¡¿–—']
 
-    return set(sanitized)
+    return list(dict.fromkeys(sanitized))
 
 
 def context_words_for_doc_and_locs(doc, locs, window):
@@ -85,6 +85,11 @@ def locate_ctx_terms_in_docs(ctx_words_by_term, texts):
     return ctxs_locs
 
 
+def ctxs_locs_by_term(term_loc_dict, ctx_words_by_term):
+    return [[term_loc_dict[w] for w in ws]
+            for ws in ctx_words_by_term]
+
+
 def transpose_ctx_terms_to_docs_locations(
         ctxs_locs_by_terms,
         terms_count,
@@ -103,9 +108,8 @@ def transpose_ctx_terms_to_docs_locations(
     return ctxs_locs_by_docs
 
 
-def ctxs_locs_by_term(term_loc_dict, ctx_words_by_term):
-    return [[term_loc_dict[w] for w in ws]
-            for ws in ctx_words_by_term]
+def to_list_of_dicts(keys, values):
+    return [dict(zip(key, value)) for key, value in zip(keys, values)]
 
 
 def count_pipeline():

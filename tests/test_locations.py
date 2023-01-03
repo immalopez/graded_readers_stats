@@ -3,8 +3,9 @@ import pytest
 from graded_readers_stats import preprocess
 from graded_readers_stats.context import (
     locate_ctx_terms_in_docs,
-    transpose_ctx_terms_to_docs_locations,
+    transpose_ctx_terms_to_docs_locations, to_list_of_dicts,
 )
+
 
 @pytest.fixture
 def terms():
@@ -20,6 +21,71 @@ def docs():
         [['hello', 'good', 'sir']],
         [['yes'], ['you', 'are', 'the', 'best', 'in', 'the', 'world', '!']]
     ]
+
+
+def test_ctx_locs_list_to_dict_conversion():
+    context_words = [
+        ['el', 'caliente', 'fría'],  # term "agua"
+        ['el'],                      # term "coche"
+    ]
+    context_locs = \
+        [
+            [  # term "agua"
+                [  # context "el"
+                    [(0, (0, 1)), (2, (0, 1))],  # doc
+                    [(0, (0, 1))],               # doc
+                    [],                          # doc
+                ],
+                [  # context "caliente"
+                    [(2, (2, 3))],  # doc
+                    [],             # doc
+                    [],             # doc
+                ],
+                [  # context "fría"
+                    [(0, (2, 3))],  # doc
+                    [],             # doc
+                    [],             # doc
+                ]
+            ],
+            [  # term "coche"
+                [  # context "el"
+                    [(0, (0, 1)), (2, (0, 1))],  # doc
+                    [(0, (0, 1))],               # doc
+                    [],                          # doc
+                ]
+            ]
+        ]
+
+    # When
+    updated = to_list_of_dicts(context_words, context_locs)
+
+    # Then
+    assert [
+               {  # term "agua"
+                   "el": [
+                       [(0, (0, 1)), (2, (0, 1))],  # doc
+                       [(0, (0, 1))],               # doc
+                       [],                          # doc
+                   ],
+                   "caliente": [
+                       [(2, (2, 3))],  # doc
+                       [],             # doc
+                       [],             # doc
+                   ],
+                   "fría": [
+                       [(0, (2, 3))],  # doc
+                       [],             # doc
+                       [],             # doc
+                   ]
+               },
+               {  # term "coche"
+                   "el": [
+                       [(0, (0, 1)), (2, (0, 1))],  # doc
+                       [(0, (0, 1))],               # doc
+                       [],                          # doc
+                   ]
+               }
+           ] == updated
 
 
 def test_transpose_locations_from_terms_to_docs_with_word_el_at_index_1():
@@ -132,8 +198,8 @@ def test_transpose_locations_from_terms_to_docs_with_word_el_at_index_0():
     terms_count = len(terms)
     docs_count = len(docs)
     ctx_words_by_terms = [
-        {'el', 'caliente', 'fría'},  # term "agua"
-        {'el'},                      # term "coche"
+        ['el', 'caliente', 'fría'],  # term "agua"
+        ['el'],                      # term "coche"
     ]
     ctxs_locs_by_terms = \
         [

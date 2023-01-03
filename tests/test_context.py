@@ -51,7 +51,7 @@ def test_collect_context_single_term(terms_locs, docs):
     words = collect_context_words_for_term(another_locs, docs, 1)
 
     # Then
-    assert {'is', 'sentence'} == words
+    assert ['is', 'sentence'] == words
 
 
 def test_collect_context_multiword_term(terms_locs, docs):
@@ -62,7 +62,7 @@ def test_collect_context_multiword_term(terms_locs, docs):
     words = collect_context_words_for_term(is_it_locs, docs, 1)
 
     # Then
-    assert {'how', 'going'} == words
+    assert ['how', 'going'] == words
 
 
 def test_collect_context_window_param(terms_locs, docs):
@@ -73,7 +73,7 @@ def test_collect_context_window_param(terms_locs, docs):
     words = collect_context_words_for_term(is_it_locs, docs, 2)
 
     # Then
-    assert {'how', 'going', 'today'} == words
+    assert ['how', 'going', 'today'] == words
 
 
 def test_collect_context_list_of_terms(terms_locs, docs):
@@ -82,9 +82,9 @@ def test_collect_context_list_of_terms(terms_locs, docs):
 
     # Then
     expected = [
-        {'is', 'sentence'},  # term1 context
-        {'hello', 'world'},  # term2 context
-        {'how', 'going'}     # term3 context
+        ['is', 'sentence'],  # term1 context
+        ['hello', 'world'],  # term2 context
+        ['how', 'going']     # term3 context
 ]
     assert expected == words
 
