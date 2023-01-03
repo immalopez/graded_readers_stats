@@ -133,12 +133,12 @@ def analyze(args):
             texts,
             window=3
         )
-        context_words_by_docs = collect_context_words_by_docs(
-            docs_locs,
-            texts,
-            window=3
-        )
         # For debugging only
+        # context_words_by_docs = collect_context_words_by_docs(
+        #     docs_locs,
+        #     texts,
+        #     window=3
+        # )
         # texts_df['Context words'] = context_words_by_docs
 
     with Timer(name='Context locate terms', text=timer_text):
@@ -174,6 +174,10 @@ def analyze(args):
     with Timer(name='Context Tree', text=timer_text):
         print("breakpoint")
         # terms_df['Context tree'] = list(trees_pipeline(storage)(ctxs_locs))
+        # texts_df["Context tree"] = calc_mean_doc_context_tree(
+        #     storage,
+        #     docs_locs
+        # )
 
 # ##############################################################################
 # #                                  Others                                    #
@@ -189,4 +193,4 @@ def analyze(args):
 #     print()
 #     utils.duration(start_main, 'Total time')
 #     print('')
-#     print('ANALYZE DOCS END')
+#     print('ANALYZE DOCS END'
