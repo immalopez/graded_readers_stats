@@ -2,6 +2,9 @@
 #                            FREQUENCY CALCULATIONS                          #
 ##############################################################################
 import math
+from collections import Counter
+
+from pandas.core.common import flatten
 
 from graded_readers_stats._typing import *
 from graded_readers_stats.constants import *
@@ -147,7 +150,7 @@ def tfidfs(terms_locs, docs):
     return result_tfidfs_per_term
 
 
-def calc_doc_avg_idfs(docs_terms_locs):
+def calc_mean_doc_idfs(docs_terms_locs):
     doc_matches_mask = [
         [1 if len(locs) else 0 for locs in terms_locs]
         for terms_locs in docs_terms_locs
@@ -190,5 +193,21 @@ def calc_doc_avg_idfs(docs_terms_locs):
     # texts_df['TFIDF'] = texts_df["Freq"] * texts_df["IDF"]
     # 0.03099
     # 0.01881
+
+
+def calc_mean_doc_context_idfs(locations_by_docs):
+    doc_contexts = [doc.keys() for doc in locations_by_docs]
+    doc_count = len(locations_by_docs)
+    context_counts = Counter(flatten(doc_contexts))
+    context_idfs = {
+        key: math.log10(doc_count / match_count) if match_count > 0 else 0
+        for key, match_count in context_counts.items()
+    }
+    doc_avg_idfs = [
+        sum(context_idfs[key] for key in context) / context_len
+        if (context_len := len(context)) > 0 else 0
+        for doc_idx, context in enumerate(doc_contexts)
+    ]
+    return doc_avg_idfs
 
 

@@ -1,7 +1,8 @@
 import pandas as pd
 
 from graded_readers_stats.context import tfidfs_pipeline
-from graded_readers_stats.tfidf import tfidfs, tfidfs_for_groups
+from graded_readers_stats.tfidf import tfidfs, tfidfs_for_groups, \
+    calc_mean_doc_context_idfs
 
 
 def test_tfidfs_for_groups():
@@ -212,7 +213,53 @@ def test_tfidfs_pipeline():
 def test_calc_avg_idf_for_context():
     # Given
 
+    # term 0 -> agua
+    # term 1 -> coche
+
+    # text 0
+    # El AGUA fría.
+    # Esta frase vacía.
+    # El AGUA caliente.
+
+    # text 1
+    # El coche.
+
+    # text 2
+    # empty
+
+    locations_by_docs = [
+        {  # doc
+            'el': [  # context
+                [(0, (0, 1)), (2, (0, 1))],  # term agua
+                [(0, (0, 1)), (2, (0, 1))],  # term coche locs duplicated
+            ],
+            'fría': [  # context
+                [(0, (2, 3))],  # term
+                [],             # term
+            ],
+            'caliente': [  # context
+                [(2, (2, 3))],  # term
+                [],             # term
+            ]
+        },
+        {  # doc
+            'el': [  # context
+                [(0, (0, 1))],  # term
+                [(0, (0, 1))],  # term
+            ]
+        },
+        {  # doc without matches
+        }
+    ]
+
     # When
+    mean_idfs = calc_mean_doc_context_idfs(locations_by_docs)
 
     # Then
-    assert False
+    assert [
+               0.3767779228316687,   # mean idf for doc 0
+               0.17609125905568124,  # mean idf for doc 1
+               0,                    # mean idf for doc 2
+           ] == mean_idfs
+
+

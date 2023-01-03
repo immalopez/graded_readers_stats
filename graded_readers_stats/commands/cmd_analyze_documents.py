@@ -25,7 +25,7 @@ from graded_readers_stats.preprocess import (
     text_analysis_pipeline,
     locate_terms_in_docs,
 )
-from graded_readers_stats.tfidf import calc_doc_avg_idfs
+from graded_readers_stats.tfidf import calc_mean_doc_idfs
 from graded_readers_stats.tree import (
     texts_tree_props_pipeline,
 )
@@ -115,7 +115,7 @@ def analyze(args):
             = texts_df[f"Count"] / texts_df["Total"]
 
     with Timer(name='TFIDF', text=timer_text):
-        texts_df["IDF"] = calc_doc_avg_idfs(docs_locs)
+        texts_df["IDF"] = calc_mean_doc_idfs(docs_locs)
         texts_df['TFIDF'] = texts_df["Freq"] * texts_df["IDF"]
         texts_df = texts_df.drop(columns="IDF")
 
