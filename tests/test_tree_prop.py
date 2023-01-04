@@ -79,7 +79,7 @@ def test_get_tree_props(storage):
     ]]
 
     # When
-    props = get_tree_props(docs_trees)
+    props = calc_mean_tree_props_for_nested_trees(docs_trees)
 
     # Then
     assert (3, 4, 3.5, 2, 3, 2.5) == props

@@ -26,29 +26,31 @@ def test_tree_props():
     assert (1, 3, 2, 3, 5, 4) == tree_props[0]
 
 
-def test_calculate_tree_props_v2():
+def test_calculate_tree_props_for_doc_contexts():
     # Given
     trees = [
-        # doc 1             doc 2
-        # sent 1            sent 1            sent 2
-        [[make_tree(1, 3)], [make_tree(2, 4), make_tree(3, 5)]],  # term 1
-        [[make_tree(2, 2)], [make_tree(4, 4), make_tree(6, 6)]],  # term 2
-        [[], [], []],
+        [  # doc
+            make_tree(1, 3), make_tree(1, 3),
+            make_tree(2, 4), make_tree(2, 4),
+            make_tree(3, 5), make_tree(3, 5),
+        ],
+        [
+            make_tree(4, 6), make_tree(8, 10),
+        ],
         [],
-        #          ^ low            ^ avg            ^ high
     ]
 
     # When
-    tree_props = calculate_tree_props_v2(trees)
+    tree_props = calculate_tree_props_for_doc_contexts(trees)
 
     # Then
     # min_w, max_w, avg_w, min_h, max_h, avg_h
     expected = [
-        (1, 3, 2, 3, 5, 4),
-        (2, 6, 4, 2, 6, 4),
-        (None, None, None, None, None, None),
-        (None, None, None, None, None, None),
+        (1, 3, 2.0, 3, 5, 4.0),               # doc 0
+        (4, 8, 6.0, 6, 10, 8.0),              # doc 1
+        (None, None, None, None, None, None)  # doc 2
     ]
+
     assert expected == tree_props
 
 

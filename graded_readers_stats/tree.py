@@ -17,6 +17,27 @@ def make_tree_for_docs_sents_term_loc(storage, docs_sents_term_loc):
             for doc_index, sents_locs in enumerate(docs_sents_term_loc)]
 
 
+def make_trees_for_doc_contexts(storage, doc_contexts):
+    """Flatten term locations for a doc and map to trees.
+
+    Returns
+    -------
+    list: List[Node]
+        a list of tree properties with the mean values of all the unique
+        sentences of a document.
+    """
+    return [
+        [make_tree_for_loc(storage, doc_index, sent_idx)
+         for sent_idx in {
+             loc[0]
+             for context in doc.values()
+             for term in context
+             for loc in term
+         }]
+        for doc_index, doc in enumerate(doc_contexts)
+    ]
+
+
 def make_trees_for_docs_terms_sents_term_loc(storage, docs_locs):
     return [
         make_tree_for_terms_sents_term_loc(
@@ -58,31 +79,44 @@ def make_tree_for_loc(storage, doc_idx, sent_idx) -> Node:
 
 
 def calculate_tree_props_v2(terms_trees):
-    return [get_tree_props(docs_trees) for docs_trees in terms_trees]
+    return [calc_mean_tree_props_for_nested_trees(docs_trees) for docs_trees in terms_trees]
 
 
-def get_tree_props(
-        docs_trees: [[Node]]
+def calculate_tree_props_for_doc_contexts(doc_contexts):
+    return [calc_mean_tree_props_for_trees(doc) for doc in doc_contexts]
+
+
+def calc_mean_tree_props_for_nested_trees(
+        nested_trees: [[Node]]
 ) -> (int, int, int, int, int, int):
-    # min_width, max_width, avg_width, min_height, max_height, avg_height
+    """
+    Flatten and calculate the min, max, mean of widths and heights of trees.
+    """
+    return calc_mean_tree_props_for_trees(
+        [tree for trees in nested_trees for tree in trees]
+    )
+
+
+def calc_mean_tree_props_for_trees(
+        trees: [Node]
+) -> (int, int, int, int, int, int):
 
     min_w, min_h = 1000, 1000
     max_w, max_h = 0, 0
     sum_w, sum_h = 0, 0
     num_nodes = 0
 
-    for doc_trees in docs_trees:
-        for sent_tree in doc_trees:
-            width, height = get_tree_props_for_sent(sent_tree)
+    for tree in trees:
+        width, height = get_tree_props_for_sent(tree)
 
-            sum_w += width
-            sum_h += height
-            num_nodes += 1
+        sum_w += width
+        sum_h += height
+        num_nodes += 1
 
-            min_w = min(min_w, width)
-            max_w = max(max_w, width)
-            min_h = min(min_h, height)
-            max_h = max(max_h, height)
+        min_w = min(min_w, width)
+        max_w = max(max_w, width)
+        min_h = min(min_h, height)
+        max_h = max(max_h, height)
 
     avg_w = sum_w / num_nodes if num_nodes > 0 else None
     avg_h = sum_h / num_nodes if num_nodes > 0 else None
@@ -92,6 +126,7 @@ def get_tree_props(
         return min_w, max_w, avg_w, min_h, max_h, avg_h
     else:
         return None, None, None, None, None, None
+
 
 
 def get_tree_props_for_sent(sent_tree):
@@ -116,4 +151,8 @@ terms_tree_props_pipeline = funcy.rcompose(
 texts_tree_props_pipeline = funcy.rcompose(
     make_trees_for_docs_terms_sents_term_loc,
     calculate_tree_props_v2
+)
+contexts_tree_props_pipeline = funcy.rcompose(
+    make_trees_for_doc_contexts,
+    calculate_tree_props_for_doc_contexts
 )

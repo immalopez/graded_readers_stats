@@ -28,7 +28,7 @@ from graded_readers_stats.preprocess import (
 from graded_readers_stats.tfidf import calc_mean_doc_idfs, \
     calc_mean_doc_context_idfs
 from graded_readers_stats.tree import (
-    texts_tree_props_pipeline,
+    texts_tree_props_pipeline, contexts_tree_props_pipeline,
 )
 
 
@@ -172,12 +172,9 @@ def analyze(args):
         texts_df = texts_df.drop(columns="Context IDF")
 
     with Timer(name='Context Tree', text=timer_text):
-        print("breakpoint")
-        # terms_df['Context tree'] = list(trees_pipeline(storage)(ctxs_locs))
-        # texts_df["Context tree"] = calc_mean_doc_context_tree(
-        #     storage,
-        #     docs_locs
-        # )
+        texts_df['Context tree'] = list(
+            contexts_tree_props_pipeline(storage, ctxs_locs_by_docs)
+        )
 
 # ##############################################################################
 # #                                  Others                                    #

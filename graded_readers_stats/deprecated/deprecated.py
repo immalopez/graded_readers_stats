@@ -7,7 +7,7 @@ from stanza.models.common.doc import Sentence
 
 from graded_readers_stats._typing import *
 from graded_readers_stats.constants import *
-from graded_readers_stats.tree import get_tree_props
+from graded_readers_stats.tree import calc_mean_tree_props_for_nested_trees
 
 
 def deprecated_make_trees_for_occurrences_v2(
@@ -63,7 +63,7 @@ def deprecated_calculate_tree_props(
     in_column_trees = column
     out_column_trees_props = column + TREES_PROPS
     values = vocabs.apply(
-        lambda x: get_tree_props(x[in_column_trees]),
+        lambda x: calc_mean_tree_props_for_nested_trees(x[in_column_trees]),
         axis=1
     )
     return out_column_trees_props, values
