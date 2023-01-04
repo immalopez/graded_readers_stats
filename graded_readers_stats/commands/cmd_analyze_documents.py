@@ -26,7 +26,7 @@ from graded_readers_stats.preprocess import (
     text_analysis_pipeline,
     locate_terms_in_docs,
 )
-from graded_readers_stats.stats import get_msttr
+from graded_readers_stats.stats import get_lexical_richness
 from graded_readers_stats.tfidf import calc_mean_doc_idfs, \
     calc_mean_doc_context_idfs
 from graded_readers_stats.tree import (
@@ -198,9 +198,15 @@ def analyze(args):
 #                                General stats                               #
 ##############################################################################
 
-    with Timer(name='MSTTR', text=timer_text):
-        joined_text = ' '.join(texts_df['Raw text'])
-        print(f'{get_msttr(joined_text)}')
+    with Timer(name='Lexical Richness', text=timer_text):
+        lex_by_doc = texts_df["Raw text"].apply(get_lexical_richness)
+        lex = {
+            k: [doc[k] for doc in lex_by_doc]
+            for k in lex_by_doc[0]
+        }
+        for name, values in lex.items():
+            texts_df[name] = values
+        print()
 
     # with Timer(name='Export CSV', text=timer_text):
     #     texts_df.to_csv(f'./output/{level}.csv', index=False)

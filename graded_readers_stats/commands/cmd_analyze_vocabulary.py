@@ -23,7 +23,6 @@ from graded_readers_stats.preprocess import (
     text_analysis_pipeline,
     locate_terms_in_docs,
 )
-from graded_readers_stats.stats import get_msttr
 from graded_readers_stats.tfidf import tfidfs
 from graded_readers_stats.tree import terms_tree_props_pipeline
 
