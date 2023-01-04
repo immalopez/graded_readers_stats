@@ -3,6 +3,7 @@ import time
 from codetiming import Timer
 from pandas.core.common import flatten
 
+from graded_readers_stats import utils
 from graded_readers_stats.constants import (
     COL_LEMMA,
     COL_LEVEL,
@@ -25,6 +26,7 @@ from graded_readers_stats.preprocess import (
     text_analysis_pipeline,
     locate_terms_in_docs,
 )
+from graded_readers_stats.stats import get_msttr
 from graded_readers_stats.tfidf import calc_mean_doc_idfs, \
     calc_mean_doc_context_idfs
 from graded_readers_stats.tree import (
@@ -176,18 +178,18 @@ def analyze(args):
             contexts_tree_props_pipeline(storage, ctxs_locs_by_docs)
         )
 
-# ##############################################################################
-# #                                  Others                                    #
-# ##############################################################################
-#
-#     with Timer(name='MSTTR', text=timer_text):
-#         joined_text = ' '.join(texts_df['Raw text'])
-#         print(f'{get_msttr(joined_text)}')
-#
-#     with Timer(name='Export CSV', text=timer_text):
-#         terms_df.to_csv(f'./output/{level}.csv', index=False)
-#
-#     print()
-#     utils.duration(start_main, 'Total time')
-#     print('')
-#     print('ANALYZE DOCS END'
+##############################################################################
+#                                General stats                               #
+##############################################################################
+
+    with Timer(name='MSTTR', text=timer_text):
+        joined_text = ' '.join(texts_df['Raw text'])
+        print(f'{get_msttr(joined_text)}')
+
+    # with Timer(name='Export CSV', text=timer_text):
+    #     texts_df.to_csv(f'./output/{level}.csv', index=False)
+    #
+    print()
+    utils.duration(start_main, 'Total time')
+    print('')
+    print('ANALYZE DOCS END')
