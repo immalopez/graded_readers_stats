@@ -118,9 +118,25 @@ def analyze(args):
             = texts_df[f"Count"] / texts_df["Total"]
 
     with Timer(name='TFIDF', text=timer_text):
-        texts_df["IDF"] = calc_mean_doc_idfs(docs_locs)
+        for level in levels:
+            term_indices = terms_df \
+                .groupby(COL_LEVEL) \
+                .get_group(level) \
+                .index \
+                .to_list()
+            texts_df[f"IDF {level}"] = calc_mean_doc_idfs(
+                docs_locs,
+                term_indices
+            )
+            texts_df[f"TFIDF {level}"] \
+                = texts_df[f"Freq {level}"] \
+                  * texts_df[f"IDF {level}"]
+        texts_df["IDF"] = calc_mean_doc_idfs(
+            docs_locs,
+            range(0, len(terms_df))
+        )
         texts_df['TFIDF'] = texts_df["Freq"] * texts_df["IDF"]
-        texts_df = texts_df.drop(columns="IDF")
+        # texts_df = texts_df.drop(columns="IDF")
 
     with Timer(name='Tree', text=timer_text):
         texts_df["Tree"] = texts_tree_props_pipeline(storage, docs_locs)

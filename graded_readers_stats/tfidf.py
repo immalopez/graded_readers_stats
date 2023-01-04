@@ -150,9 +150,10 @@ def tfidfs(terms_locs, docs):
     return result_tfidfs_per_term
 
 
-def calc_mean_doc_idfs(docs_terms_locs):
+def calc_mean_doc_idfs(docs_terms_locs, term_indices):
     doc_matches_mask = [
-        [1 if len(locs) else 0 for locs in terms_locs]
+        [1 if len(locs) else 0 for locs in [terms_locs[term_idx]
+                                            for term_idx in term_indices]]
         for terms_locs in docs_terms_locs
     ]
     # [1, 1, 0, 1, 1]
