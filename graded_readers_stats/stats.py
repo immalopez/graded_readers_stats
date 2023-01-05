@@ -122,12 +122,12 @@ def group_upos_values_by_key(result, next, docs, path):
 
 
 def calc_lex_density(row):
-    adj = row["upos-ADJ"]
-    adv = row["upos-ADV"]
-    intj = row["upos-INTJ"]
-    noun = row["upos-NOUN"]
-    propn = row["upos-PROPN"]
-    verb = row["upos-VERB"]
+    adj = row["upos-ADJ"] if "upos-ADJ" in row else 0
+    adv = row["upos-ADV"] if "upos-ADV" in row else 0
+    intj = row["upos-INTJ"] if "upos-INTJ" in row else 0
+    noun = row["upos-NOUN"] if "upos-NOUN" in row else 0
+    propn = row["upos-PROPN"] if "upos-PROPN" in row else 0
+    verb = row["upos-VERB"] if "upos-VERB" in row else 0
     total = len(list(flatten(row["Lemma"])))
     lex_density = (adj + adv + intj + noun + propn + verb) / total
     return lex_density

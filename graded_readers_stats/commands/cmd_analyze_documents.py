@@ -208,14 +208,16 @@ def analyze(args):
         texts_df["Lexical density"] = texts_df.apply(calc_lex_density, axis=1)
         texts_df = texts_df.drop(columns=[
             COL_STANZA_DOC,
-            "Publisher",
-            "Text file",
-            "Type",
+            "Raw text",
+            "Lemma",
+            # "Publisher",
+            # "Text file",
+            # "Type",
         ])
         terms_df = terms_df.drop(columns=[
             COL_STANZA_DOC,
-            "Topic",
-            "Subtopic",
+            # "Topic",
+            # "Subtopic",
         ])
 
 
