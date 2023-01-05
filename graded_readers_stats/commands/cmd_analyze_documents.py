@@ -30,7 +30,7 @@ from graded_readers_stats.preprocess import (
     locate_terms_in_docs,
 )
 from graded_readers_stats.stats import get_lexical_richness, \
-    calc_stats_for_stanza_doc, group_upos_values_by_key
+    calc_stats_for_stanza_doc, group_upos_values_by_key, calc_lex_density
 from graded_readers_stats.tfidf import calc_mean_doc_idfs, \
     calc_mean_doc_context_idfs
 from graded_readers_stats.tree import (
@@ -76,27 +76,6 @@ def analyze(args):
             'stanza': texts_df[COL_STANZA_DOC],
             'tree': {}
         }
-
-    with Timer(name="UPOS", text=timer_text):
-        stats_per_doc = [calc_stats_for_stanza_doc(doc)
-                         for doc in texts_df[COL_STANZA_DOC]]
-        upos_dict = {}
-        group_upos_values_by_key(upos_dict, stats_per_doc[0], stats_per_doc, [])
-        texts_df = texts_df.join(pd.DataFrame(upos_dict))
-
-        print()
-        texts_df = texts_df.drop(columns=[
-            COL_STANZA_DOC,
-            "Publisher",
-            "Text file",
-            "Type",
-        ])
-        terms_df = terms_df.drop(columns=[
-            COL_STANZA_DOC,
-            "Topic",
-            "Subtopic",
-        ])
-
 ##############################################################################
 #                                 Terms                                      #
 ##############################################################################
@@ -220,11 +199,29 @@ def analyze(args):
         for name, values in lex.items():
             texts_df[name] = values
 
-    with Timer(name='UPOS', text=timer_text):
-        pass
+    with Timer(name="UPOS", text=timer_text):
+        stats_per_doc = [calc_stats_for_stanza_doc(doc)
+                         for doc in texts_df[COL_STANZA_DOC]]
+        upos_dict = {}
+        group_upos_values_by_key(upos_dict, stats_per_doc[0], stats_per_doc, [])
+        texts_df = texts_df.join(pd.DataFrame(upos_dict))
+        texts_df["Lexical density"] = texts_df.apply(calc_lex_density, axis=1)
+        texts_df = texts_df.drop(columns=[
+            COL_STANZA_DOC,
+            "Publisher",
+            "Text file",
+            "Type",
+        ])
+        terms_df = terms_df.drop(columns=[
+            COL_STANZA_DOC,
+            "Topic",
+            "Subtopic",
+        ])
+
 
     with Timer(name='Export CSV', text=timer_text):
-    #     texts_df.to_csv(f'./output/{level}.csv', index=False)
+        file_name = corpus_path.split("/")[-1]
+        texts_df.to_csv(f'./output/{file_name}', index=False)
         pass
 
     print()

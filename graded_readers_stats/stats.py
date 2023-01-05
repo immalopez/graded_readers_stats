@@ -3,6 +3,7 @@ from __future__ import annotations
 import pandas as pd
 from codetiming import Timer
 from lexicalrichness import LexicalRichness
+from pandas.core.common import flatten
 
 from graded_readers_stats.constants import (
     COL_STANZA_DOC,
@@ -118,3 +119,16 @@ def group_upos_values_by_key(result, next, docs, path):
             group_upos_values_by_key(result, v, docs, cur_path)
         else:
             result[key] = [find(doc, cur_path) for doc in docs]
+
+
+def calc_lex_density(row):
+    adj = row["upos-ADJ"]
+    adv = row["upos-ADV"]
+    intj = row["upos-INTJ"]
+    noun = row["upos-NOUN"]
+    propn = row["upos-PROPN"]
+    verb = row["upos-VERB"]
+    total = len(list(flatten(row["Lemma"])))
+    lex_density = (adj + adv + intj + noun + propn + verb) / total
+    return lex_density
+
