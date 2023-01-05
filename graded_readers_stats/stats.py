@@ -111,6 +111,31 @@ def make_key_str(keys):
     )
 
 
+def calc_upos_ratios(data):
+    new_data = {}
+    for k, v in data.items():
+        if k.startswith("deprel") or ("-" not in k):
+            continue
+        parent_k = "-".join(k.split("-")[:-1])
+        parent_v = data[parent_k]
+        k_group = k + " GRP%"
+        new_data[k_group] = [x / y if y != 0 else 0
+                             for x, y in zip(v, parent_v)]
+        all_k = "".join(k.split("-")[:1])
+        all_v = data[all_k]
+        k_all = k + " DOC%"
+        new_data[k_all] = [x / y if y != 0 else 0
+                           for x, y in zip(v, all_v)]
+    return new_data
+    # for k, v in next.items():
+    #     cur_path = path + [k]
+    #     key = make_key_str(cur_path)
+    #     if isinstance(v, dict):
+    #         group_upos_values_by_key(result, v, docs, cur_path)
+    #     else:
+    #         result[key] = [find(doc, cur_path) for doc in docs]
+
+
 def group_upos_values_by_key(result, next, docs, path):
     for k, v in next.items():
         cur_path = path + [k]
@@ -128,7 +153,7 @@ def calc_lex_density(row):
     noun = row["upos-NOUN"] if "upos-NOUN" in row else 0
     propn = row["upos-PROPN"] if "upos-PROPN" in row else 0
     verb = row["upos-VERB"] if "upos-VERB" in row else 0
-    total = len(list(flatten(row["Lemma"])))
+    total = row["Total"]
     lex_density = (adj + adv + intj + noun + propn + verb) / total
     return lex_density
 

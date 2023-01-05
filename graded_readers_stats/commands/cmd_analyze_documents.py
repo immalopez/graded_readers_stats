@@ -30,7 +30,8 @@ from graded_readers_stats.preprocess import (
     locate_terms_in_docs,
 )
 from graded_readers_stats.stats import get_lexical_richness, \
-    calc_stats_for_stanza_doc, group_upos_values_by_key, calc_lex_density
+    calc_stats_for_stanza_doc, group_upos_values_by_key, calc_lex_density, \
+    calc_upos_ratios
 from graded_readers_stats.tfidf import calc_mean_doc_idfs, \
     calc_mean_doc_context_idfs
 from graded_readers_stats.tree import (
@@ -76,6 +77,9 @@ def analyze(args):
             'stanza': texts_df[COL_STANZA_DOC],
             'tree': {}
         }
+        texts_df["Total"] = texts_df["Lemma"] \
+            .apply(lambda x: sum(1 for _ in flatten(x)))
+
 ##############################################################################
 #                                 Terms                                      #
 ##############################################################################
@@ -101,8 +105,6 @@ def analyze(args):
             docs_locs,
             term_indices=range(0, len(terms_df))  # all terms
         )
-        texts_df["Total"] = texts_df["Lemma"]\
-            .apply(lambda x: sum(1 for _ in flatten(x)))
         for level in levels:
             texts_df[f"Freq {level}"] \
                 = texts_df[f"Count {level}"] / texts_df["Total"]
@@ -190,6 +192,16 @@ def analyze(args):
 #                                General stats                               #
 ##############################################################################
 
+    with Timer(name="UPOS", text=timer_text):
+        stats_per_doc = [calc_stats_for_stanza_doc(doc)
+                         for doc in texts_df[COL_STANZA_DOC]]
+        upos_dict = {}
+        group_upos_values_by_key(upos_dict, stats_per_doc[0], stats_per_doc, [])
+        upos_dict_ratios = calc_upos_ratios(upos_dict)
+        texts_df = texts_df.join(pd.DataFrame(upos_dict))
+        texts_df = texts_df.join(pd.DataFrame(upos_dict_ratios))
+        texts_df["Lexical density"] = texts_df.apply(calc_lex_density, axis=1)
+
     with Timer(name='Lexical Richness', text=timer_text):
         lex_by_doc = texts_df["Raw text"].apply(get_lexical_richness)
         lex = {
@@ -199,13 +211,7 @@ def analyze(args):
         for name, values in lex.items():
             texts_df[name] = values
 
-    with Timer(name="UPOS", text=timer_text):
-        stats_per_doc = [calc_stats_for_stanza_doc(doc)
-                         for doc in texts_df[COL_STANZA_DOC]]
-        upos_dict = {}
-        group_upos_values_by_key(upos_dict, stats_per_doc[0], stats_per_doc, [])
-        texts_df = texts_df.join(pd.DataFrame(upos_dict))
-        texts_df["Lexical density"] = texts_df.apply(calc_lex_density, axis=1)
+    with Timer(name='Export CSV', text=timer_text):
         texts_df = texts_df.drop(columns=[
             COL_STANZA_DOC,
             "Raw text",
@@ -216,12 +222,9 @@ def analyze(args):
         ])
         terms_df = terms_df.drop(columns=[
             COL_STANZA_DOC,
-            # "Topic",
-            # "Subtopic",
+            "Topic",
+            "Subtopic",
         ])
-
-
-    with Timer(name='Export CSV', text=timer_text):
         file_name = corpus_path.split("/")[-1]
         texts_df.to_csv(f'./output/{file_name}', index=False)
         pass
