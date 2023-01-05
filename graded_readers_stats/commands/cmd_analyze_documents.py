@@ -1,5 +1,8 @@
 import time
+from functools import reduce
+import operator
 
+import pandas as pd
 from codetiming import Timer
 from pandas.core.common import flatten
 
@@ -26,7 +29,8 @@ from graded_readers_stats.preprocess import (
     text_analysis_pipeline,
     locate_terms_in_docs,
 )
-from graded_readers_stats.stats import get_lexical_richness
+from graded_readers_stats.stats import get_lexical_richness, \
+    calc_stats_for_stanza_doc, group_upos_values_by_key
 from graded_readers_stats.tfidf import calc_mean_doc_idfs, \
     calc_mean_doc_context_idfs
 from graded_readers_stats.tree import (
@@ -72,6 +76,15 @@ def analyze(args):
             'stanza': texts_df[COL_STANZA_DOC],
             'tree': {}
         }
+
+    with Timer(name="UPOS", text=timer_text):
+        stats_per_doc = [calc_stats_for_stanza_doc(doc)
+                         for doc in texts_df[COL_STANZA_DOC]]
+        upos_dict = {}
+        group_upos_values_by_key(upos_dict, stats_per_doc[0], stats_per_doc, [])
+        texts_df = texts_df.join(pd.DataFrame(upos_dict))
+
+        print()
         texts_df = texts_df.drop(columns=[
             COL_STANZA_DOC,
             "Publisher",
@@ -206,11 +219,14 @@ def analyze(args):
         }
         for name, values in lex.items():
             texts_df[name] = values
-        print()
 
-    # with Timer(name='Export CSV', text=timer_text):
+    with Timer(name='UPOS', text=timer_text):
+        pass
+
+    with Timer(name='Export CSV', text=timer_text):
     #     texts_df.to_csv(f'./output/{level}.csv', index=False)
-    #
+        pass
+
     print()
     utils.duration(start_main, 'Total time')
     print('')

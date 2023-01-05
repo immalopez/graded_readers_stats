@@ -1,23 +1,17 @@
 from __future__ import annotations
 
-import math
-from itertools import zip_longest
-import matplotlib.pyplot as plt
 import time
 
+import matplotlib.pyplot as plt
 import pandas as pd
 from codetiming import Timer
 
 from graded_readers_stats import utils
 from graded_readers_stats.constants import (
     COL_LEVEL,
-    COL_STANZA_DOC,
 )
 from graded_readers_stats.data import read_pandas_csv
-from graded_readers_stats.preprocess import (
-    run,
-    text_analysis_pipeline,
-)
+from graded_readers_stats.stats import calc_stats_for_group
 
 timer_text = '{name}: {:0.0f} seconds'
 
@@ -44,20 +38,20 @@ def execute(args):
     group_names = [name for name, _ in groups]
     group_names = sorted(group_names, key=lambda x: sort_order[x])
 
-    df = pd.DataFrame(
-        {k: [stats[nn]["deprel"].setdefault(k, 0) for nn in group_names]
-         for name in group_names
-         for k in stats[name]["deprel"].keys()
-         },
-        index=group_names
-    )
+    # df = pd.DataFrame(
+    #     {k: [stats[nn]["deprel"].setdefault(k, 0) for nn in group_names]
+    #      for name in group_names
+    #      for k in stats[name]["deprel"].keys()
+    #      },
+    #     index=group_names
+    # )
 
-    ll = sorted(list(stats["Inicial"]["deprel"].keys()))
-    for i in range(0, len(ll), 3):
-        df.plot(kind="bar", y=ll[i:3+i], subplots=True, figsize=(5, 15))
-        plt.xticks(rotation=0, ha='right')
-        # plt.savefig(f"output/stats/deprel-image-{i}.png")
-        plt.show()
+    # ll = sorted(list(stats["Inicial"]["deprel"].keys()))
+    # for i in range(0, len(ll), 3):
+    #     df.plot(kind="bar", y=ll[i:3+i], subplots=True, figsize=(5, 15))
+    #     plt.xticks(rotation=0, ha='right')
+    #     # plt.savefig(f"output/stats/deprel-image-{i}.png")
+    #     plt.show()
 
     print()
     utils.duration(start_main, 'Total time')
@@ -82,61 +76,3 @@ def load_groups(corpus_path: str, max_docs: int) -> list[pd.DataFrame]:
             yield group_name, group_df
 
 
-def calc_stats_for_group(
-        group_name: str,
-        group_df: pd.DataFrame,
-        max_docs: int
-):
-    texts_df = group_df
-
-    if max_docs:
-        texts_df = texts_df[:max_docs].copy()
-
-    with Timer(name='Preprocess', text=timer_text):
-        texts_df = run(texts_df, text_analysis_pipeline)
-
-    with Timer(name='UPOS', text=timer_text):
-        stanza_docs = texts_df[COL_STANZA_DOC]
-        all_words = [word
-                     for doc in stanza_docs
-                     for sent in doc.sentences
-                     for word in sent.words]
-        all_words_count = len(all_words)
-
-        upos_dict = {"count": 0, "vals": {}}
-        for w in all_words:
-            # count general words
-            upos_dict["count"] += 1
-
-            # init and count the current upos
-            curr_upos = upos_dict["vals"]\
-                .setdefault(w.upos, {"count": 0})
-            curr_upos["count"] += 1
-
-            if w.feats is not None:
-                # init feats container
-                curr_upos.setdefault("vals", {})
-                feats = curr_upos["vals"]
-
-                for f in w.feats.split("|"):
-                    k, v = f.split("=")
-
-                    # init feat
-                    feat = feats.setdefault(k, {"count": 0, "vals": {}})
-                    feat["count"] += 1
-
-                    # init and count value
-                    feat["vals"].setdefault(v, 0)
-                    feat["vals"][v] += 1
-
-    with Timer(name='Dependency Relations', text=timer_text):
-        deprel_dict = {}
-        for w in all_words:
-            key = w.deprel
-            deprel_dict.setdefault(key, 0)
-            deprel_dict[key] += 1
-
-    return {
-        "upos": upos_dict,
-        "deprel": deprel_dict
-    }
