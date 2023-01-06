@@ -1,5 +1,5 @@
 <component name="ProjectRunConfigurationManager">
-  <configuration default="false" name="analyze-docs - readers" type="PythonConfigurationType" factoryName="Python">
+  <configuration default="false" name="analyze-docs - readers trial" type="PythonConfigurationType" factoryName="Python">
     <module name="graded_readers_stats" />
     <option name="INTERPRETER_OPTIONS" value="" />
     <option name="PARENT_ENVS" value="true" />
@@ -14,7 +14,7 @@
     <option name="ADD_SOURCE_ROOTS" value="true" />
     <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
     <option name="SCRIPT_NAME" value="$PROJECT_DIR$/main.py" />
-    <option name="PARAMETERS" value="analyze-documents &quot;data/vocabulary.csv&quot; &quot;data/readers/readers.csv&quot;" />
+    <option name="PARAMETERS" value="analyze-documents &quot;data/vocabulary.csv&quot; &quot;data/readers/readers.csv&quot; --max_docs=3" />
     <option name="SHOW_COMMAND_LINE" value="false" />
     <option name="EMULATE_TERMINAL" value="false" />
     <option name="MODULE_MODE" value="false" />

@@ -31,7 +31,7 @@ from graded_readers_stats.preprocess import (
 )
 from graded_readers_stats.stats import get_lexical_richness, \
     calc_stats_for_stanza_doc, group_upos_values_by_key, calc_lex_density, \
-    calc_upos_ratios
+    calc_upos_ratios, calc_deprel_ratios
 from graded_readers_stats.tfidf import calc_mean_doc_idfs, \
     calc_mean_doc_context_idfs
 from graded_readers_stats.tree import (
@@ -197,8 +197,13 @@ def analyze(args):
                          for doc in texts_df[COL_STANZA_DOC]]
         upos_dict = {}
         group_upos_values_by_key(upos_dict, stats_per_doc[0], stats_per_doc, [])
-        upos_dict_ratios = calc_upos_ratios(upos_dict)
         texts_df = texts_df.join(pd.DataFrame(upos_dict))
+
+        upos_dict["deprel"] = upos_dict["upos"]  # copy totals
+        depr_dict_ratios = calc_deprel_ratios(upos_dict)
+        texts_df = texts_df.join(pd.DataFrame(depr_dict_ratios))
+
+        upos_dict_ratios = calc_upos_ratios(upos_dict)
         texts_df = texts_df.join(pd.DataFrame(upos_dict_ratios))
         texts_df["Lexical density"] = texts_df.apply(calc_lex_density, axis=1)
 

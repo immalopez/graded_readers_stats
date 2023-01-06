@@ -127,13 +127,17 @@ def calc_upos_ratios(data):
         new_data[k_all] = [x / y if y != 0 else 0
                            for x, y in zip(v, all_v)]
     return new_data
-    # for k, v in next.items():
-    #     cur_path = path + [k]
-    #     key = make_key_str(cur_path)
-    #     if isinstance(v, dict):
-    #         group_upos_values_by_key(result, v, docs, cur_path)
-    #     else:
-    #         result[key] = [find(doc, cur_path) for doc in docs]
+
+
+def calc_deprel_ratios(data):
+    new_data = {}
+    for k, v in data.items():
+        if k.startswith("upos") or ("-" not in k):
+            continue
+        parent_v = data["deprel"]
+        new_data[k + " DOC%"] = [x / y if y != 0 else 0
+                                 for x, y in zip(v, parent_v)]
+    return new_data
 
 
 def group_upos_values_by_key(result, next, docs, path):
