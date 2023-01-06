@@ -143,11 +143,24 @@ def calc_deprel_ratios(data):
 def group_upos_values_by_key(result, next, docs, path):
     for k, v in next.items():
         cur_path = path + [k]
-        key = make_key_str(cur_path)
         if isinstance(v, dict):
             group_upos_values_by_key(result, v, docs, cur_path)
         else:
+            key = make_key_str(cur_path)
             result[key] = [find(doc, cur_path) for doc in docs]
+
+
+def collect_stats_keys(result, doc, path):
+    for k, v in doc.items():
+        cur_path = path + [k]
+        if isinstance(v, dict):
+            collect_stats_keys(result, v, cur_path)
+        else:
+            cur_dict = result
+            for k1 in cur_path[:-1]:
+                cur_dict = cur_dict.setdefault(k1, {})
+            last_key = "".join(cur_path[-1:])
+            cur_dict[last_key] = 0
 
 
 def calc_lex_density(row):

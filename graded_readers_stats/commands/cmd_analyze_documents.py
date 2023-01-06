@@ -31,7 +31,7 @@ from graded_readers_stats.preprocess import (
 )
 from graded_readers_stats.stats import get_lexical_richness, \
     calc_stats_for_stanza_doc, group_upos_values_by_key, calc_lex_density, \
-    calc_upos_ratios, calc_deprel_ratios
+    calc_upos_ratios, calc_deprel_ratios, collect_stats_keys
 from graded_readers_stats.tfidf import calc_mean_doc_idfs, \
     calc_mean_doc_context_idfs
 from graded_readers_stats.tree import (
@@ -195,8 +195,11 @@ def analyze(args):
     with Timer(name="UPOS", text=timer_text):
         stats_per_doc = [calc_stats_for_stanza_doc(doc)
                          for doc in texts_df[COL_STANZA_DOC]]
+        stats_keys = {}
+        for d in stats_per_doc:
+            collect_stats_keys(stats_keys, d, [])
         upos_dict = {}
-        group_upos_values_by_key(upos_dict, stats_per_doc[0], stats_per_doc, [])
+        group_upos_values_by_key(upos_dict, stats_keys, stats_per_doc, [])
         texts_df = texts_df.join(pd.DataFrame(upos_dict))
 
         upos_dict["deprel"] = upos_dict["upos"]  # copy totals
@@ -207,14 +210,14 @@ def analyze(args):
         texts_df = texts_df.join(pd.DataFrame(upos_dict_ratios))
         texts_df["Lexical density"] = texts_df.apply(calc_lex_density, axis=1)
 
-    with Timer(name='Lexical Richness', text=timer_text):
-        lex_by_doc = texts_df["Raw text"].apply(get_lexical_richness)
-        lex = {
-            k: [doc[k] for doc in lex_by_doc]
-            for k in lex_by_doc[0]
-        }
-        for name, values in lex.items():
-            texts_df[name] = values
+    # with Timer(name='Lexical Richness', text=timer_text):
+    #     lex_by_doc = texts_df["Raw text"].apply(get_lexical_richness)
+    #     lex = {
+    #         k: [doc[k] for doc in lex_by_doc]
+    #         for k in lex_by_doc[0]
+    #     }
+    #     for name, values in lex.items():
+    #         texts_df[name] = values
 
     with Timer(name='Export CSV', text=timer_text):
         texts_df = texts_df.drop(columns=[
