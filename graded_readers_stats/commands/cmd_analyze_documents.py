@@ -210,14 +210,14 @@ def analyze(args):
         texts_df = texts_df.join(pd.DataFrame(upos_dict_ratios))
         texts_df["Lexical density"] = texts_df.apply(calc_lex_density, axis=1)
 
-    # with Timer(name='Lexical Richness', text=timer_text):
-    #     lex_by_doc = texts_df["Raw text"].apply(get_lexical_richness)
-    #     lex = {
-    #         k: [doc[k] for doc in lex_by_doc]
-    #         for k in lex_by_doc[0]
-    #     }
-    #     for name, values in lex.items():
-    #         texts_df[name] = values
+    with Timer(name='Lexical Richness', text=timer_text):
+        lex_by_doc = texts_df["Raw text"].apply(get_lexical_richness)
+        lex = {
+            k: [doc[k] for doc in lex_by_doc]
+            for k in lex_by_doc[0]
+        }
+        for name, values in lex.items():
+            texts_df[name] = values
 
     with Timer(name='Export CSV', text=timer_text):
         texts_df = texts_df.drop(columns=[
@@ -235,7 +235,6 @@ def analyze(args):
         ])
         file_name = corpus_path.split("/")[-1]
         texts_df.to_csv(f'./output/{file_name}', index=False)
-        pass
 
     print()
     utils.duration(start_main, 'Total time')
