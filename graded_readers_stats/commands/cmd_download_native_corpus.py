@@ -4,12 +4,8 @@ import pandas as pd
 from nltk.corpus import cess_esp
 
 
-def download_native_corpus(args):
-    words_esp = cess_esp.words()
-    text = ' '.join([word.replace('_', ' ')
-                     for word in words_esp])
-
-    # Sanitize metadata
+def sanitize(words) -> str:
+    text = ' '.join([word.replace('_', ' ') for word in words])
     text = re.sub(r'-[Ff]pa-', '(', text)
     text = re.sub(r'-[Ff]pt-', ')', text)
     text = re.sub(r'\*0\*', '', text)
@@ -24,13 +20,24 @@ def download_native_corpus(args):
     text = re.sub(r' \) ', ') ', text)
     text = re.sub(r' \).', ').', text)
     text = re.sub(r' \),', '),', text)
+    return text
 
-    with open('../../data/native/text.txt', 'w') as f:
+
+def save_tbf_to_file(fileid):
+    words = cess_esp.words(fileid)
+    text = sanitize(words)
+    file_name = "".join(fileid.split(".")[:-1]) + ".txt"
+    with open(f'data/native/{file_name}', 'w') as f:
         f.write(text)
+    return f"data/native/{file_name}"
 
+
+def download_native_corpus(args):
     df = pd.DataFrame({
-        'Level': ['Native'],
-        'Text file': ['data/native/text.txt']
+        "Level": "Native",
+        "Treebank file": cess_esp.fileids()
     })
-    df.to_csv('data/native.csv', index=False, sep=';')
+
+    df["Text file"] = df["Treebank file"].apply(save_tbf_to_file)
+    df.to_csv('data/native/native.csv', index=False, sep=';')
     print('Download finished successfully!')
