@@ -224,10 +224,9 @@ def analyze(args):
             COL_STANZA_DOC,
             "Raw text",
             "Lemma",
-            # "Publisher",
-            # "Text file",
-            # "Type",
         ])
+        if "Treebank file" in texts_df.columns:
+            texts_df = texts_df.drop(columns="Treebank file")
         terms_df = terms_df.drop(columns=[
             COL_STANZA_DOC,
             "Topic",
