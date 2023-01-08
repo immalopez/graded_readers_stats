@@ -66,7 +66,7 @@ def analyze(args):
     with Timer(name='Export CSV', text=timer_text):
         terms_df = terms_df.join(pd.DataFrame(result))
         terms_df = terms_df.drop(columns=["Topic", "Subtopic", "Lemma"])
-        terms_df.to_csv(f'./output/term_counts_by_group.csv', index=False)
+        terms_df.to_csv(f'./output/term_counts_by_text_group.csv', index=False)
 
     print()
     utils.duration(start_main, 'Total time')
