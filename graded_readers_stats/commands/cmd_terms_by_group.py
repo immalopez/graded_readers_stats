@@ -2,13 +2,12 @@ import time
 
 import pandas as pd
 from codetiming import Timer
-from pandas.core.common import flatten
 
 from graded_readers_stats import utils
 from graded_readers_stats.constants import COL_LEVEL, COL_LEMMA, COL_STANZA_DOC
 from graded_readers_stats.data import read_pandas_csv
 from graded_readers_stats.preprocess import vocabulary_pipeline, run, \
-    text_analysis_pipeline, text_analysis_pipeline_simple, locate_terms_in_docs
+    text_analysis_pipeline_simple, locate_terms_in_docs
 
 
 def analyze(args):
