@@ -33,38 +33,40 @@ def analyze(args):
 #                                Preprocess                                  #
 ##############################################################################
 
-    with Timer(name='Load data', text=timer_text):
-        terms_df = read_pandas_csv(vocabulary_path)
-        if max_terms:
-            terms_df = terms_df[:max_terms]
-        texts_df = read_pandas_csv(corpus_path)
-        if max_docs:
-            texts_df = texts_df[:max_docs]
+    result = {}
+    terms_df = read_pandas_csv(vocabulary_path)
+    if max_terms:
+        terms_df = terms_df[:max_terms]
+    terms_df = run(terms_df, vocabulary_pipeline)
+    terms_df = terms_df.drop(columns=COL_STANZA_DOC)
+    terms = [term for terms in terms_df[COL_LEMMA] for term in terms]
 
-    with Timer(name='Preprocess', text=timer_text):
-        terms_df = run(terms_df, vocabulary_pipeline)
-        texts_df = run(texts_df, text_analysis_pipeline_simple)
-        terms_df = terms_df.drop(columns=COL_STANZA_DOC)
-        texts_df = texts_df.drop(columns=COL_STANZA_DOC)
+    for cur_path in corpus_path:
+        with Timer(name='Load data', text=timer_text):
+            texts_df = read_pandas_csv(cur_path)
+            if max_docs:
+                texts_df = texts_df[:max_docs]
 
-    with Timer(name='Locate terms', text=timer_text):
-        terms = [term for terms in terms_df[COL_LEMMA] for term in terms]
-        texts = texts_df[COL_LEMMA]
-        terms_docs_locs = locate_terms_in_docs(terms, texts)
+        with Timer(name='Preprocess', text=timer_text):
+            texts_df = run(texts_df, text_analysis_pipeline_simple)
+            texts_df = texts_df.drop(columns=COL_STANZA_DOC)
 
-    with Timer(name='Term group membership', text=timer_text):
-        result = {}
-        groups = texts_df.groupby(COL_LEVEL)
-        for group_name, group_df in groups:
-            result[group_name] = [0] * len(terms_df)
-            result[group_name] = [sum(1 for doc_idx, _ in group_df.iterrows()
-                                      for _ in docs_locs[doc_idx])
-                                  for docs_locs in terms_docs_locs]
-        terms_df = terms_df.join(pd.DataFrame(result))
+        with Timer(name='Locate terms', text=timer_text):
+            texts = texts_df[COL_LEMMA]
+            terms_docs_locs = locate_terms_in_docs(terms, texts)
+
+        with Timer(name='Term group membership', text=timer_text):
+            groups = texts_df.groupby(COL_LEVEL)
+            for group_name, group_df in groups:
+                result[group_name] = [0] * len(terms_df)
+                result[group_name] = [sum(1 for doc_idx, _ in group_df.iterrows()
+                                          for _ in docs_locs[doc_idx])
+                                      for docs_locs in terms_docs_locs]
 
     with Timer(name='Export CSV', text=timer_text):
+        terms_df = terms_df.join(pd.DataFrame(result))
         terms_df = terms_df.drop(columns=["Topic", "Subtopic", "Lemma"])
-        terms_df.to_csv(f'./output/terms_by_group.csv', index=False)
+        terms_df.to_csv(f'./output/term_counts_by_group.csv', index=False)
 
     print()
     utils.duration(start_main, 'Total time')

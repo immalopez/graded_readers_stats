@@ -25,7 +25,7 @@ subparser.set_defaults(
 )
 
 ##############################################################################
-#                            Analyze Vocabulary                              #
+#                              Terms by group                                #
 ##############################################################################
 
 subparser = subparsers.add_parser(
@@ -35,7 +35,8 @@ subparser.add_argument(
     'vocabulary_path',
     help='file path to a CSV with terms/vocabulary')
 subparser.add_argument(
-    'corpus_path',
+    '--corpus_path',
+    action="append",
     help='file path to a CSV with file paths to texts')
 subparser.add_argument(
     '--max_terms', type=int,
