@@ -37,9 +37,12 @@ def execute(args):
     groups = terms_df.groupby("Level")
     for name, df in groups:
         print(name)
+        total = len(df)
+        single = len(df.groupby("multi-word").get_group(False))
+        multi = len(df.groupby("multi-word").get_group(True))
         print("Total:", len(df))
-        print("Single-word:", len(df.groupby("multi-word").get_group(False)))
-        print("Multi-word:", len(df.groupby("multi-word").get_group(True)))
+        print("Single:", single, f"({single/total*100:0.2f}%)")
+        print("Multi:", multi, f"({multi/total*100:0.2f}%)")
         print()
 
     print()
