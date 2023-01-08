@@ -5,6 +5,7 @@ venv/bin/python main.py analyze "data/vocabulary.csv" "data/literature/literatur
 venv/bin/python main.py analyze "data/vocabulary.csv" "data/literature/literature.csv" Juvenil | tee output/literature_2.log &
 venv/bin/python main.py analyze "data/vocabulary.csv" "data/literature/literature.csv" Adulta | tee output/literature_3.log &
 venv/bin/python main.py analyze "data/vocabulary.csv" "data/native/native.csv" Native | tee output/native.log &
+venv/bin/python main.py terms_by_group "data/vocabulary.csv" --corpus_path="data/readers/readers.csv" --corpus_path="data/literature/literature.csv" --corpus_path="data/native/native.csv" | tee output/terms_by_group.log &
 wait
 
 venv/bin/python main.py merge-output
