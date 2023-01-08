@@ -27,6 +27,10 @@ from graded_readers_stats.tfidf import tfidfs
 from graded_readers_stats.tree import terms_tree_props_pipeline
 
 
+def get_msttr(joined_text):
+    pass
+
+
 def analyze(args):
     vocabulary_path = args.vocabulary_path
     corpus_path = args.corpus_path

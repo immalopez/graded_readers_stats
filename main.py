@@ -6,6 +6,7 @@ from graded_readers_stats.commands import (
     cmd_download_native_corpus,
     cmd_merge_output,
     cmd_stats,
+    cmd_terms_by_group,
 )
 from graded_readers_stats.deprecated import cmd_analyze_vocabulary
 
@@ -22,6 +23,27 @@ subparser = subparsers.add_parser(
 subparser.set_defaults(
     func=cmd_download_native_corpus.download_native_corpus
 )
+
+##############################################################################
+#                            Analyze Vocabulary                              #
+##############################################################################
+
+subparser = subparsers.add_parser(
+    'terms_by_group',
+    help='Determine presence of a term in groups (e.g. Inicial, Intermedio).')
+subparser.add_argument(
+    'vocabulary_path',
+    help='file path to a CSV with terms/vocabulary')
+subparser.add_argument(
+    'corpus_path',
+    help='file path to a CSV with file paths to texts')
+subparser.add_argument(
+    '--max_terms', type=int,
+    help='max number of terms to analyze. Useful for tests')
+subparser.add_argument(
+    '--max_docs', type=int,
+    help='max number of docs to analyze. Useful for tests')
+subparser.set_defaults(func=cmd_terms_by_group.analyze)
 
 ##############################################################################
 #                            Analyze Vocabulary                              #
