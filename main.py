@@ -6,8 +6,8 @@ from graded_readers_stats.commands import (
     cmd_bag_of_words,
     cmd_download_native_corpus,
     cmd_merge_output,
-    cmd_stats,
-    cmd_terms_by_group,
+    cmd_stats_for_texts,
+    cmd_terms_by_group, cmd_stats_for_terms,
 )
 
 parser = argparse.ArgumentParser()
@@ -97,11 +97,26 @@ subparser.set_defaults(func=cmd_analyze_documents.analyze)
 
 
 ##############################################################################
-#                                   Stats                                    #
+#                              Stats for terms                               #
 ##############################################################################
 
 subparser = subparsers.add_parser(
-    'stats',
+    'stats_for_terms',
+    help='Stats based on stanza')
+subparser.add_argument(
+    '--vocabulary_path',
+    help='file path(s) to a CSV with file paths to texts')
+subparser.add_argument(
+    '--max_docs', type=int,
+    help='max number of docs to analyze. Useful for tests')
+subparser.set_defaults(func=cmd_stats_for_terms.execute)
+
+##############################################################################
+#                              Stats for texts                               #
+##############################################################################
+
+subparser = subparsers.add_parser(
+    'stats_for_texts',
     help='Stats based on stanza')
 subparser.add_argument(
     '--corpus_paths',
@@ -110,7 +125,7 @@ subparser.add_argument(
 subparser.add_argument(
     '--max_docs', type=int,
     help='max number of docs to analyze. Useful for tests')
-subparser.set_defaults(func=cmd_stats.execute)
+subparser.set_defaults(func=cmd_stats_for_texts.execute)
 
 ##############################################################################
 #                               Bag of Words                                 #

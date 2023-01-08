@@ -1,0 +1,32 @@
+
+---
+
+Parsing arguments...
+Parsing done: Namespace(vocabulary_path='data/vocabulary.csv', corpus_path='data/readers/readers.csv', level='Intermedio', max_terms=None, max_docs=None, func=<function analyze at 0x16dfc0670>)
+
+ANALYZE START
+---
+vocabulary_path =  data/vocabulary.csv
+corpus_path =  data/readers/readers.csv
+level =  Intermedio
+max_terms =  None
+max_docs =  None
+---
+Load data: 0 seconds
+Group: 0 seconds
+Preprocess: 93 seconds
+Locate terms: 18 seconds
+Frequency: 0 seconds
+TFIDF: 0 seconds
+Tree: 1 seconds
+Context collect: 0 seconds
+Context locate terms: 78 seconds
+Context frequency: 0 seconds
+Context TFIDF: 3 seconds
+Context Tree: 252 seconds
+Export CSV: 0 seconds
+
+Total time (7m 26s)
+---
+
+ANALYZE END

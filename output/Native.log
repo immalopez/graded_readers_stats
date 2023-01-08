@@ -1,52 +1,32 @@
-2022-02-12 20:23:20 INFO: Loading these models for language: es (Spanish):
-=======================
-| Processor | Package |
------------------------
-| tokenize  | ancora  |
-| mwt       | ancora  |
-| pos       | ancora  |
-| lemma     | ancora  |
-| depparse  | ancora  |
-=======================
-
-2022-02-12 20:23:20 INFO: Use device: cpu
-2022-02-12 20:23:20 INFO: Loading: tokenize
-2022-02-12 20:23:20 INFO: Loading: mwt
-2022-02-12 20:23:20 INFO: Loading: pos
-2022-02-12 20:23:20 INFO: Loading: lemma
-2022-02-12 20:23:20 INFO: Loading: depparse
-2022-02-12 20:23:20 INFO: Done loading processors!
-/Users/plamenandreev/developer/home/graded_readers_stats/venv/lib/python3.9/site-packages/stanza/models/common/beam.py:86: UserWarning: __floordiv__ is deprecated, and its behavior will change in a future version of pytorch. It currently rounds toward 0 (like the 'trunc' function NOT 'floor'). This results in incorrect rounding for negative values. To keep the current behavior, use torch.div(a, b, rounding_mode='trunc'), or for actual floor division, use torch.div(a, b, rounding_mode='floor').
-  prevK = bestScoresId // numWords
 
 ---
 
 Parsing arguments...
-Parsing done: Namespace(vocabulary_path='Data/Vocabulary list.csv', corpus_path='Data/Native list.csv', level='Native', func=<function analyze at 0x10ab218b0>)
+Parsing done: Namespace(vocabulary_path='data/vocabulary.csv', corpus_path='data/native/native.csv', level='Native', max_terms=None, max_docs=None, func=<function analyze at 0x28e53c670>)
 
 ANALYZE START
 ---
-vocabulary_path =  Data/Vocabulary list.csv
-corpus_path =  Data/Native list.csv
+vocabulary_path =  data/vocabulary.csv
+corpus_path =  data/native/native.csv
 level =  Native
+max_terms =  None
+max_docs =  None
 ---
 Load data: 0 seconds
 Group: 0 seconds
-Preprocess: 557 seconds
-Locate terms: 67 seconds
+Preprocess: 170 seconds
+Locate terms: 34 seconds
 Frequency: 0 seconds
 TFIDF: 0 seconds
-Tree: 4 seconds
-Context collect: 0 seconds
-Context locate terms: 610 seconds
+Tree: 3 seconds
+Context collect: 3 seconds
+Context locate terms: 265 seconds
 Context frequency: 2 seconds
-Context TFIDF: 17 seconds
-Context Tree: 2559 seconds
-{'msttr': 0.9968848432307406}
-MSTTR: 0 seconds
+Context TFIDF: 15 seconds
+Context Tree: 1250 seconds
 Export CSV: 0 seconds
 
-Total time (64m 36s)
+Total time (29m 2s)
 ---
 
 ANALYZE END

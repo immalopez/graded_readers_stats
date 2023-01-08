@@ -1,0 +1,32 @@
+
+---
+
+Parsing arguments...
+Parsing done: Namespace(vocabulary_path='data/vocabulary.csv', corpus_path='data/literature/literature.csv', level='Juvenil', max_terms=None, max_docs=None, func=<function analyze at 0x29b084670>)
+
+ANALYZE START
+---
+vocabulary_path =  data/vocabulary.csv
+corpus_path =  data/literature/literature.csv
+level =  Juvenil
+max_terms =  None
+max_docs =  None
+---
+Load data: 0 seconds
+Group: 0 seconds
+Preprocess: 104 seconds
+Locate terms: 16 seconds
+Frequency: 0 seconds
+TFIDF: 0 seconds
+Tree: 1 seconds
+Context collect: 0 seconds
+Context locate terms: 74 seconds
+Context frequency: 0 seconds
+Context TFIDF: 3 seconds
+Context Tree: 224 seconds
+Export CSV: 0 seconds
+
+Total time (7m 1s)
+---
+
+ANALYZE END

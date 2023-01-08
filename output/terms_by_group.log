@@ -1,0 +1,31 @@
+
+---
+
+Parsing arguments...
+Parsing done: Namespace(vocabulary_path='data/vocabulary.csv', corpus_path=['data/readers/readers.csv', 'data/literature/literature.csv', 'data/native/native.csv'], max_terms=None, max_docs=None, func=<function analyze at 0x16f595a60>)
+
+ANALYZE START
+---
+vocabulary_path =  data/vocabulary.csv
+corpus_path =  ['data/readers/readers.csv', 'data/literature/literature.csv', 'data/native/native.csv']
+max_terms =  None
+max_docs =  None
+---
+Load data: 0 seconds
+Preprocess: 66 seconds
+Locate terms: 34 seconds
+Term group membership: 2 seconds
+Load data: 0 seconds
+Preprocess: 63 seconds
+Locate terms: 33 seconds
+Term group membership: 2 seconds
+Load data: 0 seconds
+Preprocess: 33 seconds
+Locate terms: 26 seconds
+Term group membership: 24 seconds
+Export CSV: 0 seconds
+
+Total time (5m 49s)
+---
+
+ANALYZE END
