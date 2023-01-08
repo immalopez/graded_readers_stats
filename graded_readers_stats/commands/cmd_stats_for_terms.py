@@ -5,6 +5,7 @@ import time
 import matplotlib.pyplot as plt
 import pandas as pd
 from codetiming import Timer
+from pandas.core.common import flatten
 
 from graded_readers_stats import utils
 from graded_readers_stats.constants import (
@@ -29,8 +30,17 @@ def execute(args):
     start_main = time.time()
     terms_df = read_pandas_csv(vocabulary_path)
     terms_df = run(terms_df, vocabulary_pipeline)
+    terms_df["multi-word"] = terms_df["Lemma"].apply(
+        lambda x: len(list(flatten(x))) > 1
+    )
 
-
+    groups = terms_df.groupby("Level")
+    for name, df in groups:
+        print(name)
+        print("Total:", len(df))
+        print("Single-word:", len(df.groupby("multi-word").get_group(False)))
+        print("Multi-word:", len(df.groupby("multi-word").get_group(True)))
+        print()
 
     print()
     utils.duration(start_main, 'Total time')
