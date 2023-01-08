@@ -2,12 +2,12 @@ import argparse
 
 from graded_readers_stats.commands import (
     cmd_analyze_documents,
-    cmd_analyze_vocabulary,
     cmd_bag_of_words,
     cmd_download_native_corpus,
     cmd_merge_output,
     cmd_stats,
 )
+from graded_readers_stats.deprecated import cmd_analyze_vocabulary
 
 parser = argparse.ArgumentParser()
 subparsers = parser.add_subparsers()
