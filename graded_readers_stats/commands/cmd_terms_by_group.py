@@ -35,10 +35,6 @@ def analyze(args):
 
     result = {}
     terms_df = read_pandas_csv(vocabulary_path)
-    terms_df["Lexical item"] = terms_df["Lexical item"].str.strip()
-    terms_df = terms_df.sort_values(["Lexical item", "Level"])
-    terms_df = terms_df.drop_duplicates(subset=["Lexical item"], keep="last")
-    print()
     if max_terms:
         terms_df = terms_df[:max_terms]
     terms_df = run(terms_df, vocabulary_pipeline)
