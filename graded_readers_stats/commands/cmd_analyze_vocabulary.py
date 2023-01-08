@@ -30,10 +30,6 @@ from graded_readers_stats.tfidf import tfidfs
 from graded_readers_stats.tree import terms_tree_props_pipeline
 
 
-def get_msttr(joined_text):
-    pass
-
-
 def analyze(args):
     vocabulary_path = args.vocabulary_path
     corpus_path = args.corpus_path
@@ -59,14 +55,14 @@ def analyze(args):
 ##############################################################################
 
     with Timer(name='Load data', text=timer_text):
-        readers = read_pandas_csv(corpus_path)
+        texts_df = read_pandas_csv(corpus_path)
         terms_df = read_pandas_csv(vocabulary_path)
         if max_terms:
             terms_df = terms_df[:max_terms]
 
     with Timer(name='Group', text=timer_text):
-        reader_by_level = readers.groupby(COL_LEVEL)
-        texts_df = reader_by_level.get_group(level).reset_index(drop=True)
+        texts_by_level = texts_df.groupby(COL_LEVEL)
+        texts_df = texts_by_level.get_group(level).reset_index(drop=True)
         if max_docs:
             texts_df = texts_df[:max_docs]
 
@@ -131,12 +127,15 @@ def analyze(args):
 #                                  Others                                    #
 ##############################################################################
 
-    with Timer(name='MSTTR', text=timer_text):
-        joined_text = ' '.join(texts_df['Raw text'])
-        print(f'{get_msttr(joined_text)}')
-
     with Timer(name='Export CSV', text=timer_text):
-        terms_df.to_csv(f'./output/{level}.csv', index=False)
+        terms_df = terms_df.drop(columns=[
+            "Topic",
+            "Subtopic",
+            "Lemma",
+            "Context words",
+            "Context count per word"
+        ])
+        terms_df.to_csv(f'./output/terms_{level}.csv', index=False)
 
     print()
     utils.duration(start_main, 'Total time')
