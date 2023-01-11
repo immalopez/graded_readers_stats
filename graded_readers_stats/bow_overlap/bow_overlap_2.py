@@ -996,4 +996,7 @@ for name, freqs in [("pos", freqs_pos), ("neg", freqs_neg)]:
             )
 
 
+# Command line join background image with generated overlay words
+# magick convert -page 2800x2800+0+0 bg.jpg -page +0+0 bi1.png -page +0+0 bi2.png -page +0+0 bi3.png -page +0+0 bo1.png -page +0+0 bo2.png -page +0+0 bo3.png -page +0+0 ti1.png -page +0+0 ti2.png -page +0+0 ti3.png -page +0+0 to1.png -page +0+0 to2.png -page +0+0 to3.png -background white -flatten output.jpg
+
 print("Done!")

@@ -75,8 +75,11 @@ def execute(args):
 ##############################################################################
 
     with Timer(name='Logistic Regression', text=timer_text):
-        logit(X, y)
+        df = logit(X, y)
 
+    with Timer(name='Export CSV', text=timer_text):
+        file_name = corpus_path.split("/")[-1]
+        df.to_csv(f'./output/logit-bow-{file_name}', index=False)
 ##############################################################################
 #                                   Done
 ##############################################################################

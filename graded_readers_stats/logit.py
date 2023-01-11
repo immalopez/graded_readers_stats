@@ -51,17 +51,18 @@ def logit(X, y):
     print_report(
         y_train, y_train_pred,
         y_test, y_test_pred,
-        lr, vectorizer, columns)
-
-    return None
+        lr, vectorizer, columns
+    )
+    return make_dataframe(lr, vectorizer, 100)
 
 
 def evaluate(y_train_true, y_train_pred, y_test_true, y_test_pred, column):
-    labels = ['accuracy',
-              'precision',
-              'recall',
-              'f1',
-              ]
+    labels = [
+        'accuracy',
+        'precision',
+        'recall',
+        'f1',
+    ]
     average = "micro"
     train_values = [
         accuracy_score(y_train_true, y_train_pred[column]),
@@ -159,4 +160,27 @@ def print_report(
     print('\n'.join(output))
 
 
+def make_dataframe(model, vectorizer, n):
+    result = {}
+    cls_name_map = {
+        "Inicial": "graded_1",
+        "Intermedio": "graded_2",
+        "Avanzado": "graded_3",
+        "Infantil": "litera_1",
+        "Juvenil": "litera_2",
+        "Adulta": "litera_3",
+    }
+    coefs_per_class = model.coef_
+    for cls_name, cls_idx in zip(model.classes_, range(3)):
+        coefs_and_names = sorted(
+            zip(coefs_per_class[cls_idx], vectorizer.get_feature_names_out()),
+            key=itemgetter(0),
+            reverse=True
+        )
+        topn = list(coefs_and_names[:n] + coefs_and_names[:-(n + 1):-1])
+        name = cls_name_map[cls_name]
+        result[f"{name}"] = [(f_name, coef) for (coef, f_name) in topn]
+
+    df = pd.DataFrame(result)
+    return df
 

@@ -127,7 +127,7 @@ def remove_stopwords(column):
                 + names.words("male.txt") \
                 + names.words("female.txt") \
                 + ["pedro", "leo", "leopoldo", "leotoldo", "hans", "vázquez",
-                   "richard", "ah", "oh", "uh", "505"]
+                   "ivanovna", "luis", "mary", "richard", "santiago", "505"]
     return [[[word
               for word in sent
               if word not in blacklist]
