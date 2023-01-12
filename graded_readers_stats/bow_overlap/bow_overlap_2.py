@@ -62,13 +62,13 @@ vocab_level3_words = set(vocab_df[vocab_df["Level"] == "B2"]["Lexical item"])
 # Graded
 bow_graded_1_all = {name: value for name, value in readers_df["graded_1"]}
 bow_graded_1_pos = {k: v for k, v in bow_graded_1_all.items() if v > 0}
-bow_graded_1_neg = {k: v for k, v in bow_graded_1_all.items() if v < 0}
+bow_graded_1_neg = {k: abs(v) for k, v in bow_graded_1_all.items() if v < 0}
 bow_graded_2_all = {name: value for name, value in readers_df["graded_2"]}
 bow_graded_2_pos = {k: v for k, v in bow_graded_2_all.items() if v > 0}
-bow_graded_2_neg = {k: v for k, v in bow_graded_2_all.items() if v < 0}
+bow_graded_2_neg = {k: abs(v) for k, v in bow_graded_2_all.items() if v < 0}
 bow_graded_3_all = {name: value for name, value in readers_df["graded_3"]}
 bow_graded_3_pos = {k: v for k, v in bow_graded_3_all.items() if v > 0}
-bow_graded_3_neg = {k: v for k, v in bow_graded_3_all.items() if v < 0}
+bow_graded_3_neg = {k: abs(v) for k, v in bow_graded_3_all.items() if v < 0}
 bow_graded_all = reduce(
     lambda x, y: dict(x, **y),
     (bow_graded_1_all, bow_graded_2_all, bow_graded_3_all)
@@ -85,13 +85,13 @@ bow_graded_neg = reduce(
 # Literature
 bow_litera_1_all = {name: value for name, value in literature_df["litera_1"]}
 bow_litera_1_pos = {k: v for k, v in bow_litera_1_all.items() if v > 0}
-bow_litera_1_neg = {k: v for k, v in bow_litera_1_all.items() if v < 0}
+bow_litera_1_neg = {k: abs(v) for k, v in bow_litera_1_all.items() if v < 0}
 bow_litera_2_all = {name: value for name, value in literature_df["litera_2"]}
 bow_litera_2_pos = {k: v for k, v in bow_litera_2_all.items() if v > 0}
-bow_litera_2_neg = {k: v for k, v in bow_litera_2_all.items() if v < 0}
+bow_litera_2_neg = {k: abs(v) for k, v in bow_litera_2_all.items() if v < 0}
 bow_litera_3_all = {name: value for name, value in literature_df["litera_3"]}
 bow_litera_3_pos = {k: v for k, v in bow_litera_3_all.items() if v > 0}
-bow_litera_3_neg = {k: v for k, v in bow_litera_3_all.items() if v < 0}
+bow_litera_3_neg = {k: abs(v) for k, v in bow_litera_3_all.items() if v < 0}
 bow_litera_all = reduce(
     lambda x, y: dict(x, **y),
     (bow_litera_1_all, bow_litera_2_all, bow_litera_3_all)
@@ -143,6 +143,7 @@ def draw_wc_section(section: WordCloudSection):
         background_color=None,
         width=2800,
         height=2800,
+        scale=1,
         mask=mask
     )
     if len(section.wordToFreqMap.items()):
