@@ -88,9 +88,9 @@ def load(
     return dataframe
 
 
-def read_pandas_csv(path: str) -> pd.DataFrame:
+def read_pandas_csv(path: str, sep=";") -> pd.DataFrame:
     # print(f'\tReading csv file at {path}')
-    return pd.read_csv(path, sep=';')
+    return pd.read_csv(path, sep=sep)
 
 
 def load_native_corpus(*args) -> pd.DataFrame:
