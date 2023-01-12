@@ -1,0 +1,47 @@
+# 1. run logit and export top N words to csv (DONE)
+
+venv/bin/python main.py bag-of-words --strip-named-entities "data/readers/readers.csv" | tee output/readers_bow_ner.log &
+venv/bin/python main.py bag-of-words --strip-named-entities "data/literature/literature.csv" | tee output/literature_bow_ner.log &
+wait
+
+# 2. generate wordcloud images by running bow_overlap_2 (DONE)
+
+cd graded_readers_stats/bow_overlap || exit
+# set PYTHONPATH to find our `graded_readers_stats.*` modules
+PYTHONPATH=../../ ../../venv/bin/python bow_overlap_2.py
+
+# 3. run magick command to assemble the images (DONE)
+
+magick convert \
+-page 2800x2800+0+0 bg.jpg \
+-page +0+0 output/neg/bi1.png \
+-page +0+0 output/neg/bi2.png \
+-page +0+0 output/neg/bi3.png \
+-page +0+0 output/neg/bo1.png \
+-page +0+0 output/neg/bo2.png \
+-page +0+0 output/neg/bo3.png \
+-page +0+0 output/neg/ti1.png \
+-page +0+0 output/neg/ti2.png \
+-page +0+0 output/neg/ti3.png \
+-page +0+0 output/neg/to1.png \
+-page +0+0 output/neg/to2.png \
+-page +0+0 output/neg/to3.png \
+-background white \
+-flatten output/neg/output.jpg
+
+magick convert \
+-page 2800x2800+0+0 bg.jpg \
+-page +0+0 output/pos/bi1.png \
+-page +0+0 output/pos/bi2.png \
+-page +0+0 output/pos/bi3.png \
+-page +0+0 output/pos/bo1.png \
+-page +0+0 output/pos/bo2.png \
+-page +0+0 output/pos/bo3.png \
+-page +0+0 output/pos/ti1.png \
+-page +0+0 output/pos/ti2.png \
+-page +0+0 output/pos/ti3.png \
+-page +0+0 output/pos/to1.png \
+-page +0+0 output/pos/to2.png \
+-page +0+0 output/pos/to3.png \
+-background white \
+-flatten output/pos/output.jpg
