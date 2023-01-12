@@ -3,15 +3,21 @@
 venv/bin/python main.py bag-of-words --strip-named-entities "data/readers/readers.csv" | tee output/readers_bow_ner.log &
 venv/bin/python main.py bag-of-words --strip-named-entities "data/literature/literature.csv" | tee output/literature_bow_ner.log &
 wait
+echo "Finished generating CSV files!"
+echo
 
 # 2. generate wordcloud images by running bow_overlap_2 (DONE)
 
+echo "Generating word cloud images..."
 cd graded_readers_stats/bow_overlap || exit
 # set PYTHONPATH to find our `graded_readers_stats.*` modules
 PYTHONPATH=../../ ../../venv/bin/python bow_overlap_2.py
+echo "Finished generating word cloud images..."
+echo
 
 # 3. run magick command to assemble the images (DONE)
 
+echo "Combining word cloud images..."
 magick convert \
 -page 2800x2800+0+0 bg.jpg \
 -page +0+0 output/neg/bi1.png \
@@ -45,3 +51,4 @@ magick convert \
 -page +0+0 output/pos/to3.png \
 -background white \
 -flatten output/pos/output.jpg
+echo "Finished combining word cloud images!"
