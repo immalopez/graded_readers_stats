@@ -2,8 +2,6 @@
 #                            FREQUENCY CALCULATIONS                          #
 ##############################################################################
 
-from pandas import Int64Index
-
 from graded_readers_stats._typing import *
 from graded_readers_stats.constants import *
 
@@ -33,7 +31,7 @@ def count_vocab_in_texts_grouped_by_level(
 
 def count_phrase_occurrences_v1(
         locations: [[(int, (int, int))]],  # list of docs of sentences
-        group_indices: Int64Index
+        group_indices: pd.Index
 ) -> int:
     # We count sentences since we detect the first occurrence of the vocab
     # meaning vocab appear at most once in a sentence.
