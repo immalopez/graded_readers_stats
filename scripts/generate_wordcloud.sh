@@ -19,7 +19,7 @@ echo
 
 echo "Combining word cloud images..."
 magick convert \
--page 2800x2800+0+0 bg.jpg \
+-page 2800x2800+0+0 bg_neg.jpg \
 -page +0+0 output/neg/bi1.png \
 -page +0+0 output/neg/bi2.png \
 -page +0+0 output/neg/bi3.png \
@@ -35,8 +35,12 @@ magick convert \
 -background white \
 -flatten output/neg/output.jpg
 
+magick \
+legend_neg.jpg output/neg/output.jpg -geometry +150+420 -composite \
+labels.png -composite output/neg/final_neg.jpg
+
 magick convert \
--page 2800x2800+0+0 bg.jpg \
+-page 2800x2800+0+0 bg_pos.jpg \
 -page +0+0 output/pos/bi1.png \
 -page +0+0 output/pos/bi2.png \
 -page +0+0 output/pos/bi3.png \
@@ -51,4 +55,9 @@ magick convert \
 -page +0+0 output/pos/to3.png \
 -background white \
 -flatten output/pos/output.jpg
+
+magick \
+legend_pos.jpg output/pos/output.jpg -geometry +150+420 -composite \
+labels.png -composite output/pos/final_pos.jpg
+
 echo "Finished combining word cloud images!"
