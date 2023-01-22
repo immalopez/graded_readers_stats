@@ -1,0 +1,613 @@
+
+---
+
+Parsing arguments...
+Parsing done: Namespace(corpus_path='data/literature/literature.csv', max_docs=None, shorten_content=False, strip_named_entities=True, func=<function execute at 0x14fecb940>)
+
+BAG-OF-WORDS START
+---
+corpus_path =  data/literature/literature.csv
+max_docs =  None
+---
+Load data: 0 seconds
+Preprocess: 351 seconds
+=== BOW ===
+Cross-validation scores:
+[0.625 0.625 0.625 0.625 0.5  ]
+Cross-validation avg. score:
+0.6
+Model train score:
+0.775
+Model test score:
+0.6
+------------------------------
+		lr_bow_pred
+------------------------------
+             Train  |  Test
+------------------------------
+  accuracy 0.775000 0.600000
+ precision 0.775000 0.600000
+    recall 0.775000 0.600000
+        f1 0.775000 0.600000
+------------------------------
+[[ 6  2  0]
+ [ 0 24  0]
+ [ 0  7  1]]
+---
+[[0 2 0]
+ [0 6 0]
+ [0 2 0]]
+
+
+  Coef          Feature    Coef            Feature
+---------------------------------------------------
+                     Adulta
+---------------------------------------------------
+0.515835          haber    -0.181451       príncipe
+0.445953            ser    -0.143430           niña
+0.258752          decir    -0.133039       molinero
+0.235210          nasar    -0.130867         bosque
+0.189802      vigilante    -0.126745           lobo
+0.178885         cierto    -0.124987           rosa
+0.175997         tiempo    -0.116496         cohete
+0.172547     supervisor    -0.113323           niño
+0.171361         páramo    -0.100057          bruja
+0.160862            san    -0.098385       princesa
+0.159525         hombre    -0.094206      soldadito
+0.154985            tal    -0.093096            rey
+0.153842            don    -0.091116          nieve
+0.148654         alguno    -0.087477          volar
+0.148537     estudiante    -0.083635         muñeco
+0.144934        portero    -0.080460        palacio
+0.134405          román    -0.079407         gritar
+0.128805        bayardo    -0.078901           rojo
+0.126419           sólo    -0.078801   clancanieves
+0.123547            fué    -0.077930        fábrica
+0.123196            vez    -0.075810       ruiseñor
+0.121784          madre    -0.074264         jardín
+0.120455    posibilidad    -0.072458          nuevo
+0.119295           sino    -0.071571           loco
+0.117605         obispo    -0.071292            oro
+0.116012          clase    -0.070335         cabeza
+0.113898          drama    -0.070117           ogro
+0.113713          tomar    -0.069844          bello
+0.112748         pueblo    -0.067226          feliz
+0.111578          patio    -0.066006        estatua
+0.108595        después    -0.065637        corneja
+0.108295          aquel    -0.060937         ricito
+0.105487             si    -0.058692        balleno
+0.105259        embargo    -0.057906       exclamar
+0.102844        oficina    -0.057646           voló
+0.102289        familia    -0.056529       castillo
+0.101641         escena    -0.056385        corazón
+0.101126            dos    -0.056239         madera
+0.099873            año    -0.056211      madrastra
+0.098176        parecer    -0.055435          cisne
+0.097823          matar    -0.055273        pequeño
+0.097318           modo    -0.053974         cuento
+0.096571       estudiar    -0.052315          baile
+0.095524         sentir    -0.052019           pelo
+0.095427      enfermera    -0.051791          plomo
+0.094661          mismo    -0.050906     carretilla
+0.094626            mes    -0.050565        empezar
+0.093332           acto    -0.050491      compartir
+0.093321          calle    -0.050050             oh
+0.091214         pensar    -0.049230         espino
+0.089653       catalina    -0.049033      descubrir
+0.089573       director    -0.048974            mar
+0.088629          morir    -0.048531        invento
+0.087422         cuatro    -0.048478           saco
+0.087225         último    -0.048190          oveja
+0.086864         querer    -0.048089      convertir
+0.085974        enemigo    -0.047890        cabrito
+0.084676           café    -0.047727          barco
+0.084618          gente    -0.047430          rosal
+0.084457         muerto    -0.047414          miedo
+---------------------------------------------------
+                 Adulta as dict
+---------------------------------------------------
+Adulta = {
+	"haber": 0.515835,
+	"ser": 0.445953,
+	"decir": 0.258752,
+	"nasar": 0.235210,
+	"vigilante": 0.189802,
+	"cierto": 0.178885,
+	"tiempo": 0.175997,
+	"supervisor": 0.172547,
+	"páramo": 0.171361,
+	"san": 0.160862,
+	"hombre": 0.159525,
+	"tal": 0.154985,
+	"don": 0.153842,
+	"alguno": 0.148654,
+	"estudiante": 0.148537,
+	"portero": 0.144934,
+	"román": 0.134405,
+	"bayardo": 0.128805,
+	"sólo": 0.126419,
+	"fué": 0.123547,
+	"vez": 0.123196,
+	"madre": 0.121784,
+	"posibilidad": 0.120455,
+	"sino": 0.119295,
+	"obispo": 0.117605,
+	"clase": 0.116012,
+	"drama": 0.113898,
+	"tomar": 0.113713,
+	"pueblo": 0.112748,
+	"patio": 0.111578,
+	"después": 0.108595,
+	"aquel": 0.108295,
+	"si": 0.105487,
+	"embargo": 0.105259,
+	"oficina": 0.102844,
+	"familia": 0.102289,
+	"escena": 0.101641,
+	"dos": 0.101126,
+	"año": 0.099873,
+	"parecer": 0.098176,
+	"matar": 0.097823,
+	"modo": 0.097318,
+	"estudiar": 0.096571,
+	"sentir": 0.095524,
+	"enfermera": 0.095427,
+	"mismo": 0.094661,
+	"mes": 0.094626,
+	"acto": 0.093332,
+	"calle": 0.093321,
+	"pensar": 0.091214,
+	"catalina": 0.089653,
+	"director": 0.089573,
+	"morir": 0.088629,
+	"cuatro": 0.087422,
+	"último": 0.087225,
+	"querer": 0.086864,
+	"enemigo": 0.085974,
+	"café": 0.084676,
+	"gente": 0.084618,
+	"muerto": 0.084457,
+	"príncipe": -0.181451,
+	"niña": -0.143430,
+	"molinero": -0.133039,
+	"bosque": -0.130867,
+	"lobo": -0.126745,
+	"rosa": -0.124987,
+	"cohete": -0.116496,
+	"niño": -0.113323,
+	"bruja": -0.100057,
+	"princesa": -0.098385,
+	"soldadito": -0.094206,
+	"rey": -0.093096,
+	"nieve": -0.091116,
+	"volar": -0.087477,
+	"muñeco": -0.083635,
+	"palacio": -0.080460,
+	"gritar": -0.079407,
+	"rojo": -0.078901,
+	"clancanieves": -0.078801,
+	"fábrica": -0.077930,
+	"ruiseñor": -0.075810,
+	"jardín": -0.074264,
+	"nuevo": -0.072458,
+	"loco": -0.071571,
+	"oro": -0.071292,
+	"cabeza": -0.070335,
+	"ogro": -0.070117,
+	"bello": -0.069844,
+	"feliz": -0.067226,
+	"estatua": -0.066006,
+	"corneja": -0.065637,
+	"ricito": -0.060937,
+	"balleno": -0.058692,
+	"exclamar": -0.057906,
+	"voló": -0.057646,
+	"castillo": -0.056529,
+	"corazón": -0.056385,
+	"madera": -0.056239,
+	"madrastra": -0.056211,
+	"cisne": -0.055435,
+	"pequeño": -0.055273,
+	"cuento": -0.053974,
+	"baile": -0.052315,
+	"pelo": -0.052019,
+	"plomo": -0.051791,
+	"carretilla": -0.050906,
+	"empezar": -0.050565,
+	"compartir": -0.050491,
+	"oh": -0.050050,
+	"espino": -0.049230,
+	"descubrir": -0.049033,
+	"mar": -0.048974,
+	"invento": -0.048531,
+	"saco": -0.048478,
+	"oveja": -0.048190,
+	"convertir": -0.048089,
+	"cabrito": -0.047890,
+	"barco": -0.047727,
+	"rosal": -0.047430,
+	"miedo": -0.047414,
+}
+---------------------------------------------------
+                     Infantil
+---------------------------------------------------
+0.288076       príncipe    -0.802072            ser
+0.247537         bosque    -0.682140          haber
+0.240150           lobo    -0.545260          decir
+0.203544           niña    -0.249777          tener
+0.198649          bruja    -0.239246     estudiante
+0.194330      soldadito    -0.234599         cohete
+0.168502   clancanieves    -0.232407       ruiseñor
+0.162486        fábrica    -0.220457         alguno
+0.149905       princesa    -0.209977       molinero
+0.147806           ogro    -0.204748           rosa
+0.146954          volar    -0.190215           mano
+0.142519        corneja    -0.178701          padre
+0.140929            día    -0.166216            vez
+0.125146         ricito    -0.152482          nasar
+0.124457      madrastra    -0.152278         tiempo
+0.121002        palacio    -0.148989          saber
+0.120448        balleno    -0.148742         pensar
+0.119327           niño    -0.148508           pelo
+0.116325          barco    -0.143645          madre
+0.110953            mar    -0.141864           rojo
+0.109329          nuevo    -0.141513          mismo
+0.107179       castillo    -0.137855      preguntar
+0.099402          oveja    -0.134076           loco
+0.097616        cabrito    -0.133118        estatua
+0.095790          cisne    -0.132174        parecer
+0.095118           hada    -0.132094     habitación
+0.095012        invento    -0.122903           sólo
+0.093120        enanito    -0.121713             ir
+0.091273         abuela    -0.120831         señora
+0.091035        cazador    -0.117816     carretilla
+0.090865           cada    -0.117260          clase
+0.089709         madera    -0.115688      vigilante
+0.088564        pasaron    -0.115634        secreto
+0.088263       aprender    -0.113653            san
+0.086096           cole    -0.112779         hombre
+0.086096      coronavir    -0.112075         páramo
+0.085742  espantapájaro    -0.111927            tal
+0.085123        carabás    -0.110039         rostro
+0.083914         cuento    -0.109427          nunca
+0.081480         ayudar    -0.109315        embargo
+0.080828         buscar    -0.108616         sentir
+0.079542        querido    -0.108393         cierto
+0.078175          comer    -0.107457         hablar
+0.077439            rey    -0.107118          luego
+0.076920      convertir    -0.105349            dar
+0.076365       comenzar    -0.105171     supervisor
+0.076259       entrenar    -0.102473          creer
+0.076243         animal    -0.102215            año
+0.073558        carlito    -0.102146          aquel
+0.072085            nin    -0.101533        después
+0.071183         trenza    -0.100610          noche
+0.070907            así    -0.100566            dos
+0.068546         taller    -0.098081           pues
+0.068017            osa    -0.096999          morir
+0.068017          polar    -0.096622       replicar
+0.067703         mágico    -0.096480           bien
+0.067580          pezun    -0.096366         sangre
+0.066418      marioneta    -0.094321         último
+0.066246        marqués    -0.094164         muñeco
+0.066221    dinosaurios    -0.092919          negro
+---------------------------------------------------
+                 Infantil as dict
+---------------------------------------------------
+Infantil = {
+	"príncipe": 0.288076,
+	"bosque": 0.247537,
+	"lobo": 0.240150,
+	"niña": 0.203544,
+	"bruja": 0.198649,
+	"soldadito": 0.194330,
+	"clancanieves": 0.168502,
+	"fábrica": 0.162486,
+	"princesa": 0.149905,
+	"ogro": 0.147806,
+	"volar": 0.146954,
+	"corneja": 0.142519,
+	"día": 0.140929,
+	"ricito": 0.125146,
+	"madrastra": 0.124457,
+	"palacio": 0.121002,
+	"balleno": 0.120448,
+	"niño": 0.119327,
+	"barco": 0.116325,
+	"mar": 0.110953,
+	"nuevo": 0.109329,
+	"castillo": 0.107179,
+	"oveja": 0.099402,
+	"cabrito": 0.097616,
+	"cisne": 0.095790,
+	"hada": 0.095118,
+	"invento": 0.095012,
+	"enanito": 0.093120,
+	"abuela": 0.091273,
+	"cazador": 0.091035,
+	"cada": 0.090865,
+	"madera": 0.089709,
+	"pasaron": 0.088564,
+	"aprender": 0.088263,
+	"cole": 0.086096,
+	"coronavir": 0.086096,
+	"espantapájaro": 0.085742,
+	"carabás": 0.085123,
+	"cuento": 0.083914,
+	"ayudar": 0.081480,
+	"buscar": 0.080828,
+	"querido": 0.079542,
+	"comer": 0.078175,
+	"rey": 0.077439,
+	"convertir": 0.076920,
+	"comenzar": 0.076365,
+	"entrenar": 0.076259,
+	"animal": 0.076243,
+	"carlito": 0.073558,
+	"nin": 0.072085,
+	"trenza": 0.071183,
+	"así": 0.070907,
+	"taller": 0.068546,
+	"osa": 0.068017,
+	"polar": 0.068017,
+	"mágico": 0.067703,
+	"pezun": 0.067580,
+	"marioneta": 0.066418,
+	"marqués": 0.066246,
+	"dinosaurios": 0.066221,
+	"ser": -0.802072,
+	"haber": -0.682140,
+	"decir": -0.545260,
+	"tener": -0.249777,
+	"estudiante": -0.239246,
+	"cohete": -0.234599,
+	"ruiseñor": -0.232407,
+	"alguno": -0.220457,
+	"molinero": -0.209977,
+	"rosa": -0.204748,
+	"mano": -0.190215,
+	"padre": -0.178701,
+	"vez": -0.166216,
+	"nasar": -0.152482,
+	"tiempo": -0.152278,
+	"saber": -0.148989,
+	"pensar": -0.148742,
+	"pelo": -0.148508,
+	"madre": -0.143645,
+	"rojo": -0.141864,
+	"mismo": -0.141513,
+	"preguntar": -0.137855,
+	"loco": -0.134076,
+	"estatua": -0.133118,
+	"parecer": -0.132174,
+	"habitación": -0.132094,
+	"sólo": -0.122903,
+	"ir": -0.121713,
+	"señora": -0.120831,
+	"carretilla": -0.117816,
+	"clase": -0.117260,
+	"vigilante": -0.115688,
+	"secreto": -0.115634,
+	"san": -0.113653,
+	"hombre": -0.112779,
+	"páramo": -0.112075,
+	"tal": -0.111927,
+	"rostro": -0.110039,
+	"nunca": -0.109427,
+	"embargo": -0.109315,
+	"sentir": -0.108616,
+	"cierto": -0.108393,
+	"hablar": -0.107457,
+	"luego": -0.107118,
+	"dar": -0.105349,
+	"supervisor": -0.105171,
+	"creer": -0.102473,
+	"año": -0.102215,
+	"aquel": -0.102146,
+	"después": -0.101533,
+	"noche": -0.100610,
+	"dos": -0.100566,
+	"pues": -0.098081,
+	"morir": -0.096999,
+	"replicar": -0.096622,
+	"bien": -0.096480,
+	"sangre": -0.096366,
+	"último": -0.094321,
+	"muñeco": -0.094164,
+	"negro": -0.092919,
+}
+---------------------------------------------------
+                     Juvenil
+---------------------------------------------------
+0.356119            ser    -0.116671         bosque
+0.351095         cohete    -0.114834            día
+0.343016       molinero    -0.113405           lobo
+0.329735           rosa    -0.106626       príncipe
+0.308217       ruiseñor    -0.100124      soldadito
+0.286508          decir    -0.098593          bruja
+0.220765           rojo    -0.091441      encontrar
+0.213196          tener    -0.089701   clancanieves
+0.205647           loco    -0.084629          mujer
+0.200528           pelo    -0.084556        fábrica
+0.200523           mano    -0.082727          nasar
+0.199123        estatua    -0.077689           ogro
+0.177799         muñeco    -0.076883        corneja
+0.177600          padre    -0.074114      vigilante
+0.168722     carretilla    -0.072199         pueblo
+0.166304          haber    -0.070897       comenzar
+0.139339          nieve    -0.070492         cierto
+0.137163         gritar    -0.068598          barco
+0.129500         espino    -0.068246      madrastra
+0.124890           rubí    -0.067376     supervisor
+0.120840       replicar    -0.064209         ricito
+0.116462       sristino    -0.063616            don
+0.115763         cabeza    -0.061979            mar
+0.115517          rosal    -0.061756        balleno
+0.108971      realmente    -0.060114           niña
+0.108908          nunca    -0.059478          volar
+0.106561       pardillo    -0.059285         páramo
+0.105214          feliz    -0.058475          poder
+0.104069            ojo    -0.058368         buscar
+0.101759        corazón    -0.058070          mayor
+0.101052           voló    -0.057810           hada
+0.097656       exclamar    -0.055268        portero
+0.096488         verdad    -0.053992           casa
+0.095838           nota    -0.051884        decidir
+0.094524            río    -0.051520       princesa
+0.093210           caer    -0.051369         escena
+0.092162         señora    -0.051212          oveja
+0.090740           gran    -0.050650         entrar
+0.090709     estudiante    -0.050650       castillo
+0.090054           rata    -0.049817       aprender
+0.089989         pálido    -0.049726        cabrito
+0.089963         jardín    -0.049572        enanito
+0.087774        candela    -0.049037           hora
+0.087568          saber    -0.048329        cazador
+0.085323         ciudad    -0.047469           allí
+0.084504           bien    -0.047273          román
+0.083733         locura    -0.047209            san
+0.083494          tarta    -0.046871    posibilidad
+0.083407         llevar    -0.046746         hombre
+0.082320         rostro    -0.046685         tierra
+0.082018           puse    -0.046550        marqués
+0.081355        amistad    -0.046481        invento
+0.078300        secreto    -0.046383            fué
+0.077928         gloria    -0.046348         abuela
+0.077642          cerda    -0.046185           cada
+0.076925           cara    -0.045890       muchacha
+0.076578      preguntar    -0.045817        pasaron
+0.076049          negro    -0.045677        carabás
+0.075920          poner    -0.045482          salir
+0.074644         sangre    -0.045303        bayardo
+---------------------------------------------------
+                 Juvenil as dict
+---------------------------------------------------
+Juvenil = {
+	"ser": 0.356119,
+	"cohete": 0.351095,
+	"molinero": 0.343016,
+	"rosa": 0.329735,
+	"ruiseñor": 0.308217,
+	"decir": 0.286508,
+	"rojo": 0.220765,
+	"tener": 0.213196,
+	"loco": 0.205647,
+	"pelo": 0.200528,
+	"mano": 0.200523,
+	"estatua": 0.199123,
+	"muñeco": 0.177799,
+	"padre": 0.177600,
+	"carretilla": 0.168722,
+	"haber": 0.166304,
+	"nieve": 0.139339,
+	"gritar": 0.137163,
+	"espino": 0.129500,
+	"rubí": 0.124890,
+	"replicar": 0.120840,
+	"sristino": 0.116462,
+	"cabeza": 0.115763,
+	"rosal": 0.115517,
+	"realmente": 0.108971,
+	"nunca": 0.108908,
+	"pardillo": 0.106561,
+	"feliz": 0.105214,
+	"ojo": 0.104069,
+	"corazón": 0.101759,
+	"voló": 0.101052,
+	"exclamar": 0.097656,
+	"verdad": 0.096488,
+	"nota": 0.095838,
+	"río": 0.094524,
+	"caer": 0.093210,
+	"señora": 0.092162,
+	"gran": 0.090740,
+	"estudiante": 0.090709,
+	"rata": 0.090054,
+	"pálido": 0.089989,
+	"jardín": 0.089963,
+	"candela": 0.087774,
+	"saber": 0.087568,
+	"ciudad": 0.085323,
+	"bien": 0.084504,
+	"locura": 0.083733,
+	"tarta": 0.083494,
+	"llevar": 0.083407,
+	"rostro": 0.082320,
+	"puse": 0.082018,
+	"amistad": 0.081355,
+	"secreto": 0.078300,
+	"gloria": 0.077928,
+	"cerda": 0.077642,
+	"cara": 0.076925,
+	"preguntar": 0.076578,
+	"negro": 0.076049,
+	"poner": 0.075920,
+	"sangre": 0.074644,
+	"bosque": -0.116671,
+	"día": -0.114834,
+	"lobo": -0.113405,
+	"príncipe": -0.106626,
+	"soldadito": -0.100124,
+	"bruja": -0.098593,
+	"encontrar": -0.091441,
+	"clancanieves": -0.089701,
+	"mujer": -0.084629,
+	"fábrica": -0.084556,
+	"nasar": -0.082727,
+	"ogro": -0.077689,
+	"corneja": -0.076883,
+	"vigilante": -0.074114,
+	"pueblo": -0.072199,
+	"comenzar": -0.070897,
+	"cierto": -0.070492,
+	"barco": -0.068598,
+	"madrastra": -0.068246,
+	"supervisor": -0.067376,
+	"ricito": -0.064209,
+	"don": -0.063616,
+	"mar": -0.061979,
+	"balleno": -0.061756,
+	"niña": -0.060114,
+	"volar": -0.059478,
+	"páramo": -0.059285,
+	"poder": -0.058475,
+	"buscar": -0.058368,
+	"mayor": -0.058070,
+	"hada": -0.057810,
+	"portero": -0.055268,
+	"casa": -0.053992,
+	"decidir": -0.051884,
+	"princesa": -0.051520,
+	"escena": -0.051369,
+	"oveja": -0.051212,
+	"entrar": -0.050650,
+	"castillo": -0.050650,
+	"aprender": -0.049817,
+	"cabrito": -0.049726,
+	"enanito": -0.049572,
+	"hora": -0.049037,
+	"cazador": -0.048329,
+	"allí": -0.047469,
+	"román": -0.047273,
+	"san": -0.047209,
+	"posibilidad": -0.046871,
+	"hombre": -0.046746,
+	"tierra": -0.046685,
+	"marqués": -0.046550,
+	"invento": -0.046481,
+	"fué": -0.046383,
+	"abuela": -0.046348,
+	"cada": -0.046185,
+	"muchacha": -0.045890,
+	"pasaron": -0.045817,
+	"carabás": -0.045677,
+	"salir": -0.045482,
+	"bayardo": -0.045303,
+}
+Logistic Regression: 0 seconds
+Export CSV: 0 seconds
+
+Total time (6m 51s)
+---
+
+BAG-OF-WORDS END

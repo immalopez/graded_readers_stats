@@ -1,7 +1,7 @@
 # 1. run logit and export top N words to csv (DONE)
 
-venv/bin/python main.py bag-of-words --strip-named-entities "data/readers/readers.csv" | tee output/readers_bow_ner.log &
-venv/bin/python main.py bag-of-words --strip-named-entities "data/literature/literature.csv" | tee output/literature_bow_ner.log &
+venv/bin/python main.py bag-of-words --strip-named-entities "data/readers/readers.csv" | tee output/logit-bow-readers.log &
+venv/bin/python main.py bag-of-words --strip-named-entities "data/literature/literature.csv" | tee output/logit-bow-literature.log &
 wait
 echo "Finished generating CSV files!"
 echo

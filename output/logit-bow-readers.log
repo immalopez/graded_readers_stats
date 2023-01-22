@@ -1,0 +1,613 @@
+
+---
+
+Parsing arguments...
+Parsing done: Namespace(corpus_path='data/readers/readers.csv', max_docs=None, shorten_content=False, strip_named_entities=True, func=<function execute at 0x28de89820>)
+
+BAG-OF-WORDS START
+---
+corpus_path =  data/readers/readers.csv
+max_docs =  None
+---
+Load data: 0 seconds
+Preprocess: 343 seconds
+=== BOW ===
+Cross-validation scores:
+[0.5   0.625 0.5   0.75  0.625]
+Cross-validation avg. score:
+0.6
+Model train score:
+1.0
+Model test score:
+0.4
+------------------------------
+		lr_bow_pred
+------------------------------
+             Train  |  Test
+------------------------------
+  accuracy 1.000000 0.400000
+ precision 1.000000 0.400000
+    recall 1.000000 0.400000
+        f1 1.000000 0.400000
+------------------------------
+[[11  0  0]
+ [ 0 14  0]
+ [ 0  0 15]]
+---
+[[0 0 3]
+ [0 2 1]
+ [0 2 2]]
+
+
+  Coef          Feature    Coef            Feature
+---------------------------------------------------
+                     Avanzado
+---------------------------------------------------
+0.282973          balsa    -0.180060             ir
+0.248870         merced    -0.137843         cuadro
+0.219097          disco    -0.135072          chico
+0.200876      responder    -0.135067          mosén
+0.175172          decir    -0.134726        español
+0.174439          madre    -0.119036        camping
+0.171630             si    -0.117943       marinero
+0.155604   departamento    -0.113141            bar
+0.146640          indio    -0.107837          museo
+0.144221         gratin    -0.105900          plaza
+0.144221           hall    -0.105668        agencia
+0.144221          music    -0.105205          nuevo
+0.141080        caballo    -0.101523          bolsa
+0.140998           tíaú    -0.098739          coger
+0.137012           cosa    -0.098148          tener
+0.132248         querío    -0.097871          socio
+0.124304        jesuita    -0.094312       sinagoga
+0.123246        andante    -0.094170          calle
+0.109865         nombre    -0.093514          poder
+0.106207       historia    -0.093101        ventana
+0.104457          haber    -0.092272        siempre
+0.103634         hombre    -0.091277         mañana
+0.097333         nativo    -0.090699          calor
+0.096383       personal    -0.088539    apartamento
+0.095983     expedición    -0.088404         sentar
+0.095879       aventura    -0.087964  verónicamente
+0.095343      religioso    -0.087296          llave
+0.094473           asno    -0.087108            pez
+0.093228       guaraníe    -0.084679           piso
+0.093032      atreviste    -0.084492           cura
+0.093032       insumiso    -0.084156        empezar
+0.092581          bueno    -0.083630         dentro
+0.091826          venta    -0.083567          cerca
+0.090537           moto    -0.082227            sol
+0.089710        sortijo    -0.081868          lunes
+0.089643      industria    -0.081762       nervioso
+0.086855        ventero    -0.081138         pensar
+0.086533          belle    -0.081124          perro
+0.086533         époque    -0.080702         puerta
+0.085425           dama    -0.080685            dos
+0.083940         aunque    -0.079945        billete
+0.082015         querer    -0.079592         marido
+0.081740            ver    -0.079334         fiesta
+0.081247        sistema    -0.078283          ciego
+0.081137          poner    -0.077700            rey
+0.080869           cuyo    -0.076951           niño
+0.080179         pronto    -0.076315            río
+0.079938         social    -0.076026            ojo
+0.079813      artístico    -0.075902        alcalde
+0.078142        europeo    -0.075758           arca
+0.077854         propio    -0.074068           hora
+0.077174    embarcación    -0.074051           café
+0.077174      polinesio    -0.072708           casa
+0.077174         tronco    -0.072207          papel
+0.077037           arte    -0.071128       escalera
+0.076709     caballería    -0.069900           allí
+0.075889     arqueólogo    -0.069692       edificio
+0.075196         triste    -0.069565          nadie
+0.074579        cecilia    -0.068987          tarde
+0.074426         podías    -0.068179       despacho
+---------------------------------------------------
+                 Avanzado as dict
+---------------------------------------------------
+Avanzado = {
+	"balsa": 0.282973,
+	"merced": 0.248870,
+	"disco": 0.219097,
+	"responder": 0.200876,
+	"decir": 0.175172,
+	"madre": 0.174439,
+	"si": 0.171630,
+	"departamento": 0.155604,
+	"indio": 0.146640,
+	"gratin": 0.144221,
+	"hall": 0.144221,
+	"music": 0.144221,
+	"caballo": 0.141080,
+	"tíaú": 0.140998,
+	"cosa": 0.137012,
+	"querío": 0.132248,
+	"jesuita": 0.124304,
+	"andante": 0.123246,
+	"nombre": 0.109865,
+	"historia": 0.106207,
+	"haber": 0.104457,
+	"hombre": 0.103634,
+	"nativo": 0.097333,
+	"personal": 0.096383,
+	"expedición": 0.095983,
+	"aventura": 0.095879,
+	"religioso": 0.095343,
+	"asno": 0.094473,
+	"guaraníe": 0.093228,
+	"atreviste": 0.093032,
+	"insumiso": 0.093032,
+	"bueno": 0.092581,
+	"venta": 0.091826,
+	"moto": 0.090537,
+	"sortijo": 0.089710,
+	"industria": 0.089643,
+	"ventero": 0.086855,
+	"belle": 0.086533,
+	"époque": 0.086533,
+	"dama": 0.085425,
+	"aunque": 0.083940,
+	"querer": 0.082015,
+	"ver": 0.081740,
+	"sistema": 0.081247,
+	"poner": 0.081137,
+	"cuyo": 0.080869,
+	"pronto": 0.080179,
+	"social": 0.079938,
+	"artístico": 0.079813,
+	"europeo": 0.078142,
+	"propio": 0.077854,
+	"embarcación": 0.077174,
+	"polinesio": 0.077174,
+	"tronco": 0.077174,
+	"arte": 0.077037,
+	"caballería": 0.076709,
+	"arqueólogo": 0.075889,
+	"triste": 0.075196,
+	"cecilia": 0.074579,
+	"podías": 0.074426,
+	"ir": -0.180060,
+	"cuadro": -0.137843,
+	"chico": -0.135072,
+	"mosén": -0.135067,
+	"español": -0.134726,
+	"camping": -0.119036,
+	"marinero": -0.117943,
+	"bar": -0.113141,
+	"museo": -0.107837,
+	"plaza": -0.105900,
+	"agencia": -0.105668,
+	"nuevo": -0.105205,
+	"bolsa": -0.101523,
+	"coger": -0.098739,
+	"tener": -0.098148,
+	"socio": -0.097871,
+	"sinagoga": -0.094312,
+	"calle": -0.094170,
+	"poder": -0.093514,
+	"ventana": -0.093101,
+	"siempre": -0.092272,
+	"mañana": -0.091277,
+	"calor": -0.090699,
+	"apartamento": -0.088539,
+	"sentar": -0.088404,
+	"verónicamente": -0.087964,
+	"llave": -0.087296,
+	"pez": -0.087108,
+	"piso": -0.084679,
+	"cura": -0.084492,
+	"empezar": -0.084156,
+	"dentro": -0.083630,
+	"cerca": -0.083567,
+	"sol": -0.082227,
+	"lunes": -0.081868,
+	"nervioso": -0.081762,
+	"pensar": -0.081138,
+	"perro": -0.081124,
+	"puerta": -0.080702,
+	"dos": -0.080685,
+	"billete": -0.079945,
+	"marido": -0.079592,
+	"fiesta": -0.079334,
+	"ciego": -0.078283,
+	"rey": -0.077700,
+	"niño": -0.076951,
+	"río": -0.076315,
+	"ojo": -0.076026,
+	"alcalde": -0.075902,
+	"arca": -0.075758,
+	"hora": -0.074068,
+	"café": -0.074051,
+	"casa": -0.072708,
+	"papel": -0.072207,
+	"escalera": -0.071128,
+	"allí": -0.069900,
+	"edificio": -0.069692,
+	"nadie": -0.069565,
+	"tarde": -0.068987,
+	"despacho": -0.068179,
+}
+---------------------------------------------------
+                     Inicial
+---------------------------------------------------
+0.324959         cuadro    -0.237074             si
+0.295268             ir    -0.201218            ver
+0.269943        camping    -0.163044          padre
+0.255900            ser    -0.162235          aquel
+0.249499        español    -0.148242      responder
+0.242073       sinagoga    -0.146518           amar
+0.234326          museo    -0.141736         merced
+0.230733        agencia    -0.140035          mujer
+0.224615          tener    -0.135192         pueblo
+0.215344          socio    -0.133277          madre
+0.212065       contesto    -0.133198          mosén
+0.202978  verónicamente    -0.130093          morir
+0.193636         gustar    -0.125968         aunque
+0.193423       pregunta    -0.125858           isla
+0.185805          señor    -0.124951       marinero
+0.185536          bolsa    -0.123821          disco
+0.175987          lunes    -0.116743            dar
+0.171896      inspector    -0.113482          balsa
+0.165762         ladrón    -0.105254           cura
+0.163611        oficina    -0.102033         camino
+0.155906       despacho    -0.101738          hacer
+0.153321        billete    -0.099199            voz
+0.151919       trabajar    -0.094001            pez
+0.151721          ahora    -0.092693       comenzar
+0.151151     vacaciones    -0.087244   departamento
+0.146771      detective    -0.086665          mundo
+0.145268        policía    -0.081758         gatito
+0.143882          calle    -0.081427         fuerza
+0.142518         actriz    -0.080033         alguno
+0.142490    interesante    -0.079279           sino
+0.140451           caso    -0.076668          fondo
+0.139240          serie    -0.075579           allá
+0.138392         señora    -0.075505        batalla
+0.135850          llave    -0.074521          ciego
+0.135568          playa    -0.074005           ropa
+0.131937       edificio    -0.072481           gran
+0.128895     ventanilla    -0.072363           cosa
+0.125724           leer    -0.072117           arca
+0.125061         mañana    -0.071911           tíaú
+0.122475      periódico    -0.070115         nombre
+0.121036    inscripción    -0.069985           hijo
+0.120903           lago    -0.069637         lanzar
+0.119576      expresión    -0.069487           niña
+0.119438          brava    -0.068717        caballo
+0.118584          decir    -0.068351          fuego
+0.117487         pensar    -0.068043       multitud
+0.115994          volar    -0.067452        posible
+0.115755        cliente    -0.066886          lleno
+0.115693           aquí    -0.066777          brazo
+0.112403       artículo    -0.066361         hombre
+0.112062           café    -0.066119           cada
+0.110508     extranjero    -0.066110            vos
+0.109351           azul    -0.066064        embargo
+0.108155            día    -0.065494       italiano
+0.106642        comprar    -0.065290           moto
+0.106492         agosto    -0.065252          miedo
+0.106253         típico    -0.064586           niño
+0.106119         bonito    -0.064278          nunca
+0.105678       escalera    -0.064046       entonces
+0.104513            oca    -0.063730        alameda
+---------------------------------------------------
+                 Inicial as dict
+---------------------------------------------------
+Inicial = {
+	"cuadro": 0.324959,
+	"ir": 0.295268,
+	"camping": 0.269943,
+	"ser": 0.255900,
+	"español": 0.249499,
+	"sinagoga": 0.242073,
+	"museo": 0.234326,
+	"agencia": 0.230733,
+	"tener": 0.224615,
+	"socio": 0.215344,
+	"contesto": 0.212065,
+	"verónicamente": 0.202978,
+	"gustar": 0.193636,
+	"pregunta": 0.193423,
+	"señor": 0.185805,
+	"bolsa": 0.185536,
+	"lunes": 0.175987,
+	"inspector": 0.171896,
+	"ladrón": 0.165762,
+	"oficina": 0.163611,
+	"despacho": 0.155906,
+	"billete": 0.153321,
+	"trabajar": 0.151919,
+	"ahora": 0.151721,
+	"vacaciones": 0.151151,
+	"detective": 0.146771,
+	"policía": 0.145268,
+	"calle": 0.143882,
+	"actriz": 0.142518,
+	"interesante": 0.142490,
+	"caso": 0.140451,
+	"serie": 0.139240,
+	"señora": 0.138392,
+	"llave": 0.135850,
+	"playa": 0.135568,
+	"edificio": 0.131937,
+	"ventanilla": 0.128895,
+	"leer": 0.125724,
+	"mañana": 0.125061,
+	"periódico": 0.122475,
+	"inscripción": 0.121036,
+	"lago": 0.120903,
+	"expresión": 0.119576,
+	"brava": 0.119438,
+	"decir": 0.118584,
+	"pensar": 0.117487,
+	"volar": 0.115994,
+	"cliente": 0.115755,
+	"aquí": 0.115693,
+	"artículo": 0.112403,
+	"café": 0.112062,
+	"extranjero": 0.110508,
+	"azul": 0.109351,
+	"día": 0.108155,
+	"comprar": 0.106642,
+	"agosto": 0.106492,
+	"típico": 0.106253,
+	"bonito": 0.106119,
+	"escalera": 0.105678,
+	"oca": 0.104513,
+	"si": -0.237074,
+	"ver": -0.201218,
+	"padre": -0.163044,
+	"aquel": -0.162235,
+	"responder": -0.148242,
+	"amar": -0.146518,
+	"merced": -0.141736,
+	"mujer": -0.140035,
+	"pueblo": -0.135192,
+	"madre": -0.133277,
+	"mosén": -0.133198,
+	"morir": -0.130093,
+	"aunque": -0.125968,
+	"isla": -0.125858,
+	"marinero": -0.124951,
+	"disco": -0.123821,
+	"dar": -0.116743,
+	"balsa": -0.113482,
+	"cura": -0.105254,
+	"camino": -0.102033,
+	"hacer": -0.101738,
+	"voz": -0.099199,
+	"pez": -0.094001,
+	"comenzar": -0.092693,
+	"departamento": -0.087244,
+	"mundo": -0.086665,
+	"gatito": -0.081758,
+	"fuerza": -0.081427,
+	"alguno": -0.080033,
+	"sino": -0.079279,
+	"fondo": -0.076668,
+	"allá": -0.075579,
+	"batalla": -0.075505,
+	"ciego": -0.074521,
+	"ropa": -0.074005,
+	"gran": -0.072481,
+	"cosa": -0.072363,
+	"arca": -0.072117,
+	"tíaú": -0.071911,
+	"nombre": -0.070115,
+	"hijo": -0.069985,
+	"lanzar": -0.069637,
+	"niña": -0.069487,
+	"caballo": -0.068717,
+	"fuego": -0.068351,
+	"multitud": -0.068043,
+	"posible": -0.067452,
+	"lleno": -0.066886,
+	"brazo": -0.066777,
+	"hombre": -0.066361,
+	"cada": -0.066119,
+	"vos": -0.066110,
+	"embargo": -0.066064,
+	"italiano": -0.065494,
+	"moto": -0.065290,
+	"miedo": -0.065252,
+	"niño": -0.064586,
+	"nunca": -0.064278,
+	"entonces": -0.064046,
+	"alameda": -0.063730,
+}
+---------------------------------------------------
+                     Intermedio
+---------------------------------------------------
+0.268265          mosén    -0.293757          decir
+0.242895       marinero    -0.257777            ser
+0.189746           cura    -0.215323          señor
+0.181109            pez    -0.187116         cuadro
+0.178965           isla    -0.185187         querer
+0.176192          mujer    -0.176210       pregunta
+0.152804          ciego    -0.169491          balsa
+0.150583          padre    -0.163654         gustar
+0.147875           arca    -0.150907        camping
+0.141537           niño    -0.147760       sinagoga
+0.140975         gatito    -0.145415       contesto
+0.133890       multitud    -0.144249      detective
+0.128662        alameda    -0.126489          museo
+0.126266            río    -0.126467          tener
+0.125023          fuego    -0.125065        agencia
+0.124630           allá    -0.118785      inspector
+0.120750            dar    -0.117474          socio
+0.119479            ver    -0.115208             ir
+0.118878          plaza    -0.115014  verónicamente
+0.116573           ropa    -0.114773        español
+0.116401          aquel    -0.111336          bueno
+0.113924            vos    -0.110870       trabajar
+0.112547         cabina    -0.110818         ladrón
+0.112523          lleno    -0.107135         merced
+0.112042         camión    -0.104917          haber
+0.112019            vez    -0.104261        oficina
+0.111409        empezar    -0.099615           buen
+0.110113          brasa    -0.098763     extranjero
+0.106066           amar    -0.097869       entender
+0.105580         iguano    -0.096654         señora
+0.104902         vecino    -0.095276          disco
+0.102451          hacer    -0.094119          lunes
+0.102240          brazo    -0.093860        policía
+0.100594         pueblo    -0.093763          saber
+0.100469           hora    -0.091495           arte
+0.098527           saco    -0.090568         hablar
+0.098018          meter    -0.090320    interesante
+0.096918        alcalde    -0.089808          ahora
+0.095552         rambla    -0.089428          poner
+0.094856       entonces    -0.088088     vacaciones
+0.094530        batalla    -0.087881           aquí
+0.094039         marido    -0.087726       despacho
+0.093806         abuelo    -0.086128     arqueólogo
+0.093478       proteger    -0.085162           robo
+0.092546            aún    -0.084013          bolsa
+0.091381        abierto    -0.083910          hotel
+0.091203        caminar    -0.083763          indio
+0.090749          volví    -0.082774          music
+0.089211         llorar    -0.082774           hall
+0.089150          negro    -0.082774         gratin
+0.088604           caña    -0.079334         actriz
+0.088498            ojo    -0.078340           caso
+0.087743         balcón    -0.077710      interesar
+0.087062        enfermo    -0.077314          quién
+0.086882         cámara    -0.077152          serie
+0.086633        hoguera    -0.076766         querío
+0.086384        higgins    -0.075410       historia
+0.086047     monaguillo    -0.075267        comprar
+0.085290         cuarto    -0.074956        urgente
+0.083368            pan    -0.074309           leer
+---------------------------------------------------
+                 Intermedio as dict
+---------------------------------------------------
+Intermedio = {
+	"mosén": 0.268265,
+	"marinero": 0.242895,
+	"cura": 0.189746,
+	"pez": 0.181109,
+	"isla": 0.178965,
+	"mujer": 0.176192,
+	"ciego": 0.152804,
+	"padre": 0.150583,
+	"arca": 0.147875,
+	"niño": 0.141537,
+	"gatito": 0.140975,
+	"multitud": 0.133890,
+	"alameda": 0.128662,
+	"río": 0.126266,
+	"fuego": 0.125023,
+	"allá": 0.124630,
+	"dar": 0.120750,
+	"ver": 0.119479,
+	"plaza": 0.118878,
+	"ropa": 0.116573,
+	"aquel": 0.116401,
+	"vos": 0.113924,
+	"cabina": 0.112547,
+	"lleno": 0.112523,
+	"camión": 0.112042,
+	"vez": 0.112019,
+	"empezar": 0.111409,
+	"brasa": 0.110113,
+	"amar": 0.106066,
+	"iguano": 0.105580,
+	"vecino": 0.104902,
+	"hacer": 0.102451,
+	"brazo": 0.102240,
+	"pueblo": 0.100594,
+	"hora": 0.100469,
+	"saco": 0.098527,
+	"meter": 0.098018,
+	"alcalde": 0.096918,
+	"rambla": 0.095552,
+	"entonces": 0.094856,
+	"batalla": 0.094530,
+	"marido": 0.094039,
+	"abuelo": 0.093806,
+	"proteger": 0.093478,
+	"aún": 0.092546,
+	"abierto": 0.091381,
+	"caminar": 0.091203,
+	"volví": 0.090749,
+	"llorar": 0.089211,
+	"negro": 0.089150,
+	"caña": 0.088604,
+	"ojo": 0.088498,
+	"balcón": 0.087743,
+	"enfermo": 0.087062,
+	"cámara": 0.086882,
+	"hoguera": 0.086633,
+	"higgins": 0.086384,
+	"monaguillo": 0.086047,
+	"cuarto": 0.085290,
+	"pan": 0.083368,
+	"decir": -0.293757,
+	"ser": -0.257777,
+	"señor": -0.215323,
+	"cuadro": -0.187116,
+	"querer": -0.185187,
+	"pregunta": -0.176210,
+	"balsa": -0.169491,
+	"gustar": -0.163654,
+	"camping": -0.150907,
+	"sinagoga": -0.147760,
+	"contesto": -0.145415,
+	"detective": -0.144249,
+	"museo": -0.126489,
+	"tener": -0.126467,
+	"agencia": -0.125065,
+	"inspector": -0.118785,
+	"socio": -0.117474,
+	"ir": -0.115208,
+	"verónicamente": -0.115014,
+	"español": -0.114773,
+	"bueno": -0.111336,
+	"trabajar": -0.110870,
+	"ladrón": -0.110818,
+	"merced": -0.107135,
+	"haber": -0.104917,
+	"oficina": -0.104261,
+	"buen": -0.099615,
+	"extranjero": -0.098763,
+	"entender": -0.097869,
+	"señora": -0.096654,
+	"disco": -0.095276,
+	"lunes": -0.094119,
+	"policía": -0.093860,
+	"saber": -0.093763,
+	"arte": -0.091495,
+	"hablar": -0.090568,
+	"interesante": -0.090320,
+	"ahora": -0.089808,
+	"poner": -0.089428,
+	"vacaciones": -0.088088,
+	"aquí": -0.087881,
+	"despacho": -0.087726,
+	"arqueólogo": -0.086128,
+	"robo": -0.085162,
+	"bolsa": -0.084013,
+	"hotel": -0.083910,
+	"indio": -0.083763,
+	"music": -0.082774,
+	"hall": -0.082774,
+	"gratin": -0.082774,
+	"actriz": -0.079334,
+	"caso": -0.078340,
+	"interesar": -0.077710,
+	"quién": -0.077314,
+	"serie": -0.077152,
+	"querío": -0.076766,
+	"historia": -0.075410,
+	"comprar": -0.075267,
+	"urgente": -0.074956,
+	"leer": -0.074309,
+}
+Logistic Regression: 0 seconds
+Export CSV: 0 seconds
+
+Total time (6m 43s)
+---
+
+BAG-OF-WORDS END
