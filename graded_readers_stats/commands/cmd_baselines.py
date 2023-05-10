@@ -112,10 +112,40 @@ def execute(args):
             p=probabilities
         )
 
-        # 1000 fold randomization
-        # TODO
+        # 1000-fold randomization
+        y_train_acc = 0
+        y_test_acc = 0
+        acc_count = 1000
+        for index in range(acc_count):
+            y_train_random_pred = np.random.choice(
+                probabilities.index.tolist(),
+                size=len(y_train_pred_df)
+            )
+            y_train_acc += classification_report(
+                y_train_df["Level"],
+                y_train_random_pred,
+                output_dict=True,
+                zero_division=0
+            )["accuracy"]
 
-        # output = evaluation_and_conf_mx(
+            y_test_random_pred = np.random.choice(
+                probabilities.index.tolist(),
+                size=len(y_test_pred_df)
+            )
+            y_test_acc += classification_report(
+                y_test_df["Level"],
+                y_test_random_pred,
+                output_dict=True,
+                zero_division=0
+            )["accuracy"]
+        y_train_acc_mean = y_train_acc / acc_count
+        y_test_acc_mean = y_test_acc / acc_count
+        print("---")
+        print(f"Train data 1000-fold mean accuracy: {y_train_acc_mean}")
+        print("---")
+        print(f"Test data 1000-fold mean accuracy: {y_test_acc_mean}")
+
+    # output = evaluation_and_conf_mx(
         #     y_train_df["Level"], y_train_pred_df,
         #     y_test_df["Level"], y_test_pred_df,
         #     columns=["most_frequent", "weighted"]
