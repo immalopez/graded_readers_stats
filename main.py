@@ -7,7 +7,9 @@ from graded_readers_stats.commands import (
     cmd_download_native_corpus,
     cmd_merge_output,
     cmd_stats_for_texts,
-    cmd_terms_by_group, cmd_stats_for_terms,
+    cmd_terms_by_group,
+    cmd_stats_for_terms,
+    cmd_baselines,
 )
 
 parser = argparse.ArgumentParser()
@@ -147,6 +149,18 @@ subparser.add_argument(
     '--strip-named-entities', action='store_true',
     help='detect and strip Named Entities using Stanza.')
 subparser.set_defaults(func=cmd_bag_of_words.execute)
+
+##############################################################################
+#                                Baselines                                   #
+##############################################################################
+
+subparser = subparsers.add_parser(
+    'baselines',
+    help='calculate baselines')
+subparser.add_argument(
+    'corpus_path',
+    help='file path to a CSV with file paths to texts')
+subparser.set_defaults(func=cmd_baselines.execute)
 
 ##############################################################################
 #                               Merge output
